@@ -1,0 +1,114 @@
+
+Data : Schema : AlertRule
+Data : Schema : AlertRuleScheduleTimeRangeDto
+Data : Schema : App
+Data : Schema : AppDescription
+Data : Schema : ServiceIntegration
+Data : Schema : Invitation
+
+Data : Schema : Error
+Data : Schema : ReportInfo
+Data : Schema : UserInfo
+Data : Schema : Plan
+Data : Schema : BillingInfo
+Data : Schema : FilterValue
+
+
+Data : Schema : SavedQuery
+Data : Schema : AlertRuleScheduleWeekdayDto
+Data : Schema : BasicOrganizationDto
+Data : Schema : UserRole
+Data : Schema : BasicAuthMethodDto
+
+
+Data : Schema : AlertNotificationRequest
+Data : Schema : UpdateAppInfo
+Data : Schema : UserPermissions
+Data : Schema : AlertRule
+Data : Schema : NotificationIntegration
+
+
+Data : Schema : Generic Api Response
+Data : Schema : AppMetadata
+Data : Schema : CreateAppInfo
+Data : Schema : DataSeriesFilter
+Data : Schema : DataSeriesRequest
+
+
+
+Resource : Provider
+
+Resource : Alerts :
+  Create :
+    Create Enabled Rule
+    Create Disabled Rule
+    Enable Rule
+  Read :
+    Get Rules for App
+  Update:
+    (Missing from API -> Read-Replace)
+  Destroy :
+    Delete Rule
+    Disable Rule
+
+
+Resource : Saved Queries
+  Create :
+    send : savedQueryDto
+  Read :
+    send : savedQueries Array
+  Update :
+    send: savedQueryDto
+  Destroy :
+    send : delete(id)
+
+
+Subscriptions: omit for now
+Billing : omit for now
+Reset Password : omit
+Alert Notifications : omit
+Metrics : omit
+
+
+Resource : Apps :
+  Create App,
+    (Create App is missing from API)
+    (Destroy App Missing)
+  Read :
+    (Missing an API doc)
+  Update:
+    (Partial?)
+    Update Description (redundant?)
+    Update Plan
+    Guests
+      Add Guest
+      (Remove Guest Missing?)
+        Get Guest List
+  Destroy :
+    (Not present in API or UI?)
+
+Resource : Logs Apps
+  Create:
+    send : applicationDetails
+  Read:
+    (Not present in API?)
+  Update:
+    (Not present in API?)
+  Delete:
+    (Not present in API?)
+
+Resource : Monitoring App
+  Create :
+    send: applicationDetails
+  Read :
+    (Missing in API?)
+  Update :
+    (Missing in API?)
+  Delete :
+    (Missing in API?)
+
+
+
+Test refresh of state
+
+Set up for CI/Testing

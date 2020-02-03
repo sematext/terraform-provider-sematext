@@ -1,38 +1,33 @@
- 
-package sematext
+package semkatext
 
 import (
-        "github.com/hashicorp/terraform-plugin-sdk/helper/schema"
+	"fmt"
+	"os"
+	"testing"
+
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
 )
 
-func resourceServer() *schema.Resource {
-        return &schema.Resource{
-                Create: resourceServerCreate,
-                Read:   resourceServerRead,
-                Update: resourceServerUpdate,
-                Delete: resourceServerDelete,
-
-                Schema: map[string]*schema.Schema{
-                        "address": &schema.Schema{
-                                Type:     schema.TypeString,
-                                Required: true,
-                        },
-                },
-        }
+func TestMain(m *testing.M) {
+	resource.TestMain(m)
 }
 
-func resourceServerCreate(d *schema.ResourceData, m interface{}) error {
-        return resourceServerRead(d, m)
-}
+// returns a common client setup
+func sharedClientForRegion(region string) (interface{}, error) {
+	if os.Getenv("SEMATEXT_TOKEN") == "" {
+		return nil, fmt.Errorf("must provide environment variable SEMATEXT_TOKEN")
+	}
 
-func resourceServerRead(d *schema.ResourceData, m interface{}) error {
-        return nil
-}
+	conf := &Config{
+		MaxRetries: 5,
+		Region:     region,
+	}
 
-func resourceServerUpdate(d *schema.ResourceData, m interface{}) error {
-        return resourceServerRead(d, m)
-}
+	// configures a default client for the region, using the above env vars
+	client, err := conf.Client()
+	if err != nil {
+		return nil, fmt.Errorf("error getting AWS client")
+	}
 
-func resourceServerDelete(d *schema.ResourceData, m interface{}) error {
-        return nil
+	return client, nil
 }
