@@ -1,0 +1,77 @@
+App {
+	ajaxThreshold	integer($int64)
+	appType	string
+	appTypeId	integer($int64)
+	creatorEmail	string
+	creditCardExpiry	string
+	creditCardNumber	string
+	description	string
+	displayStatus	string
+	firstDataSavedDate	integer($int64)
+	id	integer($int64)
+	
+	integration	ServiceIntegration {
+		appTypeId	integer($int64)
+		appTypeName	string
+		displayName	string
+		enabled	boolean
+		externalProductId	integer($int64)
+		externalProductName	string
+		id	integer($int64)
+		integrationType	string
+		ordinal	integer($int32)
+		parentIntegrationId	integer($int64)
+		sematextService	string
+		visible	boolean
+	}
+	lastDataReceivedDate	integer($int64)
+	lastDataSavedDate	integer($int64)
+	loggedInUserAppRole	string
+	monthlyInvoiceAccount	boolean
+	name	string
+	ownerEmail	string
+	owningOrganization	BasicOrganizationDto{
+		authMethods	[...]
+		name	string
+		status	string
+		Enum:
+		Array [ 6 ]
+		uuid	string
+	}
+	pageLoadThreshold	integer($int64)
+	paymentMethodId	integer($int64)
+	plan	Plan {
+		appType	string
+		custom	boolean
+		dataRetentionHours	number
+		defaultTrialPlan	boolean
+		free	boolean
+		freeTrialDays	integer($int64)
+		id	integer($int64)
+		maxAlerts	integer($int64)
+		maxDailyEvents	integer($int64)
+		name	string
+		planScheme	string
+		Enum:
+		Array [ 9 ]
+		sematextService	string
+		Enum:
+		Array [ 4 ]
+		trialPlan	boolean
+	}
+	prepaidAccount	boolean
+	status	string
+	token	string
+	trialEndDate	integer($int64)
+	urlGroupLimit	integer($int32)
+	userRoles	[UserRole {
+		role	string
+		Enum:
+		Array [ 6 ]
+		roleStatus	string
+		Enum:
+		Array [ 2 ]
+		userEmail	string
+	}]
+}
+*/

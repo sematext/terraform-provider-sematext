@@ -1,10 +1,13 @@
 package sematext
 
+/*
+
 import (
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
 func dataSourceSematextApplication() *schema.Resource {
+
 	return &schema.Resource{
 
 		Read: dataSourceSematextApplicationRead,
@@ -20,13 +23,7 @@ func dataSourceSematextApplication() *schema.Resource {
 			"token": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Todo:     true, // TODO Plan sub-struct in seperate file?
-			},
-
-			"appType": &schema.Schema{
-				Type:     schema.TypeString,
-				Required: true,
-				Todo:     true, // TODO enum
+				Todo:     true, // TODO ForceNew?
 			},
 
 			"appType": &schema.Schema{
@@ -38,13 +35,32 @@ func dataSourceSematextApplication() *schema.Resource {
 			"description": &schema.Schema{
 				Type:     schema.TypeString,
 				Required: true,
-				Todo:     true, // TODO
+				Todo:     true,
 			},
 
-			"integration": &schema.Schema{
-				Type:     schema.TypeString,
+			"integration": &schema.Schema{ // TODO - ServiceIntegration sub-schema in seperate file?
+				Type:     schema.TypeSet,
 				Optional: true,
-				Todo:     true, // TODO - ServiceIntegration sub-schema in seperate file?
+				ForceNew: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+
+						appTypeId	integer($int64)
+						appTypeName	string
+						displayName	string
+						enabled	boolean
+						 externalProductId	integer($int64)
+						externalProductName	string
+						id	integer($int64)
+						integrationType	string
+						ordinal	integer($int32)
+						parentIntegrationId	integer($int64)
+						sematextService	string
+						visible	boolean
+
+					}
+				}
+
 			},
 
 			"name": &schema.Schema{
@@ -111,3 +127,4 @@ func dataSourceSematextApplicationRead(d *schema.ResourceData, meta interface{})
 
 	return nil
 }
+*/

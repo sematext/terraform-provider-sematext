@@ -16,7 +16,79 @@ func resourceSematextApp() *schema.Resource {
 			State: resourceSematextApplicationImport,
 		},
 
-		Schema: map[string]*schema.Schema{},
+		Schema: map[string]*schema.Schema{
+
+			"id": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
+
+			"token": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Todo:     true, // TODO ValidateFunc
+			},
+
+			"appType": &schema.Schema{
+				Type:     schema.TypeString,
+				Required: true,
+				Todo:     true, // TODO enum
+			},
+
+			"description": &schema.Schema{
+				Type:     schema.TypeString,
+				Required: true,
+				Todo:     true, // TODO - ServiceIntegration sub-schema in seperate file?
+			},
+
+			"integration": &schema.Schema{
+				Type:     schema.TypeSet,
+				Optional: true, // TODO - Is optional?
+				ForceNew: true, // TODO - Force?
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						// TODO - ServiceIntegration sub-schema in seperate file?
+					}
+				}
+			},
+
+			"name": &schema.Schema{
+				Type:     schema.TypeString,
+				Required: true,
+				Todo:     true, // TODO
+			},
+
+			"owningOrganization": &schema.Schema{
+				Type:     schema.TypeString,
+				Required: true,
+				Todo:     true, // TODO BasicOrganizationDto sub-struct in seperate file?
+			},
+
+			"plan": &schema.Schema{
+				Type:     schema.TypeString,
+				Required: true,
+				Todo:     true, // TODO Plan sub-struct in seperate file?
+			},
+
+			"prepaidAccount": &schema.Schema{
+				Type:     schema.TypeBoolean,
+				Optional: true,
+				Todo:     true, // TODO Required?
+			},
+
+			"status": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Todo:     true, // TODO Plan sub-struct in seperate file?
+			},
+
+			"userRoles": &schema.Schema{
+				Type:     schema.TypeString,
+				Required: true,
+				Todo:     true, // TODO array of UserRole sub-struct in seperate file?
+			}
+		}
 	}
 }
 

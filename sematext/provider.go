@@ -23,7 +23,7 @@ func Provider() terraform.ResourceProvider {
 		},
 
 		DataSourcesMap: map[string]*schema.Resource{
-			"sematext_application" dataSourceSematextApplication()
+			"sematext_application_data" dataSourceSematextApplication()
 		},
 
 		ResourcesMap: map[string]*schema.Resource{
@@ -37,8 +37,20 @@ func Provider() terraform.ResourceProvider {
 	return p
 }
 
-func providerConfigure(d *schema.ResourceData) (interface{}, error) {
-	client := sematext.NewClient(d.Get("region").(string))
-	log.Println("[INFO] Sematext client successfully initialized, now validating...")
-	return client, nil
+
+type ProviderConfig struct {
+	TerraformVerion string
+	Client SematextAPIClient
+}
+
+
+func providerConfigure(d *schema.ReesourceData) (interface{}, error) {
+
+	region := d.Get("sematext_region").(string)
+
+	providerConfig := ProviderConfig{
+		Config : Config.Factory(region)
+	}
+	return providerConfig, nil
+
 }
