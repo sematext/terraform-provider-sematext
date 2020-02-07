@@ -1,5 +1,6 @@
 package sematext
 
+// AppMetadata TODO Doc Comment
 type AppMetadata struct {
 	AwsCloudWatchAccessKey string   `json:"awsCloudWatchAccessKey"`
 	AwsCloudWatchSecretKey string   `json:"awsCloudWatchSecretKey"`

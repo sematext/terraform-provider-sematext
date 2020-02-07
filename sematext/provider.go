@@ -44,7 +44,7 @@ func providerConfigure(d *schema.ResourceData) (interface{}, error) {
 
 	region := d.Get("sematext_region").(string)
 	config, err := Config.Factory(region)
-	if err != "" {
+	if err != nil {
 		panic(err)
 	}
 

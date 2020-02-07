@@ -10,7 +10,7 @@ type Config struct {
 func (config Config) Factory(region string) (*Config, error) { // TODO Move to schema.ProviderData?
 
 	client, err := SematextAPIClient.Factory(region)
-	if err != "" {
+	if err != nil {
 		panic(err)
 	}
 

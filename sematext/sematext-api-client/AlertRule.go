@@ -1,11 +1,12 @@
 package sematext
 
+// AlertRule TODO Doc Comment
 type AlertRule struct {
 	AccountEmail                          string                        `json:"accountEmail"` // TODO readOnly: true
 	AllowedAppTypes                       []int64                       `json:"allowedAppTypes"`
 	AnalyzingTime                         string                        `json:"analyzingTime"`
 	AppDisplayState                       string                        `json:"appDisplayState"` // TODO readOnly: true
-	AppId                                 int64                         `json:"appId"`
+	AppID                                 int64                         `json:"appId"`
 	AppName                               string                        `json:"appName"`  // TODO readOnly: true
 	AppState                              string                        `json:"appState"` // TODO readOnly: true
 	AppType                               string                        `json:"appType"`  // TODO readOnly: true
@@ -39,7 +40,7 @@ type AlertRule struct {
 	RuleKey                               int64                         `json:"ruleKey"` // TODO readOnly: true
 	RuleType                              string                        `json:"ruleType"`
 	Runbook                               string                        `json:"runbook"`
-	SavedQueryId                          int64                         `json:"savedQueryId"` // TODO readOnly: true
+	SavedQueryID                          int64                         `json:"savedQueryId"` // TODO readOnly: true
 	Schedule                              []AlertRuleScheduleWeekdayDto `json:"schedule"`
 	SematextService                       string                        `json:"sematextService"` // TODO readOnly: true
 	SendToEmail                           string                        `json:"sendToEmail"`

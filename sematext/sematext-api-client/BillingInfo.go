@@ -1,7 +1,8 @@
 package sematext
 
+// BillingInfo TODO Doc Comment
 type BillingInfo struct {
-	CreditCardId  int64  `json:"creditCardId"`
+	CreditCardID  int64  `json:"creditCardId"`
 	PaymentMethod string `json:"paymentMethod"`
-	PlanId        int64  `json:"planId"`
+	PlanID        int64  `json:"planId"`
 }

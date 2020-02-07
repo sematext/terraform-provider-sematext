@@ -7,17 +7,18 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
+// App TODO Doc Comment
 type App struct {
 	AjaxThreshold         int64                `json:"ajaxThreshold"`
 	AppType               string               `json:"appType"`
-	AppTypeId             int64                `json:"appTypeId"`
+	AppTypeID             int64                `json:"appTypeId"`
 	CreatorEmail          string               `json:"creatorEmail"`
 	CreditCardExpiry      string               `json:"creditCardExpiry"`
 	CreditCardNumber      string               `json:"creditCardNumber"`
 	Description           string               `json:"description"`
 	DisplayStatus         string               `json:"displayStatus"`
 	FirstDataSavedDate    int64                `json:"firstDataSavedDate"`
-	Id                    int64                `json:"id"`
+	ID                    int64                `json:"id"`
 	Integration           ServiceIntegration   `json:"integration"`
 	LastDataReceivedDate  int64                `json:"lastDataReceivedDate"`
 	LastDataSavedDate     int64                `json:"lastDataSavedDate"`
@@ -27,16 +28,17 @@ type App struct {
 	OwnerEmail            string               `json:"ownerEmail"`
 	OwningOrganization    BasicOrganizationDto `json:"owningOrganization"`
 	PageLoadThreshold     int64                `json:"pageLoadThreshold"`
-	PaymentMethodId       int64                `json:"paymentMethodId"`
+	PaymentMethodID       int64                `json:"paymentMethodId"`
 	Plan                  Plan                 `json:"plan"`
 	PrepaidAccount        bool                 `json:"prepaidAccount"`
 	Status                string               `json:"status"`
 	Token                 string               `json:"token"`
 	TrialEndDate          int64                `json:"trialEndDate"`
-	UrlGroupLimit         int32                `json:"urlGroupLimit"`
+	URLGroupLimit         int32                `json:"urlGroupLimit"`
 	UserRoles             []UserRole           `json:"userRoles"`
 }
 
+// Create TODO Doc Comment
 func (app App) Create(d *schema.ResourceData, meta interface{}) error {
 	application, err := buildSematextApplication(d)
 	if err != nil {
@@ -49,12 +51,13 @@ func (app App) Create(d *schema.ResourceData, meta interface{}) error {
 	return resourceSematextApplicationRead(d, meta)
 }
 
+// Read TODO Doc Comment
 func (app App) Read(d *schema.ResourceData, meta interface{}) error {
 	//client := meta.(*sematext.Config.Client)
 	id := d.get("Id")
-	application, err = client.getApplication(id)
-	if err != "" {
-		return err
+	application, err := client.getApplication(id)
+	if err != nil {
+		panic(err)
 	}
 	d.set("id", application.id)
 	d.set("token", application.token)
@@ -67,13 +70,12 @@ func (app App) Read(d *schema.ResourceData, meta interface{}) error {
 	d.set("status", application.status)
 	d.set("userRoles", application.userRoles) // TODO - ServiceIntegration sub-schema in seperate file?
 
-	if err != nil {
-		return err
-	}
+	return nil
 
 }
 
-func (App App) Update(d *schema.ResourceData, meta interface{}) error {
+// Update TODO Doc Comment
+func (app App) Update(d *schema.ResourceData, meta interface{}) error {
 	application, err := buildSematextApplication(d)
 	if err != nil {
 		return fmt.Errorf("Failed to parse resource configuration: %s", err.Error())
@@ -85,6 +87,7 @@ func (App App) Update(d *schema.ResourceData, meta interface{}) error {
 	return resourceSematextApplicationRead(d, meta)
 }
 
+// Delete TODO Doc Comment
 func (app App) Delete(d *schema.ResourceData, meta interface{}) error { // TODO check this is protected
 	id := d.Id()
 	if err := meta.(*sematext.Client).DeleteApplication(id); err != nil {
@@ -93,8 +96,9 @@ func (app App) Delete(d *schema.ResourceData, meta interface{}) error { // TODO 
 	return nil
 }
 
-// TODO Consider necessity for an app edit-version to catch edit-version mis-match back into state.
+// Exists TODO Doc Comment
 func (app App) Exists(d *schema.ResourceData, meta interface{}) (b bool, e error) {
+	// TODO Consider necessity for an app edit-version to catch edit-version mis-match back into state.
 	id := d.Id()
 	if _, err := meta.(*sematext.Config).Client.GetApplication(id); err != nil {
 		if strings.Contains(err.Error(), "404 Not Found") {
@@ -105,6 +109,7 @@ func (app App) Exists(d *schema.ResourceData, meta interface{}) (b bool, e error
 	return true, nil
 }
 
+// Import TODO Doc Comment
 func (app App) Import(d *schema.ResourceData, meta interface{}) ([]*schema.ResourceData, error) {
 	if err := resourceSematextAppRead(d, meta); err != nil {
 		return nil, err

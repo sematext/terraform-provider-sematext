@@ -1,5 +1,6 @@
 package sematext
 
+// UpdateAppInfo TODO Doc Comment
 type UpdateAppInfo struct {
 	Description        string `json:"description"`
 	IgnorePercentage   int32  `json:"ignorePercentage"`

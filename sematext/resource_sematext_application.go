@@ -109,7 +109,7 @@ func resourceSematextApplicationRead(d *schema.ResourceData, meta interface{}) e
 	client := meta.(*sematext.Config.Client)
 	id := d.get(Id)
 	application, err = client.getApplication(id)
-	if err != "" {
+	if err != nil {
 		return err
 	}
 	d.set("id", application.id))

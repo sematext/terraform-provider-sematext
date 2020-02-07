@@ -1,6 +1,7 @@
 package sematext
 
+// BasicAuthMethodDto TODO Doc Comment
 type BasicAuthMethodDto struct {
 	AuthType string `json:"authType"` // TODO Enum:[ SEMATEXT_ACCOUNT, LDAP ]
-	Uuid     string `json:"uuid"`
+	UUID     string `json:"uuid"`
 }

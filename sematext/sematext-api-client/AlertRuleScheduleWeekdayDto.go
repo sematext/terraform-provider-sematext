@@ -1,5 +1,6 @@
 package sematext
 
+// AlertRuleScheduleWeekdayDto TODO Doc Comment
 type AlertRuleScheduleWeekdayDto struct {
 	Day       string                          `json:"day"`
 	Index     int32                           `json:"index"`

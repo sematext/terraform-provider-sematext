@@ -1,8 +1,9 @@
 package sematext
 
+// ReportInfo TODO Doc Comment
 type ReportInfo struct {
 	Addresses  []string `json:"addresses"`
-	AppId      int64    `json:"appId"`
+	AppID      int64    `json:"appId"`
 	EndDate    string   `json:"endDate"` // TODO ($date-time)
 	Filters    string   `json:"filters"`
 	ReportName string   `json:"reportName"`

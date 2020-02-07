@@ -1,5 +1,6 @@
 package sematext
 
+// FilterValue TODO Doc Comment
 type FilterValue struct {
 	AggType    string   `json:"aggType"`
 	FilterName string   `json:"filterName"`

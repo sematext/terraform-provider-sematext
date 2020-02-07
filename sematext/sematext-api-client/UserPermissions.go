@@ -1,5 +1,6 @@
 package sematext
 
+// UserPermissions TODO Doc Comment
 type UserPermissions struct {
 	CanDelete bool `json:"canDelete"`
 	CanEdit   bool `json:"canEdit"`

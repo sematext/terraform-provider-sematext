@@ -1,5 +1,6 @@
 package sematext
 
+// Plan TODO Doc Comment
 type Plan struct {
 	AppType            string `json:"appType"`
 	Custom             bool   `json:"custom"`
@@ -7,7 +8,7 @@ type Plan struct {
 	DefaultTrialPlan   bool   `json:"defaultTrialPlan"`
 	Free               bool   `json:"free"`
 	FreeTrialDays      int64  `json:"freeTrialDays"`
-	Id                 int64  `json:"id"`
+	ID                 int64  `json:"id"`
 	MaxAlerts          int64  `json:"maxAlerts"`
 	MaxDailyEvents     int64  `json:"maxDailyEvents"`
 	Name               string `json:"name"`
