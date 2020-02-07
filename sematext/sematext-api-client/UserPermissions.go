@@ -1,7 +1,7 @@
 package sematext
 
 type UserPermissions struct {
-	canDelete bool
-	canEdit   bool
-	canView   bool
+	CanDelete bool `json:"canDelete"`
+	CanEdit   bool `json:"canEdit"`
+	CanView   bool `json:"canView"`
 }

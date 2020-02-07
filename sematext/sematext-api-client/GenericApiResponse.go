@@ -1,8 +1,8 @@
 package sematext
 
 type GenericApiResponse struct {
-	data    []byte // TODO - freeform conversion {...} ?
-	errors  []Error
-	message string
-	success bool
+	Data    []byte  `json:"data"` // TODO - freeform conversion {...} ?
+	Errors  []Error `json:"errors"`
+	Message string  `json:"message"`
+	Success bool    `json:"success"`
 }

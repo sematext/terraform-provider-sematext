@@ -1,17 +1,17 @@
 package sematext
 
 type SavedQuery struct {
-	alertRule         AlertRule
-	allowModification bool // TODO example: false readOnly: true
-	applicationId     string
-	applicationName   string // TODO readOnly: true
-	applicationToken  string // TODO readOnly: true
-	creatorEmail      string // TODO readOnly: true
-	id                string // TODO readOnly: true
-	labelColor        string
-	logseneAlertType  map[int]string // TODO Check datatype
-	ownerEmail        string         // TODO readOnly: true
-	queryName         string
-	queryString       string
-	userPermissions   UserPermissions
+	AlertRule         AlertRule       `json:"alertRule"`
+	AllowModification bool            `json:"allowModification"` // TODO example: false readOnly: true
+	ApplicationId     string          `json:"applicationId"`
+	ApplicationName   string          `json:"applicationName"`  // TODO readOnly: true
+	ApplicationToken  string          `json:"applicationToken"` // TODO readOnly: true
+	CreatorEmail      string          `json:"creatorEmail"`     // TODO readOnly: true
+	Id                string          `json:"id"`               // TODO readOnly: true
+	LabelColor        string          `json:"labelColor"`
+	LogseneAlertType  map[int]string  `json:"logseneAlertType"` // TODO Check datatype
+	OwnerEmail        string          `json:"ownerEmail"`       // TODO readOnly: true
+	QueryName         string          `json:"queryName"`
+	QueryString       string          `json:"queryString"`
+	UserPermissions   UserPermissions `json:"userPermissions"`
 }

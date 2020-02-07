@@ -1,8 +1,8 @@
 package sematext
 
 type BasicOrganizationDto struct {
-	authMethods []BasicAuthMethodDto
-	name        string
-	status      string // TODO Enum:[ ACTIVE, IN_REGISTRATION, DISABLED, EXPIRED, INVITED, DEMO ]
-	uuid        string
+	AuthMethods []BasicAuthMethodDto `json:"authMethods"`
+	Name        string               `json:"name"`
+	Status      string               `json:"status"` // TODO Enum:[ ACTIVE, IN_REGISTRATION, DISABLED, EXPIRED, INVITED, DEMO ]
+	Uuid        string               `json:"uuid"`
 }

@@ -1,9 +1,9 @@
 package sematext
 
 type AlertRuleScheduleWeekdayDto struct {
-	day       string
-	index     int32
-	intervals []sematext.AlertRuleScheduleTimeRangeDto
-	label     string
-	Type      string `json:"type"`
+	Day       string                          `json:"day"`
+	Index     int32                           `json:"index"`
+	Intervals []AlertRuleScheduleTimeRangeDto `json:"intervals"`
+	label     string                          `json:"end"`
+	Type      string                          `json:"type"`
 }

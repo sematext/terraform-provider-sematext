@@ -1,16 +1,16 @@
 package sematext
 
 type ServiceIntegration struct {
-	appTypeId           int64
-	appTypeName         string
-	displayName         string
-	enabled             bool
-	externalProductId   int64
-	externalProductName string
-	id                  int64
-	integrationType     string
-	ordinal             int32
-	parentIntegrationId int64
-	sematextService     string
-	visible             bool
+	AppTypeId           int64  `json:"appTypeId"`
+	AppTypeName         string `json:"appTypeName"`
+	DisplayName         string `json:"displayName"`
+	Enabled             bool   `json:"enabled"`
+	ExternalProductId   int64  `json:"externalProductId"`
+	ExternalProductName string `json:"externalProductName"`
+	Id                  int64  `json:"id"`
+	IntegrationType     string `json:"integrationType"`
+	Ordinal             int32  `json:"ordinal"`
+	ParentIntegrationId int64  `json:"parentIntegrationId"`
+	SematextService     string `json:"sematextService"`
+	Visible             bool   `json:"visible"`
 }

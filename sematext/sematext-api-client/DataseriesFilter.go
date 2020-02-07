@@ -1,7 +1,7 @@
 package sematext
 
 type DataSeriesFilter struct {
-	aggregation string // TODO Enum: [ NONE, SUM, AVG, MIN, MAX ]
-	multiValue  bool
-	values      []string
+	Aggregation string   `json:"aggregation"` // TODO Enum: [ NONE, SUM, AVG, MIN, MAX ]
+	MultiValue  bool     `json:"multiValue"`
+	Values      []string `json:"values"`
 }

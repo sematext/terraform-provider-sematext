@@ -1,7 +1,7 @@
 package sematext
 
 type UserRole struct {
-	role       string // TODO Enum: [ SUPER_USER, OWNER, ADMIN, USER, DEMO, ANONYMOUS ]
-	roleStatus string // TODO Enum: [ INACTIVE, ACTIVE ]
-	userEmail  string
+	Role       string `json:"role"`       // TODO Enum: [ SUPER_USER, OWNER, ADMIN, USER, DEMO, ANONYMOUS ]
+	RoleStatus string `json:"roleStatus"` // TODO Enum: [ INACTIVE, ACTIVE ]
+	UserEmail  string `json:"userEmail"`
 }

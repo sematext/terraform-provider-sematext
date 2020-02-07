@@ -1,12 +1,12 @@
 package sematext
 
 type ReportInfo struct {
-	addresses  []string
-	appId      int64
-	endDate    string // TODO ($date-time)
-	filters    string
-	reportName string
-	startDate  string // TODO ($date-time)
-	subject    string
-	text       string
+	Addresses  []string `json:"addresses"`
+	AppId      int64    `json:"appId"`
+	EndDate    string   `json:"endDate"` // TODO ($date-time)
+	Filters    string   `json:"filters"`
+	ReportName string   `json:"reportName"`
+	StartDate  string   `json:"startDate"` // TODO ($date-time)
+	Subject    string   `json:"subject"`
+	Text       string   `json:"text"`
 }

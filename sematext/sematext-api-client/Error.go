@@ -1,6 +1,6 @@
 package sematext
 
 type Error struct {
-	code    string
-	message string
+	Code    string `json:"code"`
+	Message string `json:"message"`
 }

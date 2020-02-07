@@ -1,13 +1,13 @@
 package sematext
 
 type UpdateAppInfo struct {
-	description        string
-	ignorePercentage   int32
-	maxEvents          int64
-	maxLimitMB         int64
-	name               string
-	sampling           bool
-	samplingPercentage int32
-	staggering         bool
-	status             string // TODO example: ACTIVE  Enum: [ ACTIVE, DISABLED ]
+	Description        string `json:"description"`
+	IgnorePercentage   int32  `json:"ignorePercentage"`
+	MaxEvents          int64  `json:"maxEvents"`
+	MaxLimitMB         int64  `json:"maxLimitMB"`
+	Name               string `json:"name"`
+	Sampling           bool   `json:"sampling"`
+	SamplingPercentage int32  `json:"samplingPercentage"`
+	Staggering         bool   `json:"staggering"`
+	Status             string `json:"status"` // TODO example: ACTIVE  Enum: [ ACTIVE, DISABLED ]
 }

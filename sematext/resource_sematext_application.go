@@ -48,7 +48,7 @@ func resourceSematextApp() *schema.Resource {
 				ForceNew: true, // TODO - Force?
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
-						// TODO - ServiceIntegration sub-schema in seperate file?
+						,// TODO - ServiceIntegration sub-schema in seperate file?
 					}
 				}
 			},

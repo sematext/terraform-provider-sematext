@@ -1,7 +1,7 @@
 package sematext
 
 import (
-	"github.com/hashicorp/terraform-plugin-sdk/helper/logging"
+	//"github.com/hashicorp/terraform-plugin-sdk/helper/logging" // TODO DEcide use of logging lib
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 )
@@ -19,37 +19,37 @@ func Provider() terraform.ResourceProvider {
 				Required:    true,
 				DefaultFunc: schema.EnvDefaultFunc("SEMATEXT_REGION", ""),
 				Description: "The Sematext region, either US or EU.",
-			}
+			},
 		},
 
 		DataSourcesMap: map[string]*schema.Resource{
-			"sematext_application_data" dataSourceSematextApplication()
+			"sematext_application_data": dataSourceSematextApplication(),
 		},
 
 		ResourcesMap: map[string]*schema.Resource{
-			"sematext_application_resource" resourceSematextApplication()
+			"sematext_application_resource": resourceSematextApplication(),
 		},
 
-		ConfigureFunc: providerConfigure
-
+		ConfigureFunc: providerConfigure,
 	}
 
 	return p
 }
 
-
 type ProviderConfig struct {
-	TerraformVerion string
-	Client SematextAPIClient
+	Config Config
 }
 
-
-func providerConfigure(d *schema.ReesourceData) (interface{}, error) {
+func providerConfigure(d *schema.ResourceData) (interface{}, error) {
 
 	region := d.Get("sematext_region").(string)
+	config, err := Config.Factory(region)
+	if err != "" {
+		panic(err)
+	}
 
 	providerConfig := ProviderConfig{
-		Config : Config.Factory(region)
+		Config: config,
 	}
 	return providerConfig, nil
 

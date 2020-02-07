@@ -1,7 +1,7 @@
 package sematext
 
 type BillingInfo struct {
-	creditCardId  int64
-	paymentMethod string
-	planId        int64
+	CreditCardId  int64  `json:"creditCardId"`
+	PaymentMethod string `json:"paymentMethod"`
+	PlanId        int64  `json:"planId"`
 }

@@ -1,10 +1,10 @@
 package sematext
 
 type FilterValue struct {
-	aggType    string
-	filterName string
-	key        string
-	label      string
-	name       string
-	values     []string
+	AggType    string   `json:"aggType"`
+	FilterName string   `json:"filterName"`
+	Key        string   `json:"key"`
+	Label      string   `json:"label"`
+	Name       string   `json:"name"`
+	Values     []string `json:"values"`
 }

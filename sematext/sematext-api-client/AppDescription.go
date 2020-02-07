@@ -1,5 +1,5 @@
 package sematext
 
 type AppDescription struct {
-	description string
+	Description string `json:"description"`
 }

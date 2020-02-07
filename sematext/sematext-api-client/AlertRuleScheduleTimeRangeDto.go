@@ -1,6 +1,6 @@
 package sematext
 
 type AlertRuleScheduleTimeRangeDto struct {
-	end   string
-	start string
+	End   string `json:"end"`
+	Start string `json:"start"`
 }

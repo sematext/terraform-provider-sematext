@@ -1,31 +1,113 @@
 package sematext
 
+import (
+	"fmt"
+	"strings"
+
+	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
+)
+
 type App struct {
-	ajaxThreshold         int64
-	appType               string
-	appTypeId             int64
-	creatorEmail          string
-	creditCardExpiry      string
-	creditCardNumber      string
-	description           string
-	displayStatus         string
-	firstDataSavedDate    int64
-	id                    int64
-	integration           sematext.ServiceIntegration
-	lastDataReceivedDate  int64
-	lastDataSavedDate     int64
-	loggedInUserAppRole   string
-	monthlyInvoiceAccount bool
-	name                  string
-	ownerEmail            string
-	owningOrganization    sematext.BasicOrganizationDto
-	pageLoadThreshold     int64
-	paymentMethodId       int64
-	plan                  sematext.Plan
-	prepaidAccount        bool
-	status                string
-	token                 string
-	trialEndDate          int64
-	urlGroupLimit         int32
-	userRoles             []sematext.UserRole
+	AjaxThreshold         int64                `json:"ajaxThreshold"`
+	AppType               string               `json:"appType"`
+	AppTypeId             int64                `json:"appTypeId"`
+	CreatorEmail          string               `json:"creatorEmail"`
+	CreditCardExpiry      string               `json:"creditCardExpiry"`
+	CreditCardNumber      string               `json:"creditCardNumber"`
+	Description           string               `json:"description"`
+	DisplayStatus         string               `json:"displayStatus"`
+	FirstDataSavedDate    int64                `json:"firstDataSavedDate"`
+	Id                    int64                `json:"id"`
+	Integration           ServiceIntegration   `json:"integration"`
+	LastDataReceivedDate  int64                `json:"lastDataReceivedDate"`
+	LastDataSavedDate     int64                `json:"lastDataSavedDate"`
+	LoggedInUserAppRole   string               `json:"loggedInUserAppRole"`
+	MonthlyInvoiceAccount bool                 `json:"monthlyInvoiceAccount"`
+	Name                  string               `json:"name"`
+	OwnerEmail            string               `json:"ownerEmail"`
+	OwningOrganization    BasicOrganizationDto `json:"owningOrganization"`
+	PageLoadThreshold     int64                `json:"pageLoadThreshold"`
+	PaymentMethodId       int64                `json:"paymentMethodId"`
+	Plan                  Plan                 `json:"plan"`
+	PrepaidAccount        bool                 `json:"prepaidAccount"`
+	Status                string               `json:"status"`
+	Token                 string               `json:"token"`
+	TrialEndDate          int64                `json:"trialEndDate"`
+	UrlGroupLimit         int32                `json:"urlGroupLimit"`
+	UserRoles             []UserRole           `json:"userRoles"`
+}
+
+func (app App) Create(d *schema.ResourceData, meta interface{}) error {
+	application, err := buildSematextApplication(d)
+	if err != nil {
+		return fmt.Errorf("Failed to parse resource configuration: %s", err.Error())
+	}
+	application, err = meta.(*sematext.Client).CreateApplication(application)
+	if err != nil {
+		return fmt.Errorf("Failed to create application using API: %s", err.Error())
+	}
+	return resourceSematextApplicationRead(d, meta)
+}
+
+func (app App) Read(d *schema.ResourceData, meta interface{}) error {
+	//client := meta.(*sematext.Config.Client)
+	id := d.get("Id")
+	application, err = client.getApplication(id)
+	if err != "" {
+		return err
+	}
+	d.set("id", application.id)
+	d.set("token", application.token)
+	d.set("appType", application.appType)
+	d.set("description", application.description)
+	d.set("integration", application.integration)               // TODO - ServiceIntegration sub-schema in seperate file?
+	d.set("name", application.name)                             // TODO - ServiceIntegration sub-schema in seperate file?
+	d.set("owningOrganization", application.owningOrganization) // TODO - ServiceIntegration sub-schema in seperate file?
+	d.set("prepaidAccount", application.prepaidAccount)
+	d.set("status", application.status)
+	d.set("userRoles", application.userRoles) // TODO - ServiceIntegration sub-schema in seperate file?
+
+	if err != nil {
+		return err
+	}
+
+}
+
+func (App App) Update(d *schema.ResourceData, meta interface{}) error {
+	application, err := buildSematextApplication(d)
+	if err != nil {
+		return fmt.Errorf("Failed to parse resource configuration: %s", err.Error())
+	}
+	application, err = meta.(*sematext.Client).UpdateApplication(application)
+	if err != nil {
+		return fmt.Errorf("Failed to create application using API: %s", err.Error())
+	}
+	return resourceSematextApplicationRead(d, meta)
+}
+
+func (app App) Delete(d *schema.ResourceData, meta interface{}) error { // TODO check this is protected
+	id := d.Id()
+	if err := meta.(*sematext.Client).DeleteApplication(id); err != nil {
+		return err
+	}
+	return nil
+}
+
+// TODO Consider necessity for an app edit-version to catch edit-version mis-match back into state.
+func (app App) Exists(d *schema.ResourceData, meta interface{}) (b bool, e error) {
+	id := d.Id()
+	if _, err := meta.(*sematext.Config).Client.GetApplication(id); err != nil {
+		if strings.Contains(err.Error(), "404 Not Found") {
+			return false, nil
+		}
+		return false, err
+	}
+	return true, nil
+}
+
+func (app App) Import(d *schema.ResourceData, meta interface{}) ([]*schema.ResourceData, error) {
+	if err := resourceSematextAppRead(d, meta); err != nil {
+		return nil, err
+	}
+	return []*schema.ResourceData{d}, nil
 }

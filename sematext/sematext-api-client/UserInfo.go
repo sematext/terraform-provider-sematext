@@ -1,5 +1,5 @@
 package sematext
 
 type UserInfo struct {
-	loginName string
+	LoginName string `json:"loginName"`
 }

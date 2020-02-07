@@ -1,4 +1,4 @@
-package semkatext
+package sematext
 
 import (
 	"fmt"

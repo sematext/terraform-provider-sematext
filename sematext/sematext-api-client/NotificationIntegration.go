@@ -1,14 +1,14 @@
 package sematext
 
 type NotificationIntegration struct {
-	applicability   string // TODO Enum: [ NONE, USE_ALWAYS ]
-	createDate      string // TODO ($date-time) ISO8063 or long?
-	createdByOwner  bool
-	creatorId       int64
-	id              int64
-	integrationType string // TODO Enum:[ PAGER_DUTY, NAGIOS, WEB_HOOKS, WEB_HOOKS_TEMPLATE, HIP_CHAT, EMAIL_LIST, TEMPORARY_EMAIL_LIST ]
-	name            string
-	params          map[int]string //TODO Check key appropriate type?
-	state           string         // TODO Enum: [ ACTIVE, DISABLED, DELETED ]
-	userId          int64
+	Applicability   string         `json:"applicability"` // TODO Enum: [ NONE, USE_ALWAYS ]
+	CreateDate      string         `json:"createDate"`    // TODO ($date-time) ISO8063 or long?
+	CreatedByOwner  bool           `json:"createdByOwner"`
+	CreatorId       int64          `json:"creatorId"`
+	Id              int64          `json:"id"`
+	IntegrationType string         `json:"integrationType"` // TODO Enum:[ PAGER_DUTY, NAGIOS, WEB_HOOKS, WEB_HOOKS_TEMPLATE, HIP_CHAT, EMAIL_LIST, TEMPORARY_EMAIL_LIST ]
+	Name            string         `json:"name"`
+	Params          map[int]string `json:"params"` //TODO Check key appropriate type?
+	State           string         `json:"state"`  // TODO Enum: [ ACTIVE, DISABLED, DELETED ]
+	UserId          int64          `json:"userId"`
 }
