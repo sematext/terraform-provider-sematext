@@ -1,3 +1,0 @@
-
-
-TODO Titlecase fieldnames in structs, tag for json  https://golang.org/pkg/encoding/json/#Marshal

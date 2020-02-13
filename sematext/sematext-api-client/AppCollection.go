@@ -1,19 +1,22 @@
 package sematext
 
-import "log"
+import "errors"
 
 // AppCollection TODO Doc Comment
 type AppCollection struct {
-	Apps []App `json:"apps"` // TODO Check datatype and json tag are correct.
+	Apps []App `json:"apps"`
 }
 
-// Get TODO Doc Comment
-func (appCollection AppCollection) Get(token string) (AppCollection, error) {
+// GetCollection TODO Doc Comment
+func (appCollection *AppCollection) GetCollection(config Configuration) error {
 
-	err := c.GetJSON("/users-web/api/v3/apps", appCollection) // TODO - unrolling an array of App structs
-	if err != nil {
-		log.Fatal(err)
+	if config.Client.CachedToken == "" {
+		return errors.New("Bad or missing token")
 	}
-	// TODO Forall applicationCollection into a map by id
-	return appCollection, nil
+	err := config.Client.GetJSON("/users-web/api/v3/apps", appCollection)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }

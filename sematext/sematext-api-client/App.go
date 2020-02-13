@@ -4,12 +4,13 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/docker/docker/daemon/logger/gcplogs"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
 // App TODO Doc Comment
 type App struct {
-	AjaxThreshold         int64                `json:"ajaxThreshold"`
+	AjaxThreshold         int64                `json:"ajaxThreshold",omitempty`
 	AppType               string               `json:"appType"`
 	AppTypeID             int64                `json:"appTypeId"`
 	CreatorEmail          string               `json:"creatorEmail"`
@@ -36,19 +37,6 @@ type App struct {
 	TrialEndDate          int64                `json:"trialEndDate"`
 	URLGroupLimit         int32                `json:"urlGroupLimit"`
 	UserRoles             []UserRole           `json:"userRoles"`
-}
-
-// Create TODO Doc Comment
-func (app App) Create(d *schema.ResourceData, meta interface{}) error {
-	application, err := buildSematextApplication(d)
-	if err != nil {
-		return fmt.Errorf("Failed to parse resource configuration: %s", err.Error())
-	}
-	application, err = meta.(*sematext.Client).CreateApplication(application)
-	if err != nil {
-		return fmt.Errorf("Failed to create application using API: %s", err.Error())
-	}
-	return resourceSematextApplicationRead(d, meta)
 }
 
 // Read TODO Doc Comment

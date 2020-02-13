@@ -3,12 +3,15 @@ package sematext
 // TODO - The API Key needs to be passed as Header parameter with name Authorization and value should be in the format apiKey <Value>. e.g. apiKey e5f18450-205a-48eb-8589-7d49edaea813
 
 import (
+	"bytes"
 	"crypto/tls"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"net"
 	"net/http"
 	"net/url"
+	"regexp"
 	"runtime"
 	"time"
 )
@@ -17,14 +20,17 @@ import (
 type APIClient struct {
 	BaseURL     url.URL
 	UserAgent   string
-	Client      http.Client
+	httpClient  *http.Client
 	CachedToken string
 }
 
-// Factory TODO Doc Comment
-func (apiClient *APIClient) Factory(region string, terraformVersion string) (*APIClient, error) {
+// Init TODO Doc Comment
+func (apiClient *APIClient) Init(region string, terraformVersion string) error {
 
 	baseURL, err := url.Parse("https://apps.sematext.com")
+	if err != nil {
+		return err
+	}
 
 	switch region {
 	case "US":
@@ -32,11 +38,11 @@ func (apiClient *APIClient) Factory(region string, terraformVersion string) (*AP
 	case "EU":
 		baseURL, err = url.Parse("https://apps.eu.sematext.com")
 	default:
-		return nil, fmt.Errorf("sematext_region must be one of EU, US")
+		err = errors.New("sematext_region must be one of EU, US")
 	}
 
 	if err != nil {
-		panic(err)
+		return err
 	}
 
 	transport := &http.Transport{
@@ -51,136 +57,167 @@ func (apiClient *APIClient) Factory(region string, terraformVersion string) (*AP
 		TLSClientConfig:       &tls.Config{},
 	}
 
-	client := http.Client{Transport: transport}
-	userAgent := fmt.Sprintf("HashiCorp/1.0 Terraform/%s", terraformVersion) //TODO calc terraformVersion
-	cachedToken := ""
+	apiClient.BaseURL = *baseURL
+	apiClient.UserAgent = fmt.Sprintf("HashiCorp/1.0 Terraform/%s", terraformVersion)
+	apiClient.httpClient = &http.Client{Transport: transport}
+	apiClient.CachedToken = ""
 
-	apiClient = &APIClient{
-		BaseURL:     *baseURL, // TODO check referencing
-		UserAgent:   userAgent,
-		Client:      client,
-		CachedToken: cachedToken,
-	}
-
-	return apiClient, nil
+	return nil
 }
 
 // SetAuthorization TODO Doc Comment
 func (apiClient *APIClient) SetAuthorization(token string) error {
-	apiClient.CachedToken = token // TODO validate token format
+	re := regexp.MustCompile(`[0-9]{8}-[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{8}`)
+	if re.Match([]byte(token)) {
+		apiClient.CachedToken = fmt.Sprintf("apiKey %s", token)
+		return nil
+	}
+	apiClient.CachedToken = ""
+	return errors.New("Bad or missing Token")
 }
 
 // GetJSON TODO Doc Comment
-func (apiClient APIClient) GetJSON(path string, target interface{}) (json, error) {
+func (apiClient *APIClient) GetJSON(path string, object interface{}) (GenericAPIResponse, error) {
+
+	if apiClient.CachedToken == "" {
+		panic("Code error : method called without setting token")
+	}
 
 	route := apiClient.BaseURL
 	route.Path = path
 
-	request, err := apiClient.Client.NewRequest("GET", route.String(), nil)
+	req, err := http.NewRequest("GET", route.String(), nil)
 	if err != nil {
-		panic(err)
+		return err
 	}
 
-	request.Header.Set("Content-Type", "application/json; charset=utf-8")
-	request.Header.Add("Authorization", apiClient.CachedToken)
+	req.Header.Set("Content-Type", "application/json; charset=utf-8")
+	req.Header.Add("Authorization", apiClient.CachedToken)
 
-	response, err := apiClient.Client.Do(request)
-	if err != "" {
-		panic(err)
+	res, err := apiClient.httpClient.Do(req)
+	if err != nil {
+		return err
 	}
 
-	defer response.Body.Close()
+	defer res.Body.Close()
 
-	switch response.StatusCode {
-	case 200: // TODO integer
-		return json.NewDecoder(request.Body).Decode(target), nil // TODO handle JSON decode error
+	switch res.StatusCode {
+	case 200:
+		result := GenericAppResponse{}
+		err = json.NewDecoder(res.Body).Decode(&result)
+		return result, err
 	default:
-		return nil, fmt.Errorf("Unexected status (%i) return from Sematext API", response.StatusCode)
+		return fmt.Errorf("Unexected status (%i) return from Sematext API", res.StatusCode)
 	}
 }
 
 // PutJSON TODO Doc Comment
-func (apiClient *APIClient) PutJSON(path string, json []byte) error { // TODO check return value
+func (apiClient *APIClient) PutJSON(path string, object interface{}) (int, error) {
+
+	if apiClient.CachedToken == "" {
+		panic("Code error : method called without setting token")
+	}
 
 	route := apiClient.BaseURL
 	route.Path = path
 
-	request, err := http.NewRequest("PUT", route.String(), json)
+	jsn, err := json.Marshal(object)
 	if err != nil {
 		panic(err)
 	}
 
-	request.Header.Set("Content-Type", "application/json; charset=utf-8")
-	request.Header.Add("Authorization", apiClient.CachedToken)
-
-	response, err := apiClient.Client.Do(request)
+	req, err := http.NewRequest("PUT", route.String(), bytes.NewBuffer(jsn))
 	if err != nil {
-		panic(err)
+		return 0, err
 	}
 
-	defer response.Body.Close()
+	req.Header.Set("Content-Type", "application/json; charset=utf-8")
+	req.Header.Add("Authorization", apiClient.CachedToken)
 
-	switch response.StatusCode {
+	res, err := apiClient.httpClient.Do(req)
+	if err != nil {
+		return 0, err
+	}
+
+	defer res.Body.Close()
+
+	switch res.StatusCode {
 	case 200:
-		return nil
+		return res.StatusCode, nil
 	default:
-		return fmt.Errorf("Unexected status (%i) return from Sematext API", response.StatusCode)
+		return res.StatusCode, fmt.Errorf("Unexected status (%i) return from Sematext API", res.StatusCode)
 	}
 }
 
 // PostJSON TODO Doc Comment
-func (apiClient *APIClient) PostJSON(path string, json []byte) error {
+func (apiClient *APIClient) PostJSON(path string, object interface{}) (GenericAppResponse, error) {
+
+	if apiClient.CachedToken == "" {
+		panic("Code error : method called without setting token")
+	}
 
 	route := apiClient.BaseURL
 	route.Path = path
 
-	request, err := http.NewRequest("POST", route.String(), json)
+	jsn, err := json.Marshal(object)
 	if err != nil {
 		panic(err)
 	}
 
-	request.Header.Set("Content-Type", "application/json; charset=utf-8")
-	request.Header.Add("Authorization", apiClient.CachedToken)
-
-	response, err := apiClient.Client.Do(request)
+	req, err := http.NewRequest("POST", route.String(), bytes.NewBuffer(jsn))
 	if err != nil {
 		panic(err)
 	}
 
-	defer response.Body.Close()
+	req.Header.Set("Content-Type", "application/json; charset=utf-8")
+	req.Header.Add("Authorization", apiClient.CachedToken)
 
-	switch response.Status {
+	res, err := apiClient.httpClient.Do(req)
+	if err != nil {
+		panic(err)
+	}
+
+	defer res.Body.Close()
+
+	switch res.StatusCode {
 	case 200:
-		return nil
+		result := GenericAppResponse{}
+		err = json.NewDecoder(res.Body).Decode(&result)
+		return result, err
 	default:
-		return fmt.Errorf("Unexected status (%i) return from Sematext API", response.StatusCode)
+		return nil, fmt.Errorf("Unexected status (%i) return from Sematext API", res.StatusCode)
 	}
 }
 
 // Delete TODO Doc Comment
-func (apiClient *APIClient) Delete(path string) error {
+func (apiClient *APIClient) Delete(path string) (int, error) {
+
+	if apiClient.CachedToken == "" {
+		panic("Code error : method called without setting token")
+	}
 
 	route := apiClient.BaseURL
 	route.Path = path
 
-	request, err := http.NewRequest("DELETE", route.String(), nil)
+	req, err := http.NewRequest("DELETE", route.String(), nil)
 	if err != nil {
 		panic(err)
 	}
 
-	request.Header.Add("Authorization", apiClient.CachedToken)
+	req.Header.Set("Content-Type", "application/json; charset=utf-8")
+	req.Header.Add("Authorization", apiClient.CachedToken)
 
-	response, err := apiClient.Client.Do(request)
+	res, err := apiClient.httpClient.Do(req)
 	if err != nil {
 		panic(err)
 	}
 
-	defer response.Body.Close()
+	defer res.Body.Close()
 
-	switch response.StatusCode {
+	switch res.StatusCode {
 	case 200:
-		return nil
+		return res.StatusCode, nil
 	default:
-		return fmt.Errorf("Unexected status (%i) return from Sematext API", response.StatusCode)
+		return res.StatusCode, fmt.Errorf("Unexected status (%i) return from Sematext API", res.StatusCode)
 	}
 }

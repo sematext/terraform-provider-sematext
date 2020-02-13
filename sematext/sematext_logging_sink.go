@@ -5,15 +5,15 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
-func resourceSematextApp() *schema.Resource {
+func resourceSematextMonitorInfra() *schema.Resource {
 	return &schema.Resource{
-		Create: resourceSematextApplicationCreate,
-		Read:   resourceSematextApplicationRead,
-		Update: resourceSematextApplicationUpdate,
-		Delete: resourceSematextApplicationDelete,
-		Exists: resourceSematextApplicationExists,
+		Create: resourceSematextMonitorInfraCreate,
+		Read:   resourceSematextMonitorInfraRead,
+		Update: resourceSematextMonitorInfraUpdate,
+		Delete: resourceSematextMonitorInfraDelete,
+		Exists: resourceSematextMonitorInfraExists,
 		Importer: &schema.ResourceImporter{
-			State: resourceSematextApplicationImport,
+			State: resourceSematextMonitorInfraImport,
 		},
 
 		Schema: map[string]*schema.Schema{
@@ -92,7 +92,7 @@ func resourceSematextApp() *schema.Resource {
 	}
 }
 
-func resourceSematextApplicationCreate(d *schema.ResourceData, meta interface{}) error {
+func resourceSematextMonitorInfraCreate(d *schema.ResourceData, meta interface{}) error {
 	application, err := buildSematextApplication(d)
 	if err != nil {
 		return fmt.Errorf("Failed to parse resource configuration: %s", err.Error())
@@ -105,7 +105,7 @@ func resourceSematextApplicationCreate(d *schema.ResourceData, meta interface{})
 }
 
 
-func resourceSematextApplicationRead(d *schema.ResourceData, meta interface{}) error {
+func resourceSematextMonitorInfraRead(d *schema.ResourceData, meta interface{}) error {
 	client := meta.(*sematext.Config.Client)
 	id := d.get(Id)
 	application, err = client.getApplication(id)
@@ -129,7 +129,7 @@ func resourceSematextApplicationRead(d *schema.ResourceData, meta interface{}) e
 
 }
 
-func resourceSematextApplicationUpdate(d *schema.ResourceData, meta interface{}) error {
+func resourceSematextMonitorInfraUpdate(d *schema.ResourceData, meta interface{}) error {
 	application, err := buildSematextApplication(d)
 	if err != nil {
 		return fmt.Errorf("Failed to parse resource configuration: %s", err.Error())
@@ -141,7 +141,7 @@ func resourceSematextApplicationUpdate(d *schema.ResourceData, meta interface{})
 	return resourceSematextApplicationRead(d, meta)
 }
 
-func resourceSematextApplicationDelete(d *schema.ResourceData, meta interface{}) error { // TODO check this is protected
+func resourceSematextMonitorInfraDelete(d *schema.ResourceData, meta interface{}) error { // TODO check this is protected
 	id := d.Id()
 	if err := meta.(*sematext.Client).DeleteApplication(id); err != nil {
 		return err
@@ -150,7 +150,7 @@ func resourceSematextApplicationDelete(d *schema.ResourceData, meta interface{})
 }
 
 // TODO Consider necessity for an app edit-version to catch edit-version mis-match back into state.
-func resourceSematextApplicationExists(d *schema.ResourceData, meta interface{}) (b bool, e error) {
+func resourceSematextMonitorInfraExists(d *schema.ResourceData, meta interface{}) (b bool, e error) {
 	id := d.Id()
 	if _, err := meta.(*sematext.Config.Client).GetApplication(id); err != nil {
 		if strings.Contains(err.Error(), "404 Not Found") {
@@ -161,7 +161,7 @@ func resourceSematextApplicationExists(d *schema.ResourceData, meta interface{})
 	return true, nil
 }
 
-func resourceSematextApplicationImport(d *schema.ResourceData, meta interface{}) ([]*schema.ResourceData, error) {
+func resourceSematextMonitorInfra(d *schema.ResourceData, meta interface{}) ([]*schema.ResourceData, error) {
 	if err := resourceSematextAppRead(d, meta); err != nil {
 		return nil, err
 	}

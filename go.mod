@@ -13,4 +13,5 @@ require (
 	github.com/hashicorp/terraform-plugin-sdk v1.4.1
 	github.com/opencontainers/go-digest v1.0.0-rc1 // indirect
 	github.com/opencontainers/runc v0.1.1 // indirect
+	github.com/thoas/go-funk v0.5.0
 )
