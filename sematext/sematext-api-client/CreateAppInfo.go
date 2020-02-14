@@ -1,5 +1,8 @@
 package sematext
 
+import {
+	"json"
+}
 
 // CreateAppInfo TODO Doc Comment
 type CreateAppInfo struct {
@@ -11,17 +14,22 @@ type CreateAppInfo struct {
 }
 
 // Create TODO Doc comment
-func (createAppInfo *CreateAppInfo) Create(path string, client *APIClient) interface{}, error {
+func (createAppInfo *CreateAppInfo) Create(client *APIClient) interface{}, error {
+
+	path := "/spm-reports/api/v3/apps"
 
 	genericAPIResponse, err := client.PostJSON(path, createAppInfo)
 	if err!= nil {
 		return nil, err
 	}
 
+	var extract interface{}
+	extract, err := json.Marshall(genericAPIResponse.Data.apps)
+	var apps :=[]App
+	err := json.UnMarshall(extract, &apps)
+	if err!=nil{
+		return nill, err
+	}
 
-
-	// TODO - convert genericAPIResponse.Data.apps => []Apps
-
-
-
+	return apps[0], nil
 }

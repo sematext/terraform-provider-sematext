@@ -77,7 +77,7 @@ func (apiClient *APIClient) SetAuthorization(token string) error {
 }
 
 // GetJSON TODO Doc Comment
-func (apiClient *APIClient) GetJSON(path string, object interface{}) (GenericAPIResponse, error) {
+func (apiClient *APIClient) GetJSON(path string, object interface{}) (*GenericAPIResponse, error) {
 
 	if apiClient.CachedToken == "" {
 		panic("Code error : method called without setting token")
@@ -101,18 +101,21 @@ func (apiClient *APIClient) GetJSON(path string, object interface{}) (GenericAPI
 
 	defer res.Body.Close()
 
-	switch res.StatusCode {
-	case 200:
-		result := GenericAppResponse{}
-		err = json.NewDecoder(res.Body).Decode(&result)
-		return result, err
-	default:
-		return fmt.Errorf("Unexected status (%i) return from Sematext API", res.StatusCode)
+	if res.StatusCode == 200 {
+		genericAppResponse := &GenericAppResponse{}
+		err = json.NewDecoder(res.Body).Decode(genericAppResponse)
+		if err != nil {
+			return nil, err
+
+		}
+		return genericAppResponse, nil
 	}
+
+	return nil, fmt.Errorf("Unexected status (%i) return from Sematext API", res.StatusCode)
 }
 
 // PutJSON TODO Doc Comment
-func (apiClient *APIClient) PutJSON(path string, object interface{}) (int, error) {
+func (apiClient *APIClient) PutJSON(path string, object interface{}) (*GenericAPIResponse, error) {
 
 	if apiClient.CachedToken == "" {
 		panic("Code error : method called without setting token")
@@ -141,12 +144,17 @@ func (apiClient *APIClient) PutJSON(path string, object interface{}) (int, error
 
 	defer res.Body.Close()
 
-	switch res.StatusCode {
-	case 200:
-		return res.StatusCode, nil
-	default:
-		return res.StatusCode, fmt.Errorf("Unexected status (%i) return from Sematext API", res.StatusCode)
+	if res.StatusCode == 200 {
+		genericAppResponse := new(GenericAppResponse)
+		err = json.NewDecoder(res.Body).Decode(genericAppResponse)
+		if err != nil {
+			return nil, err
+
+		}
+		return genericAppResponse, nil
 	}
+
+	return nil, fmt.Errorf("Unexected status (%i) return from Sematext API", res.StatusCode)
 }
 
 // PostJSON TODO Doc Comment
@@ -179,18 +187,21 @@ func (apiClient *APIClient) PostJSON(path string, object interface{}) (GenericAp
 
 	defer res.Body.Close()
 
-	switch res.StatusCode {
-	case 200:
-		result := GenericAppResponse{}
-		err = json.NewDecoder(res.Body).Decode(&result)
-		return result, err
-	default:
-		return nil, fmt.Errorf("Unexected status (%i) return from Sematext API", res.StatusCode)
+	if res.StatusCode == 200 {
+		genericAppResponse := &GenericAppResponse{}
+		err = json.NewDecoder(res.Body).Decode(genericAppResponse)
+		if err != nil {
+			return nil, err
+
+		}
+		return genericAppResponse, nil
 	}
+
+	return nil, fmt.Errorf("Unexected status (%i) return from Sematext API", res.StatusCode)
 }
 
 // Delete TODO Doc Comment
-func (apiClient *APIClient) Delete(path string) (int, error) {
+func (apiClient *APIClient) Delete(path string) error {
 
 	if apiClient.CachedToken == "" {
 		panic("Code error : method called without setting token")
@@ -213,11 +224,9 @@ func (apiClient *APIClient) Delete(path string) (int, error) {
 	}
 
 	defer res.Body.Close()
-
-	switch res.StatusCode {
-	case 200:
-		return res.StatusCode, nil
-	default:
-		return res.StatusCode, fmt.Errorf("Unexected status (%i) return from Sematext API", res.StatusCode)
+	if res.StatusCode != 200 {
+		return res.StatusCode, fmt.Errorf("Unexected status (%i) return from Sematext API on Delete", res.StatusCode)
 	}
+	return nil
+	nil
 }

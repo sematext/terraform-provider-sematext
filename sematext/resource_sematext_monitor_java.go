@@ -2,189 +2,253 @@ package sematext
 
 import (
 	"fmt"
+	"github.com/thoas/go-funk"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
-func resourceSematextMonitorInfra() *schema.Resource {
+// resourceSematextMonitorJava TODO Doc Comment
+func resourceSematextMonitorJava() *schema.Resource {
 	return &schema.Resource{
-		Create: resourceSematextMonitorInfraCreate,
-		Read:   resourceSematextMonitorInfraRead,
-		Update: resourceSematextMonitorInfraUpdate,
-		Delete: resourceSematextMonitorInfraDelete,
-		Exists: resourceSematextMonitorInfraExists,
+		Create: resourceSematextMonitorJavaCreate,
+		Read:   resourceSematextMonitorJavaRead,
+		Update: resourceSematextMonitorJavaUpdate,
+		Delete: resourceSematextMonitorJavaDelete,
+		Exists: resourceSematextMonitorJavaExists,
 		Importer: &schema.ResourceImporter{
-			State: resourceSematextMonitorInfraImport,
+			State: resourceSematextMonitorJavaImport,
 		},
 
 		Schema: map[string]*schema.Schema{
 
-			"id": &schema.Schema{
+			"id": &schema.Schema{  // TODO validate func
 				Type:     schema.TypeString,
 				Optional: true,
 				ForceNew: true,
 			},
 
-			"token": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-				Todo:     true, // TODO ValidateFunc
-			},
-
-			"appType": &schema.Schema{
+			"label": &schema.Schema{  // TODO validate func
 				Type:     schema.TypeString,
 				Required: true,
-				Todo:     true, // TODO enum
+				ForceNew: false,
 			},
 
-			"description": &schema.Schema{
+			"description": &schema.Schema{  // TODO Need this?
 				Type:     schema.TypeString,
 				Required: true,
-				Todo:     true, // TODO - ServiceIntegration sub-schema in seperate file?
+				ForceNew: false,
 			},
 
-			"integration": &schema.Schema{
-				Type:     schema.TypeSet,
-				Optional: true, // TODO - Is optional?
-				ForceNew: true, // TODO - Force?
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-						,// TODO - ServiceIntegration sub-schema in seperate file?
+			"billing_plan": &schema.Schema{
+				Type:     schema.TypeString,
+				Required: true,
+				ForceNew: false,
+				ValidateFunc : func(value string, key string) (warns []string, errs []error) {
+					allowed := []string{"basic","standard","pro","enterprise"}
+					if !funk.Contains(allowed, value) {
+						errs = append(errs, fmt.Errorf("billing_plan must be one of %v : got %s", allowed, value))
 					}
+					return
 				}
 			},
 
-			"name": &schema.Schema{
-				Type:     schema.TypeString,
-				Required: true,
-				Todo:     true, // TODO
-			},
-
-			"owningOrganization": &schema.Schema{
-				Type:     schema.TypeString,
-				Required: true,
-				Todo:     true, // TODO BasicOrganizationDto sub-struct in seperate file?
-			},
-
-			"plan": &schema.Schema{
-				Type:     schema.TypeString,
-				Required: true,
-				Todo:     true, // TODO Plan sub-struct in seperate file?
-			},
-
-			"prepaidAccount": &schema.Schema{
-				Type:     schema.TypeBoolean,
-				Optional: true,
-				Todo:     true, // TODO Required?
-			},
-
-			"status": &schema.Schema{
+			"discount_code": &schema.Schema{  // TODO validate func
 				Type:     schema.TypeString,
 				Optional: true,
-				Todo:     true, // TODO Plan sub-struct in seperate file?
+				ForceNew: false,
+				ValidateFunc : func(value string, key string) (warns []string, errs []error) {
+					if value.len == 0 {
+						errs = append(errs, fmt.Errorf("discount_code is set with zero length"))
+					}
+					return
+				}
 			},
 
-			"userRoles": &schema.Schema{
-				Type:     schema.TypeString,
-				Required: true,
-				Todo:     true, // TODO array of UserRole sub-struct in seperate file?
+			/*
+			"metadata": &schema.Schema{
+				Optional: true,
+				ForceNew: true,
+				Type:     schema.Schema {
+					"aws_cloudwatch" : &schema.Schema{ // TODO pull out of ENV
+						Required: true,
+						ForceNew: true,
+						Type : &schema.Schema{
+							"access_key" : {
+								Type:     schema.TypeString,
+								Required: true,
+							},
+							"secret_key" : {
+								Type:     schema.TypeString,
+								Required: true,
+							},
+							"fetch_frequency" : {
+								Type:     schema.TypeString,
+								Required: true,
+							},
+							"region" : {
+								Type:     schema.TypeString,
+								Required: true,
+							},
+
+						}
+					}
+				}
+			}
+			*/
+
+			"lifecycle": &schema.Schema{
+				Optional: true,
+				ForceNew: true, // TODO Confirm use of ForceNew.
+				Type:     schema.Schema {
+					"delete_on_destroy" : {
+						Type:     schema.TypeBool,
+						Optional: true,
+						DefaultFunc func() {interface{}, error} {
+							return false, nil
+						},
+						ValidateFunc : func(value bool, key string) (warns []string, errs []error) {
+							if value == true {
+								warns = append(warns, fmt.Errorf("Note: delete_on_destroy is ON - Sematext data collection for this resource will be turned off and will be deleted on resource-destroy!"))
+							} else {
+								warns = append(warns, fmt.Errorf("Note: delete_on_destroy is OFF - Sematext data collection for this resource will be set to archived but wil be retainedon resource-destroy!"))
+							}
+							return
+						}
+
+					}
+				}
 			}
 		}
 	}
 }
 
-func resourceSematextMonitorInfraCreate(d *schema.ResourceData, meta interface{}) error {
-	application, err := buildSematextApplication(d)
-	if err != nil {
-		return fmt.Errorf("Failed to parse resource configuration: %s", err.Error())
-	}
-	application, err = meta.(*sematext.Client).CreateApplication(application)
-	if err != nil {
-		return fmt.Errorf("Failed to create application using API: %s", err.Error())
-	}
-	return resourceSematextApplicationRead(d, meta)
-}
 
+// resourceSematextMonitorJavaCreate TODO Doc Comment
+func resourceSematextMonitorJavaCreate(d *schema.ResourceData, meta interface{}) error {
 
-func resourceSematextMonitorInfraRead(d *schema.ResourceData, meta interface{}) error {
-	client := meta.(*sematext.Config.Client)
-	id := d.get(Id)
-	application, err = client.getApplication(id)
-	if err != nil {
-		return err
+	plans := map[string]int{"basic":0,"standard":1,"pro":2,"enterprise":3}
+	createAppInfo :=  &CreateAppInfo{}
+	createAppInfo.AppType = "infra"
+	createAppInfo.DiscountCode = d.Get("discount_code")
+	createAppInfo.InitialPlanID = plans[d.Get("billing_plan")]
+	//createAppInfo.MetaData = &AppMetaData{} // not used for this resource
+	createAppInfo.Name = d.Get("label")
+	client := meta.(*ProviderConfig).Config.Api.Client
+	app, err := createAppInfo.Create(client)
+	if (err != nil){
+		return error
 	}
-	d.set("id", application.id))
-	d.set("token", application.token))
-	d.set("appType", application.appType)
-	d.set("description", application.description)
-	d.set("integration", application.integration) // TODO - ServiceIntegration sub-schema in seperate file?
-	d.set("name", application.name) // TODO - ServiceIntegration sub-schema in seperate file?
-	d.set("owningOrganization", application.owningOrganization) // TODO - ServiceIntegration sub-schema in seperate file?
-	d.set("prepaidAccount", application.prepaidAccount)
-	d.set("status", application.status)
-	d.set("userRoles", application.userRoles) // TODO - ServiceIntegration sub-schema in seperate file?
 
-	if err != nil {
-		return err
-	}
+	d.setId(app.Id)
 
 }
 
-func resourceSematextMonitorInfraUpdate(d *schema.ResourceData, meta interface{}) error {
-	application, err := buildSematextApplication(d)
-	if err != nil {
-		return fmt.Errorf("Failed to parse resource configuration: %s", err.Error())
-	}
-	application, err = meta.(*sematext.Client).UpdateApplication(application)
-	if err != nil {
-		return fmt.Errorf("Failed to create application using API: %s", err.Error())
-	}
-	return resourceSematextApplicationRead(d, meta)
-}
+// resourceSematextMonitorJavaRead TODO Doc Comment
+func resourceSematextMonitorJavaRead(d *schema.ResourceData, meta interface{}) error {
 
-func resourceSematextMonitorInfraDelete(d *schema.ResourceData, meta interface{}) error { // TODO check this is protected
+	client := meta.(*Provider.Config.Api.Client) // TODO check reference
 	id := d.Id()
-	if err := meta.(*sematext.Client).DeleteApplication(id); err != nil {
+	app, err := App.Retrieve(id, client)
+	if err != nil{
+		return nil, err
+	}
+	plans := map[int]string{0: "basic",1: "standard",2:"pro",3: "enterprise":3}
+	d.set("label", app.Name)
+	d.set("description",app.Description)
+	d.set("billing_plan", plans[App.Pan.ID])
+	//d.set("discount_code",) // TODO - this seems to not be stored in the App.
+	//d.set("lifecycle.delete_on_destroy",)  // TODO Computed from resource, not stored on backend?
+
+}
+
+
+// resourceSematextMonitorJavaUpdate TODO Doc Comment
+func resourceSematextMonitorJavaUpdate(d *schema.ResourceData, meta interface{}) error {
+
+
+	// TODO - how to do a plan update?
+
+	client := meta.(*Provider.Config.Api.Client) // TODO check reference
+	id := d.Id()
+	dto := &Dto{}
+
+	description := d.get("description")
+	if description != nil {
+		dto.Description = description
+	}
+	ignorePercentage := d.get("ignore_percentage")
+	if ignorePercentage != nil {
+		dto.ignorePercentage = ignorePercentage
+	}
+	maxEvents := d.get("max_events")
+	if maxEvents != nil {
+		dto.MaxEvents = maxEvents
+	}
+	maxLimitMB := d.get("max_limit_mb")
+	if maxLimitMB != nil {
+		dto.maxLimitMB = maxLimitMB
+	}
+	name := d.get("name") // TODO name vs resource name/label in terraform
+	if name != nil {
+		dto.Name = name
+	}
+	sampling := d.get("sampling")
+	if description != nil {
+		dto.Sampling = sampling
+	}
+	samplingPercentage := d.get("sampling_percentage")
+	if samplingPercentage != nil {
+		dto.SamplingPercentage = samplingPercentage
+	}
+	staggering := d.get("staggering")
+	if staggering != nil {
+		dto.Staggering = staggering
+	}
+	status := d.get("status")
+	if status != nil {
+		dto.Status = status // TODO Status should be reset as part of delete?
+	}
+
+	if dto.isValid() == false {
+		return fmt.Errorf("Coding error - dto non-valid") // TODO Check correctness.
+	}
+
+	app, err := dto.Update(client, dto)
+	if err != null {
 		return err
 	}
+
+	return nil
+
+}
+
+
+// resourceSematextMonitorJavaDelete TODO Doc Comment
+func resourceSematextMonitorJavaDelete(d *schema.ResourceData, meta interface{}) error { // TODO Check default is respected
+
+	client := meta.(*Provider.Config.Api.Client) // TODO check reference
+	id := d.Id()
+	var app App
+	err = app.Delete(id, client)
+	if err != nil {
+		return err
+	}
+
 	return nil
 }
 
 // TODO Consider necessity for an app edit-version to catch edit-version mis-match back into state.
-func resourceSematextMonitorInfraExists(d *schema.ResourceData, meta interface{}) (b bool, e error) {
+// resourceSematextMonitorJavaExists TODO Doc Comment
+func resourceSematextMonitorJavaExists(d *schema.ResourceData, meta interface{}) (b bool, e error) {
+
+	client := meta.(*Provider.Config.Api.Client) // TODO check reference
 	id := d.Id()
-	if _, err := meta.(*sematext.Config.Client).GetApplication(id); err != nil {
-		if strings.Contains(err.Error(), "404 Not Found") {
-			return false, nil
-		}
-		return false, err
-	}
-	return true, nil
+	var app App
+	b, e = app.Exists(id, client) // TODO Pointer-value mismatch?
 }
 
-func resourceSematextMonitorInfra(d *schema.ResourceData, meta interface{}) ([]*schema.ResourceData, error) {
-	if err := resourceSematextAppRead(d, meta); err != nil {
-		return nil, err
-	}
-	return []*schema.ResourceData{d}, nil
-}
+// resourceSematextMonitorJavaImport TODO Doc Comment
+func resourceSematextMonitorJavaImport(d *schema.ResourceData, meta interface{}) ([]*schema.ResourceData, error) {
 
-// Helper Functions
-
-func buildSematextApplication(d *schema.ResourceData) (*sematext.Application, error) {
-	var application sematext.Application
-
-	// TODO Field validations
-	application.setId(d.Id())
-	if v, ok := d.GetOk("field1"); ok {
-		application.SetField1(v.(string))
-	}
-	if v, ok := d.GetOk("field2"); ok {
-		application.SetField2(v.(string))
-	}
-	if v, ok := d.GetOk("field3"); ok {
-		application.SetField3(v.(string))
-	}
-
-	return &application, nil
+	// TODO Decide if necessary
 
 }

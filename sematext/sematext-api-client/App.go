@@ -2,9 +2,7 @@ package sematext
 
 import (
 	"fmt"
-	"strings"
 
-	"github.com/docker/docker/daemon/logger/gcplogs"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
@@ -19,7 +17,7 @@ type App struct {
 	Description           string               `json:"description"`
 	DisplayStatus         string               `json:"displayStatus"`
 	FirstDataSavedDate    int64                `json:"firstDataSavedDate"`
-	ID                    int64                `json:"id"`
+	ID                    string               `json:"id"`
 	Integration           ServiceIntegration   `json:"integration"`
 	LastDataReceivedDate  int64                `json:"lastDataReceivedDate"`
 	LastDataSavedDate     int64                `json:"lastDataSavedDate"`
@@ -39,68 +37,69 @@ type App struct {
 	UserRoles             []UserRole           `json:"userRoles"`
 }
 
-// Read TODO Doc Comment
-func (app App) Read(d *schema.ResourceData, meta interface{}) error {
-	//client := meta.(*sematext.Config.Client)
-	id := d.get("Id")
-	application, err := client.getApplication(id)
-	if err != nil {
-		panic(err)
-	}
-	d.set("id", application.id)
-	d.set("token", application.token)
-	d.set("appType", application.appType)
-	d.set("description", application.description)
-	d.set("integration", application.integration)               // TODO - ServiceIntegration sub-schema in seperate file?
-	d.set("name", application.name)                             // TODO - ServiceIntegration sub-schema in seperate file?
-	d.set("owningOrganization", application.owningOrganization) // TODO - ServiceIntegration sub-schema in seperate file?
-	d.set("prepaidAccount", application.prepaidAccount)
-	d.set("status", application.status)
-	d.set("userRoles", application.userRoles) // TODO - ServiceIntegration sub-schema in seperate file?
+// Pull TODO Doc comment
+func (app *App) Retrieve(id string, client *APIClient) (*App, error) { // TODO Rework once API has a route for GET by id
 
-	return nil
+	path := "/spm-reports/api/v3/apps"
+	genericAPIResponse, err := client.GetJSON(path, nil)
+	if err != nil {
+		return nil, err
+	}
+
+	app, err = genericAPIResponse.extractAppById(id)
+	if err != nil {
+		return nil, err
+	}
+
+	return app, nil
 
 }
 
-// Update TODO Doc Comment
-func (app App) Update(d *schema.ResourceData, meta interface{}) error {
-	application, err := buildSematextApplication(d)
+// Exists TODO Doc comment
+func (app *App) Exists(id string, client *APIClient) (*bool, error) { // TODO Rework once API has a route for GET by id
+
+	path := "/spm-reports/api/v3/apps"
+	genericAPIResponse, err := client.GetJSON(path, nil)
 	if err != nil {
-		return fmt.Errorf("Failed to parse resource configuration: %s", err.Error())
+		return nil, err
 	}
-	application, err = meta.(*sematext.Client).UpdateApplication(application)
-	if err != nil {
-		return fmt.Errorf("Failed to create application using API: %s", err.Error())
+
+	var result bool
+	app, err = genericAPIResponse.extractAppById(id)
+	if app != nil {
+		result = true
+	} else {
+		result = false
 	}
-	return resourceSematextApplicationRead(d, meta)
+
+	return &result, nil
+
 }
 
-// Delete TODO Doc Comment
-func (app App) Delete(d *schema.ResourceData, meta interface{}) error { // TODO check this is protected
-	id := d.Id()
-	if err := meta.(*sematext.Client).DeleteApplication(id); err != nil {
+// Update TODO Doc comment
+func (app *App) Update(id string, client *APIClient, dto Dto) (*App, error) {
+
+	path := fmt.Sprintf("/spm-reports/api/v3/apps/%s", id)
+	genericAPIResponse, err := client.PutJSON(path, dto)
+	if err != nil {
+		return nil, err
+	}
+
+	app, err = genericAPIResponse.extractAppById(id)
+	if err != nil {
+		return nil, err
+	}
+
+	return app, nil
+}
+
+// Delete TODO Doc comment
+func (app *App) Delete(id string, client *APIClient) error {
+
+	path := fmt.Sprintf("/spm-reports/api/v3/apps/%s", id)
+	err := client.Delete(path, nil)
+	if err != nil {
 		return err
 	}
 	return nil
-}
-
-// Exists TODO Doc Comment
-func (app App) Exists(d *schema.ResourceData, meta interface{}) (b bool, e error) {
-	// TODO Consider necessity for an app edit-version to catch edit-version mis-match back into state.
-	id := d.Id()
-	if _, err := meta.(*sematext.Config).Client.GetApplication(id); err != nil {
-		if strings.Contains(err.Error(), "404 Not Found") {
-			return false, nil
-		}
-		return false, err
-	}
-	return true, nil
-}
-
-// Import TODO Doc Comment
-func (app App) Import(d *schema.ResourceData, meta interface{}) ([]*schema.ResourceData, error) {
-	if err := resourceSematextAppRead(d, meta); err != nil {
-		return nil, err
-	}
-	return []*schema.ResourceData{d}, nil
 }
