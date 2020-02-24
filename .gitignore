@@ -39,4 +39,5 @@ override.tf.json
 *.test
 *.tmp
 *.out
-
+.vscode
+vendor

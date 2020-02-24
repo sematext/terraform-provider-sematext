@@ -1,5 +1,6 @@
-package local
+package sematext
 
+/*
 import (
 	"testing"
 
@@ -16,3 +17,5 @@ func TestProvider(t *testing.T) {
 		t.Fatalf("err: %s", err)
 	}
 }
+
+*/
