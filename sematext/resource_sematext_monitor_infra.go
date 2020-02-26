@@ -22,25 +22,25 @@ func resourceSematextMonitorInfra() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 
-			"id": &schema.Schema{ // TODO validate func
+			"id": { // TODO validate func
 				Type:     schema.TypeString,
 				Optional: true,
 				ForceNew: true,
 			},
 
-			"label": &schema.Schema{ // TODO validate func
+			"name": { // TODO validate func
 				Type:     schema.TypeString,
 				Required: true,
 				ForceNew: false,
 			},
 
-			"description": &schema.Schema{ // TODO Need this?
+			"description": { // TODO Need this?
 				Type:     schema.TypeString,
 				Required: true,
 				ForceNew: false,
 			},
 
-			"billing_plan": &schema.Schema{
+			"billing_plan": {
 				Type:     schema.TypeString,
 				Required: true,
 				ForceNew: false,
@@ -53,7 +53,7 @@ func resourceSematextMonitorInfra() *schema.Resource {
 				},
 			},
 
-			"discount_code": &schema.Schema{ // TODO validate func
+			"discount_code": { // TODO validate func
 				Type:     schema.TypeString,
 				Optional: true,
 				ForceNew: false,
@@ -96,58 +96,43 @@ func resourceSematextMonitorInfra() *schema.Resource {
 					}
 				}
 			*/
-
-			"lifecycle": &schema.Schema{
-				Optional: true,
-				ForceNew: true, // TODO Confirm use of ForceNew.
-				Type: schema.Schema{
-					"delete_on_destroy": {
-						Type:     schema.TypeBool,
-						Optional: true,
-						DefaultFunc: func() (interface{}, error) {
-							return false, nil
-						},
-						ValidateFunc: func(value bool, key string) (warns []string, errs []error) {
-							if value == true {
-								warns = append(warns, fmt.Errorf("Note: delete_on_destroy is ON - Sematext data collection for this resource will be turned off and will be deleted on resource-destroy"))
-							} else {
-								warns = append(warns, fmt.Errorf("Note: delete_on_destroy is OFF - Sematext data collection for this resource will be set to archived but wil be retainedon resource-destroy"))
-							}
-						},
-					},
-				},
-			},
 		},
 	}
 }
 
 // resourceSematextMonitorInfraCreate TODO Doc Comment
 func resourceSematextMonitorInfraCreate(d *schema.ResourceData, meta interface{}) error {
+	d.Set("app_type", "infra")
 	return api.SematextMonitorCreate(d, meta)
 }
 
 // resourceSematextMonitorInfraRead TODO Doc Comment
 func resourceSematextMonitorInfraRead(d *schema.ResourceData, meta interface{}) error {
+	d.Set("app_type", "infra")
 	return api.SematextMonitorRead(d, meta)
 }
 
 // resourceSematextMonitorInfraUpdate TODO Doc Comment
 func resourceSematextMonitorInfraUpdate(d *schema.ResourceData, meta interface{}) error {
+	d.Set("app_type", "infra")
 	return api.SematextMonitorUpdate(d, meta)
 }
 
 // resourceSematextMonitorInfraDelete TODO Doc Comment
 func resourceSematextMonitorInfraDelete(d *schema.ResourceData, meta interface{}) error { // TODO Check default is respected
+	d.Set("app_type", "infra")
 	return api.SematextMonitorDelete(d, meta)
 }
 
 // TODO Consider necessity for an app edit-version to catch edit-version mis-match back into state.
 // resourceSematextMonitorInfraExists TODO Doc Comment
 func resourceSematextMonitorInfraExists(d *schema.ResourceData, meta interface{}) (b bool, e error) {
+	d.Set("app_type", "infra")
 	return api.SematextMonitorExists(d, meta)
 }
 
 // resourceSematextMonitorInfraImport TODO Doc Comment
 func resourceSematextMonitorInfraImport(d *schema.ResourceData, meta interface{}) ([]*schema.ResourceData, error) {
+	d.Set("app_type", "infra")
 	return api.SematextMonitorImport(d, meta)
 }

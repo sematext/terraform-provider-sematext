@@ -9,27 +9,24 @@ import (
 // SematextMonitorCreate TODO Doc Comment
 func SematextMonitorCreate(d *schema.ResourceData, meta interface{}) error {
 
+	client := meta.(*Client)
 	plans := map[string]int64{"basic": 0, "standard": 1, "pro": 2, "enterprise": 3}
-
-	billingPlan := d.Get("discount_code").(string)
+	billingPlan := d.Get("billing_code").(string)
 	createAppInfo := &CreateAppInfo{}
-	createAppInfo.AppType = "infra"
+	createAppInfo.AppType = d.Get("app_type").(string)
 	createAppInfo.DiscountCode = d.Get("discount_code").(string)
 	createAppInfo.InitialPlanID = plans[billingPlan]
 	//createAppInfo.MetaData = &AppMetaData{} // not used for this resource
 	createAppInfo.Name = d.Get("label").(string)
 
-	client := meta.(*Client) // TODO check reference
-
 	app, err := createAppInfo.Create(client)
-
 	if err != nil {
 		return err
 	}
 
-	// TODO - set token into resource - how is a token generated?
-
 	d.SetId(app.ID)
+	d.Set("token", app.Token)
+	// TODO - Check rest of App values to see if any relevant to inject into state.
 
 	return nil
 
@@ -38,7 +35,7 @@ func SematextMonitorCreate(d *schema.ResourceData, meta interface{}) error {
 // SematextMonitorRead TODO Doc Comment
 func SematextMonitorRead(d *schema.ResourceData, meta interface{}) error {
 
-	client := meta.(*Client) // TODO check reference
+	client := meta.(*Client)
 	id := d.Id()
 	var app *App
 	var err error
@@ -47,11 +44,10 @@ func SematextMonitorRead(d *schema.ResourceData, meta interface{}) error {
 		return err
 	}
 	plans := map[int64]string{0: "basic", 1: "standard", 2: "pro", 3: "enterprise"}
-	d.Set("label", app.Name)
+	d.Set("name", app.Name)
 	d.Set("description", app.Description)
 	d.Set("billing_plan", plans[app.Plan.ID])
-	//d.Set("discount_code",) // TODO - this seems to not be stored in the App.
-	//d.Set("lifecycle.delete_on_destroy",)  // TODO Computed from resource, not stored on backend?
+	//d.Set("discount_code",) // TODO - JIRA discount_code seems to not be stored in the App.
 	return nil
 }
 

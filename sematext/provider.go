@@ -65,8 +65,12 @@ func Provider() terraform.ResourceProvider {
 			terraformVersion = "0.11+compatible"
 		}
 
+		/*
+			TODO enforce region as mandatory
+			TODO API-token storage in state and get from ENV
+		*/
+
 		region := d.Get("sematext_region").(string)
-		// TODO enforce as mandatory
 
 		client := new(api.Client)
 		err := client.Init(region, terraformVersion)
