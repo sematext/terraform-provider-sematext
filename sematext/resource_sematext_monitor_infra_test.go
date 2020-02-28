@@ -140,6 +140,7 @@ func testAccSematextMonitorInfra_CheckConsistency(name string) resource.TestChec
 func testAccSematextMonitorInfra_ConfirmDestroyed(s *terraform.State) error {
 
 	app := new(api.App)
+	err := new(error)
 	client := testAccProvider.Meta().(*api.Client)
 
 	for _, rs := range s.RootModule().Resources {

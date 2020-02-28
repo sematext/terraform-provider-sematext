@@ -58,7 +58,7 @@ func SematextMonitorUpdate(d *schema.ResourceData, meta interface{}) error {
 
 	client := meta.(*Client)
 	id := d.Id()
-	dto := &Dto{}
+	dto := &Dto{} // TODO - switch to UpdateAppInfo
 
 	dto.Description = d.Get("description").(string)
 	dto.IgnorePercentage = d.Get("ignore_percentage").(int)

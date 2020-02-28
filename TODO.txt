@@ -1,13 +1,12 @@
 
-- Check token production and handling - is this saved to state? Should this token be used as an id?
-- Write up JIRA API tasking for api mods
-- Write autotests
+
+
+- Expand autotests
 - Seperate api client out into it's own repo as a go module
 
 Tidyups
 
-- Move client out into a seperate go module in it's own repo
 - Write godoc comments https://blog.golang.org/godoc-documenting-go-code
 - Retire obsolete website drectory
 - final check of makefile
-- final check of
+
