@@ -8,16 +8,16 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/terraform"
-	"github.com/sematext/terraform-provider-sematext/sematext.com/api"
+	"github.com/sematext/sematext-api-client/golang/api"
 )
 
 // testAccSematextMonitorInfra_Create tests resource creation.
-func testAccSematextMonitorInfra_Basic(t *testing.T) {
+func testAccSematextMonitorInfraBasic(t *testing.T) {
 	name := "test-infra-" + acctest.RandStringFromCharSet(10, acctest.CharSetAlphaNum)
 	description := "TESTING : SematextMonitorInfra_Create : Create Step"
 	plan := "basic"
-	discount_code := ""
-	fixture := testAccSematextMonitorInfra_Fixture(name, description, plan, discount_code)
+	discountCode := ""
+	fixture := testAccSematextMonitorInfra_Fixture(name, description, plan, discountCode)
 
 	resource.Test(t, resource.TestCase{
 		PreCheck:     func() { testAccPreCheck(t) },
@@ -30,7 +30,7 @@ func testAccSematextMonitorInfra_Basic(t *testing.T) {
 					testAccSematextMonitorInfra_CheckConsistency(name),
 					resource.TestCheckResourceAttr("sematext_monitor_infra."+name, "description", description),
 					resource.TestCheckResourceAttr("sematext_monitor_infra."+name, "plan", plan),
-					resource.TestCheckResourceAttr("sematext_monitor_infra."+name, "discount_code", discount_code),
+					resource.TestCheckResourceAttr("sematext_monitor_infra."+name, "discount_code", discountCode),
 				),
 			},
 		},
@@ -38,14 +38,14 @@ func testAccSematextMonitorInfra_Basic(t *testing.T) {
 }
 
 // testAccSematextMonitorInfra_Update tests for resource updates.
-func testAccSematextMonitorInfra_Update(t *testing.T) {
+func testAccSematextMonitorInfraUpdate(t *testing.T) {
 	name := "test-infra-" + acctest.RandStringFromCharSet(10, acctest.CharSetAlphaNum)
-	description_1 := "TESTING : SematextMonitorInfra_Update : Create Step"
-	description_2 := "TESTING : SematextMonitorInfra_Update : Update Step"
+	description1 := "TESTING : SematextMonitorInfra_Update : Create Step"
+	description2 := "TESTING : SematextMonitorInfra_Update : Update Step"
 	plan := "basic"
-	discount_code := ""
-	fixture_1 := testAccSematextMonitorInfra_Fixture(name, description_1, plan, discount_code)
-	fixture_2 := testAccSematextMonitorInfra_Fixture(name, description_2, plan, discount_code)
+	discountCode := ""
+	fixture1 := testAccSematextMonitorInfra_Fixture(name, description_1, plan, discountCode)
+	fixture2 := testAccSematextMonitorInfra_Fixture(name, description_2, plan, discountCode)
 
 	resource.Test(t, resource.TestCase{
 		PreCheck:     func() { testAccPreCheck(t) },
@@ -55,19 +55,19 @@ func testAccSematextMonitorInfra_Update(t *testing.T) {
 			{
 				Config: fixture_1,
 				Check: resource.ComposeTestCheckFunc(
-					testAccSematextMonitorInfra_CheckConsistency(name),
-					resource.TestCheckResourceAttr("sematext_monitor_infra."+name, "description", description_1),
+					testAccSematextMonitorInfraCheckConsistency(name),
+					resource.TestCheckResourceAttr("sematext_monitor_infra."+name, "description", description1),
 					resource.TestCheckResourceAttr("sematext_monitor_infra."+name, "plan", plan),
-					resource.TestCheckResourceAttr("sematext_monitor_infra."+name, "discount_code", discount_code),
+					resource.TestCheckResourceAttr("sematext_monitor_infra."+name, "discount_code", discountCode),
 				),
 			},
 			{
 				Config: fixture_2,
 				Check: resource.ComposeTestCheckFunc(
 					testAccSematextMonitorInfra_CheckConsistency(name),
-					resource.TestCheckResourceAttr("sematext_monitor_infra."+name, "description", description_2),
+					resource.TestCheckResourceAttr("sematext_monitor_infra."+name, "description", description2),
 					resource.TestCheckResourceAttr("sematext_monitor_infra."+name, "plan", plan),
-					resource.TestCheckResourceAttr("sematext_monitor_infra."+name, "discount_code", discount_code),
+					resource.TestCheckResourceAttr("sematext_monitor_infra."+name, "discount_code", discountCode),
 				),
 			},
 		},
@@ -75,21 +75,21 @@ func testAccSematextMonitorInfra_Update(t *testing.T) {
 }
 
 // testAccExampleResource returns a fixture resource.
-func testAccSematextMonitorInfra_Fixture(name string, description string, billing_plan string, discount_code string) string {
+func testAccSematextMonitorInfraFixture(name string, description string, billingPlan string, discountCode string) string {
 
-	random_identifier := acctest.RandStringFromCharSet(10, acctest.CharSetAlphaNum)
+	randomIdentifier := acctest.RandStringFromCharSet(10, acctest.CharSetAlphaNum)
 
 	if name == "" {
-		name = "infra-" + random_identifier
+		name = "infra-" + randomIdentifier
 	}
 	if description == "" {
-		description := "TESTING : SematextMonitorInfra_Create : Default Step"
+		description = "TESTING : SematextMonitorInfra_Create : Default Step"
 	}
-	if billing_plan == "" {
-		billing_plan = "basic"
+	if billingPlan == "" {
+		billingPlan = "basic"
 	}
-	if discount_code == "" {
-		discount_code = ""
+	if discountCode == "" {
+		discountCode = ""
 	}
 
 	// TODO - check rest of CreateApp to see if any fields left out
@@ -101,13 +101,13 @@ func testAccSematextMonitorInfra_Fixture(name string, description string, billin
 		"billing_plan": "%s"
 		"discount_code": "%s"
 	}
-	`, name, name, description, billing_plan, discount_code)
+	`, name, name, description, billingPlan, discountCode)
 
 	return result
 }
 
 // testAccSematextMonitorInfra_CheckConsistency checks the App ID exists in both state and API.
-func testAccSematextMonitorInfra_CheckConsistency(name string) resource.TestCheckFunc {
+func testAccSematextMonitorInfraCheckConsistency(name string) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 
 		rs, ok := s.RootModule().Resources[name]
@@ -137,7 +137,7 @@ func testAccSematextMonitorInfra_CheckConsistency(name string) resource.TestChec
 }
 
 // testAccSematextMonitorInfra_ConfirmDestroyed -  check is destroyed in API
-func testAccSematextMonitorInfra_ConfirmDestroyed(s *terraform.State) error {
+func testAccSematextMonitorInfraConfirmDestroyed(s *terraform.State) error {
 
 	app := new(api.App)
 	err := new(error)

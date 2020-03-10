@@ -3,7 +3,7 @@ package sematext
 import (
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/terraform"
-	"github.com/sematext/terraform-provider-sematext/sematext.com/api"
+	"github.com/sematext/sematext-api-client/golang/api"
 )
 
 // Provider  - TODO Doc Comment
@@ -18,39 +18,40 @@ func Provider() terraform.ResourceProvider {
 			},
 		},
 
-		// TODO Write data source
+		// TODO Implement as data sources?
 		// DataSourcesMap: map[string]*schema.Resource{
 		//	"sematext_application_data": dataSourceSematextApp(),
 		// },
+        
 
 		ResourcesMap: map[string]*schema.Resource{
-			"sematext_monitor_infra": resourceSematextMonitorInfra(),
-			// "sematext_monitor_docker":        resourceSematextMonitorDocker(),
-			// "sematext_monitor_solr":          resourceSematextMonitorSolr(),
-			// "sematext_monitor_solrcloud":     resourceSematextMonitorSolrCloud(),
-			// "sematext_monitor_elasticsearch": resourceSematextMonitorElasticsearch(),
-			// "sematext_monitor_akka":          resourceSematextMonitorAkka(),
-			// "sematext_monitor_java":          resourceSematextMonitorJava(),
-			// "sematext_monitor_tomcat":        resourceSematextMonitorTomcat(),
-			// "sematext_monitor_zookeeper":     resourceSematextMonitorZookeeper(),
-			// "sematext_monitor_kafka":         resourceSematextMonitorKafka(),
-			// "sematext_monitor_clickhouse":    resourceSematextMonitorClickhouse(),
-			// "sematext_monitor_aws":           resourceSematextMonitorAws(),
-			// "sematext_monitor_cassandra":     resourceSematextMonitorCassandra(),
-			// "sematext_monitor_nginx":         resourceSematextMonitorNginx(),
-			// "sematext_monitor_nginxplus":     resourceSematextMonitorNginxPlus(),
-			// "sematext_monitor_mongodb":       resourceSematextMonitorMongoDb(),
-			// "sematext_monitor_nodejs":        resourceSematextMonitorNodejs(),
-			// "sematext_monitor_apache":        resourceSematextMonitorApache(),
-			// "sematext_monitor_mysql":         resourceSematextMonitorMysql(),
-			// "sematext_monitor_hbase":         resourceSematextMonitorHbase(),
-			// "sematext_monitor_redis":         resourceSematextMonitorRedis(),
-			// "sematext_monitor_storm":         resourceSematextMonitorStorm(),
-			// "sematext_monitor_haproxy":       resourceSematextMonitorHaproxy(),
-			// "sematext_monitor_spark":         resourceSematextMonitorSpark(),
-			// "sematext_monitor_yarn":          resourceSematextMonitorYarn(),
-			// "sematext_monitor_hadoop":        resourceSematextMonitorHadoop(),
-			// TODO Logger
+            "sematext_monitor_akka": resourceSematextMonitorAkka(),
+            "sematext_monitor_apache": resourceSematextMonitorApache(),
+            "sematext_monitor_aws": resourceSematextMonitorAWS(),
+            "sematext_monitor_cassandra": resourceSematextMonitorCassandra(),
+            "sematext_monitor_clickhouse": resourceSematextMonitorClickhouse(),
+            "sematext_monitor_docker": resourceSematextMonitorDocker(),
+            "sematext_monitor_elasticsearch": resourceSematextMonitorElasticsearch(),
+            "sematext_monitor_hadoop": resourceSematextMonitorHadoop(),
+            "sematext_monitor_haproxy": resourceSematextMonitorHaproxy(),
+            "sematext_monitor_hbase": resourceSematextMonitorHbase(),
+            "sematext_monitor_infra": resourceSematextMonitorInfra(),
+            "sematext_monitor_java": resourceSematextMonitorJava(),
+            "sematext_monitor_kafka": resourceSematextMonitorKafka(),
+            "sematext_monitor_loging": resourceSematextMonitorLogging(),
+            "sematext_monitor_mongodb": resourceSematextMonitorMongodb(),
+            "sematext_monitor_mysql": resourceSematextMonitorMysql(),
+            "sematext_monitor_nginx": resourceSematextMonitorNginx(),
+            "sematext_monitor_nginxplus": resourceSematextMonitorNginxplus(),
+            "sematext_monitor_nodejs": resourceSematextMonitorNodejs(),
+            "sematext_monitor_redis": resourceSematextMonitorRedis(),
+            "sematext_monitor_solr": resourceSematextMonitorSolr(),
+            "sematext_monitor_solrcloud": resourceSematextMonitorSolrcloud(),
+            "sematext_monitor_spark": resourceSematextMonitorSpark(),
+            "sematext_monitor_storm": resourceSematextMonitorStorm(),
+            "sematext_monitor_tomcat": resourceSematextMonitorTomcat(),
+            "sematext_monitor_yarn": resourceSematextMonitorYarn(),
+            "sematext_monitor_zookeeper": resourceSematextMonitorZookeeper(),
 		},
 	}
 

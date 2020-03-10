@@ -1,0 +1,62 @@
+package sematext
+
+import (
+    "strings"
+
+	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
+)
+
+
+// resourceSematextMonitor<<MONITOR_TYPE>> TODO Doc Comment
+func resourceSematextMonitor<<MONITOR_TYPE>>() *schema.Resource {
+
+	fieldSchema := MonitorSchemaCommon
+
+	// AWS replacement target
+
+	return &schema.Resource{
+		Create: resourceSematextMonitorCreate<<MONITOR_TYPE>>,
+		Read:   resourceSematextMonitorRead<<MONITOR_TYPE>>,
+		Update: resourceSematextMonitorUpdate<<MONITOR_TYPE>>,
+		Delete: resourceSematextMonitorDelete<<MONITOR_TYPE>>,
+		Exists: resourceSematextMonitorExists<<MONITOR_TYPE>>,
+		Schema: fieldSchema,
+	}
+}
+
+// resourceSematextMonitorCreate<<MONITOR_TYPE>> TODO Doc Comment
+func resourceSematextMonitorCreate<<MONITOR_TYPE>>(d *schema.ResourceData, meta interface{}) error {
+	d.Set("app_type", strings.ToLower("<<MONITOR_TYPE>>"))
+	return SematextMonitorCreate(d, meta)
+}
+
+// resourceSematextMonitorRead<<MONITOR_TYPE>> TODO Doc Comment
+func resourceSematextMonitorRead<<MONITOR_TYPE>>(d *schema.ResourceData, meta interface{}) error {
+	d.Set("app_type", strings.ToLower("<<MONITOR_TYPE>>"))
+	return SematextMonitorRead(d, meta)
+}
+
+// resourceSematextMonitorUpdate<<MONITOR_TYPE>> TODO Doc Comment
+func resourceSematextMonitorUpdate<<MONITOR_TYPE>>(d *schema.ResourceData, meta interface{}) error {
+	d.Set("app_type", strings.ToLower("<<MONITOR_TYPE>>"))
+	return SematextMonitorUpdate(d, meta)
+}
+
+// resourceSematextMonitorDelete<<MONITOR_TYPE>> TODO Doc Comment
+func resourceSematextMonitorDelete<<MONITOR_TYPE>>(d *schema.ResourceData, meta interface{}) error { // TODO Check default is respected
+	d.Set("app_type", strings.ToLower("<<MONITOR_TYPE>>"))
+	return SematextMonitorDelete(d, meta)
+}
+
+// TODO Consider necessity for an app edit-version to catch edit-version mis-match back into state.
+// resourceSematextMonitorExists<<MONITOR_TYPE>> TODO Doc Comment
+func resourceSematextMonitorExists<<MONITOR_TYPE>>(d *schema.ResourceData, meta interface{}) (b bool, e error) {
+	d.Set("app_type", strings.ToLower("<<MONITOR_TYPE>>"))
+	return SematextMonitorExists(d, meta)
+}
+
+// resourceSematextMonitorImport<<MONITOR_TYPE>> TODO Doc Comment
+func resourceSematextMonitorImport<<MONITOR_TYPE>>(d *schema.ResourceData, meta interface{}) ([]*schema.ResourceData, error) {
+	d.Set("app_type", strings.ToLower("<<MONITOR_TYPE>>"))
+	return SematextMonitorImport(d, meta)
+}
