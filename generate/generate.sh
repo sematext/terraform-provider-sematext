@@ -36,7 +36,8 @@ monitors=(
 for monitor in "${monitors[@]}"
 do
 
-    sed -e "s/<<MONITOR_TYPE>>/${monitor}/" ./resource_sematext_monitor.go.template > ../sematext/resource_sematext_monitor_${monitor,,}.go
+    sed -e "s/<<MONITOR_TYPE>>/${monitor}/g" ./resource_sematext_monitor.go.template > ../sematext/resource_sematext_monitor_${monitor,,}.go
+    sed -e "s/<<MONITOR_TYPE>>/${monitor}/g" ./resource_sematext_monitor_test.go.template > ../sematext/resource_sematext_monitor_${monitor,,}_test.go
     
 done
 

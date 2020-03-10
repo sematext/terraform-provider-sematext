@@ -14,8 +14,8 @@ import (
 	"github.com/sematext/sematext-api-client/golang/api"
 )
 
-// ResourceTestFixtureInfra TODO Doc Comment
-struct ResourceTestFixtureInfra {
+// ResourceTestFixtureYarn TODO Doc Comment
+struct ResourceTestFixtureYarn {
 	Name string
 	Description string
 	Plan string
@@ -29,10 +29,10 @@ struct ResourceTestFixtureInfra {
 }
 
 // HydrateBasic TODO Doc Comment
-func (rtf *ResourceTestFixtureInfra) HydrateBasic() (*ResourceTestFixtureInfra){
+func (rtf *ResourceTestFixtureYarn) HydrateBasic() (*ResourceTestFixtureYarn){
 	rndID := acctest.RandStringFromCharSet(10, acctest.CharSetAlphaNum)
-	rtf.Name = strings.ToLowercase(fmt.Sprintf("Infra_test_%s", rndID))
-	rtf.Description = "TESTING : SematextMonitorInfra_Basic : Create"
+	rtf.Name = strings.ToLowercase(fmt.Sprintf("Yarn_test_%s", rndID))
+	rtf.Description = "TESTING : SematextMonitorYarn_Basic : Create"
 	rtf.Plan = "basic"
 	rtf.Discount_code = "testing"
 	rtf.Ignore_percentage = 10
@@ -46,9 +46,9 @@ func (rtf *ResourceTestFixtureInfra) HydrateBasic() (*ResourceTestFixtureInfra){
 }
 
 // FormatToHCL TODO Doc Comment
-func (rtf *ResourceTestFixtureInfra) FormatToHCL() {
+func (rtf *ResourceTestFixtureYarn) FormatToHCL() {
 
-	monitortype = strings.ToLowerCase("Infra")
+	monitortype = strings.ToLowerCase("Yarn")
 
 	result := fmt.Sprintf(`
 	resource "sematext_monitor_%s" "%s" {
@@ -81,23 +81,23 @@ func (rtf *ResourceTestFixtureInfra) FormatToHCL() {
 }
 
 
-// testAccSematextMonitorInfra_Basic tests resource creation.
-func testAccSematextMonitorInfraBasic(t *testing.T) {
+// testAccSematextMonitorYarn_Basic tests resource creation.
+func testAccSematextMonitorYarnBasic(t *testing.T) {
 
-	monitortype = strings.ToLowerCase("Infra")
-	rtf := (&ResourceTestFixtureInfra{}).HydrateBasic()
+	monitortype = strings.ToLowerCase("Yarn")
+	rtf := (&ResourceTestFixtureYarn{}).HydrateBasic()
 	fixture := rtf.FormatToHCL()
 	statepath := fmt.Sprintf("sematext_monitor_%s.%s", monitortype, rtf.Name)
 
 	resource.Test(t, resource.TestCase{
 		PreCheck:     func() { testAccPreCheck(t) },
 		Providers:    testAccProviders,
-		CheckDestroy: testAccSematextMonitorInfra_ConfirmDestroyed,
+		CheckDestroy: testAccSematextMonitorYarn_ConfirmDestroyed,
 		Steps: []resource.TestStep{
 			{
 				Config: fixture,
 				Check: resource.ComposeTestCheckFunc(
-					testAccSematextMonitorInfra_CheckConsistency(name),
+					testAccSematextMonitorYarn_CheckConsistency(name),
 					resource.TestCheckResourceAttr(statepath,"name",rtf.Name),
 					resource.TestCheckResourceAttr(statepath,"description",rtf.Description),
 					resource.TestCheckResourceAttr(statepath,"billing_plan", rtf.Plan),
@@ -114,28 +114,28 @@ func testAccSematextMonitorInfraBasic(t *testing.T) {
 	})
 }
 
-// testAccSematextMonitorInfra_Update tests for resource updates.
-func testAccSematextMonitorInfraUpdate(t *testing.T) {
+// testAccSematextMonitorYarn_Update tests for resource updates.
+func testAccSematextMonitorYarnUpdate(t *testing.T) {
 
-	monitortype = strings.ToLowerCase("Infra")
+	monitortype = strings.ToLowerCase("Yarn")
 
-	rtf1 := (&ResourceTestFixtureInfra{}).HydrateBasic()
+	rtf1 := (&ResourceTestFixtureYarn{}).HydrateBasic()
 	statepath := fmt.Sprintf("sematext_monitor_%s.%s", monitortype, rtf1.Name)
 
 	rtf2 := rtf1
-	rtf2.Description = "TESTING : SematextMonitorInfra_Basic : Update"
+	rtf2.Description = "TESTING : SematextMonitorYarn_Basic : Update"
 	fixture1 := rtf1.FormatToHCL()
 	fixture2 := rtf2.FormatToHCL()
 
 	resource.Test(t, resource.TestCase{
 		PreCheck:     func() { testAccPreCheck(t) },
 		Providers:    testAccProviders,
-		CheckDestroy: testAccSematextMonitorInfra_ConfirmDestroyed,
+		CheckDestroy: testAccSematextMonitorYarn_ConfirmDestroyed,
 		Steps: []resource.TestStep{
 			{
 				Config: fixture1,
 				Check: resource.ComposeTestCheckFunc(
-					testAccSematextMonitorInfraCheckConsistency(rtf1.Name),
+					testAccSematextMonitorYarnCheckConsistency(rtf1.Name),
 					resource.TestCheckResourceAttr(statepath,"name",rtf1.Name),
 					resource.TestCheckResourceAttr(statepath,"description",rtf1.Description),
 					resource.TestCheckResourceAttr(statepath,"billing_plan", rtf1.Plan),
@@ -151,7 +151,7 @@ func testAccSematextMonitorInfraUpdate(t *testing.T) {
 			{
 				Config: fixture2,
 				Check: resource.ComposeTestCheckFunc(
-					testAccSematextMonitorInfra_CheckConsistency(rtf2.name),
+					testAccSematextMonitorYarn_CheckConsistency(rtf2.name),
 					resource.TestCheckResourceAttr(statepath,"name",rtf2.Name),
 					resource.TestCheckResourceAttr(statepath,"description",rtf2.Description),
 					resource.TestCheckResourceAttr(statepath,"billing_plan", rtf2.Plan),
@@ -169,8 +169,8 @@ func testAccSematextMonitorInfraUpdate(t *testing.T) {
 }
 
 
-// testAccSematextMonitorInfra_CheckConsistency checks the App ID exists in both state and API.
-func testAccSematextMonitorInfraCheckConsistency(name string) resource.TestCheckFunc {
+// testAccSematextMonitorYarn_CheckConsistency checks the App ID exists in both state and API.
+func testAccSematextMonitorYarnCheckConsistency(name string) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 
 		rs, ok := s.RootModule().Resources[name]
@@ -199,8 +199,8 @@ func testAccSematextMonitorInfraCheckConsistency(name string) resource.TestCheck
 	}
 }
 
-// testAccSematextMonitorInfra_ConfirmDestroyed -  check is destroyed in API
-func testAccSematextMonitorInfraConfirmDestroyed(s *terraform.State) error {
+// testAccSematextMonitorYarn_ConfirmDestroyed -  check is destroyed in API
+func testAccSematextMonitorYarnConfirmDestroyed(s *terraform.State) error {
 
 	app := new(api.App)
 	err := new(error)
@@ -208,7 +208,7 @@ func testAccSematextMonitorInfraConfirmDestroyed(s *terraform.State) error {
 
 	for _, rs := range s.RootModule().Resources {
 
-		if rs.Type != "sematext_monitor_Infra" {
+		if rs.Type != "sematext_monitor_Yarn" {
 			continue
 		}
 
