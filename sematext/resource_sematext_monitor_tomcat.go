@@ -1,11 +1,10 @@
 package sematext
 
 import (
-    "strings"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
-
 
 // resourceSematextMonitorTomcat TODO Doc Comment
 func resourceSematextMonitorTomcat() *schema.Resource {

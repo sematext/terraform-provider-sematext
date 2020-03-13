@@ -1,11 +1,10 @@
 package sematext
 
 import (
-    "strings"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
-
 
 // resourceSematextMonitorClickhouse TODO Doc Comment
 func resourceSematextMonitorClickhouse() *schema.Resource {

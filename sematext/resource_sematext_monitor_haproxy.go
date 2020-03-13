@@ -1,11 +1,10 @@
 package sematext
 
 import (
-    "strings"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
-
 
 // resourceSematextMonitorHaproxy TODO Doc Comment
 func resourceSematextMonitorHaproxy() *schema.Resource {
