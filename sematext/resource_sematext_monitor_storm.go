@@ -11,51 +11,51 @@ func resourceSematextMonitorStorm() *schema.Resource {
 
 	fieldSchema := MonitorSchemaCommon
 
-	// AWS replacement target
+	// TODO AWS metadata replacement target
 
 	return &schema.Resource{
-		Create: resourceSematextMonitorCreateStorm,
-		Read:   resourceSematextMonitorReadStorm,
-		Update: resourceSematextMonitorUpdateStorm,
-		Delete: resourceSematextMonitorDeleteStorm,
-		Exists: resourceSematextMonitorExistsStorm,
+		Create: resourceMonitorCreateStorm,
+		Read:   resourceMonitorReadStorm,
+		Update: resourceMonitorUpdateStorm,
+		Delete: resourceMonitorDeleteStorm,
+		Exists: resourceMonitorExistsStorm,
 		Schema: fieldSchema,
 	}
 }
 
-// resourceSematextMonitorCreateStorm TODO Doc Comment
-func resourceSematextMonitorCreateStorm(d *schema.ResourceData, meta interface{}) error {
+// resourceMonitorCreateStorm TODO Doc Comment
+func resourceMonitorCreateStorm(d *schema.ResourceData, meta interface{}) error {
 	d.Set("app_type", strings.ToLower("Storm"))
-	return SematextMonitorCreate(d, meta)
+	return CommonMonitorCreate(d, meta)
 }
 
-// resourceSematextMonitorReadStorm TODO Doc Comment
-func resourceSematextMonitorReadStorm(d *schema.ResourceData, meta interface{}) error {
+// resourceMonitorReadStorm TODO Doc Comment
+func resourceMonitorReadStorm(d *schema.ResourceData, meta interface{}) error {
 	d.Set("app_type", strings.ToLower("Storm"))
-	return SematextMonitorRead(d, meta)
+	return CommonMonitorRead(d, meta)
 }
 
-// resourceSematextMonitorUpdateStorm TODO Doc Comment
-func resourceSematextMonitorUpdateStorm(d *schema.ResourceData, meta interface{}) error {
+// resourceMonitorUpdateStorm TODO Doc Comment
+func resourceMonitorUpdateStorm(d *schema.ResourceData, meta interface{}) error {
 	d.Set("app_type", strings.ToLower("Storm"))
-	return SematextMonitorUpdate(d, meta)
+	return CommonMonitorUpdate(d, meta)
 }
 
-// resourceSematextMonitorDeleteStorm TODO Doc Comment
-func resourceSematextMonitorDeleteStorm(d *schema.ResourceData, meta interface{}) error { // TODO Check default is respected
+// resourceMonitorDeleteStorm TODO Doc Comment
+func resourceMonitorDeleteStorm(d *schema.ResourceData, meta interface{}) error { // TODO Check default is respected
 	d.Set("app_type", strings.ToLower("Storm"))
-	return SematextMonitorDelete(d, meta)
+	return CommonMonitorDelete(d, meta)
 }
 
 // TODO Consider necessity for an app edit-version to catch edit-version mis-match back into state.
-// resourceSematextMonitorExistsStorm TODO Doc Comment
-func resourceSematextMonitorExistsStorm(d *schema.ResourceData, meta interface{}) (b bool, e error) {
+// resourceMonitorExistsStorm TODO Doc Comment
+func resourceMonitorExistsStorm(d *schema.ResourceData, meta interface{}) (b bool, e error) {
 	d.Set("app_type", strings.ToLower("Storm"))
-	return SematextMonitorExists(d, meta)
+	return CommonMonitorExists(d, meta)
 }
 
 // resourceSematextMonitorImportStorm TODO Doc Comment
 func resourceSematextMonitorImportStorm(d *schema.ResourceData, meta interface{}) ([]*schema.ResourceData, error) {
 	d.Set("app_type", strings.ToLower("Storm"))
-	return SematextMonitorImport(d, meta)
+	return CommonMonitorImport(d, meta)
 }

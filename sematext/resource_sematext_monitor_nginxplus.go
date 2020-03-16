@@ -11,51 +11,51 @@ func resourceSematextMonitorNginxplus() *schema.Resource {
 
 	fieldSchema := MonitorSchemaCommon
 
-	// AWS replacement target
+	// TODO AWS metadata replacement target
 
 	return &schema.Resource{
-		Create: resourceSematextMonitorCreateNginxplus,
-		Read:   resourceSematextMonitorReadNginxplus,
-		Update: resourceSematextMonitorUpdateNginxplus,
-		Delete: resourceSematextMonitorDeleteNginxplus,
-		Exists: resourceSematextMonitorExistsNginxplus,
+		Create: resourceMonitorCreateNginxplus,
+		Read:   resourceMonitorReadNginxplus,
+		Update: resourceMonitorUpdateNginxplus,
+		Delete: resourceMonitorDeleteNginxplus,
+		Exists: resourceMonitorExistsNginxplus,
 		Schema: fieldSchema,
 	}
 }
 
-// resourceSematextMonitorCreateNginxplus TODO Doc Comment
-func resourceSematextMonitorCreateNginxplus(d *schema.ResourceData, meta interface{}) error {
+// resourceMonitorCreateNginxplus TODO Doc Comment
+func resourceMonitorCreateNginxplus(d *schema.ResourceData, meta interface{}) error {
 	d.Set("app_type", strings.ToLower("Nginxplus"))
-	return SematextMonitorCreate(d, meta)
+	return CommonMonitorCreate(d, meta)
 }
 
-// resourceSematextMonitorReadNginxplus TODO Doc Comment
-func resourceSematextMonitorReadNginxplus(d *schema.ResourceData, meta interface{}) error {
+// resourceMonitorReadNginxplus TODO Doc Comment
+func resourceMonitorReadNginxplus(d *schema.ResourceData, meta interface{}) error {
 	d.Set("app_type", strings.ToLower("Nginxplus"))
-	return SematextMonitorRead(d, meta)
+	return CommonMonitorRead(d, meta)
 }
 
-// resourceSematextMonitorUpdateNginxplus TODO Doc Comment
-func resourceSematextMonitorUpdateNginxplus(d *schema.ResourceData, meta interface{}) error {
+// resourceMonitorUpdateNginxplus TODO Doc Comment
+func resourceMonitorUpdateNginxplus(d *schema.ResourceData, meta interface{}) error {
 	d.Set("app_type", strings.ToLower("Nginxplus"))
-	return SematextMonitorUpdate(d, meta)
+	return CommonMonitorUpdate(d, meta)
 }
 
-// resourceSematextMonitorDeleteNginxplus TODO Doc Comment
-func resourceSematextMonitorDeleteNginxplus(d *schema.ResourceData, meta interface{}) error { // TODO Check default is respected
+// resourceMonitorDeleteNginxplus TODO Doc Comment
+func resourceMonitorDeleteNginxplus(d *schema.ResourceData, meta interface{}) error { // TODO Check default is respected
 	d.Set("app_type", strings.ToLower("Nginxplus"))
-	return SematextMonitorDelete(d, meta)
+	return CommonMonitorDelete(d, meta)
 }
 
 // TODO Consider necessity for an app edit-version to catch edit-version mis-match back into state.
-// resourceSematextMonitorExistsNginxplus TODO Doc Comment
-func resourceSematextMonitorExistsNginxplus(d *schema.ResourceData, meta interface{}) (b bool, e error) {
+// resourceMonitorExistsNginxplus TODO Doc Comment
+func resourceMonitorExistsNginxplus(d *schema.ResourceData, meta interface{}) (b bool, e error) {
 	d.Set("app_type", strings.ToLower("Nginxplus"))
-	return SematextMonitorExists(d, meta)
+	return CommonMonitorExists(d, meta)
 }
 
 // resourceSematextMonitorImportNginxplus TODO Doc Comment
 func resourceSematextMonitorImportNginxplus(d *schema.ResourceData, meta interface{}) ([]*schema.ResourceData, error) {
 	d.Set("app_type", strings.ToLower("Nginxplus"))
-	return SematextMonitorImport(d, meta)
+	return CommonMonitorImport(d, meta)
 }

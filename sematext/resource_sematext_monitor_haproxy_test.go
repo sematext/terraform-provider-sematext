@@ -2,14 +2,15 @@ package sematext
 
 import (
 	"strings"
+	"testing"
 )
 
-// testAccSematextMonitorHaproxyBasic tests resource creation.
-func testAccSematextMonitorHaproxyBasic(t *testing.T) {
-	testAccSematextMonitorBasic(t, strings.ToLower("sematext_monitor_Haproxy"))
+// TestAccSematextMonitorHaproxyBasic tests resource creation.
+func TestAccSematextMonitorHaproxyBasic(t *testing.T) {
+	CommonMonitorBasicTest(t, strings.ToLower("sematext_monitor_Haproxy"))
 }
 
-// testAccSematextMonitorHaproxyUpdate tests for resource updates.
-func testAccSematextMonitorHaproxyUpdate(t *testing.T) {
-	testAccSematextMonitorUpdate(t, strings.ToLower("sematext_monitor_Haproxy"))
+// TestAccSematextMonitorHaproxyUpdate tests for resource updates.
+func TestAccSematextMonitorHaproxyUpdate(t *testing.T) {
+	CommonMonitorUpdateText(t, strings.ToLower("sematext_monitor_Haproxy"))
 }

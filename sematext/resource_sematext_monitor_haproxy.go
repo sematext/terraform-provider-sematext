@@ -11,51 +11,51 @@ func resourceSematextMonitorHaproxy() *schema.Resource {
 
 	fieldSchema := MonitorSchemaCommon
 
-	// AWS replacement target
+	// TODO AWS metadata replacement target
 
 	return &schema.Resource{
-		Create: resourceSematextMonitorCreateHaproxy,
-		Read:   resourceSematextMonitorReadHaproxy,
-		Update: resourceSematextMonitorUpdateHaproxy,
-		Delete: resourceSematextMonitorDeleteHaproxy,
-		Exists: resourceSematextMonitorExistsHaproxy,
+		Create: resourceMonitorCreateHaproxy,
+		Read:   resourceMonitorReadHaproxy,
+		Update: resourceMonitorUpdateHaproxy,
+		Delete: resourceMonitorDeleteHaproxy,
+		Exists: resourceMonitorExistsHaproxy,
 		Schema: fieldSchema,
 	}
 }
 
-// resourceSematextMonitorCreateHaproxy TODO Doc Comment
-func resourceSematextMonitorCreateHaproxy(d *schema.ResourceData, meta interface{}) error {
+// resourceMonitorCreateHaproxy TODO Doc Comment
+func resourceMonitorCreateHaproxy(d *schema.ResourceData, meta interface{}) error {
 	d.Set("app_type", strings.ToLower("Haproxy"))
-	return SematextMonitorCreate(d, meta)
+	return CommonMonitorCreate(d, meta)
 }
 
-// resourceSematextMonitorReadHaproxy TODO Doc Comment
-func resourceSematextMonitorReadHaproxy(d *schema.ResourceData, meta interface{}) error {
+// resourceMonitorReadHaproxy TODO Doc Comment
+func resourceMonitorReadHaproxy(d *schema.ResourceData, meta interface{}) error {
 	d.Set("app_type", strings.ToLower("Haproxy"))
-	return SematextMonitorRead(d, meta)
+	return CommonMonitorRead(d, meta)
 }
 
-// resourceSematextMonitorUpdateHaproxy TODO Doc Comment
-func resourceSematextMonitorUpdateHaproxy(d *schema.ResourceData, meta interface{}) error {
+// resourceMonitorUpdateHaproxy TODO Doc Comment
+func resourceMonitorUpdateHaproxy(d *schema.ResourceData, meta interface{}) error {
 	d.Set("app_type", strings.ToLower("Haproxy"))
-	return SematextMonitorUpdate(d, meta)
+	return CommonMonitorUpdate(d, meta)
 }
 
-// resourceSematextMonitorDeleteHaproxy TODO Doc Comment
-func resourceSematextMonitorDeleteHaproxy(d *schema.ResourceData, meta interface{}) error { // TODO Check default is respected
+// resourceMonitorDeleteHaproxy TODO Doc Comment
+func resourceMonitorDeleteHaproxy(d *schema.ResourceData, meta interface{}) error { // TODO Check default is respected
 	d.Set("app_type", strings.ToLower("Haproxy"))
-	return SematextMonitorDelete(d, meta)
+	return CommonMonitorDelete(d, meta)
 }
 
 // TODO Consider necessity for an app edit-version to catch edit-version mis-match back into state.
-// resourceSematextMonitorExistsHaproxy TODO Doc Comment
-func resourceSematextMonitorExistsHaproxy(d *schema.ResourceData, meta interface{}) (b bool, e error) {
+// resourceMonitorExistsHaproxy TODO Doc Comment
+func resourceMonitorExistsHaproxy(d *schema.ResourceData, meta interface{}) (b bool, e error) {
 	d.Set("app_type", strings.ToLower("Haproxy"))
-	return SematextMonitorExists(d, meta)
+	return CommonMonitorExists(d, meta)
 }
 
 // resourceSematextMonitorImportHaproxy TODO Doc Comment
 func resourceSematextMonitorImportHaproxy(d *schema.ResourceData, meta interface{}) ([]*schema.ResourceData, error) {
 	d.Set("app_type", strings.ToLower("Haproxy"))
-	return SematextMonitorImport(d, meta)
+	return CommonMonitorImport(d, meta)
 }

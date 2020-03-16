@@ -11,51 +11,51 @@ func resourceSematextMonitorAkka() *schema.Resource {
 
 	fieldSchema := MonitorSchemaCommon
 
-	// AWS replacement target
+	// TODO AWS metadata replacement target
 
 	return &schema.Resource{
-		Create: resourceSematextMonitorCreateAkka,
-		Read:   resourceSematextMonitorReadAkka,
-		Update: resourceSematextMonitorUpdateAkka,
-		Delete: resourceSematextMonitorDeleteAkka,
-		Exists: resourceSematextMonitorExistsAkka,
+		Create: resourceMonitorCreateAkka,
+		Read:   resourceMonitorReadAkka,
+		Update: resourceMonitorUpdateAkka,
+		Delete: resourceMonitorDeleteAkka,
+		Exists: resourceMonitorExistsAkka,
 		Schema: fieldSchema,
 	}
 }
 
-// resourceSematextMonitorCreateAkka TODO Doc Comment
-func resourceSematextMonitorCreateAkka(d *schema.ResourceData, meta interface{}) error {
+// resourceMonitorCreateAkka TODO Doc Comment
+func resourceMonitorCreateAkka(d *schema.ResourceData, meta interface{}) error {
 	d.Set("app_type", strings.ToLower("Akka"))
-	return SematextMonitorCreate(d, meta)
+	return CommonMonitorCreate(d, meta)
 }
 
-// resourceSematextMonitorReadAkka TODO Doc Comment
-func resourceSematextMonitorReadAkka(d *schema.ResourceData, meta interface{}) error {
+// resourceMonitorReadAkka TODO Doc Comment
+func resourceMonitorReadAkka(d *schema.ResourceData, meta interface{}) error {
 	d.Set("app_type", strings.ToLower("Akka"))
-	return SematextMonitorRead(d, meta)
+	return CommonMonitorRead(d, meta)
 }
 
-// resourceSematextMonitorUpdateAkka TODO Doc Comment
-func resourceSematextMonitorUpdateAkka(d *schema.ResourceData, meta interface{}) error {
+// resourceMonitorUpdateAkka TODO Doc Comment
+func resourceMonitorUpdateAkka(d *schema.ResourceData, meta interface{}) error {
 	d.Set("app_type", strings.ToLower("Akka"))
-	return SematextMonitorUpdate(d, meta)
+	return CommonMonitorUpdate(d, meta)
 }
 
-// resourceSematextMonitorDeleteAkka TODO Doc Comment
-func resourceSematextMonitorDeleteAkka(d *schema.ResourceData, meta interface{}) error { // TODO Check default is respected
+// resourceMonitorDeleteAkka TODO Doc Comment
+func resourceMonitorDeleteAkka(d *schema.ResourceData, meta interface{}) error { // TODO Check default is respected
 	d.Set("app_type", strings.ToLower("Akka"))
-	return SematextMonitorDelete(d, meta)
+	return CommonMonitorDelete(d, meta)
 }
 
 // TODO Consider necessity for an app edit-version to catch edit-version mis-match back into state.
-// resourceSematextMonitorExistsAkka TODO Doc Comment
-func resourceSematextMonitorExistsAkka(d *schema.ResourceData, meta interface{}) (b bool, e error) {
+// resourceMonitorExistsAkka TODO Doc Comment
+func resourceMonitorExistsAkka(d *schema.ResourceData, meta interface{}) (b bool, e error) {
 	d.Set("app_type", strings.ToLower("Akka"))
-	return SematextMonitorExists(d, meta)
+	return CommonMonitorExists(d, meta)
 }
 
 // resourceSematextMonitorImportAkka TODO Doc Comment
 func resourceSematextMonitorImportAkka(d *schema.ResourceData, meta interface{}) ([]*schema.ResourceData, error) {
 	d.Set("app_type", strings.ToLower("Akka"))
-	return SematextMonitorImport(d, meta)
+	return CommonMonitorImport(d, meta)
 }

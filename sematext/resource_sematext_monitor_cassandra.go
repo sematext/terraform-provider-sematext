@@ -11,51 +11,51 @@ func resourceSematextMonitorCassandra() *schema.Resource {
 
 	fieldSchema := MonitorSchemaCommon
 
-	// AWS replacement target
+	// TODO AWS metadata replacement target
 
 	return &schema.Resource{
-		Create: resourceSematextMonitorCreateCassandra,
-		Read:   resourceSematextMonitorReadCassandra,
-		Update: resourceSematextMonitorUpdateCassandra,
-		Delete: resourceSematextMonitorDeleteCassandra,
-		Exists: resourceSematextMonitorExistsCassandra,
+		Create: resourceMonitorCreateCassandra,
+		Read:   resourceMonitorReadCassandra,
+		Update: resourceMonitorUpdateCassandra,
+		Delete: resourceMonitorDeleteCassandra,
+		Exists: resourceMonitorExistsCassandra,
 		Schema: fieldSchema,
 	}
 }
 
-// resourceSematextMonitorCreateCassandra TODO Doc Comment
-func resourceSematextMonitorCreateCassandra(d *schema.ResourceData, meta interface{}) error {
+// resourceMonitorCreateCassandra TODO Doc Comment
+func resourceMonitorCreateCassandra(d *schema.ResourceData, meta interface{}) error {
 	d.Set("app_type", strings.ToLower("Cassandra"))
-	return SematextMonitorCreate(d, meta)
+	return CommonMonitorCreate(d, meta)
 }
 
-// resourceSematextMonitorReadCassandra TODO Doc Comment
-func resourceSematextMonitorReadCassandra(d *schema.ResourceData, meta interface{}) error {
+// resourceMonitorReadCassandra TODO Doc Comment
+func resourceMonitorReadCassandra(d *schema.ResourceData, meta interface{}) error {
 	d.Set("app_type", strings.ToLower("Cassandra"))
-	return SematextMonitorRead(d, meta)
+	return CommonMonitorRead(d, meta)
 }
 
-// resourceSematextMonitorUpdateCassandra TODO Doc Comment
-func resourceSematextMonitorUpdateCassandra(d *schema.ResourceData, meta interface{}) error {
+// resourceMonitorUpdateCassandra TODO Doc Comment
+func resourceMonitorUpdateCassandra(d *schema.ResourceData, meta interface{}) error {
 	d.Set("app_type", strings.ToLower("Cassandra"))
-	return SematextMonitorUpdate(d, meta)
+	return CommonMonitorUpdate(d, meta)
 }
 
-// resourceSematextMonitorDeleteCassandra TODO Doc Comment
-func resourceSematextMonitorDeleteCassandra(d *schema.ResourceData, meta interface{}) error { // TODO Check default is respected
+// resourceMonitorDeleteCassandra TODO Doc Comment
+func resourceMonitorDeleteCassandra(d *schema.ResourceData, meta interface{}) error { // TODO Check default is respected
 	d.Set("app_type", strings.ToLower("Cassandra"))
-	return SematextMonitorDelete(d, meta)
+	return CommonMonitorDelete(d, meta)
 }
 
 // TODO Consider necessity for an app edit-version to catch edit-version mis-match back into state.
-// resourceSematextMonitorExistsCassandra TODO Doc Comment
-func resourceSematextMonitorExistsCassandra(d *schema.ResourceData, meta interface{}) (b bool, e error) {
+// resourceMonitorExistsCassandra TODO Doc Comment
+func resourceMonitorExistsCassandra(d *schema.ResourceData, meta interface{}) (b bool, e error) {
 	d.Set("app_type", strings.ToLower("Cassandra"))
-	return SematextMonitorExists(d, meta)
+	return CommonMonitorExists(d, meta)
 }
 
 // resourceSematextMonitorImportCassandra TODO Doc Comment
 func resourceSematextMonitorImportCassandra(d *schema.ResourceData, meta interface{}) ([]*schema.ResourceData, error) {
 	d.Set("app_type", strings.ToLower("Cassandra"))
-	return SematextMonitorImport(d, meta)
+	return CommonMonitorImport(d, meta)
 }

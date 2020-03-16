@@ -11,51 +11,51 @@ func resourceSematextMonitorSpark() *schema.Resource {
 
 	fieldSchema := MonitorSchemaCommon
 
-	// AWS replacement target
+	// TODO AWS metadata replacement target
 
 	return &schema.Resource{
-		Create: resourceSematextMonitorCreateSpark,
-		Read:   resourceSematextMonitorReadSpark,
-		Update: resourceSematextMonitorUpdateSpark,
-		Delete: resourceSematextMonitorDeleteSpark,
-		Exists: resourceSematextMonitorExistsSpark,
+		Create: resourceMonitorCreateSpark,
+		Read:   resourceMonitorReadSpark,
+		Update: resourceMonitorUpdateSpark,
+		Delete: resourceMonitorDeleteSpark,
+		Exists: resourceMonitorExistsSpark,
 		Schema: fieldSchema,
 	}
 }
 
-// resourceSematextMonitorCreateSpark TODO Doc Comment
-func resourceSematextMonitorCreateSpark(d *schema.ResourceData, meta interface{}) error {
+// resourceMonitorCreateSpark TODO Doc Comment
+func resourceMonitorCreateSpark(d *schema.ResourceData, meta interface{}) error {
 	d.Set("app_type", strings.ToLower("Spark"))
-	return SematextMonitorCreate(d, meta)
+	return CommonMonitorCreate(d, meta)
 }
 
-// resourceSematextMonitorReadSpark TODO Doc Comment
-func resourceSematextMonitorReadSpark(d *schema.ResourceData, meta interface{}) error {
+// resourceMonitorReadSpark TODO Doc Comment
+func resourceMonitorReadSpark(d *schema.ResourceData, meta interface{}) error {
 	d.Set("app_type", strings.ToLower("Spark"))
-	return SematextMonitorRead(d, meta)
+	return CommonMonitorRead(d, meta)
 }
 
-// resourceSematextMonitorUpdateSpark TODO Doc Comment
-func resourceSematextMonitorUpdateSpark(d *schema.ResourceData, meta interface{}) error {
+// resourceMonitorUpdateSpark TODO Doc Comment
+func resourceMonitorUpdateSpark(d *schema.ResourceData, meta interface{}) error {
 	d.Set("app_type", strings.ToLower("Spark"))
-	return SematextMonitorUpdate(d, meta)
+	return CommonMonitorUpdate(d, meta)
 }
 
-// resourceSematextMonitorDeleteSpark TODO Doc Comment
-func resourceSematextMonitorDeleteSpark(d *schema.ResourceData, meta interface{}) error { // TODO Check default is respected
+// resourceMonitorDeleteSpark TODO Doc Comment
+func resourceMonitorDeleteSpark(d *schema.ResourceData, meta interface{}) error { // TODO Check default is respected
 	d.Set("app_type", strings.ToLower("Spark"))
-	return SematextMonitorDelete(d, meta)
+	return CommonMonitorDelete(d, meta)
 }
 
 // TODO Consider necessity for an app edit-version to catch edit-version mis-match back into state.
-// resourceSematextMonitorExistsSpark TODO Doc Comment
-func resourceSematextMonitorExistsSpark(d *schema.ResourceData, meta interface{}) (b bool, e error) {
+// resourceMonitorExistsSpark TODO Doc Comment
+func resourceMonitorExistsSpark(d *schema.ResourceData, meta interface{}) (b bool, e error) {
 	d.Set("app_type", strings.ToLower("Spark"))
-	return SematextMonitorExists(d, meta)
+	return CommonMonitorExists(d, meta)
 }
 
 // resourceSematextMonitorImportSpark TODO Doc Comment
 func resourceSematextMonitorImportSpark(d *schema.ResourceData, meta interface{}) ([]*schema.ResourceData, error) {
 	d.Set("app_type", strings.ToLower("Spark"))
-	return SematextMonitorImport(d, meta)
+	return CommonMonitorImport(d, meta)
 }

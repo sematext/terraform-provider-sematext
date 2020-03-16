@@ -11,51 +11,51 @@ func resourceSematextMonitorAWS() *schema.Resource {
 
 	fieldSchema := MonitorSchemaCommon
 
-	// AWS replacement target
+	// TODO AWS metadata replacement target
 
 	return &schema.Resource{
-		Create: resourceSematextMonitorCreateAWS,
-		Read:   resourceSematextMonitorReadAWS,
-		Update: resourceSematextMonitorUpdateAWS,
-		Delete: resourceSematextMonitorDeleteAWS,
-		Exists: resourceSematextMonitorExistsAWS,
+		Create: resourceMonitorCreateAWS,
+		Read:   resourceMonitorReadAWS,
+		Update: resourceMonitorUpdateAWS,
+		Delete: resourceMonitorDeleteAWS,
+		Exists: resourceMonitorExistsAWS,
 		Schema: fieldSchema,
 	}
 }
 
-// resourceSematextMonitorCreateAWS TODO Doc Comment
-func resourceSematextMonitorCreateAWS(d *schema.ResourceData, meta interface{}) error {
+// resourceMonitorCreateAWS TODO Doc Comment
+func resourceMonitorCreateAWS(d *schema.ResourceData, meta interface{}) error {
 	d.Set("app_type", strings.ToLower("AWS"))
-	return SematextMonitorCreate(d, meta)
+	return CommonMonitorCreate(d, meta)
 }
 
-// resourceSematextMonitorReadAWS TODO Doc Comment
-func resourceSematextMonitorReadAWS(d *schema.ResourceData, meta interface{}) error {
+// resourceMonitorReadAWS TODO Doc Comment
+func resourceMonitorReadAWS(d *schema.ResourceData, meta interface{}) error {
 	d.Set("app_type", strings.ToLower("AWS"))
-	return SematextMonitorRead(d, meta)
+	return CommonMonitorRead(d, meta)
 }
 
-// resourceSematextMonitorUpdateAWS TODO Doc Comment
-func resourceSematextMonitorUpdateAWS(d *schema.ResourceData, meta interface{}) error {
+// resourceMonitorUpdateAWS TODO Doc Comment
+func resourceMonitorUpdateAWS(d *schema.ResourceData, meta interface{}) error {
 	d.Set("app_type", strings.ToLower("AWS"))
-	return SematextMonitorUpdate(d, meta)
+	return CommonMonitorUpdate(d, meta)
 }
 
-// resourceSematextMonitorDeleteAWS TODO Doc Comment
-func resourceSematextMonitorDeleteAWS(d *schema.ResourceData, meta interface{}) error { // TODO Check default is respected
+// resourceMonitorDeleteAWS TODO Doc Comment
+func resourceMonitorDeleteAWS(d *schema.ResourceData, meta interface{}) error { // TODO Check default is respected
 	d.Set("app_type", strings.ToLower("AWS"))
-	return SematextMonitorDelete(d, meta)
+	return CommonMonitorDelete(d, meta)
 }
 
 // TODO Consider necessity for an app edit-version to catch edit-version mis-match back into state.
-// resourceSematextMonitorExistsAWS TODO Doc Comment
-func resourceSematextMonitorExistsAWS(d *schema.ResourceData, meta interface{}) (b bool, e error) {
+// resourceMonitorExistsAWS TODO Doc Comment
+func resourceMonitorExistsAWS(d *schema.ResourceData, meta interface{}) (b bool, e error) {
 	d.Set("app_type", strings.ToLower("AWS"))
-	return SematextMonitorExists(d, meta)
+	return CommonMonitorExists(d, meta)
 }
 
 // resourceSematextMonitorImportAWS TODO Doc Comment
 func resourceSematextMonitorImportAWS(d *schema.ResourceData, meta interface{}) ([]*schema.ResourceData, error) {
 	d.Set("app_type", strings.ToLower("AWS"))
-	return SematextMonitorImport(d, meta)
+	return CommonMonitorImport(d, meta)
 }

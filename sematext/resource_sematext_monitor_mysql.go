@@ -11,51 +11,51 @@ func resourceSematextMonitorMysql() *schema.Resource {
 
 	fieldSchema := MonitorSchemaCommon
 
-	// AWS replacement target
+	// TODO AWS metadata replacement target
 
 	return &schema.Resource{
-		Create: resourceSematextMonitorCreateMysql,
-		Read:   resourceSematextMonitorReadMysql,
-		Update: resourceSematextMonitorUpdateMysql,
-		Delete: resourceSematextMonitorDeleteMysql,
-		Exists: resourceSematextMonitorExistsMysql,
+		Create: resourceMonitorCreateMysql,
+		Read:   resourceMonitorReadMysql,
+		Update: resourceMonitorUpdateMysql,
+		Delete: resourceMonitorDeleteMysql,
+		Exists: resourceMonitorExistsMysql,
 		Schema: fieldSchema,
 	}
 }
 
-// resourceSematextMonitorCreateMysql TODO Doc Comment
-func resourceSematextMonitorCreateMysql(d *schema.ResourceData, meta interface{}) error {
+// resourceMonitorCreateMysql TODO Doc Comment
+func resourceMonitorCreateMysql(d *schema.ResourceData, meta interface{}) error {
 	d.Set("app_type", strings.ToLower("Mysql"))
-	return SematextMonitorCreate(d, meta)
+	return CommonMonitorCreate(d, meta)
 }
 
-// resourceSematextMonitorReadMysql TODO Doc Comment
-func resourceSematextMonitorReadMysql(d *schema.ResourceData, meta interface{}) error {
+// resourceMonitorReadMysql TODO Doc Comment
+func resourceMonitorReadMysql(d *schema.ResourceData, meta interface{}) error {
 	d.Set("app_type", strings.ToLower("Mysql"))
-	return SematextMonitorRead(d, meta)
+	return CommonMonitorRead(d, meta)
 }
 
-// resourceSematextMonitorUpdateMysql TODO Doc Comment
-func resourceSematextMonitorUpdateMysql(d *schema.ResourceData, meta interface{}) error {
+// resourceMonitorUpdateMysql TODO Doc Comment
+func resourceMonitorUpdateMysql(d *schema.ResourceData, meta interface{}) error {
 	d.Set("app_type", strings.ToLower("Mysql"))
-	return SematextMonitorUpdate(d, meta)
+	return CommonMonitorUpdate(d, meta)
 }
 
-// resourceSematextMonitorDeleteMysql TODO Doc Comment
-func resourceSematextMonitorDeleteMysql(d *schema.ResourceData, meta interface{}) error { // TODO Check default is respected
+// resourceMonitorDeleteMysql TODO Doc Comment
+func resourceMonitorDeleteMysql(d *schema.ResourceData, meta interface{}) error { // TODO Check default is respected
 	d.Set("app_type", strings.ToLower("Mysql"))
-	return SematextMonitorDelete(d, meta)
+	return CommonMonitorDelete(d, meta)
 }
 
 // TODO Consider necessity for an app edit-version to catch edit-version mis-match back into state.
-// resourceSematextMonitorExistsMysql TODO Doc Comment
-func resourceSematextMonitorExistsMysql(d *schema.ResourceData, meta interface{}) (b bool, e error) {
+// resourceMonitorExistsMysql TODO Doc Comment
+func resourceMonitorExistsMysql(d *schema.ResourceData, meta interface{}) (b bool, e error) {
 	d.Set("app_type", strings.ToLower("Mysql"))
-	return SematextMonitorExists(d, meta)
+	return CommonMonitorExists(d, meta)
 }
 
 // resourceSematextMonitorImportMysql TODO Doc Comment
 func resourceSematextMonitorImportMysql(d *schema.ResourceData, meta interface{}) ([]*schema.ResourceData, error) {
 	d.Set("app_type", strings.ToLower("Mysql"))
-	return SematextMonitorImport(d, meta)
+	return CommonMonitorImport(d, meta)
 }

@@ -6,5 +6,6 @@ import (
 )
 
 func main() {
-	plugin.Serve(&plugin.ServeOpts{ProviderFunc: sematext.Provider})
+	plugin.Serve(&plugin.ServeOpts{
+		ProviderFunc: sematext.Provider})
 }

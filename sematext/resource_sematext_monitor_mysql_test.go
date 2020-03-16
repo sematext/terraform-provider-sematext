@@ -2,14 +2,15 @@ package sematext
 
 import (
 	"strings"
+	"testing"
 )
 
-// testAccSematextMonitorMysqlBasic tests resource creation.
-func testAccSematextMonitorMysqlBasic(t *testing.T) {
-	testAccSematextMonitorBasic(t, strings.ToLower("sematext_monitor_Mysql"))
+// TestAccSematextMonitorMysqlBasic tests resource creation.
+func TestAccSematextMonitorMysqlBasic(t *testing.T) {
+	CommonMonitorBasicTest(t, strings.ToLower("sematext_monitor_Mysql"))
 }
 
-// testAccSematextMonitorMysqlUpdate tests for resource updates.
-func testAccSematextMonitorMysqlUpdate(t *testing.T) {
-	testAccSematextMonitorUpdate(t, strings.ToLower("sematext_monitor_Mysql"))
+// TestAccSematextMonitorMysqlUpdate tests for resource updates.
+func TestAccSematextMonitorMysqlUpdate(t *testing.T) {
+	CommonMonitorUpdateText(t, strings.ToLower("sematext_monitor_Mysql"))
 }

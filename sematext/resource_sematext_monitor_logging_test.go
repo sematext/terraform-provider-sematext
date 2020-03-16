@@ -2,14 +2,15 @@ package sematext
 
 import (
 	"strings"
+	"testing"
 )
 
-// testAccSematextMonitorLoggingBasic tests resource creation.
-func testAccSematextMonitorLoggingBasic(t *testing.T) {
-	testAccSematextMonitorBasic(t, strings.ToLower("sematext_monitor_Logging"))
+// TestAccSematextMonitorLoggingBasic tests resource creation.
+func TestAccSematextMonitorLoggingBasic(t *testing.T) {
+	CommonMonitorBasicTest(t, strings.ToLower("sematext_monitor_Logging"))
 }
 
-// testAccSematextMonitorLoggingUpdate tests for resource updates.
-func testAccSematextMonitorLoggingUpdate(t *testing.T) {
-	testAccSematextMonitorUpdate(t, strings.ToLower("sematext_monitor_Logging"))
+// TestAccSematextMonitorLoggingUpdate tests for resource updates.
+func TestAccSematextMonitorLoggingUpdate(t *testing.T) {
+	CommonMonitorUpdateText(t, strings.ToLower("sematext_monitor_Logging"))
 }

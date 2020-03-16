@@ -3,12 +3,14 @@ package sematext
 import (
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/terraform"
-	"github.com/sematext/sematext-api-client/golang/api"
+	"github.com/sematext/sematext-api-client/api"
 )
 
 // Provider  - TODO Doc Comment
 func Provider() terraform.ResourceProvider {
-	p := &schema.Provider{
+
+	provider := &schema.Provider{
+
 		Schema: map[string]*schema.Schema{
 			"sematext_region": {
 				Type:        schema.TypeString,
@@ -17,11 +19,6 @@ func Provider() terraform.ResourceProvider {
 				Description: "The Sematext region, either US or EU.",
 			},
 		},
-
-		// TODO Implement as data sources?
-		// DataSourcesMap: map[string]*schema.Resource{
-		//	"sematext_application_data": dataSourceSematextApp(),
-		// },
 
 		ResourcesMap: map[string]*schema.Resource{
 			"sematext_monitor_akka":          resourceSematextMonitorAkka(),
@@ -54,13 +51,13 @@ func Provider() terraform.ResourceProvider {
 		},
 	}
 
-	p.ConfigureFunc = func(d *schema.ResourceData) (interface{}, error) {
+	provider.ConfigureFunc = func(d *schema.ResourceData) (interface{}, error) {
 
 		/*
 			Terraform 0.12 introduced this field to the protocol
 			We can therefore assume that if it's missing it's 0.10 or 0.11
 		*/
-		terraformVersion := p.TerraformVersion
+		terraformVersion := provider.TerraformVersion
 		if terraformVersion == "" {
 			terraformVersion = "0.11+compatible"
 		}
@@ -81,5 +78,6 @@ func Provider() terraform.ResourceProvider {
 		return &client, nil
 	}
 
-	return p
+	return provider
+
 }

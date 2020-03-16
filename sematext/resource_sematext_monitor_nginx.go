@@ -11,51 +11,51 @@ func resourceSematextMonitorNginx() *schema.Resource {
 
 	fieldSchema := MonitorSchemaCommon
 
-	// AWS replacement target
+	// TODO AWS metadata replacement target
 
 	return &schema.Resource{
-		Create: resourceSematextMonitorCreateNginx,
-		Read:   resourceSematextMonitorReadNginx,
-		Update: resourceSematextMonitorUpdateNginx,
-		Delete: resourceSematextMonitorDeleteNginx,
-		Exists: resourceSematextMonitorExistsNginx,
+		Create: resourceMonitorCreateNginx,
+		Read:   resourceMonitorReadNginx,
+		Update: resourceMonitorUpdateNginx,
+		Delete: resourceMonitorDeleteNginx,
+		Exists: resourceMonitorExistsNginx,
 		Schema: fieldSchema,
 	}
 }
 
-// resourceSematextMonitorCreateNginx TODO Doc Comment
-func resourceSematextMonitorCreateNginx(d *schema.ResourceData, meta interface{}) error {
+// resourceMonitorCreateNginx TODO Doc Comment
+func resourceMonitorCreateNginx(d *schema.ResourceData, meta interface{}) error {
 	d.Set("app_type", strings.ToLower("Nginx"))
-	return SematextMonitorCreate(d, meta)
+	return CommonMonitorCreate(d, meta)
 }
 
-// resourceSematextMonitorReadNginx TODO Doc Comment
-func resourceSematextMonitorReadNginx(d *schema.ResourceData, meta interface{}) error {
+// resourceMonitorReadNginx TODO Doc Comment
+func resourceMonitorReadNginx(d *schema.ResourceData, meta interface{}) error {
 	d.Set("app_type", strings.ToLower("Nginx"))
-	return SematextMonitorRead(d, meta)
+	return CommonMonitorRead(d, meta)
 }
 
-// resourceSematextMonitorUpdateNginx TODO Doc Comment
-func resourceSematextMonitorUpdateNginx(d *schema.ResourceData, meta interface{}) error {
+// resourceMonitorUpdateNginx TODO Doc Comment
+func resourceMonitorUpdateNginx(d *schema.ResourceData, meta interface{}) error {
 	d.Set("app_type", strings.ToLower("Nginx"))
-	return SematextMonitorUpdate(d, meta)
+	return CommonMonitorUpdate(d, meta)
 }
 
-// resourceSematextMonitorDeleteNginx TODO Doc Comment
-func resourceSematextMonitorDeleteNginx(d *schema.ResourceData, meta interface{}) error { // TODO Check default is respected
+// resourceMonitorDeleteNginx TODO Doc Comment
+func resourceMonitorDeleteNginx(d *schema.ResourceData, meta interface{}) error { // TODO Check default is respected
 	d.Set("app_type", strings.ToLower("Nginx"))
-	return SematextMonitorDelete(d, meta)
+	return CommonMonitorDelete(d, meta)
 }
 
 // TODO Consider necessity for an app edit-version to catch edit-version mis-match back into state.
-// resourceSematextMonitorExistsNginx TODO Doc Comment
-func resourceSematextMonitorExistsNginx(d *schema.ResourceData, meta interface{}) (b bool, e error) {
+// resourceMonitorExistsNginx TODO Doc Comment
+func resourceMonitorExistsNginx(d *schema.ResourceData, meta interface{}) (b bool, e error) {
 	d.Set("app_type", strings.ToLower("Nginx"))
-	return SematextMonitorExists(d, meta)
+	return CommonMonitorExists(d, meta)
 }
 
 // resourceSematextMonitorImportNginx TODO Doc Comment
 func resourceSematextMonitorImportNginx(d *schema.ResourceData, meta interface{}) ([]*schema.ResourceData, error) {
 	d.Set("app_type", strings.ToLower("Nginx"))
-	return SematextMonitorImport(d, meta)
+	return CommonMonitorImport(d, meta)
 }

@@ -11,37 +11,9 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/terraform"
-	"github.com/sematext/sematext-api-client/golang/api"
+	"github.com/sematext/sematext-api-client/api"
 )
-
-var TestAccProviders map[string]terraform.ResourceProvider
-var TestAccProvider *schema.Provider
-
-func init() {
-	TestAccProvider = Provider().(*schema.Provider)
-	TestAccProviders = map[string]terraform.ResourceProvider{
-		"sematext": TestAccProvider,
-	}
-}
-
-var TestProviders = map[string]terraform.ResourceProvider{
-	"sematext": Provider(),
-}
-
-func TestProvider(t *testing.T) {
-	if err := Provider().(*schema.Provider).InternalValidate(); err != nil {
-		t.Fatalf("err: %s", err)
-	}
-}
-
-func TestAccPreCheck(t *testing.T) {
-	err := TestAccProvider.Configure(terraform.NewResourceConfigRaw(nil)) // TODO - what does this do?
-	if err != nil {
-		t.Fatal(err)
-	}
-}
 
 // ResourceTestFixture a common test fixture representing a resource
 type ResourceTestFixture struct {
@@ -67,7 +39,7 @@ func (rtf *ResourceTestFixture) Hydrate(resourceType string) *ResourceTestFixtur
 	rtf.ResourceType = resourceType
 	rtf.ResourceTag = strings.ToLower(fmt.Sprintf("test_%s", rndID))
 	rtf.Name = strings.ToLower(fmt.Sprintf("test_%s", rndID))
-	rtf.StatePath = fmt.Sprint("%s.%s", rtf.ResourceType, rtf.Name)
+	rtf.StatePath = rtf.ResourceType + "." + rtf.Name
 	rtf.Description = fmt.Sprintf("TESTING : SematextMonitorBasic : %s : Create", rtf.ResourceType)
 	rtf.Plan = "basic"
 	rtf.DiscountCode = "testing"
@@ -81,21 +53,21 @@ func (rtf *ResourceTestFixture) Hydrate(resourceType string) *ResourceTestFixtur
 	return rtf
 }
 
-// FixtureToHCL Formats a common resource struct to HCL.
+// FixtureToHCL Formats a common struct containing a resource to HCL.
 func (rtf *ResourceTestFixture) FixtureToHCL() string {
 
 	result := fmt.Sprintf(`
-	resource "sematext_monitor_%s" "%s" {
-		name : %s,
-		description : %s,
-		billing_plan : %s,
-		discount_code : %s,
-		ignore_percentage : %i,
-		max_events  : %i,
-		max_limit_mb : %i,
-		sampling : %b,
-		sampling_percentage : %i,
-		staggering : %b
+	resource "%s" "%s" {
+		name = "%s"
+		description = "%s"
+		billing_plan = "%s"
+		discount_code = "%s"
+		ignore_percentage = %d
+		max_events = %d
+		max_limit_mb = %d
+		sampling = %t
+		sampling_percentage = %d
+		staggering = %t
 	}
 	`,
 		rtf.ResourceType,
@@ -115,20 +87,20 @@ func (rtf *ResourceTestFixture) FixtureToHCL() string {
 	return result
 }
 
-// testAccSematextMonitorBasic is a common test of resource creation.
-func testAccSematextMonitorBasic(t *testing.T, resourceType string) {
+// TestSematextMonitorBasic is a common test of resource creation.
+func CommonMonitorBasicTest(t *testing.T, resourceType string) {
 
 	rtf := (&ResourceTestFixture{}).Hydrate(resourceType)
 
 	resource.Test(t, resource.TestCase{
-		PreCheck:     func() { TestAccPreCheck(t) },
-		Providers:    TestAccProviders,
-		CheckDestroy: testAccSematextMonitorConfirmDestruction,
+		PreCheck:     func() { testAccPreCheck(t) },
+		Providers:    testAccProviders,
+		CheckDestroy: ConfirmMonitorDestruction,
 		Steps: []resource.TestStep{
 			{
 				Config: rtf.FixtureToHCL(),
 				Check: resource.ComposeTestCheckFunc(
-					testAccSematextMonitorConfirmCreation(rtf),
+					ConfirmMonitorCreation(rtf),
 					resource.TestCheckResourceAttr(rtf.StatePath, "name", rtf.Name),
 					resource.TestCheckResourceAttr(rtf.StatePath, "description", rtf.Description),
 					resource.TestCheckResourceAttr(rtf.StatePath, "billing_plan", rtf.Plan),
@@ -145,22 +117,22 @@ func testAccSematextMonitorBasic(t *testing.T, resourceType string) {
 	})
 }
 
-// testAccSematextMonitorUpdate tests for resource updates.
-func testAccSematextMonitorUpdate(t *testing.T, resourceType string) {
+// TestSematextMonitorUpdate tests for resource updates.
+func CommonMonitorUpdateText(t *testing.T, resourceType string) {
 
 	rtf1 := (&ResourceTestFixture{}).Hydrate(resourceType)
 	rtf2 := rtf1
-	rtf2.Description = fmt.Sprint("TESTING : SematextMonitorBasic : %s : Update", rtf2.ResourceType)
+	rtf2.Description = "TESTING : SematextMonitorBasic : " + rtf2.ResourceType + " : Update"
 
 	resource.Test(t, resource.TestCase{
-		PreCheck:     func() { TestAccPreCheck(t) },
-		Providers:    TestAccProviders,
-		CheckDestroy: testAccSematextMonitorConfirmDestruction,
+		PreCheck:     func() { testAccPreCheck(t) },
+		Providers:    testAccProviders,
+		CheckDestroy: ConfirmMonitorDestruction,
 		Steps: []resource.TestStep{
 			{
 				Config: rtf1.FixtureToHCL(),
 				Check: resource.ComposeTestCheckFunc(
-					testAccSematextMonitorConfirmCreation(rtf1),
+					ConfirmMonitorCreation(rtf1),
 					resource.TestCheckResourceAttr(rtf1.StatePath, "name", rtf1.Name),
 					resource.TestCheckResourceAttr(rtf1.StatePath, "description", rtf1.Description),
 					resource.TestCheckResourceAttr(rtf1.StatePath, "billing_plan", rtf1.Plan),
@@ -176,7 +148,7 @@ func testAccSematextMonitorUpdate(t *testing.T, resourceType string) {
 			{
 				Config: rtf2.FixtureToHCL(),
 				Check: resource.ComposeTestCheckFunc(
-					testAccSematextMonitorConfirmCreation(rtf2),
+					ConfirmMonitorCreation(rtf2),
 					resource.TestCheckResourceAttr(rtf2.StatePath, "name", rtf2.Name),
 					resource.TestCheckResourceAttr(rtf2.StatePath, "description", rtf2.Description),
 					resource.TestCheckResourceAttr(rtf2.StatePath, "billing_plan", rtf2.Plan),
@@ -193,11 +165,11 @@ func testAccSematextMonitorUpdate(t *testing.T, resourceType string) {
 	})
 }
 
-// testAccSematextMonitorCheckConsistency checks the App ID exists in both state and API.
-func testAccSematextMonitorConfirmCreation(rtf *ResourceTestFixture) resource.TestCheckFunc {
+// ConfirmMonitorCreation checks the App ID exists in both state and API.
+func ConfirmMonitorCreation(rtf *ResourceTestFixture) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 
-		client := TestAccProvider.Meta().(*api.Client)
+		client := testAccProvider.Meta().(*api.Client)
 
 		rs, ok := s.RootModule().Resources[rtf.Name]
 		if !ok {
@@ -221,10 +193,10 @@ func testAccSematextMonitorConfirmCreation(rtf *ResourceTestFixture) resource.Te
 	}
 }
 
-// testAccSematextMonitorConfirmDestroyed -  check is destroyed in API
-func testAccSematextMonitorConfirmDestruction(s *terraform.State) error {
+// ConfirmMonitorDestruction -  check is destroyed in API
+func ConfirmMonitorDestruction(s *terraform.State) error {
 
-	client := TestAccProvider.Meta().(*api.Client)
+	client := testAccProvider.Meta().(*api.Client)
 
 	for _, rs := range s.RootModule().Resources {
 

@@ -8,6 +8,7 @@ import (
 	funk "github.com/thoas/go-funk"
 )
 
+// MonitorSchemaCommon contains common resource fields
 var MonitorSchemaCommon = map[string]*schema.Schema{
 
 	"name": { // TODO validate func
@@ -32,7 +33,7 @@ var MonitorSchemaCommon = map[string]*schema.Schema{
 			return warns, errs
 		},
 	},
-	"plan": {
+	"billing_plan": {
 		Type:     schema.TypeString,
 		Required: true,
 		ForceNew: false,

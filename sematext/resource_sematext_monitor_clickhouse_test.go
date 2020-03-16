@@ -2,14 +2,15 @@ package sematext
 
 import (
 	"strings"
+	"testing"
 )
 
-// testAccSematextMonitorClickhouseBasic tests resource creation.
-func testAccSematextMonitorClickhouseBasic(t *testing.T) {
-	testAccSematextMonitorBasic(t, strings.ToLower("sematext_monitor_Clickhouse"))
+// TestAccSematextMonitorClickhouseBasic tests resource creation.
+func TestAccSematextMonitorClickhouseBasic(t *testing.T) {
+	CommonMonitorBasicTest(t, strings.ToLower("sematext_monitor_Clickhouse"))
 }
 
-// testAccSematextMonitorClickhouseUpdate tests for resource updates.
-func testAccSematextMonitorClickhouseUpdate(t *testing.T) {
-	testAccSematextMonitorUpdate(t, strings.ToLower("sematext_monitor_Clickhouse"))
+// TestAccSematextMonitorClickhouseUpdate tests for resource updates.
+func TestAccSematextMonitorClickhouseUpdate(t *testing.T) {
+	CommonMonitorUpdateText(t, strings.ToLower("sematext_monitor_Clickhouse"))
 }

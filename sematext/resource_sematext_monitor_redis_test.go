@@ -2,14 +2,15 @@ package sematext
 
 import (
 	"strings"
+	"testing"
 )
 
-// testAccSematextMonitorRedisBasic tests resource creation.
-func testAccSematextMonitorRedisBasic(t *testing.T) {
-	testAccSematextMonitorBasic(t, strings.ToLower("sematext_monitor_Redis"))
+// TestAccSematextMonitorRedisBasic tests resource creation.
+func TestAccSematextMonitorRedisBasic(t *testing.T) {
+	CommonMonitorBasicTest(t, strings.ToLower("sematext_monitor_Redis"))
 }
 
-// testAccSematextMonitorRedisUpdate tests for resource updates.
-func testAccSematextMonitorRedisUpdate(t *testing.T) {
-	testAccSematextMonitorUpdate(t, strings.ToLower("sematext_monitor_Redis"))
+// TestAccSematextMonitorRedisUpdate tests for resource updates.
+func TestAccSematextMonitorRedisUpdate(t *testing.T) {
+	CommonMonitorUpdateText(t, strings.ToLower("sematext_monitor_Redis"))
 }

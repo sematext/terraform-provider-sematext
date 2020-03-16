@@ -4,13 +4,13 @@ import (
 	"fmt"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
-	"github.com/sematext/sematext-api-client/golang/api"
+	"github.com/sematext/sematext-api-client/api"
 )
 
 // TODO - shift this back into terraform-provider-sematext
 
-// SematextMonitorCreate TODO Doc Comment
-func SematextMonitorCreate(d *schema.ResourceData, meta interface{}) error {
+// CommonMonitorCreate TODO Doc Comment
+func CommonMonitorCreate(d *schema.ResourceData, meta interface{}) error {
 
 	client := meta.(*api.Client)
 	plans := map[string]int64{"basic": 0, "standard": 1, "pro": 2, "enterprise": 3} // TODO shift plan map out to a config var
@@ -99,8 +99,8 @@ func SematextMonitorCreate(d *schema.ResourceData, meta interface{}) error {
 
 }
 
-// SematextMonitorRead TODO Doc Comment
-func SematextMonitorRead(d *schema.ResourceData, meta interface{}) error {
+// CommonMonitorRead TODO Doc Comment
+func CommonMonitorRead(d *schema.ResourceData, meta interface{}) error {
 
 	// TODO Check for consistency between schema and update
 
@@ -123,8 +123,8 @@ func SematextMonitorRead(d *schema.ResourceData, meta interface{}) error {
 	return nil
 }
 
-// SematextMonitorUpdate TODO Doc Comment
-func SematextMonitorUpdate(d *schema.ResourceData, meta interface{}) error {
+// CommonMonitorUpdate TODO Doc Comment
+func CommonMonitorUpdate(d *schema.ResourceData, meta interface{}) error {
 
 	client := meta.(*api.Client)
 	id := d.Id()
@@ -222,8 +222,8 @@ func SematextMonitorUpdate(d *schema.ResourceData, meta interface{}) error {
 
 }
 
-// SematextMonitorDelete TODO Doc Comment
-func SematextMonitorDelete(d *schema.ResourceData, meta interface{}) error {
+// CommonMonitorDelete TODO Doc Comment
+func CommonMonitorDelete(d *schema.ResourceData, meta interface{}) error {
 
 	client := meta.(*api.Client)
 	id := d.Id()
@@ -237,8 +237,8 @@ func SematextMonitorDelete(d *schema.ResourceData, meta interface{}) error {
 	return nil
 }
 
-// SematextMonitorExists TODO Doc Comment
-func SematextMonitorExists(d *schema.ResourceData, meta interface{}) (b bool, e error) {
+// CommonMonitorExists TODO Doc Comment
+func CommonMonitorExists(d *schema.ResourceData, meta interface{}) (b bool, e error) {
 
 	// TODO Consider necessity for an app edit-version to catch edit-version mis-match back into state.
 	client := meta.(*api.Client)
@@ -248,8 +248,8 @@ func SematextMonitorExists(d *schema.ResourceData, meta interface{}) (b bool, e 
 	return b, e
 }
 
-// SematextMonitorImport TODO Doc Comment
-func SematextMonitorImport(d *schema.ResourceData, meta interface{}) ([]*schema.ResourceData, error) {
+// CommonMonitorImport TODO Doc Comment
+func CommonMonitorImport(d *schema.ResourceData, meta interface{}) ([]*schema.ResourceData, error) {
 
 	// TODO Decide if Import necessary and MVP
 	return nil, nil

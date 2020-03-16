@@ -11,51 +11,51 @@ func resourceSematextMonitorClickhouse() *schema.Resource {
 
 	fieldSchema := MonitorSchemaCommon
 
-	// AWS replacement target
+	// TODO AWS metadata replacement target
 
 	return &schema.Resource{
-		Create: resourceSematextMonitorCreateClickhouse,
-		Read:   resourceSematextMonitorReadClickhouse,
-		Update: resourceSematextMonitorUpdateClickhouse,
-		Delete: resourceSematextMonitorDeleteClickhouse,
-		Exists: resourceSematextMonitorExistsClickhouse,
+		Create: resourceMonitorCreateClickhouse,
+		Read:   resourceMonitorReadClickhouse,
+		Update: resourceMonitorUpdateClickhouse,
+		Delete: resourceMonitorDeleteClickhouse,
+		Exists: resourceMonitorExistsClickhouse,
 		Schema: fieldSchema,
 	}
 }
 
-// resourceSematextMonitorCreateClickhouse TODO Doc Comment
-func resourceSematextMonitorCreateClickhouse(d *schema.ResourceData, meta interface{}) error {
+// resourceMonitorCreateClickhouse TODO Doc Comment
+func resourceMonitorCreateClickhouse(d *schema.ResourceData, meta interface{}) error {
 	d.Set("app_type", strings.ToLower("Clickhouse"))
-	return SematextMonitorCreate(d, meta)
+	return CommonMonitorCreate(d, meta)
 }
 
-// resourceSematextMonitorReadClickhouse TODO Doc Comment
-func resourceSematextMonitorReadClickhouse(d *schema.ResourceData, meta interface{}) error {
+// resourceMonitorReadClickhouse TODO Doc Comment
+func resourceMonitorReadClickhouse(d *schema.ResourceData, meta interface{}) error {
 	d.Set("app_type", strings.ToLower("Clickhouse"))
-	return SematextMonitorRead(d, meta)
+	return CommonMonitorRead(d, meta)
 }
 
-// resourceSematextMonitorUpdateClickhouse TODO Doc Comment
-func resourceSematextMonitorUpdateClickhouse(d *schema.ResourceData, meta interface{}) error {
+// resourceMonitorUpdateClickhouse TODO Doc Comment
+func resourceMonitorUpdateClickhouse(d *schema.ResourceData, meta interface{}) error {
 	d.Set("app_type", strings.ToLower("Clickhouse"))
-	return SematextMonitorUpdate(d, meta)
+	return CommonMonitorUpdate(d, meta)
 }
 
-// resourceSematextMonitorDeleteClickhouse TODO Doc Comment
-func resourceSematextMonitorDeleteClickhouse(d *schema.ResourceData, meta interface{}) error { // TODO Check default is respected
+// resourceMonitorDeleteClickhouse TODO Doc Comment
+func resourceMonitorDeleteClickhouse(d *schema.ResourceData, meta interface{}) error { // TODO Check default is respected
 	d.Set("app_type", strings.ToLower("Clickhouse"))
-	return SematextMonitorDelete(d, meta)
+	return CommonMonitorDelete(d, meta)
 }
 
 // TODO Consider necessity for an app edit-version to catch edit-version mis-match back into state.
-// resourceSematextMonitorExistsClickhouse TODO Doc Comment
-func resourceSematextMonitorExistsClickhouse(d *schema.ResourceData, meta interface{}) (b bool, e error) {
+// resourceMonitorExistsClickhouse TODO Doc Comment
+func resourceMonitorExistsClickhouse(d *schema.ResourceData, meta interface{}) (b bool, e error) {
 	d.Set("app_type", strings.ToLower("Clickhouse"))
-	return SematextMonitorExists(d, meta)
+	return CommonMonitorExists(d, meta)
 }
 
 // resourceSematextMonitorImportClickhouse TODO Doc Comment
 func resourceSematextMonitorImportClickhouse(d *schema.ResourceData, meta interface{}) ([]*schema.ResourceData, error) {
 	d.Set("app_type", strings.ToLower("Clickhouse"))
-	return SematextMonitorImport(d, meta)
+	return CommonMonitorImport(d, meta)
 }

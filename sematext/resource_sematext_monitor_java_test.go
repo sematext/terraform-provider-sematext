@@ -2,14 +2,15 @@ package sematext
 
 import (
 	"strings"
+	"testing"
 )
 
-// testAccSematextMonitorJavaBasic tests resource creation.
-func testAccSematextMonitorJavaBasic(t *testing.T) {
-	testAccSematextMonitorBasic(t, strings.ToLower("sematext_monitor_Java"))
+// TestAccSematextMonitorJavaBasic tests resource creation.
+func TestAccSematextMonitorJavaBasic(t *testing.T) {
+	CommonMonitorBasicTest(t, strings.ToLower("sematext_monitor_Java"))
 }
 
-// testAccSematextMonitorJavaUpdate tests for resource updates.
-func testAccSematextMonitorJavaUpdate(t *testing.T) {
-	testAccSematextMonitorUpdate(t, strings.ToLower("sematext_monitor_Java"))
+// TestAccSematextMonitorJavaUpdate tests for resource updates.
+func TestAccSematextMonitorJavaUpdate(t *testing.T) {
+	CommonMonitorUpdateText(t, strings.ToLower("sematext_monitor_Java"))
 }

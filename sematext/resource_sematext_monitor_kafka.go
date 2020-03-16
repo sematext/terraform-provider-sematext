@@ -11,51 +11,51 @@ func resourceSematextMonitorKafka() *schema.Resource {
 
 	fieldSchema := MonitorSchemaCommon
 
-	// AWS replacement target
+	// TODO AWS metadata replacement target
 
 	return &schema.Resource{
-		Create: resourceSematextMonitorCreateKafka,
-		Read:   resourceSematextMonitorReadKafka,
-		Update: resourceSematextMonitorUpdateKafka,
-		Delete: resourceSematextMonitorDeleteKafka,
-		Exists: resourceSematextMonitorExistsKafka,
+		Create: resourceMonitorCreateKafka,
+		Read:   resourceMonitorReadKafka,
+		Update: resourceMonitorUpdateKafka,
+		Delete: resourceMonitorDeleteKafka,
+		Exists: resourceMonitorExistsKafka,
 		Schema: fieldSchema,
 	}
 }
 
-// resourceSematextMonitorCreateKafka TODO Doc Comment
-func resourceSematextMonitorCreateKafka(d *schema.ResourceData, meta interface{}) error {
+// resourceMonitorCreateKafka TODO Doc Comment
+func resourceMonitorCreateKafka(d *schema.ResourceData, meta interface{}) error {
 	d.Set("app_type", strings.ToLower("Kafka"))
-	return SematextMonitorCreate(d, meta)
+	return CommonMonitorCreate(d, meta)
 }
 
-// resourceSematextMonitorReadKafka TODO Doc Comment
-func resourceSematextMonitorReadKafka(d *schema.ResourceData, meta interface{}) error {
+// resourceMonitorReadKafka TODO Doc Comment
+func resourceMonitorReadKafka(d *schema.ResourceData, meta interface{}) error {
 	d.Set("app_type", strings.ToLower("Kafka"))
-	return SematextMonitorRead(d, meta)
+	return CommonMonitorRead(d, meta)
 }
 
-// resourceSematextMonitorUpdateKafka TODO Doc Comment
-func resourceSematextMonitorUpdateKafka(d *schema.ResourceData, meta interface{}) error {
+// resourceMonitorUpdateKafka TODO Doc Comment
+func resourceMonitorUpdateKafka(d *schema.ResourceData, meta interface{}) error {
 	d.Set("app_type", strings.ToLower("Kafka"))
-	return SematextMonitorUpdate(d, meta)
+	return CommonMonitorUpdate(d, meta)
 }
 
-// resourceSematextMonitorDeleteKafka TODO Doc Comment
-func resourceSematextMonitorDeleteKafka(d *schema.ResourceData, meta interface{}) error { // TODO Check default is respected
+// resourceMonitorDeleteKafka TODO Doc Comment
+func resourceMonitorDeleteKafka(d *schema.ResourceData, meta interface{}) error { // TODO Check default is respected
 	d.Set("app_type", strings.ToLower("Kafka"))
-	return SematextMonitorDelete(d, meta)
+	return CommonMonitorDelete(d, meta)
 }
 
 // TODO Consider necessity for an app edit-version to catch edit-version mis-match back into state.
-// resourceSematextMonitorExistsKafka TODO Doc Comment
-func resourceSematextMonitorExistsKafka(d *schema.ResourceData, meta interface{}) (b bool, e error) {
+// resourceMonitorExistsKafka TODO Doc Comment
+func resourceMonitorExistsKafka(d *schema.ResourceData, meta interface{}) (b bool, e error) {
 	d.Set("app_type", strings.ToLower("Kafka"))
-	return SematextMonitorExists(d, meta)
+	return CommonMonitorExists(d, meta)
 }
 
 // resourceSematextMonitorImportKafka TODO Doc Comment
 func resourceSematextMonitorImportKafka(d *schema.ResourceData, meta interface{}) ([]*schema.ResourceData, error) {
 	d.Set("app_type", strings.ToLower("Kafka"))
-	return SematextMonitorImport(d, meta)
+	return CommonMonitorImport(d, meta)
 }

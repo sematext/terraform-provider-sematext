@@ -2,14 +2,15 @@ package sematext
 
 import (
 	"strings"
+	"testing"
 )
 
-// testAccSematextMonitorCassandraBasic tests resource creation.
-func testAccSematextMonitorCassandraBasic(t *testing.T) {
-	testAccSematextMonitorBasic(t, strings.ToLower("sematext_monitor_Cassandra"))
+// TestAccSematextMonitorCassandraBasic tests resource creation.
+func TestAccSematextMonitorCassandraBasic(t *testing.T) {
+	CommonMonitorBasicTest(t, strings.ToLower("sematext_monitor_Cassandra"))
 }
 
-// testAccSematextMonitorCassandraUpdate tests for resource updates.
-func testAccSematextMonitorCassandraUpdate(t *testing.T) {
-	testAccSematextMonitorUpdate(t, strings.ToLower("sematext_monitor_Cassandra"))
+// TestAccSematextMonitorCassandraUpdate tests for resource updates.
+func TestAccSematextMonitorCassandraUpdate(t *testing.T) {
+	CommonMonitorUpdateText(t, strings.ToLower("sematext_monitor_Cassandra"))
 }

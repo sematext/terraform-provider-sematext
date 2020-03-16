@@ -11,51 +11,51 @@ func resourceSematextMonitorJava() *schema.Resource {
 
 	fieldSchema := MonitorSchemaCommon
 
-	// AWS replacement target
+	// TODO AWS metadata replacement target
 
 	return &schema.Resource{
-		Create: resourceSematextMonitorCreateJava,
-		Read:   resourceSematextMonitorReadJava,
-		Update: resourceSematextMonitorUpdateJava,
-		Delete: resourceSematextMonitorDeleteJava,
-		Exists: resourceSematextMonitorExistsJava,
+		Create: resourceMonitorCreateJava,
+		Read:   resourceMonitorReadJava,
+		Update: resourceMonitorUpdateJava,
+		Delete: resourceMonitorDeleteJava,
+		Exists: resourceMonitorExistsJava,
 		Schema: fieldSchema,
 	}
 }
 
-// resourceSematextMonitorCreateJava TODO Doc Comment
-func resourceSematextMonitorCreateJava(d *schema.ResourceData, meta interface{}) error {
+// resourceMonitorCreateJava TODO Doc Comment
+func resourceMonitorCreateJava(d *schema.ResourceData, meta interface{}) error {
 	d.Set("app_type", strings.ToLower("Java"))
-	return SematextMonitorCreate(d, meta)
+	return CommonMonitorCreate(d, meta)
 }
 
-// resourceSematextMonitorReadJava TODO Doc Comment
-func resourceSematextMonitorReadJava(d *schema.ResourceData, meta interface{}) error {
+// resourceMonitorReadJava TODO Doc Comment
+func resourceMonitorReadJava(d *schema.ResourceData, meta interface{}) error {
 	d.Set("app_type", strings.ToLower("Java"))
-	return SematextMonitorRead(d, meta)
+	return CommonMonitorRead(d, meta)
 }
 
-// resourceSematextMonitorUpdateJava TODO Doc Comment
-func resourceSematextMonitorUpdateJava(d *schema.ResourceData, meta interface{}) error {
+// resourceMonitorUpdateJava TODO Doc Comment
+func resourceMonitorUpdateJava(d *schema.ResourceData, meta interface{}) error {
 	d.Set("app_type", strings.ToLower("Java"))
-	return SematextMonitorUpdate(d, meta)
+	return CommonMonitorUpdate(d, meta)
 }
 
-// resourceSematextMonitorDeleteJava TODO Doc Comment
-func resourceSematextMonitorDeleteJava(d *schema.ResourceData, meta interface{}) error { // TODO Check default is respected
+// resourceMonitorDeleteJava TODO Doc Comment
+func resourceMonitorDeleteJava(d *schema.ResourceData, meta interface{}) error { // TODO Check default is respected
 	d.Set("app_type", strings.ToLower("Java"))
-	return SematextMonitorDelete(d, meta)
+	return CommonMonitorDelete(d, meta)
 }
 
 // TODO Consider necessity for an app edit-version to catch edit-version mis-match back into state.
-// resourceSematextMonitorExistsJava TODO Doc Comment
-func resourceSematextMonitorExistsJava(d *schema.ResourceData, meta interface{}) (b bool, e error) {
+// resourceMonitorExistsJava TODO Doc Comment
+func resourceMonitorExistsJava(d *schema.ResourceData, meta interface{}) (b bool, e error) {
 	d.Set("app_type", strings.ToLower("Java"))
-	return SematextMonitorExists(d, meta)
+	return CommonMonitorExists(d, meta)
 }
 
 // resourceSematextMonitorImportJava TODO Doc Comment
 func resourceSematextMonitorImportJava(d *schema.ResourceData, meta interface{}) ([]*schema.ResourceData, error) {
 	d.Set("app_type", strings.ToLower("Java"))
-	return SematextMonitorImport(d, meta)
+	return CommonMonitorImport(d, meta)
 }

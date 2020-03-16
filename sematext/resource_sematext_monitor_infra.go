@@ -11,51 +11,51 @@ func resourceSematextMonitorInfra() *schema.Resource {
 
 	fieldSchema := MonitorSchemaCommon
 
-	// AWS replacement target
+	// TODO AWS metadata replacement target
 
 	return &schema.Resource{
-		Create: resourceSematextMonitorCreateInfra,
-		Read:   resourceSematextMonitorReadInfra,
-		Update: resourceSematextMonitorUpdateInfra,
-		Delete: resourceSematextMonitorDeleteInfra,
-		Exists: resourceSematextMonitorExistsInfra,
+		Create: resourceMonitorCreateInfra,
+		Read:   resourceMonitorReadInfra,
+		Update: resourceMonitorUpdateInfra,
+		Delete: resourceMonitorDeleteInfra,
+		Exists: resourceMonitorExistsInfra,
 		Schema: fieldSchema,
 	}
 }
 
-// resourceSematextMonitorCreateInfra TODO Doc Comment
-func resourceSematextMonitorCreateInfra(d *schema.ResourceData, meta interface{}) error {
+// resourceMonitorCreateInfra TODO Doc Comment
+func resourceMonitorCreateInfra(d *schema.ResourceData, meta interface{}) error {
 	d.Set("app_type", strings.ToLower("Infra"))
-	return SematextMonitorCreate(d, meta)
+	return CommonMonitorCreate(d, meta)
 }
 
-// resourceSematextMonitorReadInfra TODO Doc Comment
-func resourceSematextMonitorReadInfra(d *schema.ResourceData, meta interface{}) error {
+// resourceMonitorReadInfra TODO Doc Comment
+func resourceMonitorReadInfra(d *schema.ResourceData, meta interface{}) error {
 	d.Set("app_type", strings.ToLower("Infra"))
-	return SematextMonitorRead(d, meta)
+	return CommonMonitorRead(d, meta)
 }
 
-// resourceSematextMonitorUpdateInfra TODO Doc Comment
-func resourceSematextMonitorUpdateInfra(d *schema.ResourceData, meta interface{}) error {
+// resourceMonitorUpdateInfra TODO Doc Comment
+func resourceMonitorUpdateInfra(d *schema.ResourceData, meta interface{}) error {
 	d.Set("app_type", strings.ToLower("Infra"))
-	return SematextMonitorUpdate(d, meta)
+	return CommonMonitorUpdate(d, meta)
 }
 
-// resourceSematextMonitorDeleteInfra TODO Doc Comment
-func resourceSematextMonitorDeleteInfra(d *schema.ResourceData, meta interface{}) error { // TODO Check default is respected
+// resourceMonitorDeleteInfra TODO Doc Comment
+func resourceMonitorDeleteInfra(d *schema.ResourceData, meta interface{}) error { // TODO Check default is respected
 	d.Set("app_type", strings.ToLower("Infra"))
-	return SematextMonitorDelete(d, meta)
+	return CommonMonitorDelete(d, meta)
 }
 
 // TODO Consider necessity for an app edit-version to catch edit-version mis-match back into state.
-// resourceSematextMonitorExistsInfra TODO Doc Comment
-func resourceSematextMonitorExistsInfra(d *schema.ResourceData, meta interface{}) (b bool, e error) {
+// resourceMonitorExistsInfra TODO Doc Comment
+func resourceMonitorExistsInfra(d *schema.ResourceData, meta interface{}) (b bool, e error) {
 	d.Set("app_type", strings.ToLower("Infra"))
-	return SematextMonitorExists(d, meta)
+	return CommonMonitorExists(d, meta)
 }
 
 // resourceSematextMonitorImportInfra TODO Doc Comment
 func resourceSematextMonitorImportInfra(d *schema.ResourceData, meta interface{}) ([]*schema.ResourceData, error) {
 	d.Set("app_type", strings.ToLower("Infra"))
-	return SematextMonitorImport(d, meta)
+	return CommonMonitorImport(d, meta)
 }

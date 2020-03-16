@@ -11,51 +11,51 @@ func resourceSematextMonitorHbase() *schema.Resource {
 
 	fieldSchema := MonitorSchemaCommon
 
-	// AWS replacement target
+	// TODO AWS metadata replacement target
 
 	return &schema.Resource{
-		Create: resourceSematextMonitorCreateHbase,
-		Read:   resourceSematextMonitorReadHbase,
-		Update: resourceSematextMonitorUpdateHbase,
-		Delete: resourceSematextMonitorDeleteHbase,
-		Exists: resourceSematextMonitorExistsHbase,
+		Create: resourceMonitorCreateHbase,
+		Read:   resourceMonitorReadHbase,
+		Update: resourceMonitorUpdateHbase,
+		Delete: resourceMonitorDeleteHbase,
+		Exists: resourceMonitorExistsHbase,
 		Schema: fieldSchema,
 	}
 }
 
-// resourceSematextMonitorCreateHbase TODO Doc Comment
-func resourceSematextMonitorCreateHbase(d *schema.ResourceData, meta interface{}) error {
+// resourceMonitorCreateHbase TODO Doc Comment
+func resourceMonitorCreateHbase(d *schema.ResourceData, meta interface{}) error {
 	d.Set("app_type", strings.ToLower("Hbase"))
-	return SematextMonitorCreate(d, meta)
+	return CommonMonitorCreate(d, meta)
 }
 
-// resourceSematextMonitorReadHbase TODO Doc Comment
-func resourceSematextMonitorReadHbase(d *schema.ResourceData, meta interface{}) error {
+// resourceMonitorReadHbase TODO Doc Comment
+func resourceMonitorReadHbase(d *schema.ResourceData, meta interface{}) error {
 	d.Set("app_type", strings.ToLower("Hbase"))
-	return SematextMonitorRead(d, meta)
+	return CommonMonitorRead(d, meta)
 }
 
-// resourceSematextMonitorUpdateHbase TODO Doc Comment
-func resourceSematextMonitorUpdateHbase(d *schema.ResourceData, meta interface{}) error {
+// resourceMonitorUpdateHbase TODO Doc Comment
+func resourceMonitorUpdateHbase(d *schema.ResourceData, meta interface{}) error {
 	d.Set("app_type", strings.ToLower("Hbase"))
-	return SematextMonitorUpdate(d, meta)
+	return CommonMonitorUpdate(d, meta)
 }
 
-// resourceSematextMonitorDeleteHbase TODO Doc Comment
-func resourceSematextMonitorDeleteHbase(d *schema.ResourceData, meta interface{}) error { // TODO Check default is respected
+// resourceMonitorDeleteHbase TODO Doc Comment
+func resourceMonitorDeleteHbase(d *schema.ResourceData, meta interface{}) error { // TODO Check default is respected
 	d.Set("app_type", strings.ToLower("Hbase"))
-	return SematextMonitorDelete(d, meta)
+	return CommonMonitorDelete(d, meta)
 }
 
 // TODO Consider necessity for an app edit-version to catch edit-version mis-match back into state.
-// resourceSematextMonitorExistsHbase TODO Doc Comment
-func resourceSematextMonitorExistsHbase(d *schema.ResourceData, meta interface{}) (b bool, e error) {
+// resourceMonitorExistsHbase TODO Doc Comment
+func resourceMonitorExistsHbase(d *schema.ResourceData, meta interface{}) (b bool, e error) {
 	d.Set("app_type", strings.ToLower("Hbase"))
-	return SematextMonitorExists(d, meta)
+	return CommonMonitorExists(d, meta)
 }
 
 // resourceSematextMonitorImportHbase TODO Doc Comment
 func resourceSematextMonitorImportHbase(d *schema.ResourceData, meta interface{}) ([]*schema.ResourceData, error) {
 	d.Set("app_type", strings.ToLower("Hbase"))
-	return SematextMonitorImport(d, meta)
+	return CommonMonitorImport(d, meta)
 }

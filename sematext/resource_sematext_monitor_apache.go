@@ -11,51 +11,51 @@ func resourceSematextMonitorApache() *schema.Resource {
 
 	fieldSchema := MonitorSchemaCommon
 
-	// AWS replacement target
+	// TODO AWS metadata replacement target
 
 	return &schema.Resource{
-		Create: resourceSematextMonitorCreateApache,
-		Read:   resourceSematextMonitorReadApache,
-		Update: resourceSematextMonitorUpdateApache,
-		Delete: resourceSematextMonitorDeleteApache,
-		Exists: resourceSematextMonitorExistsApache,
+		Create: resourceMonitorCreateApache,
+		Read:   resourceMonitorReadApache,
+		Update: resourceMonitorUpdateApache,
+		Delete: resourceMonitorDeleteApache,
+		Exists: resourceMonitorExistsApache,
 		Schema: fieldSchema,
 	}
 }
 
-// resourceSematextMonitorCreateApache TODO Doc Comment
-func resourceSematextMonitorCreateApache(d *schema.ResourceData, meta interface{}) error {
+// resourceMonitorCreateApache TODO Doc Comment
+func resourceMonitorCreateApache(d *schema.ResourceData, meta interface{}) error {
 	d.Set("app_type", strings.ToLower("Apache"))
-	return SematextMonitorCreate(d, meta)
+	return CommonMonitorCreate(d, meta)
 }
 
-// resourceSematextMonitorReadApache TODO Doc Comment
-func resourceSematextMonitorReadApache(d *schema.ResourceData, meta interface{}) error {
+// resourceMonitorReadApache TODO Doc Comment
+func resourceMonitorReadApache(d *schema.ResourceData, meta interface{}) error {
 	d.Set("app_type", strings.ToLower("Apache"))
-	return SematextMonitorRead(d, meta)
+	return CommonMonitorRead(d, meta)
 }
 
-// resourceSematextMonitorUpdateApache TODO Doc Comment
-func resourceSematextMonitorUpdateApache(d *schema.ResourceData, meta interface{}) error {
+// resourceMonitorUpdateApache TODO Doc Comment
+func resourceMonitorUpdateApache(d *schema.ResourceData, meta interface{}) error {
 	d.Set("app_type", strings.ToLower("Apache"))
-	return SematextMonitorUpdate(d, meta)
+	return CommonMonitorUpdate(d, meta)
 }
 
-// resourceSematextMonitorDeleteApache TODO Doc Comment
-func resourceSematextMonitorDeleteApache(d *schema.ResourceData, meta interface{}) error { // TODO Check default is respected
+// resourceMonitorDeleteApache TODO Doc Comment
+func resourceMonitorDeleteApache(d *schema.ResourceData, meta interface{}) error { // TODO Check default is respected
 	d.Set("app_type", strings.ToLower("Apache"))
-	return SematextMonitorDelete(d, meta)
+	return CommonMonitorDelete(d, meta)
 }
 
 // TODO Consider necessity for an app edit-version to catch edit-version mis-match back into state.
-// resourceSematextMonitorExistsApache TODO Doc Comment
-func resourceSematextMonitorExistsApache(d *schema.ResourceData, meta interface{}) (b bool, e error) {
+// resourceMonitorExistsApache TODO Doc Comment
+func resourceMonitorExistsApache(d *schema.ResourceData, meta interface{}) (b bool, e error) {
 	d.Set("app_type", strings.ToLower("Apache"))
-	return SematextMonitorExists(d, meta)
+	return CommonMonitorExists(d, meta)
 }
 
 // resourceSematextMonitorImportApache TODO Doc Comment
 func resourceSematextMonitorImportApache(d *schema.ResourceData, meta interface{}) ([]*schema.ResourceData, error) {
 	d.Set("app_type", strings.ToLower("Apache"))
-	return SematextMonitorImport(d, meta)
+	return CommonMonitorImport(d, meta)
 }

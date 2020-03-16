@@ -11,51 +11,51 @@ func resourceSematextMonitorDocker() *schema.Resource {
 
 	fieldSchema := MonitorSchemaCommon
 
-	// AWS replacement target
+	// TODO AWS metadata replacement target
 
 	return &schema.Resource{
-		Create: resourceSematextMonitorCreateDocker,
-		Read:   resourceSematextMonitorReadDocker,
-		Update: resourceSematextMonitorUpdateDocker,
-		Delete: resourceSematextMonitorDeleteDocker,
-		Exists: resourceSematextMonitorExistsDocker,
+		Create: resourceMonitorCreateDocker,
+		Read:   resourceMonitorReadDocker,
+		Update: resourceMonitorUpdateDocker,
+		Delete: resourceMonitorDeleteDocker,
+		Exists: resourceMonitorExistsDocker,
 		Schema: fieldSchema,
 	}
 }
 
-// resourceSematextMonitorCreateDocker TODO Doc Comment
-func resourceSematextMonitorCreateDocker(d *schema.ResourceData, meta interface{}) error {
+// resourceMonitorCreateDocker TODO Doc Comment
+func resourceMonitorCreateDocker(d *schema.ResourceData, meta interface{}) error {
 	d.Set("app_type", strings.ToLower("Docker"))
-	return SematextMonitorCreate(d, meta)
+	return CommonMonitorCreate(d, meta)
 }
 
-// resourceSematextMonitorReadDocker TODO Doc Comment
-func resourceSematextMonitorReadDocker(d *schema.ResourceData, meta interface{}) error {
+// resourceMonitorReadDocker TODO Doc Comment
+func resourceMonitorReadDocker(d *schema.ResourceData, meta interface{}) error {
 	d.Set("app_type", strings.ToLower("Docker"))
-	return SematextMonitorRead(d, meta)
+	return CommonMonitorRead(d, meta)
 }
 
-// resourceSematextMonitorUpdateDocker TODO Doc Comment
-func resourceSematextMonitorUpdateDocker(d *schema.ResourceData, meta interface{}) error {
+// resourceMonitorUpdateDocker TODO Doc Comment
+func resourceMonitorUpdateDocker(d *schema.ResourceData, meta interface{}) error {
 	d.Set("app_type", strings.ToLower("Docker"))
-	return SematextMonitorUpdate(d, meta)
+	return CommonMonitorUpdate(d, meta)
 }
 
-// resourceSematextMonitorDeleteDocker TODO Doc Comment
-func resourceSematextMonitorDeleteDocker(d *schema.ResourceData, meta interface{}) error { // TODO Check default is respected
+// resourceMonitorDeleteDocker TODO Doc Comment
+func resourceMonitorDeleteDocker(d *schema.ResourceData, meta interface{}) error { // TODO Check default is respected
 	d.Set("app_type", strings.ToLower("Docker"))
-	return SematextMonitorDelete(d, meta)
+	return CommonMonitorDelete(d, meta)
 }
 
 // TODO Consider necessity for an app edit-version to catch edit-version mis-match back into state.
-// resourceSematextMonitorExistsDocker TODO Doc Comment
-func resourceSematextMonitorExistsDocker(d *schema.ResourceData, meta interface{}) (b bool, e error) {
+// resourceMonitorExistsDocker TODO Doc Comment
+func resourceMonitorExistsDocker(d *schema.ResourceData, meta interface{}) (b bool, e error) {
 	d.Set("app_type", strings.ToLower("Docker"))
-	return SematextMonitorExists(d, meta)
+	return CommonMonitorExists(d, meta)
 }
 
 // resourceSematextMonitorImportDocker TODO Doc Comment
 func resourceSematextMonitorImportDocker(d *schema.ResourceData, meta interface{}) ([]*schema.ResourceData, error) {
 	d.Set("app_type", strings.ToLower("Docker"))
-	return SematextMonitorImport(d, meta)
+	return CommonMonitorImport(d, meta)
 }

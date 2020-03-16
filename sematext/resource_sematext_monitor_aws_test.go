@@ -2,14 +2,15 @@ package sematext
 
 import (
 	"strings"
+	"testing"
 )
 
-// testAccSematextMonitorAWSBasic tests resource creation.
-func testAccSematextMonitorAWSBasic(t *testing.T) {
-	testAccSematextMonitorBasic(t, strings.ToLower("sematext_monitor_AWS"))
+// TestAccSematextMonitorAWSBasic tests resource creation.
+func TestAccSematextMonitorAWSBasic(t *testing.T) {
+	CommonMonitorBasicTest(t, strings.ToLower("sematext_monitor_AWS"))
 }
 
-// testAccSematextMonitorAWSUpdate tests for resource updates.
-func testAccSematextMonitorAWSUpdate(t *testing.T) {
-	testAccSematextMonitorUpdate(t, strings.ToLower("sematext_monitor_AWS"))
+// TestAccSematextMonitorAWSUpdate tests for resource updates.
+func TestAccSematextMonitorAWSUpdate(t *testing.T) {
+	CommonMonitorUpdateText(t, strings.ToLower("sematext_monitor_AWS"))
 }

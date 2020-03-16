@@ -11,51 +11,51 @@ func resourceSematextMonitorYarn() *schema.Resource {
 
 	fieldSchema := MonitorSchemaCommon
 
-	// AWS replacement target
+	// TODO AWS metadata replacement target
 
 	return &schema.Resource{
-		Create: resourceSematextMonitorCreateYarn,
-		Read:   resourceSematextMonitorReadYarn,
-		Update: resourceSematextMonitorUpdateYarn,
-		Delete: resourceSematextMonitorDeleteYarn,
-		Exists: resourceSematextMonitorExistsYarn,
+		Create: resourceMonitorCreateYarn,
+		Read:   resourceMonitorReadYarn,
+		Update: resourceMonitorUpdateYarn,
+		Delete: resourceMonitorDeleteYarn,
+		Exists: resourceMonitorExistsYarn,
 		Schema: fieldSchema,
 	}
 }
 
-// resourceSematextMonitorCreateYarn TODO Doc Comment
-func resourceSematextMonitorCreateYarn(d *schema.ResourceData, meta interface{}) error {
+// resourceMonitorCreateYarn TODO Doc Comment
+func resourceMonitorCreateYarn(d *schema.ResourceData, meta interface{}) error {
 	d.Set("app_type", strings.ToLower("Yarn"))
-	return SematextMonitorCreate(d, meta)
+	return CommonMonitorCreate(d, meta)
 }
 
-// resourceSematextMonitorReadYarn TODO Doc Comment
-func resourceSematextMonitorReadYarn(d *schema.ResourceData, meta interface{}) error {
+// resourceMonitorReadYarn TODO Doc Comment
+func resourceMonitorReadYarn(d *schema.ResourceData, meta interface{}) error {
 	d.Set("app_type", strings.ToLower("Yarn"))
-	return SematextMonitorRead(d, meta)
+	return CommonMonitorRead(d, meta)
 }
 
-// resourceSematextMonitorUpdateYarn TODO Doc Comment
-func resourceSematextMonitorUpdateYarn(d *schema.ResourceData, meta interface{}) error {
+// resourceMonitorUpdateYarn TODO Doc Comment
+func resourceMonitorUpdateYarn(d *schema.ResourceData, meta interface{}) error {
 	d.Set("app_type", strings.ToLower("Yarn"))
-	return SematextMonitorUpdate(d, meta)
+	return CommonMonitorUpdate(d, meta)
 }
 
-// resourceSematextMonitorDeleteYarn TODO Doc Comment
-func resourceSematextMonitorDeleteYarn(d *schema.ResourceData, meta interface{}) error { // TODO Check default is respected
+// resourceMonitorDeleteYarn TODO Doc Comment
+func resourceMonitorDeleteYarn(d *schema.ResourceData, meta interface{}) error { // TODO Check default is respected
 	d.Set("app_type", strings.ToLower("Yarn"))
-	return SematextMonitorDelete(d, meta)
+	return CommonMonitorDelete(d, meta)
 }
 
 // TODO Consider necessity for an app edit-version to catch edit-version mis-match back into state.
-// resourceSematextMonitorExistsYarn TODO Doc Comment
-func resourceSematextMonitorExistsYarn(d *schema.ResourceData, meta interface{}) (b bool, e error) {
+// resourceMonitorExistsYarn TODO Doc Comment
+func resourceMonitorExistsYarn(d *schema.ResourceData, meta interface{}) (b bool, e error) {
 	d.Set("app_type", strings.ToLower("Yarn"))
-	return SematextMonitorExists(d, meta)
+	return CommonMonitorExists(d, meta)
 }
 
 // resourceSematextMonitorImportYarn TODO Doc Comment
 func resourceSematextMonitorImportYarn(d *schema.ResourceData, meta interface{}) ([]*schema.ResourceData, error) {
 	d.Set("app_type", strings.ToLower("Yarn"))
-	return SematextMonitorImport(d, meta)
+	return CommonMonitorImport(d, meta)
 }

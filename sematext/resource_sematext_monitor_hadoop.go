@@ -11,51 +11,51 @@ func resourceSematextMonitorHadoop() *schema.Resource {
 
 	fieldSchema := MonitorSchemaCommon
 
-	// AWS replacement target
+	// TODO AWS metadata replacement target
 
 	return &schema.Resource{
-		Create: resourceSematextMonitorCreateHadoop,
-		Read:   resourceSematextMonitorReadHadoop,
-		Update: resourceSematextMonitorUpdateHadoop,
-		Delete: resourceSematextMonitorDeleteHadoop,
-		Exists: resourceSematextMonitorExistsHadoop,
+		Create: resourceMonitorCreateHadoop,
+		Read:   resourceMonitorReadHadoop,
+		Update: resourceMonitorUpdateHadoop,
+		Delete: resourceMonitorDeleteHadoop,
+		Exists: resourceMonitorExistsHadoop,
 		Schema: fieldSchema,
 	}
 }
 
-// resourceSematextMonitorCreateHadoop TODO Doc Comment
-func resourceSematextMonitorCreateHadoop(d *schema.ResourceData, meta interface{}) error {
+// resourceMonitorCreateHadoop TODO Doc Comment
+func resourceMonitorCreateHadoop(d *schema.ResourceData, meta interface{}) error {
 	d.Set("app_type", strings.ToLower("Hadoop"))
-	return SematextMonitorCreate(d, meta)
+	return CommonMonitorCreate(d, meta)
 }
 
-// resourceSematextMonitorReadHadoop TODO Doc Comment
-func resourceSematextMonitorReadHadoop(d *schema.ResourceData, meta interface{}) error {
+// resourceMonitorReadHadoop TODO Doc Comment
+func resourceMonitorReadHadoop(d *schema.ResourceData, meta interface{}) error {
 	d.Set("app_type", strings.ToLower("Hadoop"))
-	return SematextMonitorRead(d, meta)
+	return CommonMonitorRead(d, meta)
 }
 
-// resourceSematextMonitorUpdateHadoop TODO Doc Comment
-func resourceSematextMonitorUpdateHadoop(d *schema.ResourceData, meta interface{}) error {
+// resourceMonitorUpdateHadoop TODO Doc Comment
+func resourceMonitorUpdateHadoop(d *schema.ResourceData, meta interface{}) error {
 	d.Set("app_type", strings.ToLower("Hadoop"))
-	return SematextMonitorUpdate(d, meta)
+	return CommonMonitorUpdate(d, meta)
 }
 
-// resourceSematextMonitorDeleteHadoop TODO Doc Comment
-func resourceSematextMonitorDeleteHadoop(d *schema.ResourceData, meta interface{}) error { // TODO Check default is respected
+// resourceMonitorDeleteHadoop TODO Doc Comment
+func resourceMonitorDeleteHadoop(d *schema.ResourceData, meta interface{}) error { // TODO Check default is respected
 	d.Set("app_type", strings.ToLower("Hadoop"))
-	return SematextMonitorDelete(d, meta)
+	return CommonMonitorDelete(d, meta)
 }
 
 // TODO Consider necessity for an app edit-version to catch edit-version mis-match back into state.
-// resourceSematextMonitorExistsHadoop TODO Doc Comment
-func resourceSematextMonitorExistsHadoop(d *schema.ResourceData, meta interface{}) (b bool, e error) {
+// resourceMonitorExistsHadoop TODO Doc Comment
+func resourceMonitorExistsHadoop(d *schema.ResourceData, meta interface{}) (b bool, e error) {
 	d.Set("app_type", strings.ToLower("Hadoop"))
-	return SematextMonitorExists(d, meta)
+	return CommonMonitorExists(d, meta)
 }
 
 // resourceSematextMonitorImportHadoop TODO Doc Comment
 func resourceSematextMonitorImportHadoop(d *schema.ResourceData, meta interface{}) ([]*schema.ResourceData, error) {
 	d.Set("app_type", strings.ToLower("Hadoop"))
-	return SematextMonitorImport(d, meta)
+	return CommonMonitorImport(d, meta)
 }

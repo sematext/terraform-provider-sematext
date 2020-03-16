@@ -8,6 +8,11 @@ default: build
 
 build: fmtcheck
 	go install
+	
+generate:
+	@echo "INFO: Generating resource and test code."
+	@./generate/generate.sh
+
 
 sweep:
 	@echo "WARNING: This will destroy infrastructure. Use only in development accounts."

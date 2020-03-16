@@ -11,51 +11,51 @@ func resourceSematextMonitorSolr() *schema.Resource {
 
 	fieldSchema := MonitorSchemaCommon
 
-	// AWS replacement target
+	// TODO AWS metadata replacement target
 
 	return &schema.Resource{
-		Create: resourceSematextMonitorCreateSolr,
-		Read:   resourceSematextMonitorReadSolr,
-		Update: resourceSematextMonitorUpdateSolr,
-		Delete: resourceSematextMonitorDeleteSolr,
-		Exists: resourceSematextMonitorExistsSolr,
+		Create: resourceMonitorCreateSolr,
+		Read:   resourceMonitorReadSolr,
+		Update: resourceMonitorUpdateSolr,
+		Delete: resourceMonitorDeleteSolr,
+		Exists: resourceMonitorExistsSolr,
 		Schema: fieldSchema,
 	}
 }
 
-// resourceSematextMonitorCreateSolr TODO Doc Comment
-func resourceSematextMonitorCreateSolr(d *schema.ResourceData, meta interface{}) error {
+// resourceMonitorCreateSolr TODO Doc Comment
+func resourceMonitorCreateSolr(d *schema.ResourceData, meta interface{}) error {
 	d.Set("app_type", strings.ToLower("Solr"))
-	return SematextMonitorCreate(d, meta)
+	return CommonMonitorCreate(d, meta)
 }
 
-// resourceSematextMonitorReadSolr TODO Doc Comment
-func resourceSematextMonitorReadSolr(d *schema.ResourceData, meta interface{}) error {
+// resourceMonitorReadSolr TODO Doc Comment
+func resourceMonitorReadSolr(d *schema.ResourceData, meta interface{}) error {
 	d.Set("app_type", strings.ToLower("Solr"))
-	return SematextMonitorRead(d, meta)
+	return CommonMonitorRead(d, meta)
 }
 
-// resourceSematextMonitorUpdateSolr TODO Doc Comment
-func resourceSematextMonitorUpdateSolr(d *schema.ResourceData, meta interface{}) error {
+// resourceMonitorUpdateSolr TODO Doc Comment
+func resourceMonitorUpdateSolr(d *schema.ResourceData, meta interface{}) error {
 	d.Set("app_type", strings.ToLower("Solr"))
-	return SematextMonitorUpdate(d, meta)
+	return CommonMonitorUpdate(d, meta)
 }
 
-// resourceSematextMonitorDeleteSolr TODO Doc Comment
-func resourceSematextMonitorDeleteSolr(d *schema.ResourceData, meta interface{}) error { // TODO Check default is respected
+// resourceMonitorDeleteSolr TODO Doc Comment
+func resourceMonitorDeleteSolr(d *schema.ResourceData, meta interface{}) error { // TODO Check default is respected
 	d.Set("app_type", strings.ToLower("Solr"))
-	return SematextMonitorDelete(d, meta)
+	return CommonMonitorDelete(d, meta)
 }
 
 // TODO Consider necessity for an app edit-version to catch edit-version mis-match back into state.
-// resourceSematextMonitorExistsSolr TODO Doc Comment
-func resourceSematextMonitorExistsSolr(d *schema.ResourceData, meta interface{}) (b bool, e error) {
+// resourceMonitorExistsSolr TODO Doc Comment
+func resourceMonitorExistsSolr(d *schema.ResourceData, meta interface{}) (b bool, e error) {
 	d.Set("app_type", strings.ToLower("Solr"))
-	return SematextMonitorExists(d, meta)
+	return CommonMonitorExists(d, meta)
 }
 
 // resourceSematextMonitorImportSolr TODO Doc Comment
 func resourceSematextMonitorImportSolr(d *schema.ResourceData, meta interface{}) ([]*schema.ResourceData, error) {
 	d.Set("app_type", strings.ToLower("Solr"))
-	return SematextMonitorImport(d, meta)
+	return CommonMonitorImport(d, meta)
 }

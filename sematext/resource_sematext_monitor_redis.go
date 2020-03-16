@@ -11,51 +11,51 @@ func resourceSematextMonitorRedis() *schema.Resource {
 
 	fieldSchema := MonitorSchemaCommon
 
-	// AWS replacement target
+	// TODO AWS metadata replacement target
 
 	return &schema.Resource{
-		Create: resourceSematextMonitorCreateRedis,
-		Read:   resourceSematextMonitorReadRedis,
-		Update: resourceSematextMonitorUpdateRedis,
-		Delete: resourceSematextMonitorDeleteRedis,
-		Exists: resourceSematextMonitorExistsRedis,
+		Create: resourceMonitorCreateRedis,
+		Read:   resourceMonitorReadRedis,
+		Update: resourceMonitorUpdateRedis,
+		Delete: resourceMonitorDeleteRedis,
+		Exists: resourceMonitorExistsRedis,
 		Schema: fieldSchema,
 	}
 }
 
-// resourceSematextMonitorCreateRedis TODO Doc Comment
-func resourceSematextMonitorCreateRedis(d *schema.ResourceData, meta interface{}) error {
+// resourceMonitorCreateRedis TODO Doc Comment
+func resourceMonitorCreateRedis(d *schema.ResourceData, meta interface{}) error {
 	d.Set("app_type", strings.ToLower("Redis"))
-	return SematextMonitorCreate(d, meta)
+	return CommonMonitorCreate(d, meta)
 }
 
-// resourceSematextMonitorReadRedis TODO Doc Comment
-func resourceSematextMonitorReadRedis(d *schema.ResourceData, meta interface{}) error {
+// resourceMonitorReadRedis TODO Doc Comment
+func resourceMonitorReadRedis(d *schema.ResourceData, meta interface{}) error {
 	d.Set("app_type", strings.ToLower("Redis"))
-	return SematextMonitorRead(d, meta)
+	return CommonMonitorRead(d, meta)
 }
 
-// resourceSematextMonitorUpdateRedis TODO Doc Comment
-func resourceSematextMonitorUpdateRedis(d *schema.ResourceData, meta interface{}) error {
+// resourceMonitorUpdateRedis TODO Doc Comment
+func resourceMonitorUpdateRedis(d *schema.ResourceData, meta interface{}) error {
 	d.Set("app_type", strings.ToLower("Redis"))
-	return SematextMonitorUpdate(d, meta)
+	return CommonMonitorUpdate(d, meta)
 }
 
-// resourceSematextMonitorDeleteRedis TODO Doc Comment
-func resourceSematextMonitorDeleteRedis(d *schema.ResourceData, meta interface{}) error { // TODO Check default is respected
+// resourceMonitorDeleteRedis TODO Doc Comment
+func resourceMonitorDeleteRedis(d *schema.ResourceData, meta interface{}) error { // TODO Check default is respected
 	d.Set("app_type", strings.ToLower("Redis"))
-	return SematextMonitorDelete(d, meta)
+	return CommonMonitorDelete(d, meta)
 }
 
 // TODO Consider necessity for an app edit-version to catch edit-version mis-match back into state.
-// resourceSematextMonitorExistsRedis TODO Doc Comment
-func resourceSematextMonitorExistsRedis(d *schema.ResourceData, meta interface{}) (b bool, e error) {
+// resourceMonitorExistsRedis TODO Doc Comment
+func resourceMonitorExistsRedis(d *schema.ResourceData, meta interface{}) (b bool, e error) {
 	d.Set("app_type", strings.ToLower("Redis"))
-	return SematextMonitorExists(d, meta)
+	return CommonMonitorExists(d, meta)
 }
 
 // resourceSematextMonitorImportRedis TODO Doc Comment
 func resourceSematextMonitorImportRedis(d *schema.ResourceData, meta interface{}) ([]*schema.ResourceData, error) {
 	d.Set("app_type", strings.ToLower("Redis"))
-	return SematextMonitorImport(d, meta)
+	return CommonMonitorImport(d, meta)
 }
