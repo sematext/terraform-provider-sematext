@@ -1,6 +1,10 @@
 package sematext
 
 import (
+	"errors"
+	"fmt"
+	"os"
+
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"github.com/sematext/sematext-api-client/api"
@@ -13,9 +17,15 @@ func Provider() terraform.ResourceProvider {
 
 		Schema: map[string]*schema.Schema{
 			"sematext_region": {
-				Type:        schema.TypeString,
-				Required:    true,
-				DefaultFunc: schema.EnvDefaultFunc("SEMATEXT_REGION", ""),
+				Type:     schema.TypeString,
+				Required: true,
+				ValidateFunc: func(val interface{}, key string) (warns []string, errs []error) {
+					region := val.(string)
+					if val == nil || !IsValidSematextRegion(region) {
+						errs = append(errs, fmt.Errorf("ERROR  : sematext_region missing or invalid in sematext provider"))
+					}
+					return
+				},
 				Description: "The Sematext region, either US or EU.",
 			},
 		},
@@ -62,18 +72,22 @@ func Provider() terraform.ResourceProvider {
 			terraformVersion = "0.11+compatible"
 		}
 
-		/*
-			TODO enforce region as mandatory
-			TODO API-token storage in state and get from ENV
-		*/
-
 		region := d.Get("sematext_region").(string)
+		if !IsValidSematextRegion(region) {
+			return nil, errors.New("ERROR : Missing or invalid sematext_region parameter in provider tf")
+		}
+
+		token := os.Getenv("SEMATEXT_API_TOKEN")
+		if !IsValidUUID(token) {
+			return nil, errors.New("ERROR : Missing or invalid env SEMATEXT_API_TOKEN")
+		}
 
 		client := new(api.Client)
 		err := client.Init(region, terraformVersion)
 		if err != nil {
 			return nil, err
 		}
+		client.SetAuthorization(token)
 
 		return &client, nil
 	}
