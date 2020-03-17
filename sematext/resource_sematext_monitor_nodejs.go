@@ -1,8 +1,12 @@
 package sematext
 
-import (
-	"strings"
+/*
+	Note: Generated file, any edits will be overwritten!
+	Correct way to alter is to edit generate/resource_sematext_monitor.go.template
+	Then run generate/generate.sh
+*/
 
+import (
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
@@ -11,7 +15,7 @@ func resourceSematextMonitorNodejs() *schema.Resource {
 
 	fieldSchema := MonitorSchemaCommon
 
-	// TODO AWS metadata replacement target
+	// TODO AWS* metadata replacement target
 
 	return &schema.Resource{
 		Create: resourceMonitorCreateNodejs,
@@ -25,37 +29,37 @@ func resourceSematextMonitorNodejs() *schema.Resource {
 
 // resourceMonitorCreateNodejs TODO Doc Comment
 func resourceMonitorCreateNodejs(d *schema.ResourceData, meta interface{}) error {
-	d.Set("app_type", strings.ToLower("Nodejs"))
-	return CommonMonitorCreate(d, meta)
+	apptype := "Node.js"
+	return CommonMonitorCreate(d, meta, apptype)
 }
 
 // resourceMonitorReadNodejs TODO Doc Comment
 func resourceMonitorReadNodejs(d *schema.ResourceData, meta interface{}) error {
-	d.Set("app_type", strings.ToLower("Nodejs"))
-	return CommonMonitorRead(d, meta)
+	apptype := "Node.js"
+	return CommonMonitorRead(d, meta, apptype)
 }
 
 // resourceMonitorUpdateNodejs TODO Doc Comment
 func resourceMonitorUpdateNodejs(d *schema.ResourceData, meta interface{}) error {
-	d.Set("app_type", strings.ToLower("Nodejs"))
-	return CommonMonitorUpdate(d, meta)
+	apptype := "Node.js"
+	return CommonMonitorUpdate(d, meta, apptype)
 }
 
 // resourceMonitorDeleteNodejs TODO Doc Comment
 func resourceMonitorDeleteNodejs(d *schema.ResourceData, meta interface{}) error { // TODO Check default is respected
-	d.Set("app_type", strings.ToLower("Nodejs"))
-	return CommonMonitorDelete(d, meta)
+	apptype := "Node.js"
+	return CommonMonitorDelete(d, meta, apptype)
 }
 
 // TODO Consider necessity for an app edit-version to catch edit-version mis-match back into state.
 // resourceMonitorExistsNodejs TODO Doc Comment
 func resourceMonitorExistsNodejs(d *schema.ResourceData, meta interface{}) (b bool, e error) {
-	d.Set("app_type", strings.ToLower("Nodejs"))
-	return CommonMonitorExists(d, meta)
+	apptype := "Node.js"
+	return CommonMonitorExists(d, meta, apptype)
 }
 
 // resourceSematextMonitorImportNodejs TODO Doc Comment
 func resourceSematextMonitorImportNodejs(d *schema.ResourceData, meta interface{}) ([]*schema.ResourceData, error) {
-	d.Set("app_type", strings.ToLower("Nodejs"))
-	return CommonMonitorImport(d, meta)
+	apptype := "Node.js"
+	return CommonMonitorImport(d, meta, apptype)
 }

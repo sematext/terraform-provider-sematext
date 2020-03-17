@@ -42,7 +42,7 @@ func (rtf *ResourceTestFixture) Hydrate(resourceType string) *ResourceTestFixtur
 	rtf.StatePath = rtf.ResourceType + "." + rtf.Name
 	rtf.Description = fmt.Sprintf("TESTING : SematextMonitorBasic : %s : Create", rtf.ResourceType)
 	rtf.Plan = "basic"
-	rtf.DiscountCode = "testing"
+	rtf.DiscountCode = "MONEU2020"
 	rtf.IgnorePercentage = 10
 	rtf.MaxEvents = 10
 	rtf.MaxLimitMb = 10
@@ -56,12 +56,12 @@ func (rtf *ResourceTestFixture) Hydrate(resourceType string) *ResourceTestFixtur
 // FixtureToHCL Formats a common struct containing a resource to HCL.
 func (rtf *ResourceTestFixture) FixtureToHCL() string {
 
+	// TODO Discount Code temprarily removed
 	result := fmt.Sprintf(`
 	resource "%s" "%s" {
 		name = "%s"
 		description = "%s"
 		billing_plan = "%s"
-		discount_code = "%s"
 		ignore_percentage = %d
 		max_events = %d
 		max_limit_mb = %d
@@ -75,7 +75,6 @@ func (rtf *ResourceTestFixture) FixtureToHCL() string {
 		rtf.Name,
 		rtf.Description,
 		rtf.Plan,
-		rtf.DiscountCode,
 		rtf.IgnorePercentage,
 		rtf.MaxEvents,
 		rtf.MaxLimitMb,
@@ -87,7 +86,7 @@ func (rtf *ResourceTestFixture) FixtureToHCL() string {
 	return result
 }
 
-// TestSematextMonitorBasic is a common test of resource creation.
+// CommonMonitorBasicTest is a common test of resource creation.
 func CommonMonitorBasicTest(t *testing.T, resourceType string) {
 
 	rtf := (&ResourceTestFixture{}).Hydrate(resourceType)
@@ -117,8 +116,8 @@ func CommonMonitorBasicTest(t *testing.T, resourceType string) {
 	})
 }
 
-// TestSematextMonitorUpdate tests for resource updates.
-func CommonMonitorUpdateText(t *testing.T, resourceType string) {
+// CommonMonitorUpdateTest tests for resource updates.
+func CommonMonitorUpdateTest(t *testing.T, resourceType string) {
 
 	rtf1 := (&ResourceTestFixture{}).Hydrate(resourceType)
 	rtf2 := rtf1

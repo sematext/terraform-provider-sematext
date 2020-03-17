@@ -1,8 +1,12 @@
 package sematext
 
-import (
-	"strings"
+/*
+	Note: Generated file, any edits will be overwritten!
+	Correct way to alter is to edit generate/resource_sematext_monitor.go.template
+	Then run generate/generate.sh
+*/
 
+import (
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
@@ -11,7 +15,7 @@ func resourceSematextMonitorDocker() *schema.Resource {
 
 	fieldSchema := MonitorSchemaCommon
 
-	// TODO AWS metadata replacement target
+	// TODO AWS* metadata replacement target
 
 	return &schema.Resource{
 		Create: resourceMonitorCreateDocker,
@@ -25,37 +29,37 @@ func resourceSematextMonitorDocker() *schema.Resource {
 
 // resourceMonitorCreateDocker TODO Doc Comment
 func resourceMonitorCreateDocker(d *schema.ResourceData, meta interface{}) error {
-	d.Set("app_type", strings.ToLower("Docker"))
-	return CommonMonitorCreate(d, meta)
+	apptype := "Docker"
+	return CommonMonitorCreate(d, meta, apptype)
 }
 
 // resourceMonitorReadDocker TODO Doc Comment
 func resourceMonitorReadDocker(d *schema.ResourceData, meta interface{}) error {
-	d.Set("app_type", strings.ToLower("Docker"))
-	return CommonMonitorRead(d, meta)
+	apptype := "Docker"
+	return CommonMonitorRead(d, meta, apptype)
 }
 
 // resourceMonitorUpdateDocker TODO Doc Comment
 func resourceMonitorUpdateDocker(d *schema.ResourceData, meta interface{}) error {
-	d.Set("app_type", strings.ToLower("Docker"))
-	return CommonMonitorUpdate(d, meta)
+	apptype := "Docker"
+	return CommonMonitorUpdate(d, meta, apptype)
 }
 
 // resourceMonitorDeleteDocker TODO Doc Comment
 func resourceMonitorDeleteDocker(d *schema.ResourceData, meta interface{}) error { // TODO Check default is respected
-	d.Set("app_type", strings.ToLower("Docker"))
-	return CommonMonitorDelete(d, meta)
+	apptype := "Docker"
+	return CommonMonitorDelete(d, meta, apptype)
 }
 
 // TODO Consider necessity for an app edit-version to catch edit-version mis-match back into state.
 // resourceMonitorExistsDocker TODO Doc Comment
 func resourceMonitorExistsDocker(d *schema.ResourceData, meta interface{}) (b bool, e error) {
-	d.Set("app_type", strings.ToLower("Docker"))
-	return CommonMonitorExists(d, meta)
+	apptype := "Docker"
+	return CommonMonitorExists(d, meta, apptype)
 }
 
 // resourceSematextMonitorImportDocker TODO Doc Comment
 func resourceSematextMonitorImportDocker(d *schema.ResourceData, meta interface{}) ([]*schema.ResourceData, error) {
-	d.Set("app_type", strings.ToLower("Docker"))
-	return CommonMonitorImport(d, meta)
+	apptype := "Docker"
+	return CommonMonitorImport(d, meta, apptype)
 }

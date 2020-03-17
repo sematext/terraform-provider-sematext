@@ -1,8 +1,12 @@
 package sematext
 
-import (
-	"strings"
+/*
+	Note: Generated file, any edits will be overwritten!
+	Correct way to alter is to edit generate/resource_sematext_monitor.go.template
+	Then run generate/generate.sh
+*/
 
+import (
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
@@ -11,7 +15,7 @@ func resourceSematextMonitorHaproxy() *schema.Resource {
 
 	fieldSchema := MonitorSchemaCommon
 
-	// TODO AWS metadata replacement target
+	// TODO AWS* metadata replacement target
 
 	return &schema.Resource{
 		Create: resourceMonitorCreateHaproxy,
@@ -25,37 +29,37 @@ func resourceSematextMonitorHaproxy() *schema.Resource {
 
 // resourceMonitorCreateHaproxy TODO Doc Comment
 func resourceMonitorCreateHaproxy(d *schema.ResourceData, meta interface{}) error {
-	d.Set("app_type", strings.ToLower("Haproxy"))
-	return CommonMonitorCreate(d, meta)
+	apptype := "HAProxy"
+	return CommonMonitorCreate(d, meta, apptype)
 }
 
 // resourceMonitorReadHaproxy TODO Doc Comment
 func resourceMonitorReadHaproxy(d *schema.ResourceData, meta interface{}) error {
-	d.Set("app_type", strings.ToLower("Haproxy"))
-	return CommonMonitorRead(d, meta)
+	apptype := "HAProxy"
+	return CommonMonitorRead(d, meta, apptype)
 }
 
 // resourceMonitorUpdateHaproxy TODO Doc Comment
 func resourceMonitorUpdateHaproxy(d *schema.ResourceData, meta interface{}) error {
-	d.Set("app_type", strings.ToLower("Haproxy"))
-	return CommonMonitorUpdate(d, meta)
+	apptype := "HAProxy"
+	return CommonMonitorUpdate(d, meta, apptype)
 }
 
 // resourceMonitorDeleteHaproxy TODO Doc Comment
 func resourceMonitorDeleteHaproxy(d *schema.ResourceData, meta interface{}) error { // TODO Check default is respected
-	d.Set("app_type", strings.ToLower("Haproxy"))
-	return CommonMonitorDelete(d, meta)
+	apptype := "HAProxy"
+	return CommonMonitorDelete(d, meta, apptype)
 }
 
 // TODO Consider necessity for an app edit-version to catch edit-version mis-match back into state.
 // resourceMonitorExistsHaproxy TODO Doc Comment
 func resourceMonitorExistsHaproxy(d *schema.ResourceData, meta interface{}) (b bool, e error) {
-	d.Set("app_type", strings.ToLower("Haproxy"))
-	return CommonMonitorExists(d, meta)
+	apptype := "HAProxy"
+	return CommonMonitorExists(d, meta, apptype)
 }
 
 // resourceSematextMonitorImportHaproxy TODO Doc Comment
 func resourceSematextMonitorImportHaproxy(d *schema.ResourceData, meta interface{}) ([]*schema.ResourceData, error) {
-	d.Set("app_type", strings.ToLower("Haproxy"))
-	return CommonMonitorImport(d, meta)
+	apptype := "HAProxy"
+	return CommonMonitorImport(d, meta, apptype)
 }

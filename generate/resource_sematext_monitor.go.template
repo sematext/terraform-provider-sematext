@@ -7,61 +7,59 @@ package sematext
 */
 
 import (
-    "strings"
-
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
-// resourceSematextMonitor<<MONITOR_TYPE>> TODO Doc Comment
-func resourceSematextMonitor<<MONITOR_TYPE>>() *schema.Resource {
+// resourceSematextMonitor<<CLASS_NAME>> TODO Doc Comment
+func resourceSematextMonitor<<CLASS_NAME>>() *schema.Resource {
 
 	fieldSchema := MonitorSchemaCommon
 
-	// TODO AWS metadata replacement target
+	// TODO AWS* metadata replacement target
 
 	return &schema.Resource{
-		Create: resourceMonitorCreate<<MONITOR_TYPE>>,
-		Read:   resourceMonitorRead<<MONITOR_TYPE>>,
-		Update: resourceMonitorUpdate<<MONITOR_TYPE>>,
-		Delete: resourceMonitorDelete<<MONITOR_TYPE>>,
-		Exists: resourceMonitorExists<<MONITOR_TYPE>>,
+		Create: resourceMonitorCreate<<CLASS_NAME>>,
+		Read:   resourceMonitorRead<<CLASS_NAME>>,
+		Update: resourceMonitorUpdate<<CLASS_NAME>>,
+		Delete: resourceMonitorDelete<<CLASS_NAME>>,
+		Exists: resourceMonitorExists<<CLASS_NAME>>,
 		Schema: fieldSchema,
 	}
 }
 
-// resourceMonitorCreate<<MONITOR_TYPE>> TODO Doc Comment
-func resourceMonitorCreate<<MONITOR_TYPE>>(d *schema.ResourceData, meta interface{}) error {
-	d.Set("app_type", strings.ToLower("<<MONITOR_TYPE>>"))
-	return CommonMonitorCreate(d, meta)
+// resourceMonitorCreate<<CLASS_NAME>> TODO Doc Comment
+func resourceMonitorCreate<<CLASS_NAME>>(d *schema.ResourceData, meta interface{}) error {
+	apptype := "<<APP_TYPE>>"
+	return CommonMonitorCreate(d, meta, apptype)
 }
 
-// resourceMonitorRead<<MONITOR_TYPE>> TODO Doc Comment
-func resourceMonitorRead<<MONITOR_TYPE>>(d *schema.ResourceData, meta interface{}) error {
-	d.Set("app_type", strings.ToLower("<<MONITOR_TYPE>>"))
-	return CommonMonitorRead(d, meta)
+// resourceMonitorRead<<CLASS_NAME>> TODO Doc Comment
+func resourceMonitorRead<<CLASS_NAME>>(d *schema.ResourceData, meta interface{}) error {
+	apptype := "<<APP_TYPE>>"
+	return CommonMonitorRead(d, meta, apptype)
 }
 
-// resourceMonitorUpdate<<MONITOR_TYPE>> TODO Doc Comment
-func resourceMonitorUpdate<<MONITOR_TYPE>>(d *schema.ResourceData, meta interface{}) error {
-	d.Set("app_type", strings.ToLower("<<MONITOR_TYPE>>"))
-	return CommonMonitorUpdate(d, meta)
+// resourceMonitorUpdate<<CLASS_NAME>> TODO Doc Comment
+func resourceMonitorUpdate<<CLASS_NAME>>(d *schema.ResourceData, meta interface{}) error {
+	apptype := "<<APP_TYPE>>"
+	return CommonMonitorUpdate(d, meta, apptype)
 }
 
-// resourceMonitorDelete<<MONITOR_TYPE>> TODO Doc Comment
-func resourceMonitorDelete<<MONITOR_TYPE>>(d *schema.ResourceData, meta interface{}) error { // TODO Check default is respected
-	d.Set("app_type", strings.ToLower("<<MONITOR_TYPE>>"))
-	return CommonMonitorDelete(d, meta)
+// resourceMonitorDelete<<CLASS_NAME>> TODO Doc Comment
+func resourceMonitorDelete<<CLASS_NAME>>(d *schema.ResourceData, meta interface{}) error { // TODO Check default is respected
+	apptype := "<<APP_TYPE>>"
+	return CommonMonitorDelete(d, meta, apptype)
 }
 
 // TODO Consider necessity for an app edit-version to catch edit-version mis-match back into state.
-// resourceMonitorExists<<MONITOR_TYPE>> TODO Doc Comment
-func resourceMonitorExists<<MONITOR_TYPE>>(d *schema.ResourceData, meta interface{}) (b bool, e error) {
-	d.Set("app_type", strings.ToLower("<<MONITOR_TYPE>>"))
-	return CommonMonitorExists(d, meta)
+// resourceMonitorExists<<CLASS_NAME>> TODO Doc Comment
+func resourceMonitorExists<<CLASS_NAME>>(d *schema.ResourceData, meta interface{}) (b bool, e error) {
+	apptype := "<<APP_TYPE>>"
+	return CommonMonitorExists(d, meta, apptype)
 }
 
-// resourceSematextMonitorImport<<MONITOR_TYPE>> TODO Doc Comment
-func resourceSematextMonitorImport<<MONITOR_TYPE>>(d *schema.ResourceData, meta interface{}) ([]*schema.ResourceData, error) {
-	d.Set("app_type", strings.ToLower("<<MONITOR_TYPE>>"))
-	return CommonMonitorImport(d, meta)
+// resourceSematextMonitorImport<<CLASS_NAME>> TODO Doc Comment
+func resourceSematextMonitorImport<<CLASS_NAME>>(d *schema.ResourceData, meta interface{}) ([]*schema.ResourceData, error) {
+	apptype := "<<APP_TYPE>>"
+	return CommonMonitorImport(d, meta, apptype)
 }

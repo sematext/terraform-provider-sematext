@@ -1,5 +1,11 @@
 package sematext
 
+/*
+	Note: Generated file, any edits will be overwritten!
+	Correct way to alter is to edit generate/provider.go.template
+	Then run generate/generate.sh
+*/
+
 import (
 	"errors"
 	"fmt"
@@ -17,8 +23,9 @@ func Provider() terraform.ResourceProvider {
 
 		Schema: map[string]*schema.Schema{
 			"sematext_region": {
-				Type:     schema.TypeString,
-				Required: true,
+				Type:        schema.TypeString,
+				Required:    true,
+				DefaultFunc: schema.EnvDefaultFunc("SEMATEXT_REGION", "US"),
 				ValidateFunc: func(val interface{}, key string) (warns []string, errs []error) {
 					region := val.(string)
 					if val == nil || !IsValidSematextRegion(region) {
@@ -31,33 +38,38 @@ func Provider() terraform.ResourceProvider {
 		},
 
 		ResourcesMap: map[string]*schema.Resource{
-			"sematext_monitor_akka":          resourceSematextMonitorAkka(),
-			"sematext_monitor_apache":        resourceSematextMonitorApache(),
-			"sematext_monitor_aws":           resourceSematextMonitorAWS(),
-			"sematext_monitor_cassandra":     resourceSematextMonitorCassandra(),
-			"sematext_monitor_clickhouse":    resourceSematextMonitorClickhouse(),
-			"sematext_monitor_docker":        resourceSematextMonitorDocker(),
-			"sematext_monitor_elasticsearch": resourceSematextMonitorElasticsearch(),
-			"sematext_monitor_hadoop":        resourceSematextMonitorHadoop(),
-			"sematext_monitor_haproxy":       resourceSematextMonitorHaproxy(),
-			"sematext_monitor_hbase":         resourceSematextMonitorHbase(),
-			"sematext_monitor_infra":         resourceSematextMonitorInfra(),
-			"sematext_monitor_java":          resourceSematextMonitorJava(),
-			"sematext_monitor_kafka":         resourceSematextMonitorKafka(),
-			"sematext_monitor_loging":        resourceSematextMonitorLogging(),
-			"sematext_monitor_mongodb":       resourceSematextMonitorMongodb(),
-			"sematext_monitor_mysql":         resourceSematextMonitorMysql(),
-			"sematext_monitor_nginx":         resourceSematextMonitorNginx(),
-			"sematext_monitor_nginxplus":     resourceSematextMonitorNginxplus(),
-			"sematext_monitor_nodejs":        resourceSematextMonitorNodejs(),
-			"sematext_monitor_redis":         resourceSematextMonitorRedis(),
-			"sematext_monitor_solr":          resourceSematextMonitorSolr(),
-			"sematext_monitor_solrcloud":     resourceSematextMonitorSolrcloud(),
-			"sematext_monitor_spark":         resourceSematextMonitorSpark(),
-			"sematext_monitor_storm":         resourceSematextMonitorStorm(),
-			"sematext_monitor_tomcat":        resourceSematextMonitorTomcat(),
-			"sematext_monitor_yarn":          resourceSematextMonitorYarn(),
-			"sematext_monitor_zookeeper":     resourceSematextMonitorZookeeper(),
+			"sematext_monitor_akka":            resourceSematextMonitorAkka(),
+			"sematext_monitor_apache":          resourceSematextMonitorApache(),
+			"sematext_monitor_awsebs":          resourceSematextMonitorAwsebs(),
+			"sematext_monitor_awsec2":          resourceSematextMonitorAwsec2(),
+			"sematext_monitor_awselb":          resourceSematextMonitorAwselb(),
+			"sematext_monitor_cassandra":       resourceSematextMonitorCassandra(),
+			"sematext_monitor_clickhouse":      resourceSematextMonitorClickhouse(),
+			"sematext_monitor_docker":          resourceSematextMonitorDocker(),
+			"sematext_monitor_elasticsearch":   resourceSematextMonitorElasticsearch(),
+			"sematext_monitor_hadoopmrv1":      resourceSematextMonitorHadoopmrv1(),
+			"sematext_monitor_hadoopyarn":      resourceSematextMonitorHadoopyarn(),
+			"sematext_monitor_haproxy":         resourceSematextMonitorHaproxy(),
+			"sematext_monitor_hbase":           resourceSematextMonitorHbase(),
+			"sematext_monitor_infra":           resourceSematextMonitorInfra(),
+			"sematext_monitor_jvm":             resourceSematextMonitorJvm(),
+			"sematext_monitor_kafka":           resourceSematextMonitorKafka(),
+			"sematext_monitor_kafka072":        resourceSematextMonitorKafka072(),
+			"sematext_monitor_memcached":       resourceSematextMonitorMemcached(),
+			"sematext_monitor_mongodb":         resourceSematextMonitorMongodb(),
+			"sematext_monitor_mysql":           resourceSematextMonitorMysql(),
+			"sematext_monitor_nginx":           resourceSematextMonitorNginx(),
+			"sematext_monitor_nginxplus":       resourceSematextMonitorNginxplus(),
+			"sematext_monitor_nodejs":          resourceSematextMonitorNodejs(),
+			"sematext_monitor_redis":           resourceSematextMonitorRedis(),
+			"sematext_monitor_searchanalytics": resourceSematextMonitorSearchanalytics(),
+			"sematext_monitor_sensei":          resourceSematextMonitorSensei(),
+			"sematext_monitor_solr":            resourceSematextMonitorSolr(),
+			"sematext_monitor_solrcloud":       resourceSematextMonitorSolrcloud(),
+			"sematext_monitor_spark":           resourceSematextMonitorSpark(),
+			"sematext_monitor_storm":           resourceSematextMonitorStorm(),
+			"sematext_monitor_tomcat":          resourceSematextMonitorTomcat(),
+			"sematext_monitor_zookeeper":       resourceSematextMonitorZookeeper(),
 		},
 	}
 
@@ -89,7 +101,7 @@ func Provider() terraform.ResourceProvider {
 		}
 		client.SetAuthorization(token)
 
-		return &client, nil
+		return client, nil
 	}
 
 	return provider

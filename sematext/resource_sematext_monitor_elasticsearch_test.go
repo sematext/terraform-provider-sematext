@@ -1,16 +1,21 @@
 package sematext
 
+/*
+	Note: Generated file, any edits will be overwritten!
+	Correct way to alter is to edit generate/resource_sematext_monitor_test.go.template
+	Then run generate/generate.sh
+*/
+
 import (
-	"strings"
 	"testing"
 )
 
 // TestAccSematextMonitorElasticsearchBasic tests resource creation.
 func TestAccSematextMonitorElasticsearchBasic(t *testing.T) {
-	CommonMonitorBasicTest(t, strings.ToLower("sematext_monitor_Elasticsearch"))
+	CommonMonitorBasicTest(t, "sematext_monitor_elasticsearch")
 }
 
 // TestAccSematextMonitorElasticsearchUpdate tests for resource updates.
 func TestAccSematextMonitorElasticsearchUpdate(t *testing.T) {
-	CommonMonitorUpdateText(t, strings.ToLower("sematext_monitor_Elasticsearch"))
+	CommonMonitorUpdateTest(t, "sematext_monitor_elasticsearch")
 }

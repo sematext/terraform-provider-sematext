@@ -8,18 +8,17 @@ package sematext
 
 
 import (
-	"strings"
 	"testing"
 
 )
 
-// TestAccSematextMonitor<<MONITOR_TYPE>>Basic tests resource creation.
-func TestAccSematextMonitor<<MONITOR_TYPE>>Basic(t *testing.T) {
-	CommonMonitorBasicTest(t, strings.ToLower("sematext_monitor_<<MONITOR_TYPE>>"))
+// TestAccSematextMonitor<<CLASS_NAME>>Basic tests resource creation.
+func TestAccSematextMonitor<<CLASS_NAME>>Basic(t *testing.T) {
+	CommonMonitorBasicTest(t, "<<RESOURCE_NAME>>")
 }
 
 
-// TestAccSematextMonitor<<MONITOR_TYPE>>Update tests for resource updates.
-func TestAccSematextMonitor<<MONITOR_TYPE>>Update(t *testing.T) {
-	CommonMonitorUpdateText(t, strings.ToLower("sematext_monitor_<<MONITOR_TYPE>>"))
+// TestAccSematextMonitor<<CLASS_NAME>>Update tests for resource updates.
+func TestAccSematextMonitor<<CLASS_NAME>>Update(t *testing.T) {
+	CommonMonitorUpdateTest(t, "<<RESOURCE_NAME>>")
 }

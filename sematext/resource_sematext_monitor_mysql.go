@@ -1,8 +1,12 @@
 package sematext
 
-import (
-	"strings"
+/*
+	Note: Generated file, any edits will be overwritten!
+	Correct way to alter is to edit generate/resource_sematext_monitor.go.template
+	Then run generate/generate.sh
+*/
 
+import (
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
@@ -11,7 +15,7 @@ func resourceSematextMonitorMysql() *schema.Resource {
 
 	fieldSchema := MonitorSchemaCommon
 
-	// TODO AWS metadata replacement target
+	// TODO AWS* metadata replacement target
 
 	return &schema.Resource{
 		Create: resourceMonitorCreateMysql,
@@ -25,37 +29,37 @@ func resourceSematextMonitorMysql() *schema.Resource {
 
 // resourceMonitorCreateMysql TODO Doc Comment
 func resourceMonitorCreateMysql(d *schema.ResourceData, meta interface{}) error {
-	d.Set("app_type", strings.ToLower("Mysql"))
-	return CommonMonitorCreate(d, meta)
+	apptype := "MySQL"
+	return CommonMonitorCreate(d, meta, apptype)
 }
 
 // resourceMonitorReadMysql TODO Doc Comment
 func resourceMonitorReadMysql(d *schema.ResourceData, meta interface{}) error {
-	d.Set("app_type", strings.ToLower("Mysql"))
-	return CommonMonitorRead(d, meta)
+	apptype := "MySQL"
+	return CommonMonitorRead(d, meta, apptype)
 }
 
 // resourceMonitorUpdateMysql TODO Doc Comment
 func resourceMonitorUpdateMysql(d *schema.ResourceData, meta interface{}) error {
-	d.Set("app_type", strings.ToLower("Mysql"))
-	return CommonMonitorUpdate(d, meta)
+	apptype := "MySQL"
+	return CommonMonitorUpdate(d, meta, apptype)
 }
 
 // resourceMonitorDeleteMysql TODO Doc Comment
 func resourceMonitorDeleteMysql(d *schema.ResourceData, meta interface{}) error { // TODO Check default is respected
-	d.Set("app_type", strings.ToLower("Mysql"))
-	return CommonMonitorDelete(d, meta)
+	apptype := "MySQL"
+	return CommonMonitorDelete(d, meta, apptype)
 }
 
 // TODO Consider necessity for an app edit-version to catch edit-version mis-match back into state.
 // resourceMonitorExistsMysql TODO Doc Comment
 func resourceMonitorExistsMysql(d *schema.ResourceData, meta interface{}) (b bool, e error) {
-	d.Set("app_type", strings.ToLower("Mysql"))
-	return CommonMonitorExists(d, meta)
+	apptype := "MySQL"
+	return CommonMonitorExists(d, meta, apptype)
 }
 
 // resourceSematextMonitorImportMysql TODO Doc Comment
 func resourceSematextMonitorImportMysql(d *schema.ResourceData, meta interface{}) ([]*schema.ResourceData, error) {
-	d.Set("app_type", strings.ToLower("Mysql"))
-	return CommonMonitorImport(d, meta)
+	apptype := "MySQL"
+	return CommonMonitorImport(d, meta, apptype)
 }

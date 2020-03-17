@@ -1,8 +1,12 @@
 package sematext
 
-import (
-	"strings"
+/*
+	Note: Generated file, any edits will be overwritten!
+	Correct way to alter is to edit generate/resource_sematext_monitor.go.template
+	Then run generate/generate.sh
+*/
 
+import (
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
@@ -11,7 +15,7 @@ func resourceSematextMonitorTomcat() *schema.Resource {
 
 	fieldSchema := MonitorSchemaCommon
 
-	// TODO AWS metadata replacement target
+	// TODO AWS* metadata replacement target
 
 	return &schema.Resource{
 		Create: resourceMonitorCreateTomcat,
@@ -25,37 +29,37 @@ func resourceSematextMonitorTomcat() *schema.Resource {
 
 // resourceMonitorCreateTomcat TODO Doc Comment
 func resourceMonitorCreateTomcat(d *schema.ResourceData, meta interface{}) error {
-	d.Set("app_type", strings.ToLower("Tomcat"))
-	return CommonMonitorCreate(d, meta)
+	apptype := "Tomcat"
+	return CommonMonitorCreate(d, meta, apptype)
 }
 
 // resourceMonitorReadTomcat TODO Doc Comment
 func resourceMonitorReadTomcat(d *schema.ResourceData, meta interface{}) error {
-	d.Set("app_type", strings.ToLower("Tomcat"))
-	return CommonMonitorRead(d, meta)
+	apptype := "Tomcat"
+	return CommonMonitorRead(d, meta, apptype)
 }
 
 // resourceMonitorUpdateTomcat TODO Doc Comment
 func resourceMonitorUpdateTomcat(d *schema.ResourceData, meta interface{}) error {
-	d.Set("app_type", strings.ToLower("Tomcat"))
-	return CommonMonitorUpdate(d, meta)
+	apptype := "Tomcat"
+	return CommonMonitorUpdate(d, meta, apptype)
 }
 
 // resourceMonitorDeleteTomcat TODO Doc Comment
 func resourceMonitorDeleteTomcat(d *schema.ResourceData, meta interface{}) error { // TODO Check default is respected
-	d.Set("app_type", strings.ToLower("Tomcat"))
-	return CommonMonitorDelete(d, meta)
+	apptype := "Tomcat"
+	return CommonMonitorDelete(d, meta, apptype)
 }
 
 // TODO Consider necessity for an app edit-version to catch edit-version mis-match back into state.
 // resourceMonitorExistsTomcat TODO Doc Comment
 func resourceMonitorExistsTomcat(d *schema.ResourceData, meta interface{}) (b bool, e error) {
-	d.Set("app_type", strings.ToLower("Tomcat"))
-	return CommonMonitorExists(d, meta)
+	apptype := "Tomcat"
+	return CommonMonitorExists(d, meta, apptype)
 }
 
 // resourceSematextMonitorImportTomcat TODO Doc Comment
 func resourceSematextMonitorImportTomcat(d *schema.ResourceData, meta interface{}) ([]*schema.ResourceData, error) {
-	d.Set("app_type", strings.ToLower("Tomcat"))
-	return CommonMonitorImport(d, meta)
+	apptype := "Tomcat"
+	return CommonMonitorImport(d, meta, apptype)
 }

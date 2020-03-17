@@ -1,16 +1,21 @@
 package sematext
 
+/*
+	Note: Generated file, any edits will be overwritten!
+	Correct way to alter is to edit generate/resource_sematext_monitor_test.go.template
+	Then run generate/generate.sh
+*/
+
 import (
-	"strings"
 	"testing"
 )
 
 // TestAccSematextMonitorSolrcloudBasic tests resource creation.
 func TestAccSematextMonitorSolrcloudBasic(t *testing.T) {
-	CommonMonitorBasicTest(t, strings.ToLower("sematext_monitor_Solrcloud"))
+	CommonMonitorBasicTest(t, "sematext_monitor_solrcloud")
 }
 
 // TestAccSematextMonitorSolrcloudUpdate tests for resource updates.
 func TestAccSematextMonitorSolrcloudUpdate(t *testing.T) {
-	CommonMonitorUpdateText(t, strings.ToLower("sematext_monitor_Solrcloud"))
+	CommonMonitorUpdateTest(t, "sematext_monitor_solrcloud")
 }

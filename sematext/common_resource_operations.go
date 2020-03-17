@@ -10,16 +10,15 @@ import (
 // TODO - shift this back into terraform-provider-sematext
 
 // CommonMonitorCreate TODO Doc Comment
-func CommonMonitorCreate(d *schema.ResourceData, meta interface{}) error {
+func CommonMonitorCreate(d *schema.ResourceData, meta interface{}, apptype string) error {
 
 	client := meta.(*api.Client)
-	plans := map[string]int64{"basic": 0, "standard": 1, "pro": 2, "enterprise": 3} // TODO shift plan map out to a config var
 
 	// TODO - Consider if pre-existence safeguard check should be done (if app is deleted it only changes status)
 	// TODO Check for consistency between schema and update
 
 	createAppInfo := &api.CreateAppInfo{}
-	createAppInfo.AppType = d.Get("app_type").(string) // TODO check this is passed through correctly
+	createAppInfo.AppType = apptype
 
 	discountCode, discountCodeExists := d.GetOkExists("discount_code")
 	if discountCodeExists {
@@ -28,9 +27,9 @@ func CommonMonitorCreate(d *schema.ResourceData, meta interface{}) error {
 
 	initialPlan, initialPlanExists := d.GetOkExists("billing_plan")
 	if initialPlanExists {
-		createAppInfo.InitialPlanID = plans[initialPlan.(string)]
+		createAppInfo.InitialPlanID = api.PlanLabelToPlanID[initialPlan.(string)]
 	} else {
-		createAppInfo.InitialPlanID = plans["basic"]
+		createAppInfo.InitialPlanID = api.PlanLabelToPlanID["basic"]
 		d.Set("plan", "basic")
 	}
 
@@ -100,7 +99,7 @@ func CommonMonitorCreate(d *schema.ResourceData, meta interface{}) error {
 }
 
 // CommonMonitorRead TODO Doc Comment
-func CommonMonitorRead(d *schema.ResourceData, meta interface{}) error {
+func CommonMonitorRead(d *schema.ResourceData, meta interface{}, apptype string) error {
 
 	// TODO Check for consistency between schema and update
 
@@ -112,10 +111,9 @@ func CommonMonitorRead(d *schema.ResourceData, meta interface{}) error {
 	if err != nil {
 		return err
 	}
-	plans := map[int64]string{0: "basic", 1: "standard", 2: "pro", 3: "enterprise"}
 	d.Set("name", app.Name)
 	d.Set("description", app.Description)
-	d.Set("billing_plan", plans[app.Plan.ID])
+	d.Set("billing_plan", api.PlanIDToPlanLabel[app.Plan.ID])
 
 	//d.Set("discount_code",) // TODO - JIRA discount_code seems to not be stored in the App.
 	// TODO Make consistent with latest schema
@@ -124,7 +122,7 @@ func CommonMonitorRead(d *schema.ResourceData, meta interface{}) error {
 }
 
 // CommonMonitorUpdate TODO Doc Comment
-func CommonMonitorUpdate(d *schema.ResourceData, meta interface{}) error {
+func CommonMonitorUpdate(d *schema.ResourceData, meta interface{}, apptype string) error {
 
 	client := meta.(*api.Client)
 	id := d.Id()
@@ -182,9 +180,8 @@ func CommonMonitorUpdate(d *schema.ResourceData, meta interface{}) error {
 	billingInfoChanged := false
 
 	if d.HasChange("billing_plan") {
-		plans := map[string]int64{"basic": 0, "standard": 1, "pro": 2, "enterprise": 3} // TODO enterprise requires more information?
 		_, newBillingPlan := d.GetChange("billing_plan")
-		billingInfo.PlanID = plans[newBillingPlan.(string)]
+		billingInfo.PlanID = api.PlanLabelToPlanID[newBillingPlan.(string)]
 		billingInfoChanged = true
 	}
 
@@ -223,7 +220,7 @@ func CommonMonitorUpdate(d *schema.ResourceData, meta interface{}) error {
 }
 
 // CommonMonitorDelete TODO Doc Comment
-func CommonMonitorDelete(d *schema.ResourceData, meta interface{}) error {
+func CommonMonitorDelete(d *schema.ResourceData, meta interface{}, apptype string) error {
 
 	client := meta.(*api.Client)
 	id := d.Id()
@@ -238,7 +235,7 @@ func CommonMonitorDelete(d *schema.ResourceData, meta interface{}) error {
 }
 
 // CommonMonitorExists TODO Doc Comment
-func CommonMonitorExists(d *schema.ResourceData, meta interface{}) (b bool, e error) {
+func CommonMonitorExists(d *schema.ResourceData, meta interface{}, apptype string) (b bool, e error) {
 
 	// TODO Consider necessity for an app edit-version to catch edit-version mis-match back into state.
 	client := meta.(*api.Client)
@@ -249,9 +246,9 @@ func CommonMonitorExists(d *schema.ResourceData, meta interface{}) (b bool, e er
 }
 
 // CommonMonitorImport TODO Doc Comment
-func CommonMonitorImport(d *schema.ResourceData, meta interface{}) ([]*schema.ResourceData, error) {
+func CommonMonitorImport(d *schema.ResourceData, meta interface{}, apptype string) ([]*schema.ResourceData, error) {
 
-	// TODO Decide if Import necessary and MVP
+	// TODO Decide if Resource Import necessary for MVP
 	return nil, nil
 
 }

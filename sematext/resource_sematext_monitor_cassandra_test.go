@@ -1,16 +1,21 @@
 package sematext
 
+/*
+	Note: Generated file, any edits will be overwritten!
+	Correct way to alter is to edit generate/resource_sematext_monitor_test.go.template
+	Then run generate/generate.sh
+*/
+
 import (
-	"strings"
 	"testing"
 )
 
 // TestAccSematextMonitorCassandraBasic tests resource creation.
 func TestAccSematextMonitorCassandraBasic(t *testing.T) {
-	CommonMonitorBasicTest(t, strings.ToLower("sematext_monitor_Cassandra"))
+	CommonMonitorBasicTest(t, "sematext_monitor_cassandra")
 }
 
 // TestAccSematextMonitorCassandraUpdate tests for resource updates.
 func TestAccSematextMonitorCassandraUpdate(t *testing.T) {
-	CommonMonitorUpdateText(t, strings.ToLower("sematext_monitor_Cassandra"))
+	CommonMonitorUpdateTest(t, "sematext_monitor_cassandra")
 }

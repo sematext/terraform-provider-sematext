@@ -1,8 +1,12 @@
 package sematext
 
-import (
-	"strings"
+/*
+	Note: Generated file, any edits will be overwritten!
+	Correct way to alter is to edit generate/resource_sematext_monitor.go.template
+	Then run generate/generate.sh
+*/
 
+import (
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
@@ -11,7 +15,7 @@ func resourceSematextMonitorAkka() *schema.Resource {
 
 	fieldSchema := MonitorSchemaCommon
 
-	// TODO AWS metadata replacement target
+	// TODO AWS* metadata replacement target
 
 	return &schema.Resource{
 		Create: resourceMonitorCreateAkka,
@@ -25,37 +29,37 @@ func resourceSematextMonitorAkka() *schema.Resource {
 
 // resourceMonitorCreateAkka TODO Doc Comment
 func resourceMonitorCreateAkka(d *schema.ResourceData, meta interface{}) error {
-	d.Set("app_type", strings.ToLower("Akka"))
-	return CommonMonitorCreate(d, meta)
+	apptype := "Akka"
+	return CommonMonitorCreate(d, meta, apptype)
 }
 
 // resourceMonitorReadAkka TODO Doc Comment
 func resourceMonitorReadAkka(d *schema.ResourceData, meta interface{}) error {
-	d.Set("app_type", strings.ToLower("Akka"))
-	return CommonMonitorRead(d, meta)
+	apptype := "Akka"
+	return CommonMonitorRead(d, meta, apptype)
 }
 
 // resourceMonitorUpdateAkka TODO Doc Comment
 func resourceMonitorUpdateAkka(d *schema.ResourceData, meta interface{}) error {
-	d.Set("app_type", strings.ToLower("Akka"))
-	return CommonMonitorUpdate(d, meta)
+	apptype := "Akka"
+	return CommonMonitorUpdate(d, meta, apptype)
 }
 
 // resourceMonitorDeleteAkka TODO Doc Comment
 func resourceMonitorDeleteAkka(d *schema.ResourceData, meta interface{}) error { // TODO Check default is respected
-	d.Set("app_type", strings.ToLower("Akka"))
-	return CommonMonitorDelete(d, meta)
+	apptype := "Akka"
+	return CommonMonitorDelete(d, meta, apptype)
 }
 
 // TODO Consider necessity for an app edit-version to catch edit-version mis-match back into state.
 // resourceMonitorExistsAkka TODO Doc Comment
 func resourceMonitorExistsAkka(d *schema.ResourceData, meta interface{}) (b bool, e error) {
-	d.Set("app_type", strings.ToLower("Akka"))
-	return CommonMonitorExists(d, meta)
+	apptype := "Akka"
+	return CommonMonitorExists(d, meta, apptype)
 }
 
 // resourceSematextMonitorImportAkka TODO Doc Comment
 func resourceSematextMonitorImportAkka(d *schema.ResourceData, meta interface{}) ([]*schema.ResourceData, error) {
-	d.Set("app_type", strings.ToLower("Akka"))
-	return CommonMonitorImport(d, meta)
+	apptype := "Akka"
+	return CommonMonitorImport(d, meta, apptype)
 }

@@ -1,8 +1,12 @@
 package sematext
 
-import (
-	"strings"
+/*
+	Note: Generated file, any edits will be overwritten!
+	Correct way to alter is to edit generate/resource_sematext_monitor.go.template
+	Then run generate/generate.sh
+*/
 
+import (
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
@@ -11,7 +15,7 @@ func resourceSematextMonitorZookeeper() *schema.Resource {
 
 	fieldSchema := MonitorSchemaCommon
 
-	// TODO AWS metadata replacement target
+	// TODO AWS* metadata replacement target
 
 	return &schema.Resource{
 		Create: resourceMonitorCreateZookeeper,
@@ -25,37 +29,37 @@ func resourceSematextMonitorZookeeper() *schema.Resource {
 
 // resourceMonitorCreateZookeeper TODO Doc Comment
 func resourceMonitorCreateZookeeper(d *schema.ResourceData, meta interface{}) error {
-	d.Set("app_type", strings.ToLower("Zookeeper"))
-	return CommonMonitorCreate(d, meta)
+	apptype := "ZooKeeper"
+	return CommonMonitorCreate(d, meta, apptype)
 }
 
 // resourceMonitorReadZookeeper TODO Doc Comment
 func resourceMonitorReadZookeeper(d *schema.ResourceData, meta interface{}) error {
-	d.Set("app_type", strings.ToLower("Zookeeper"))
-	return CommonMonitorRead(d, meta)
+	apptype := "ZooKeeper"
+	return CommonMonitorRead(d, meta, apptype)
 }
 
 // resourceMonitorUpdateZookeeper TODO Doc Comment
 func resourceMonitorUpdateZookeeper(d *schema.ResourceData, meta interface{}) error {
-	d.Set("app_type", strings.ToLower("Zookeeper"))
-	return CommonMonitorUpdate(d, meta)
+	apptype := "ZooKeeper"
+	return CommonMonitorUpdate(d, meta, apptype)
 }
 
 // resourceMonitorDeleteZookeeper TODO Doc Comment
 func resourceMonitorDeleteZookeeper(d *schema.ResourceData, meta interface{}) error { // TODO Check default is respected
-	d.Set("app_type", strings.ToLower("Zookeeper"))
-	return CommonMonitorDelete(d, meta)
+	apptype := "ZooKeeper"
+	return CommonMonitorDelete(d, meta, apptype)
 }
 
 // TODO Consider necessity for an app edit-version to catch edit-version mis-match back into state.
 // resourceMonitorExistsZookeeper TODO Doc Comment
 func resourceMonitorExistsZookeeper(d *schema.ResourceData, meta interface{}) (b bool, e error) {
-	d.Set("app_type", strings.ToLower("Zookeeper"))
-	return CommonMonitorExists(d, meta)
+	apptype := "ZooKeeper"
+	return CommonMonitorExists(d, meta, apptype)
 }
 
 // resourceSematextMonitorImportZookeeper TODO Doc Comment
 func resourceSematextMonitorImportZookeeper(d *schema.ResourceData, meta interface{}) ([]*schema.ResourceData, error) {
-	d.Set("app_type", strings.ToLower("Zookeeper"))
-	return CommonMonitorImport(d, meta)
+	apptype := "ZooKeeper"
+	return CommonMonitorImport(d, meta, apptype)
 }

@@ -1,8 +1,12 @@
 package sematext
 
-import (
-	"strings"
+/*
+	Note: Generated file, any edits will be overwritten!
+	Correct way to alter is to edit generate/resource_sematext_monitor.go.template
+	Then run generate/generate.sh
+*/
 
+import (
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
@@ -11,7 +15,7 @@ func resourceSematextMonitorRedis() *schema.Resource {
 
 	fieldSchema := MonitorSchemaCommon
 
-	// TODO AWS metadata replacement target
+	// TODO AWS* metadata replacement target
 
 	return &schema.Resource{
 		Create: resourceMonitorCreateRedis,
@@ -25,37 +29,37 @@ func resourceSematextMonitorRedis() *schema.Resource {
 
 // resourceMonitorCreateRedis TODO Doc Comment
 func resourceMonitorCreateRedis(d *schema.ResourceData, meta interface{}) error {
-	d.Set("app_type", strings.ToLower("Redis"))
-	return CommonMonitorCreate(d, meta)
+	apptype := "Redis"
+	return CommonMonitorCreate(d, meta, apptype)
 }
 
 // resourceMonitorReadRedis TODO Doc Comment
 func resourceMonitorReadRedis(d *schema.ResourceData, meta interface{}) error {
-	d.Set("app_type", strings.ToLower("Redis"))
-	return CommonMonitorRead(d, meta)
+	apptype := "Redis"
+	return CommonMonitorRead(d, meta, apptype)
 }
 
 // resourceMonitorUpdateRedis TODO Doc Comment
 func resourceMonitorUpdateRedis(d *schema.ResourceData, meta interface{}) error {
-	d.Set("app_type", strings.ToLower("Redis"))
-	return CommonMonitorUpdate(d, meta)
+	apptype := "Redis"
+	return CommonMonitorUpdate(d, meta, apptype)
 }
 
 // resourceMonitorDeleteRedis TODO Doc Comment
 func resourceMonitorDeleteRedis(d *schema.ResourceData, meta interface{}) error { // TODO Check default is respected
-	d.Set("app_type", strings.ToLower("Redis"))
-	return CommonMonitorDelete(d, meta)
+	apptype := "Redis"
+	return CommonMonitorDelete(d, meta, apptype)
 }
 
 // TODO Consider necessity for an app edit-version to catch edit-version mis-match back into state.
 // resourceMonitorExistsRedis TODO Doc Comment
 func resourceMonitorExistsRedis(d *schema.ResourceData, meta interface{}) (b bool, e error) {
-	d.Set("app_type", strings.ToLower("Redis"))
-	return CommonMonitorExists(d, meta)
+	apptype := "Redis"
+	return CommonMonitorExists(d, meta, apptype)
 }
 
 // resourceSematextMonitorImportRedis TODO Doc Comment
 func resourceSematextMonitorImportRedis(d *schema.ResourceData, meta interface{}) ([]*schema.ResourceData, error) {
-	d.Set("app_type", strings.ToLower("Redis"))
-	return CommonMonitorImport(d, meta)
+	apptype := "Redis"
+	return CommonMonitorImport(d, meta, apptype)
 }

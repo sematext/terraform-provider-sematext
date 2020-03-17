@@ -1,8 +1,12 @@
 package sematext
 
-import (
-	"strings"
+/*
+	Note: Generated file, any edits will be overwritten!
+	Correct way to alter is to edit generate/resource_sematext_monitor.go.template
+	Then run generate/generate.sh
+*/
 
+import (
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
@@ -11,7 +15,7 @@ func resourceSematextMonitorSolrcloud() *schema.Resource {
 
 	fieldSchema := MonitorSchemaCommon
 
-	// TODO AWS metadata replacement target
+	// TODO AWS* metadata replacement target
 
 	return &schema.Resource{
 		Create: resourceMonitorCreateSolrcloud,
@@ -25,37 +29,37 @@ func resourceSematextMonitorSolrcloud() *schema.Resource {
 
 // resourceMonitorCreateSolrcloud TODO Doc Comment
 func resourceMonitorCreateSolrcloud(d *schema.ResourceData, meta interface{}) error {
-	d.Set("app_type", strings.ToLower("Solrcloud"))
-	return CommonMonitorCreate(d, meta)
+	apptype := "SolrCloud"
+	return CommonMonitorCreate(d, meta, apptype)
 }
 
 // resourceMonitorReadSolrcloud TODO Doc Comment
 func resourceMonitorReadSolrcloud(d *schema.ResourceData, meta interface{}) error {
-	d.Set("app_type", strings.ToLower("Solrcloud"))
-	return CommonMonitorRead(d, meta)
+	apptype := "SolrCloud"
+	return CommonMonitorRead(d, meta, apptype)
 }
 
 // resourceMonitorUpdateSolrcloud TODO Doc Comment
 func resourceMonitorUpdateSolrcloud(d *schema.ResourceData, meta interface{}) error {
-	d.Set("app_type", strings.ToLower("Solrcloud"))
-	return CommonMonitorUpdate(d, meta)
+	apptype := "SolrCloud"
+	return CommonMonitorUpdate(d, meta, apptype)
 }
 
 // resourceMonitorDeleteSolrcloud TODO Doc Comment
 func resourceMonitorDeleteSolrcloud(d *schema.ResourceData, meta interface{}) error { // TODO Check default is respected
-	d.Set("app_type", strings.ToLower("Solrcloud"))
-	return CommonMonitorDelete(d, meta)
+	apptype := "SolrCloud"
+	return CommonMonitorDelete(d, meta, apptype)
 }
 
 // TODO Consider necessity for an app edit-version to catch edit-version mis-match back into state.
 // resourceMonitorExistsSolrcloud TODO Doc Comment
 func resourceMonitorExistsSolrcloud(d *schema.ResourceData, meta interface{}) (b bool, e error) {
-	d.Set("app_type", strings.ToLower("Solrcloud"))
-	return CommonMonitorExists(d, meta)
+	apptype := "SolrCloud"
+	return CommonMonitorExists(d, meta, apptype)
 }
 
 // resourceSematextMonitorImportSolrcloud TODO Doc Comment
 func resourceSematextMonitorImportSolrcloud(d *schema.ResourceData, meta interface{}) ([]*schema.ResourceData, error) {
-	d.Set("app_type", strings.ToLower("Solrcloud"))
-	return CommonMonitorImport(d, meta)
+	apptype := "SolrCloud"
+	return CommonMonitorImport(d, meta, apptype)
 }

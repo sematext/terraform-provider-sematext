@@ -1,8 +1,12 @@
 package sematext
 
-import (
-	"strings"
+/*
+	Note: Generated file, any edits will be overwritten!
+	Correct way to alter is to edit generate/resource_sematext_monitor.go.template
+	Then run generate/generate.sh
+*/
 
+import (
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
@@ -11,7 +15,7 @@ func resourceSematextMonitorCassandra() *schema.Resource {
 
 	fieldSchema := MonitorSchemaCommon
 
-	// TODO AWS metadata replacement target
+	// TODO AWS* metadata replacement target
 
 	return &schema.Resource{
 		Create: resourceMonitorCreateCassandra,
@@ -25,37 +29,37 @@ func resourceSematextMonitorCassandra() *schema.Resource {
 
 // resourceMonitorCreateCassandra TODO Doc Comment
 func resourceMonitorCreateCassandra(d *schema.ResourceData, meta interface{}) error {
-	d.Set("app_type", strings.ToLower("Cassandra"))
-	return CommonMonitorCreate(d, meta)
+	apptype := "Cassandra"
+	return CommonMonitorCreate(d, meta, apptype)
 }
 
 // resourceMonitorReadCassandra TODO Doc Comment
 func resourceMonitorReadCassandra(d *schema.ResourceData, meta interface{}) error {
-	d.Set("app_type", strings.ToLower("Cassandra"))
-	return CommonMonitorRead(d, meta)
+	apptype := "Cassandra"
+	return CommonMonitorRead(d, meta, apptype)
 }
 
 // resourceMonitorUpdateCassandra TODO Doc Comment
 func resourceMonitorUpdateCassandra(d *schema.ResourceData, meta interface{}) error {
-	d.Set("app_type", strings.ToLower("Cassandra"))
-	return CommonMonitorUpdate(d, meta)
+	apptype := "Cassandra"
+	return CommonMonitorUpdate(d, meta, apptype)
 }
 
 // resourceMonitorDeleteCassandra TODO Doc Comment
 func resourceMonitorDeleteCassandra(d *schema.ResourceData, meta interface{}) error { // TODO Check default is respected
-	d.Set("app_type", strings.ToLower("Cassandra"))
-	return CommonMonitorDelete(d, meta)
+	apptype := "Cassandra"
+	return CommonMonitorDelete(d, meta, apptype)
 }
 
 // TODO Consider necessity for an app edit-version to catch edit-version mis-match back into state.
 // resourceMonitorExistsCassandra TODO Doc Comment
 func resourceMonitorExistsCassandra(d *schema.ResourceData, meta interface{}) (b bool, e error) {
-	d.Set("app_type", strings.ToLower("Cassandra"))
-	return CommonMonitorExists(d, meta)
+	apptype := "Cassandra"
+	return CommonMonitorExists(d, meta, apptype)
 }
 
 // resourceSematextMonitorImportCassandra TODO Doc Comment
 func resourceSematextMonitorImportCassandra(d *schema.ResourceData, meta interface{}) ([]*schema.ResourceData, error) {
-	d.Set("app_type", strings.ToLower("Cassandra"))
-	return CommonMonitorImport(d, meta)
+	apptype := "Cassandra"
+	return CommonMonitorImport(d, meta, apptype)
 }

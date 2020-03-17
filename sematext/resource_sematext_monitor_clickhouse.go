@@ -1,8 +1,12 @@
 package sematext
 
-import (
-	"strings"
+/*
+	Note: Generated file, any edits will be overwritten!
+	Correct way to alter is to edit generate/resource_sematext_monitor.go.template
+	Then run generate/generate.sh
+*/
 
+import (
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
@@ -11,7 +15,7 @@ func resourceSematextMonitorClickhouse() *schema.Resource {
 
 	fieldSchema := MonitorSchemaCommon
 
-	// TODO AWS metadata replacement target
+	// TODO AWS* metadata replacement target
 
 	return &schema.Resource{
 		Create: resourceMonitorCreateClickhouse,
@@ -25,37 +29,37 @@ func resourceSematextMonitorClickhouse() *schema.Resource {
 
 // resourceMonitorCreateClickhouse TODO Doc Comment
 func resourceMonitorCreateClickhouse(d *schema.ResourceData, meta interface{}) error {
-	d.Set("app_type", strings.ToLower("Clickhouse"))
-	return CommonMonitorCreate(d, meta)
+	apptype := "ClickHouse"
+	return CommonMonitorCreate(d, meta, apptype)
 }
 
 // resourceMonitorReadClickhouse TODO Doc Comment
 func resourceMonitorReadClickhouse(d *schema.ResourceData, meta interface{}) error {
-	d.Set("app_type", strings.ToLower("Clickhouse"))
-	return CommonMonitorRead(d, meta)
+	apptype := "ClickHouse"
+	return CommonMonitorRead(d, meta, apptype)
 }
 
 // resourceMonitorUpdateClickhouse TODO Doc Comment
 func resourceMonitorUpdateClickhouse(d *schema.ResourceData, meta interface{}) error {
-	d.Set("app_type", strings.ToLower("Clickhouse"))
-	return CommonMonitorUpdate(d, meta)
+	apptype := "ClickHouse"
+	return CommonMonitorUpdate(d, meta, apptype)
 }
 
 // resourceMonitorDeleteClickhouse TODO Doc Comment
 func resourceMonitorDeleteClickhouse(d *schema.ResourceData, meta interface{}) error { // TODO Check default is respected
-	d.Set("app_type", strings.ToLower("Clickhouse"))
-	return CommonMonitorDelete(d, meta)
+	apptype := "ClickHouse"
+	return CommonMonitorDelete(d, meta, apptype)
 }
 
 // TODO Consider necessity for an app edit-version to catch edit-version mis-match back into state.
 // resourceMonitorExistsClickhouse TODO Doc Comment
 func resourceMonitorExistsClickhouse(d *schema.ResourceData, meta interface{}) (b bool, e error) {
-	d.Set("app_type", strings.ToLower("Clickhouse"))
-	return CommonMonitorExists(d, meta)
+	apptype := "ClickHouse"
+	return CommonMonitorExists(d, meta, apptype)
 }
 
 // resourceSematextMonitorImportClickhouse TODO Doc Comment
 func resourceSematextMonitorImportClickhouse(d *schema.ResourceData, meta interface{}) ([]*schema.ResourceData, error) {
-	d.Set("app_type", strings.ToLower("Clickhouse"))
-	return CommonMonitorImport(d, meta)
+	apptype := "ClickHouse"
+	return CommonMonitorImport(d, meta, apptype)
 }

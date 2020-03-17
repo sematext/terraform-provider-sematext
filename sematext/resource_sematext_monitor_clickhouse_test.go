@@ -1,16 +1,21 @@
 package sematext
 
+/*
+	Note: Generated file, any edits will be overwritten!
+	Correct way to alter is to edit generate/resource_sematext_monitor_test.go.template
+	Then run generate/generate.sh
+*/
+
 import (
-	"strings"
 	"testing"
 )
 
 // TestAccSematextMonitorClickhouseBasic tests resource creation.
 func TestAccSematextMonitorClickhouseBasic(t *testing.T) {
-	CommonMonitorBasicTest(t, strings.ToLower("sematext_monitor_Clickhouse"))
+	CommonMonitorBasicTest(t, "sematext_monitor_clickhouse")
 }
 
 // TestAccSematextMonitorClickhouseUpdate tests for resource updates.
 func TestAccSematextMonitorClickhouseUpdate(t *testing.T) {
-	CommonMonitorUpdateText(t, strings.ToLower("sematext_monitor_Clickhouse"))
+	CommonMonitorUpdateTest(t, "sematext_monitor_clickhouse")
 }

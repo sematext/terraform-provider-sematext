@@ -1,6 +1,9 @@
 package sematext
 
 import (
+	"bytes"
+	"encoding/json"
+
 	"github.com/google/uuid"
 )
 
@@ -17,4 +20,11 @@ func IsValidSematextRegion(region string) bool {
 func IsValidUUID(u string) bool {
 	_, err := uuid.Parse(u)
 	return err == nil
+}
+
+// PrettyPrintJSON TODO Doc Comment
+func PrettyPrintJSON(b []byte) ([]byte, error) {
+	var out bytes.Buffer
+	err := json.Indent(&out, b, "", "    ")
+	return out.Bytes(), err
 }
