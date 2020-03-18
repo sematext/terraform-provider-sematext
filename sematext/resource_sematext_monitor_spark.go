@@ -30,7 +30,9 @@ func resourceSematextMonitorSpark() *schema.Resource {
 // resourceMonitorCreateSpark TODO Doc Comment
 func resourceMonitorCreateSpark(d *schema.ResourceData, meta interface{}) error {
 	apptype := "Spark"
-	return CommonMonitorCreate(d, meta, apptype)
+	err := CommonMonitorCreate(d, meta, apptype)
+
+	return err
 }
 
 // resourceMonitorReadSpark TODO Doc Comment

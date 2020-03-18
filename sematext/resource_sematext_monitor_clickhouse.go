@@ -30,7 +30,9 @@ func resourceSematextMonitorClickhouse() *schema.Resource {
 // resourceMonitorCreateClickhouse TODO Doc Comment
 func resourceMonitorCreateClickhouse(d *schema.ResourceData, meta interface{}) error {
 	apptype := "ClickHouse"
-	return CommonMonitorCreate(d, meta, apptype)
+	err := CommonMonitorCreate(d, meta, apptype)
+
+	return err
 }
 
 // resourceMonitorReadClickhouse TODO Doc Comment

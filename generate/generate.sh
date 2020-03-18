@@ -20,15 +20,12 @@ apptypes=(
     "Infra"
     "JVM"
     "Kafka"
-    "Kafka-0.7.2"
-    "Memcached"
     "MongoDB"
     "MySQL"
     "Nginx"
     "Nginx-Plus"
     "Node.js"
     "Redis"
-    "SearchAnalytics"
     "Sensei"
     "Solr"
     "SolrCloud"
@@ -37,6 +34,8 @@ apptypes=(
     "Tomcat"
     "ZooKeeper"
 )
+
+# removed "Kafka-0.7.2" "Memcached" "SearchAnalytics"
 
 resourcelist=""
 

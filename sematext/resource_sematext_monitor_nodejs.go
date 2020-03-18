@@ -30,7 +30,9 @@ func resourceSematextMonitorNodejs() *schema.Resource {
 // resourceMonitorCreateNodejs TODO Doc Comment
 func resourceMonitorCreateNodejs(d *schema.ResourceData, meta interface{}) error {
 	apptype := "Node.js"
-	return CommonMonitorCreate(d, meta, apptype)
+	err := CommonMonitorCreate(d, meta, apptype)
+
+	return err
 }
 
 // resourceMonitorReadNodejs TODO Doc Comment

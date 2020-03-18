@@ -30,7 +30,9 @@ func resourceSematextMonitorSensei() *schema.Resource {
 // resourceMonitorCreateSensei TODO Doc Comment
 func resourceMonitorCreateSensei(d *schema.ResourceData, meta interface{}) error {
 	apptype := "Sensei"
-	return CommonMonitorCreate(d, meta, apptype)
+	err := CommonMonitorCreate(d, meta, apptype)
+
+	return err
 }
 
 // resourceMonitorReadSensei TODO Doc Comment

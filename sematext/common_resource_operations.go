@@ -1,6 +1,7 @@
 package sematext
 
 import (
+	"errors"
 	"fmt"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
@@ -20,28 +21,28 @@ func CommonMonitorCreate(d *schema.ResourceData, meta interface{}, apptype strin
 	createAppInfo := &api.CreateAppInfo{}
 	createAppInfo.AppType = apptype
 
-	discountCode, discountCodeExists := d.GetOkExists("discount_code")
-	if discountCodeExists {
+	discountCode, discountCodePresent := d.GetOkExists("discount_code")
+	if discountCodePresent {
 		createAppInfo.DiscountCode = discountCode.(string)
 	}
 
-	initialPlan, initialPlanExists := d.GetOkExists("billing_plan")
-	if initialPlanExists {
-		createAppInfo.InitialPlanID = api.PlanLabelToPlanID[initialPlan.(string)]
+	initialPlanID, initialPlanIDPresent := d.GetOkExists("billing_plan_id")
+	if initialPlanIDPresent {
+		if _, found := api.LookupAppType2PlanID[initialPlanID.(int)]; !found {
+
+			return fmt.Errorf("%i is invalid billing_plan_id for %s", initialPlanID, apptype)
+
+		}
+		createAppInfo.InitialPlanID = initialPlanID.(int64)
 	} else {
-		createAppInfo.InitialPlanID = api.PlanLabelToPlanID["basic"]
-		d.Set("plan", "basic")
+		createAppInfo.InitialPlanID = int64(api.LookupPlanID2Apptypes[apptype][0])
 	}
 
-	if createAppInfo.AppType == "aws" {
-		//MetaData      AppMetadata `json:"metaData,omitempty"` - TODO aws metadata
-	}
-
-	name, nameExists := d.GetOkExists("name")
-	if nameExists {
+	name, namePresent := d.GetOkExists("name")
+	if namePresent {
 		createAppInfo.Name = name.(string)
 	} else {
-		return fmt.Errorf("Sematext monitor is missing a name clause")
+		return errors.New("Sematext monitor is missing a name field")
 	}
 
 	app, err := createAppInfo.Persist(client)
@@ -111,12 +112,17 @@ func CommonMonitorRead(d *schema.ResourceData, meta interface{}, apptype string)
 	if err != nil {
 		return err
 	}
+
 	d.Set("name", app.Name)
 	d.Set("description", app.Description)
-	d.Set("billing_plan", api.PlanIDToPlanLabel[app.Plan.ID])
-
-	//d.Set("discount_code",) // TODO - JIRA discount_code seems to not be stored in the App.
-	// TODO Make consistent with latest schema
+	d.Set("billing_plan_id", app.Plan.ID)
+	//d.Set("discount_code", "???")     // TODO Where to read?
+	//d.Set("ignore_percentage", "???") // TODO Where to read field?
+	d.Set("max_events", app.Plan.MaxDailyEvents)
+	//d.Set("max_limit_mb", "???")        // TODO Where to read field?
+	//d.Set("sampling", "???")            // TODO Where to read field?
+	//d.Set("sampling_percentage", "???") // TODO Where to read field?
+	//d.Set("staggering", "???")          // TODO Where to read field?
 
 	return nil
 }
@@ -179,9 +185,9 @@ func CommonMonitorUpdate(d *schema.ResourceData, meta interface{}, apptype strin
 	billingInfo := &api.BillingInfo{}
 	billingInfoChanged := false
 
-	if d.HasChange("billing_plan") {
-		_, newBillingPlan := d.GetChange("billing_plan")
-		billingInfo.PlanID = api.PlanLabelToPlanID[newBillingPlan.(string)]
+	if d.HasChange("billing_plan_id") {
+		_, newBillingPlanID := d.GetChange("billing_plan_id")
+		billingInfo.PlanID = newBillingPlanID.(int64)
 		billingInfoChanged = true
 	}
 

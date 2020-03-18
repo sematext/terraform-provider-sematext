@@ -30,7 +30,9 @@ func resourceSematextMonitorHbase() *schema.Resource {
 // resourceMonitorCreateHbase TODO Doc Comment
 func resourceMonitorCreateHbase(d *schema.ResourceData, meta interface{}) error {
 	apptype := "HBase"
-	return CommonMonitorCreate(d, meta, apptype)
+	err := CommonMonitorCreate(d, meta, apptype)
+
+	return err
 }
 
 // resourceMonitorReadHbase TODO Doc Comment

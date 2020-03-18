@@ -30,7 +30,9 @@ func resourceSematextMonitorDocker() *schema.Resource {
 // resourceMonitorCreateDocker TODO Doc Comment
 func resourceMonitorCreateDocker(d *schema.ResourceData, meta interface{}) error {
 	apptype := "Docker"
-	return CommonMonitorCreate(d, meta, apptype)
+	err := CommonMonitorCreate(d, meta, apptype)
+
+	return err
 }
 
 // resourceMonitorReadDocker TODO Doc Comment

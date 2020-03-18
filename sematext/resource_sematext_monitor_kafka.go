@@ -30,7 +30,9 @@ func resourceSematextMonitorKafka() *schema.Resource {
 // resourceMonitorCreateKafka TODO Doc Comment
 func resourceMonitorCreateKafka(d *schema.ResourceData, meta interface{}) error {
 	apptype := "Kafka"
-	return CommonMonitorCreate(d, meta, apptype)
+	err := CommonMonitorCreate(d, meta, apptype)
+
+	return err
 }
 
 // resourceMonitorReadKafka TODO Doc Comment

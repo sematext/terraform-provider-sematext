@@ -30,7 +30,9 @@ func resourceSematextMonitorNginxplus() *schema.Resource {
 // resourceMonitorCreateNginxplus TODO Doc Comment
 func resourceMonitorCreateNginxplus(d *schema.ResourceData, meta interface{}) error {
 	apptype := "Nginx-Plus"
-	return CommonMonitorCreate(d, meta, apptype)
+	err := CommonMonitorCreate(d, meta, apptype)
+
+	return err
 }
 
 // resourceMonitorReadNginxplus TODO Doc Comment

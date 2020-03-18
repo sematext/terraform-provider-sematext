@@ -30,7 +30,9 @@ func resourceSematextMonitorAwsec2() *schema.Resource {
 // resourceMonitorCreateAwsec2 TODO Doc Comment
 func resourceMonitorCreateAwsec2(d *schema.ResourceData, meta interface{}) error {
 	apptype := "AWS EC2"
-	return CommonMonitorCreate(d, meta, apptype)
+	err := CommonMonitorCreate(d, meta, apptype)
+
+	return err
 }
 
 // resourceMonitorReadAwsec2 TODO Doc Comment

@@ -30,7 +30,9 @@ func resourceSematextMonitorAwselb() *schema.Resource {
 // resourceMonitorCreateAwselb TODO Doc Comment
 func resourceMonitorCreateAwselb(d *schema.ResourceData, meta interface{}) error {
 	apptype := "AWS ELB"
-	return CommonMonitorCreate(d, meta, apptype)
+	err := CommonMonitorCreate(d, meta, apptype)
+
+	return err
 }
 
 // resourceMonitorReadAwselb TODO Doc Comment

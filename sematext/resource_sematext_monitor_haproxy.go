@@ -30,7 +30,9 @@ func resourceSematextMonitorHaproxy() *schema.Resource {
 // resourceMonitorCreateHaproxy TODO Doc Comment
 func resourceMonitorCreateHaproxy(d *schema.ResourceData, meta interface{}) error {
 	apptype := "HAProxy"
-	return CommonMonitorCreate(d, meta, apptype)
+	err := CommonMonitorCreate(d, meta, apptype)
+
+	return err
 }
 
 // resourceMonitorReadHaproxy TODO Doc Comment

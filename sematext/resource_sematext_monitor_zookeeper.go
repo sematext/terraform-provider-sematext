@@ -30,7 +30,9 @@ func resourceSematextMonitorZookeeper() *schema.Resource {
 // resourceMonitorCreateZookeeper TODO Doc Comment
 func resourceMonitorCreateZookeeper(d *schema.ResourceData, meta interface{}) error {
 	apptype := "ZooKeeper"
-	return CommonMonitorCreate(d, meta, apptype)
+	err := CommonMonitorCreate(d, meta, apptype)
+
+	return err
 }
 
 // resourceMonitorReadZookeeper TODO Doc Comment

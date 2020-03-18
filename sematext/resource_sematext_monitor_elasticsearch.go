@@ -30,7 +30,9 @@ func resourceSematextMonitorElasticsearch() *schema.Resource {
 // resourceMonitorCreateElasticsearch TODO Doc Comment
 func resourceMonitorCreateElasticsearch(d *schema.ResourceData, meta interface{}) error {
 	apptype := "Elastic Search"
-	return CommonMonitorCreate(d, meta, apptype)
+	err := CommonMonitorCreate(d, meta, apptype)
+
+	return err
 }
 
 // resourceMonitorReadElasticsearch TODO Doc Comment

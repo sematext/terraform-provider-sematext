@@ -30,7 +30,9 @@ func resourceSematextMonitorJvm() *schema.Resource {
 // resourceMonitorCreateJvm TODO Doc Comment
 func resourceMonitorCreateJvm(d *schema.ResourceData, meta interface{}) error {
 	apptype := "JVM"
-	return CommonMonitorCreate(d, meta, apptype)
+	err := CommonMonitorCreate(d, meta, apptype)
+
+	return err
 }
 
 // resourceMonitorReadJvm TODO Doc Comment

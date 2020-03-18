@@ -30,7 +30,9 @@ func resourceSematextMonitorStorm() *schema.Resource {
 // resourceMonitorCreateStorm TODO Doc Comment
 func resourceMonitorCreateStorm(d *schema.ResourceData, meta interface{}) error {
 	apptype := "Storm"
-	return CommonMonitorCreate(d, meta, apptype)
+	err := CommonMonitorCreate(d, meta, apptype)
+
+	return err
 }
 
 // resourceMonitorReadStorm TODO Doc Comment

@@ -30,7 +30,9 @@ func resourceSematextMonitorMongodb() *schema.Resource {
 // resourceMonitorCreateMongodb TODO Doc Comment
 func resourceMonitorCreateMongodb(d *schema.ResourceData, meta interface{}) error {
 	apptype := "MongoDB"
-	return CommonMonitorCreate(d, meta, apptype)
+	err := CommonMonitorCreate(d, meta, apptype)
+
+	return err
 }
 
 // resourceMonitorReadMongodb TODO Doc Comment

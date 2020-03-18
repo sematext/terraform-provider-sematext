@@ -41,8 +41,8 @@ func (rtf *ResourceTestFixture) Hydrate(resourceType string) *ResourceTestFixtur
 	rtf.Name = strings.ToLower(fmt.Sprintf("test_%s", rndID))
 	rtf.StatePath = rtf.ResourceType + "." + rtf.Name
 	rtf.Description = fmt.Sprintf("TESTING : SematextMonitorBasic : %s : Create", rtf.ResourceType)
-	rtf.Plan = "basic"
-	rtf.DiscountCode = "MONEU2020"
+	rtf.Plan = api.TestBillingPlan
+	rtf.DiscountCode = api.TestDiscountCodeMetrics
 	rtf.IgnorePercentage = 10
 	rtf.MaxEvents = 10
 	rtf.MaxLimitMb = 10
@@ -62,6 +62,7 @@ func (rtf *ResourceTestFixture) FixtureToHCL() string {
 		name = "%s"
 		description = "%s"
 		billing_plan = "%s"
+		discount_code = "%s"
 		ignore_percentage = %d
 		max_events = %d
 		max_limit_mb = %d
@@ -75,6 +76,7 @@ func (rtf *ResourceTestFixture) FixtureToHCL() string {
 		rtf.Name,
 		rtf.Description,
 		rtf.Plan,
+		rtf.DiscountCode,
 		rtf.IgnorePercentage,
 		rtf.MaxEvents,
 		rtf.MaxLimitMb,

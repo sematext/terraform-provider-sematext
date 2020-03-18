@@ -30,7 +30,9 @@ func resourceSematextMonitorHadoopyarn() *schema.Resource {
 // resourceMonitorCreateHadoopyarn TODO Doc Comment
 func resourceMonitorCreateHadoopyarn(d *schema.ResourceData, meta interface{}) error {
 	apptype := "Hadoop-YARN"
-	return CommonMonitorCreate(d, meta, apptype)
+	err := CommonMonitorCreate(d, meta, apptype)
+
+	return err
 }
 
 // resourceMonitorReadHadoopyarn TODO Doc Comment

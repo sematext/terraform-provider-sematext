@@ -30,7 +30,9 @@ func resourceSematextMonitorMysql() *schema.Resource {
 // resourceMonitorCreateMysql TODO Doc Comment
 func resourceMonitorCreateMysql(d *schema.ResourceData, meta interface{}) error {
 	apptype := "MySQL"
-	return CommonMonitorCreate(d, meta, apptype)
+	err := CommonMonitorCreate(d, meta, apptype)
+
+	return err
 }
 
 // resourceMonitorReadMysql TODO Doc Comment

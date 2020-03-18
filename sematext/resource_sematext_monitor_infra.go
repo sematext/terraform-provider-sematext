@@ -30,7 +30,9 @@ func resourceSematextMonitorInfra() *schema.Resource {
 // resourceMonitorCreateInfra TODO Doc Comment
 func resourceMonitorCreateInfra(d *schema.ResourceData, meta interface{}) error {
 	apptype := "Infra"
-	return CommonMonitorCreate(d, meta, apptype)
+	err := CommonMonitorCreate(d, meta, apptype)
+
+	return err
 }
 
 // resourceMonitorReadInfra TODO Doc Comment

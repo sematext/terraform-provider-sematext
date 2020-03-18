@@ -30,7 +30,9 @@ func resourceSematextMonitorApache() *schema.Resource {
 // resourceMonitorCreateApache TODO Doc Comment
 func resourceMonitorCreateApache(d *schema.ResourceData, meta interface{}) error {
 	apptype := "Apache"
-	return CommonMonitorCreate(d, meta, apptype)
+	err := CommonMonitorCreate(d, meta, apptype)
+
+	return err
 }
 
 // resourceMonitorReadApache TODO Doc Comment

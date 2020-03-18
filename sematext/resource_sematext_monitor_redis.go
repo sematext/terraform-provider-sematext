@@ -30,7 +30,9 @@ func resourceSematextMonitorRedis() *schema.Resource {
 // resourceMonitorCreateRedis TODO Doc Comment
 func resourceMonitorCreateRedis(d *schema.ResourceData, meta interface{}) error {
 	apptype := "Redis"
-	return CommonMonitorCreate(d, meta, apptype)
+	err := CommonMonitorCreate(d, meta, apptype)
+
+	return err
 }
 
 // resourceMonitorReadRedis TODO Doc Comment

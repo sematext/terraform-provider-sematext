@@ -30,7 +30,9 @@ func resourceSematextMonitorHadoopmrv1() *schema.Resource {
 // resourceMonitorCreateHadoopmrv1 TODO Doc Comment
 func resourceMonitorCreateHadoopmrv1(d *schema.ResourceData, meta interface{}) error {
 	apptype := "Hadoop-MRv1"
-	return CommonMonitorCreate(d, meta, apptype)
+	err := CommonMonitorCreate(d, meta, apptype)
+
+	return err
 }
 
 // resourceMonitorReadHadoopmrv1 TODO Doc Comment

@@ -2,10 +2,9 @@ package sematext
 
 import (
 	"errors"
-	"fmt"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
-	funk "github.com/thoas/go-funk"
+	"github.com/sematext/sematext-api-client/api"
 )
 
 // MonitorSchemaCommon contains common resource fields
@@ -33,14 +32,13 @@ var MonitorSchemaCommon = map[string]*schema.Schema{
 			return warns, errs
 		},
 	},
-	"billing_plan": {
-		Type:     schema.TypeString,
+	"billing_plan_id": {
+		Type:     schema.TypeInt,
 		Required: true,
 		ForceNew: false,
 		ValidateFunc: func(value interface{}, key string) (warns []string, errs []error) {
-			allowed := []string{"basic", "standard", "pro"}
-			if !funk.Contains(allowed, value.(string)) {
-				errs = append(errs, fmt.Errorf("billing_plan must be one of %v : got %s", allowed, value))
+			if _, found := api.LookupAppType2PlanID[value.(int)]; !found {
+				errs = append(errs, errors.New("billing_plan_id not recognized"))
 			}
 			return warns, errs
 		},

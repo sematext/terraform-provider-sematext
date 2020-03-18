@@ -30,7 +30,9 @@ func resourceSematextMonitorCassandra() *schema.Resource {
 // resourceMonitorCreateCassandra TODO Doc Comment
 func resourceMonitorCreateCassandra(d *schema.ResourceData, meta interface{}) error {
 	apptype := "Cassandra"
-	return CommonMonitorCreate(d, meta, apptype)
+	err := CommonMonitorCreate(d, meta, apptype)
+
+	return err
 }
 
 // resourceMonitorReadCassandra TODO Doc Comment

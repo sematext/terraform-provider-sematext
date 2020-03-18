@@ -30,7 +30,9 @@ func resourceSematextMonitorAkka() *schema.Resource {
 // resourceMonitorCreateAkka TODO Doc Comment
 func resourceMonitorCreateAkka(d *schema.ResourceData, meta interface{}) error {
 	apptype := "Akka"
-	return CommonMonitorCreate(d, meta, apptype)
+	err := CommonMonitorCreate(d, meta, apptype)
+
+	return err
 }
 
 // resourceMonitorReadAkka TODO Doc Comment

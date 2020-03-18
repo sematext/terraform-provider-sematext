@@ -30,7 +30,9 @@ func resourceSematextMonitorTomcat() *schema.Resource {
 // resourceMonitorCreateTomcat TODO Doc Comment
 func resourceMonitorCreateTomcat(d *schema.ResourceData, meta interface{}) error {
 	apptype := "Tomcat"
-	return CommonMonitorCreate(d, meta, apptype)
+	err := CommonMonitorCreate(d, meta, apptype)
+
+	return err
 }
 
 // resourceMonitorReadTomcat TODO Doc Comment

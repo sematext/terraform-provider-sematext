@@ -30,7 +30,9 @@ func resourceSematextMonitorAwsebs() *schema.Resource {
 // resourceMonitorCreateAwsebs TODO Doc Comment
 func resourceMonitorCreateAwsebs(d *schema.ResourceData, meta interface{}) error {
 	apptype := "AWS EBS"
-	return CommonMonitorCreate(d, meta, apptype)
+	err := CommonMonitorCreate(d, meta, apptype)
+
+	return err
 }
 
 // resourceMonitorReadAwsebs TODO Doc Comment

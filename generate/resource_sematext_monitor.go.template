@@ -30,7 +30,9 @@ func resourceSematextMonitor<<CLASS_NAME>>() *schema.Resource {
 // resourceMonitorCreate<<CLASS_NAME>> TODO Doc Comment
 func resourceMonitorCreate<<CLASS_NAME>>(d *schema.ResourceData, meta interface{}) error {
 	apptype := "<<APP_TYPE>>"
-	return CommonMonitorCreate(d, meta, apptype)
+	err := CommonMonitorCreate(d, meta, apptype)
+
+	return err
 }
 
 // resourceMonitorRead<<CLASS_NAME>> TODO Doc Comment

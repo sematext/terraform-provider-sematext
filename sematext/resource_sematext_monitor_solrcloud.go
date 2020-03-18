@@ -30,7 +30,9 @@ func resourceSematextMonitorSolrcloud() *schema.Resource {
 // resourceMonitorCreateSolrcloud TODO Doc Comment
 func resourceMonitorCreateSolrcloud(d *schema.ResourceData, meta interface{}) error {
 	apptype := "SolrCloud"
-	return CommonMonitorCreate(d, meta, apptype)
+	err := CommonMonitorCreate(d, meta, apptype)
+
+	return err
 }
 
 // resourceMonitorReadSolrcloud TODO Doc Comment
