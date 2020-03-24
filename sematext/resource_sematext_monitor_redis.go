@@ -13,9 +13,7 @@ import (
 // resourceSematextMonitorRedis TODO Doc Comment
 func resourceSematextMonitorRedis() *schema.Resource {
 
-	fieldSchema := MonitorSchemaCommon
-
-	// TODO AWS* metadata replacement target
+	fieldSchema := MonitorSchemaCommon("Redis")
 
 	return &schema.Resource{
 		Create: resourceMonitorCreateRedis,

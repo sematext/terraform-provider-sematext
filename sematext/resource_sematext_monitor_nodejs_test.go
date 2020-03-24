@@ -12,10 +12,10 @@ import (
 
 // TestAccSematextMonitorNodejsBasic tests resource creation.
 func TestAccSematextMonitorNodejsBasic(t *testing.T) {
-	CommonMonitorBasicTest(t, "sematext_monitor_nodejs")
+	CommonMonitorBasicTest(t, "sematext_monitor_nodejs", "Node.js")
 }
 
 // TestAccSematextMonitorNodejsUpdate tests for resource updates.
 func TestAccSematextMonitorNodejsUpdate(t *testing.T) {
-	CommonMonitorUpdateTest(t, "sematext_monitor_nodejs")
+	CommonMonitorUpdateTest(t, "sematext_monitor_nodejs", "Node.js")
 }

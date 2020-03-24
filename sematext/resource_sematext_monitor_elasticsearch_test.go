@@ -12,10 +12,10 @@ import (
 
 // TestAccSematextMonitorElasticsearchBasic tests resource creation.
 func TestAccSematextMonitorElasticsearchBasic(t *testing.T) {
-	CommonMonitorBasicTest(t, "sematext_monitor_elasticsearch")
+	CommonMonitorBasicTest(t, "sematext_monitor_elasticsearch", "Elastic Search")
 }
 
 // TestAccSematextMonitorElasticsearchUpdate tests for resource updates.
 func TestAccSematextMonitorElasticsearchUpdate(t *testing.T) {
-	CommonMonitorUpdateTest(t, "sematext_monitor_elasticsearch")
+	CommonMonitorUpdateTest(t, "sematext_monitor_elasticsearch", "Elastic Search")
 }

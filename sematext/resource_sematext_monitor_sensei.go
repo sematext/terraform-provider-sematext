@@ -13,9 +13,7 @@ import (
 // resourceSematextMonitorSensei TODO Doc Comment
 func resourceSematextMonitorSensei() *schema.Resource {
 
-	fieldSchema := MonitorSchemaCommon
-
-	// TODO AWS* metadata replacement target
+	fieldSchema := MonitorSchemaCommon("Sensei")
 
 	return &schema.Resource{
 		Create: resourceMonitorCreateSensei,

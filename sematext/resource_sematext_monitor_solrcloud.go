@@ -13,9 +13,7 @@ import (
 // resourceSematextMonitorSolrcloud TODO Doc Comment
 func resourceSematextMonitorSolrcloud() *schema.Resource {
 
-	fieldSchema := MonitorSchemaCommon
-
-	// TODO AWS* metadata replacement target
+	fieldSchema := MonitorSchemaCommon("Solrcloud")
 
 	return &schema.Resource{
 		Create: resourceMonitorCreateSolrcloud,

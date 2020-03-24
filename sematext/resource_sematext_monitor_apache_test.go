@@ -12,10 +12,10 @@ import (
 
 // TestAccSematextMonitorApacheBasic tests resource creation.
 func TestAccSematextMonitorApacheBasic(t *testing.T) {
-	CommonMonitorBasicTest(t, "sematext_monitor_apache")
+	CommonMonitorBasicTest(t, "sematext_monitor_apache", "Apache")
 }
 
 // TestAccSematextMonitorApacheUpdate tests for resource updates.
 func TestAccSematextMonitorApacheUpdate(t *testing.T) {
-	CommonMonitorUpdateTest(t, "sematext_monitor_apache")
+	CommonMonitorUpdateTest(t, "sematext_monitor_apache", "Apache")
 }

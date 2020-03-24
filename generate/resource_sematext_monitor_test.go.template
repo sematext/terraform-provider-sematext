@@ -14,11 +14,11 @@ import (
 
 // TestAccSematextMonitor<<CLASS_NAME>>Basic tests resource creation.
 func TestAccSematextMonitor<<CLASS_NAME>>Basic(t *testing.T) {
-	CommonMonitorBasicTest(t, "<<RESOURCE_NAME>>")
+	CommonMonitorBasicTest(t, "<<RESOURCE_NAME>>", "<<APP_TYPE>>")
 }
 
 
 // TestAccSematextMonitor<<CLASS_NAME>>Update tests for resource updates.
 func TestAccSematextMonitor<<CLASS_NAME>>Update(t *testing.T) {
-	CommonMonitorUpdateTest(t, "<<RESOURCE_NAME>>")
+	CommonMonitorUpdateTest(t, "<<RESOURCE_NAME>>", "<<APP_TYPE>>")
 }

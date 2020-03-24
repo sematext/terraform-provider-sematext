@@ -13,9 +13,7 @@ import (
 // resourceSematextMonitorHadoopmrv1 TODO Doc Comment
 func resourceSematextMonitorHadoopmrv1() *schema.Resource {
 
-	fieldSchema := MonitorSchemaCommon
-
-	// TODO AWS* metadata replacement target
+	fieldSchema := MonitorSchemaCommon("Hadoopmrv1")
 
 	return &schema.Resource{
 		Create: resourceMonitorCreateHadoopmrv1,

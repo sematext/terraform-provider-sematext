@@ -12,10 +12,10 @@ import (
 
 // TestAccSematextMonitorHadoopyarnBasic tests resource creation.
 func TestAccSematextMonitorHadoopyarnBasic(t *testing.T) {
-	CommonMonitorBasicTest(t, "sematext_monitor_hadoopyarn")
+	CommonMonitorBasicTest(t, "sematext_monitor_hadoopyarn", "Hadoop-YARN")
 }
 
 // TestAccSematextMonitorHadoopyarnUpdate tests for resource updates.
 func TestAccSematextMonitorHadoopyarnUpdate(t *testing.T) {
-	CommonMonitorUpdateTest(t, "sematext_monitor_hadoopyarn")
+	CommonMonitorUpdateTest(t, "sematext_monitor_hadoopyarn", "Hadoop-YARN")
 }

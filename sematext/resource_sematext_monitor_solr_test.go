@@ -12,10 +12,10 @@ import (
 
 // TestAccSematextMonitorSolrBasic tests resource creation.
 func TestAccSematextMonitorSolrBasic(t *testing.T) {
-	CommonMonitorBasicTest(t, "sematext_monitor_solr")
+	CommonMonitorBasicTest(t, "sematext_monitor_solr", "Solr")
 }
 
 // TestAccSematextMonitorSolrUpdate tests for resource updates.
 func TestAccSematextMonitorSolrUpdate(t *testing.T) {
-	CommonMonitorUpdateTest(t, "sematext_monitor_solr")
+	CommonMonitorUpdateTest(t, "sematext_monitor_solr", "Solr")
 }

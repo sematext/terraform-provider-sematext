@@ -12,10 +12,10 @@ import (
 
 // TestAccSematextMonitorCassandraBasic tests resource creation.
 func TestAccSematextMonitorCassandraBasic(t *testing.T) {
-	CommonMonitorBasicTest(t, "sematext_monitor_cassandra")
+	CommonMonitorBasicTest(t, "sematext_monitor_cassandra", "Cassandra")
 }
 
 // TestAccSematextMonitorCassandraUpdate tests for resource updates.
 func TestAccSematextMonitorCassandraUpdate(t *testing.T) {
-	CommonMonitorUpdateTest(t, "sematext_monitor_cassandra")
+	CommonMonitorUpdateTest(t, "sematext_monitor_cassandra", "Cassandra")
 }

@@ -13,9 +13,7 @@ import (
 // resourceSematextMonitorAwselb TODO Doc Comment
 func resourceSematextMonitorAwselb() *schema.Resource {
 
-	fieldSchema := MonitorSchemaCommon
-
-	// TODO AWS* metadata replacement target
+	fieldSchema := MonitorSchemaCommon("Awselb")
 
 	return &schema.Resource{
 		Create: resourceMonitorCreateAwselb,

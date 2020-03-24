@@ -12,10 +12,10 @@ import (
 
 // TestAccSematextMonitorAwsec2Basic tests resource creation.
 func TestAccSematextMonitorAwsec2Basic(t *testing.T) {
-	CommonMonitorBasicTest(t, "sematext_monitor_awsec2")
+	CommonMonitorBasicTest(t, "sematext_monitor_awsec2", "AWS EC2")
 }
 
 // TestAccSematextMonitorAwsec2Update tests for resource updates.
 func TestAccSematextMonitorAwsec2Update(t *testing.T) {
-	CommonMonitorUpdateTest(t, "sematext_monitor_awsec2")
+	CommonMonitorUpdateTest(t, "sematext_monitor_awsec2", "AWS EC2")
 }

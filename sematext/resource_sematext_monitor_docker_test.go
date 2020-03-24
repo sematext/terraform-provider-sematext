@@ -12,10 +12,10 @@ import (
 
 // TestAccSematextMonitorDockerBasic tests resource creation.
 func TestAccSematextMonitorDockerBasic(t *testing.T) {
-	CommonMonitorBasicTest(t, "sematext_monitor_docker")
+	CommonMonitorBasicTest(t, "sematext_monitor_docker", "Docker")
 }
 
 // TestAccSematextMonitorDockerUpdate tests for resource updates.
 func TestAccSematextMonitorDockerUpdate(t *testing.T) {
-	CommonMonitorUpdateTest(t, "sematext_monitor_docker")
+	CommonMonitorUpdateTest(t, "sematext_monitor_docker", "Docker")
 }

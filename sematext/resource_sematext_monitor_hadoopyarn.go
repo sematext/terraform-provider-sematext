@@ -13,9 +13,7 @@ import (
 // resourceSematextMonitorHadoopyarn TODO Doc Comment
 func resourceSematextMonitorHadoopyarn() *schema.Resource {
 
-	fieldSchema := MonitorSchemaCommon
-
-	// TODO AWS* metadata replacement target
+	fieldSchema := MonitorSchemaCommon("Hadoopyarn")
 
 	return &schema.Resource{
 		Create: resourceMonitorCreateHadoopyarn,

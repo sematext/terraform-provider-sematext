@@ -13,9 +13,7 @@ import (
 // resourceSematextMonitorHbase TODO Doc Comment
 func resourceSematextMonitorHbase() *schema.Resource {
 
-	fieldSchema := MonitorSchemaCommon
-
-	// TODO AWS* metadata replacement target
+	fieldSchema := MonitorSchemaCommon("Hbase")
 
 	return &schema.Resource{
 		Create: resourceMonitorCreateHbase,

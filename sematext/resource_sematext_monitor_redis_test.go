@@ -12,10 +12,10 @@ import (
 
 // TestAccSematextMonitorRedisBasic tests resource creation.
 func TestAccSematextMonitorRedisBasic(t *testing.T) {
-	CommonMonitorBasicTest(t, "sematext_monitor_redis")
+	CommonMonitorBasicTest(t, "sematext_monitor_redis", "Redis")
 }
 
 // TestAccSematextMonitorRedisUpdate tests for resource updates.
 func TestAccSematextMonitorRedisUpdate(t *testing.T) {
-	CommonMonitorUpdateTest(t, "sematext_monitor_redis")
+	CommonMonitorUpdateTest(t, "sematext_monitor_redis", "Redis")
 }

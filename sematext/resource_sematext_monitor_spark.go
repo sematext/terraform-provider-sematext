@@ -13,9 +13,7 @@ import (
 // resourceSematextMonitorSpark TODO Doc Comment
 func resourceSematextMonitorSpark() *schema.Resource {
 
-	fieldSchema := MonitorSchemaCommon
-
-	// TODO AWS* metadata replacement target
+	fieldSchema := MonitorSchemaCommon("Spark")
 
 	return &schema.Resource{
 		Create: resourceMonitorCreateSpark,

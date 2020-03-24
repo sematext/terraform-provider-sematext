@@ -12,10 +12,10 @@ import (
 
 // TestAccSematextMonitorHaproxyBasic tests resource creation.
 func TestAccSematextMonitorHaproxyBasic(t *testing.T) {
-	CommonMonitorBasicTest(t, "sematext_monitor_haproxy")
+	CommonMonitorBasicTest(t, "sematext_monitor_haproxy", "HAProxy")
 }
 
 // TestAccSematextMonitorHaproxyUpdate tests for resource updates.
 func TestAccSematextMonitorHaproxyUpdate(t *testing.T) {
-	CommonMonitorUpdateTest(t, "sematext_monitor_haproxy")
+	CommonMonitorUpdateTest(t, "sematext_monitor_haproxy", "HAProxy")
 }

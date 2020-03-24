@@ -12,10 +12,10 @@ import (
 
 // TestAccSematextMonitorKafkaBasic tests resource creation.
 func TestAccSematextMonitorKafkaBasic(t *testing.T) {
-	CommonMonitorBasicTest(t, "sematext_monitor_kafka")
+	CommonMonitorBasicTest(t, "sematext_monitor_kafka", "Kafka")
 }
 
 // TestAccSematextMonitorKafkaUpdate tests for resource updates.
 func TestAccSematextMonitorKafkaUpdate(t *testing.T) {
-	CommonMonitorUpdateTest(t, "sematext_monitor_kafka")
+	CommonMonitorUpdateTest(t, "sematext_monitor_kafka", "Kafka")
 }

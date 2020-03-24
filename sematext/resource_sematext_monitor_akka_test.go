@@ -12,10 +12,10 @@ import (
 
 // TestAccSematextMonitorAkkaBasic tests resource creation.
 func TestAccSematextMonitorAkkaBasic(t *testing.T) {
-	CommonMonitorBasicTest(t, "sematext_monitor_akka")
+	CommonMonitorBasicTest(t, "sematext_monitor_akka", "Akka")
 }
 
 // TestAccSematextMonitorAkkaUpdate tests for resource updates.
 func TestAccSematextMonitorAkkaUpdate(t *testing.T) {
-	CommonMonitorUpdateTest(t, "sematext_monitor_akka")
+	CommonMonitorUpdateTest(t, "sematext_monitor_akka", "Akka")
 }

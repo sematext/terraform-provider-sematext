@@ -12,10 +12,10 @@ import (
 
 // TestAccSematextMonitorHbaseBasic tests resource creation.
 func TestAccSematextMonitorHbaseBasic(t *testing.T) {
-	CommonMonitorBasicTest(t, "sematext_monitor_hbase")
+	CommonMonitorBasicTest(t, "sematext_monitor_hbase", "HBase")
 }
 
 // TestAccSematextMonitorHbaseUpdate tests for resource updates.
 func TestAccSematextMonitorHbaseUpdate(t *testing.T) {
-	CommonMonitorUpdateTest(t, "sematext_monitor_hbase")
+	CommonMonitorUpdateTest(t, "sematext_monitor_hbase", "HBase")
 }

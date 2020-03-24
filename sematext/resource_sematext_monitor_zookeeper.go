@@ -13,9 +13,7 @@ import (
 // resourceSematextMonitorZookeeper TODO Doc Comment
 func resourceSematextMonitorZookeeper() *schema.Resource {
 
-	fieldSchema := MonitorSchemaCommon
-
-	// TODO AWS* metadata replacement target
+	fieldSchema := MonitorSchemaCommon("Zookeeper")
 
 	return &schema.Resource{
 		Create: resourceMonitorCreateZookeeper,

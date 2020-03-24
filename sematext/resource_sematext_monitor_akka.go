@@ -13,9 +13,7 @@ import (
 // resourceSematextMonitorAkka TODO Doc Comment
 func resourceSematextMonitorAkka() *schema.Resource {
 
-	fieldSchema := MonitorSchemaCommon
-
-	// TODO AWS* metadata replacement target
+	fieldSchema := MonitorSchemaCommon("Akka")
 
 	return &schema.Resource{
 		Create: resourceMonitorCreateAkka,

@@ -13,9 +13,7 @@ import (
 // resourceSematextMonitorNginxplus TODO Doc Comment
 func resourceSematextMonitorNginxplus() *schema.Resource {
 
-	fieldSchema := MonitorSchemaCommon
-
-	// TODO AWS* metadata replacement target
+	fieldSchema := MonitorSchemaCommon("Nginxplus")
 
 	return &schema.Resource{
 		Create: resourceMonitorCreateNginxplus,

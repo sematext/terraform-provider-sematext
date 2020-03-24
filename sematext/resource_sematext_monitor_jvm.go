@@ -13,9 +13,7 @@ import (
 // resourceSematextMonitorJvm TODO Doc Comment
 func resourceSematextMonitorJvm() *schema.Resource {
 
-	fieldSchema := MonitorSchemaCommon
-
-	// TODO AWS* metadata replacement target
+	fieldSchema := MonitorSchemaCommon("Jvm")
 
 	return &schema.Resource{
 		Create: resourceMonitorCreateJvm,

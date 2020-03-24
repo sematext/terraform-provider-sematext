@@ -12,10 +12,10 @@ import (
 
 // TestAccSematextMonitorHadoopmrv1Basic tests resource creation.
 func TestAccSematextMonitorHadoopmrv1Basic(t *testing.T) {
-	CommonMonitorBasicTest(t, "sematext_monitor_hadoopmrv1")
+	CommonMonitorBasicTest(t, "sematext_monitor_hadoopmrv1", "Hadoop-MRv1")
 }
 
 // TestAccSematextMonitorHadoopmrv1Update tests for resource updates.
 func TestAccSematextMonitorHadoopmrv1Update(t *testing.T) {
-	CommonMonitorUpdateTest(t, "sematext_monitor_hadoopmrv1")
+	CommonMonitorUpdateTest(t, "sematext_monitor_hadoopmrv1", "Hadoop-MRv1")
 }

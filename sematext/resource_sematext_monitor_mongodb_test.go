@@ -12,10 +12,10 @@ import (
 
 // TestAccSematextMonitorMongodbBasic tests resource creation.
 func TestAccSematextMonitorMongodbBasic(t *testing.T) {
-	CommonMonitorBasicTest(t, "sematext_monitor_mongodb")
+	CommonMonitorBasicTest(t, "sematext_monitor_mongodb", "MongoDB")
 }
 
 // TestAccSematextMonitorMongodbUpdate tests for resource updates.
 func TestAccSematextMonitorMongodbUpdate(t *testing.T) {
-	CommonMonitorUpdateTest(t, "sematext_monitor_mongodb")
+	CommonMonitorUpdateTest(t, "sematext_monitor_mongodb", "MongoDB")
 }

@@ -13,9 +13,7 @@ import (
 // resourceSematextMonitorClickhouse TODO Doc Comment
 func resourceSematextMonitorClickhouse() *schema.Resource {
 
-	fieldSchema := MonitorSchemaCommon
-
-	// TODO AWS* metadata replacement target
+	fieldSchema := MonitorSchemaCommon("Clickhouse")
 
 	return &schema.Resource{
 		Create: resourceMonitorCreateClickhouse,

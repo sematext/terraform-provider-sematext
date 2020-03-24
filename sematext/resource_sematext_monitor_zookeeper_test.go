@@ -12,10 +12,10 @@ import (
 
 // TestAccSematextMonitorZookeeperBasic tests resource creation.
 func TestAccSematextMonitorZookeeperBasic(t *testing.T) {
-	CommonMonitorBasicTest(t, "sematext_monitor_zookeeper")
+	CommonMonitorBasicTest(t, "sematext_monitor_zookeeper", "ZooKeeper")
 }
 
 // TestAccSematextMonitorZookeeperUpdate tests for resource updates.
 func TestAccSematextMonitorZookeeperUpdate(t *testing.T) {
-	CommonMonitorUpdateTest(t, "sematext_monitor_zookeeper")
+	CommonMonitorUpdateTest(t, "sematext_monitor_zookeeper", "ZooKeeper")
 }

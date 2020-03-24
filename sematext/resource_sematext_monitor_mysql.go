@@ -13,9 +13,7 @@ import (
 // resourceSematextMonitorMysql TODO Doc Comment
 func resourceSematextMonitorMysql() *schema.Resource {
 
-	fieldSchema := MonitorSchemaCommon
-
-	// TODO AWS* metadata replacement target
+	fieldSchema := MonitorSchemaCommon("Mysql")
 
 	return &schema.Resource{
 		Create: resourceMonitorCreateMysql,

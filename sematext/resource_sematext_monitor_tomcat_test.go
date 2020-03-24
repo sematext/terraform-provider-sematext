@@ -12,10 +12,10 @@ import (
 
 // TestAccSematextMonitorTomcatBasic tests resource creation.
 func TestAccSematextMonitorTomcatBasic(t *testing.T) {
-	CommonMonitorBasicTest(t, "sematext_monitor_tomcat")
+	CommonMonitorBasicTest(t, "sematext_monitor_tomcat", "Tomcat")
 }
 
 // TestAccSematextMonitorTomcatUpdate tests for resource updates.
 func TestAccSematextMonitorTomcatUpdate(t *testing.T) {
-	CommonMonitorUpdateTest(t, "sematext_monitor_tomcat")
+	CommonMonitorUpdateTest(t, "sematext_monitor_tomcat", "Tomcat")
 }

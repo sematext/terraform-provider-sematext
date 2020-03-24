@@ -12,10 +12,10 @@ import (
 
 // TestAccSematextMonitorClickhouseBasic tests resource creation.
 func TestAccSematextMonitorClickhouseBasic(t *testing.T) {
-	CommonMonitorBasicTest(t, "sematext_monitor_clickhouse")
+	CommonMonitorBasicTest(t, "sematext_monitor_clickhouse", "ClickHouse")
 }
 
 // TestAccSematextMonitorClickhouseUpdate tests for resource updates.
 func TestAccSematextMonitorClickhouseUpdate(t *testing.T) {
-	CommonMonitorUpdateTest(t, "sematext_monitor_clickhouse")
+	CommonMonitorUpdateTest(t, "sematext_monitor_clickhouse", "ClickHouse")
 }

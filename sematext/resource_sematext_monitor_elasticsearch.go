@@ -13,9 +13,7 @@ import (
 // resourceSematextMonitorElasticsearch TODO Doc Comment
 func resourceSematextMonitorElasticsearch() *schema.Resource {
 
-	fieldSchema := MonitorSchemaCommon
-
-	// TODO AWS* metadata replacement target
+	fieldSchema := MonitorSchemaCommon("Elasticsearch")
 
 	return &schema.Resource{
 		Create: resourceMonitorCreateElasticsearch,

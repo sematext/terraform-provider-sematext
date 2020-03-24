@@ -12,10 +12,10 @@ import (
 
 // TestAccSematextMonitorAwselbBasic tests resource creation.
 func TestAccSematextMonitorAwselbBasic(t *testing.T) {
-	CommonMonitorBasicTest(t, "sematext_monitor_awselb")
+	CommonMonitorBasicTest(t, "sematext_monitor_awselb", "AWS ELB")
 }
 
 // TestAccSematextMonitorAwselbUpdate tests for resource updates.
 func TestAccSematextMonitorAwselbUpdate(t *testing.T) {
-	CommonMonitorUpdateTest(t, "sematext_monitor_awselb")
+	CommonMonitorUpdateTest(t, "sematext_monitor_awselb", "AWS ELB")
 }

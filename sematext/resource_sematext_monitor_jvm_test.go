@@ -12,10 +12,10 @@ import (
 
 // TestAccSematextMonitorJvmBasic tests resource creation.
 func TestAccSematextMonitorJvmBasic(t *testing.T) {
-	CommonMonitorBasicTest(t, "sematext_monitor_jvm")
+	CommonMonitorBasicTest(t, "sematext_monitor_jvm", "JVM")
 }
 
 // TestAccSematextMonitorJvmUpdate tests for resource updates.
 func TestAccSematextMonitorJvmUpdate(t *testing.T) {
-	CommonMonitorUpdateTest(t, "sematext_monitor_jvm")
+	CommonMonitorUpdateTest(t, "sematext_monitor_jvm", "JVM")
 }

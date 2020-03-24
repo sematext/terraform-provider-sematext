@@ -12,10 +12,10 @@ import (
 
 // TestAccSematextMonitorMysqlBasic tests resource creation.
 func TestAccSematextMonitorMysqlBasic(t *testing.T) {
-	CommonMonitorBasicTest(t, "sematext_monitor_mysql")
+	CommonMonitorBasicTest(t, "sematext_monitor_mysql", "MySQL")
 }
 
 // TestAccSematextMonitorMysqlUpdate tests for resource updates.
 func TestAccSematextMonitorMysqlUpdate(t *testing.T) {
-	CommonMonitorUpdateTest(t, "sematext_monitor_mysql")
+	CommonMonitorUpdateTest(t, "sematext_monitor_mysql", "MySQL")
 }

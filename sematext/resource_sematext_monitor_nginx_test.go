@@ -12,10 +12,10 @@ import (
 
 // TestAccSematextMonitorNginxBasic tests resource creation.
 func TestAccSematextMonitorNginxBasic(t *testing.T) {
-	CommonMonitorBasicTest(t, "sematext_monitor_nginx")
+	CommonMonitorBasicTest(t, "sematext_monitor_nginx", "Nginx")
 }
 
 // TestAccSematextMonitorNginxUpdate tests for resource updates.
 func TestAccSematextMonitorNginxUpdate(t *testing.T) {
-	CommonMonitorUpdateTest(t, "sematext_monitor_nginx")
+	CommonMonitorUpdateTest(t, "sematext_monitor_nginx", "Nginx")
 }

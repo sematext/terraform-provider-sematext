@@ -12,10 +12,10 @@ import (
 
 // TestAccSematextMonitorAwsebsBasic tests resource creation.
 func TestAccSematextMonitorAwsebsBasic(t *testing.T) {
-	CommonMonitorBasicTest(t, "sematext_monitor_awsebs")
+	CommonMonitorBasicTest(t, "sematext_monitor_awsebs", "AWS EBS")
 }
 
 // TestAccSematextMonitorAwsebsUpdate tests for resource updates.
 func TestAccSematextMonitorAwsebsUpdate(t *testing.T) {
-	CommonMonitorUpdateTest(t, "sematext_monitor_awsebs")
+	CommonMonitorUpdateTest(t, "sematext_monitor_awsebs", "AWS EBS")
 }

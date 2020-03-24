@@ -12,10 +12,10 @@ import (
 
 // TestAccSematextMonitorStormBasic tests resource creation.
 func TestAccSematextMonitorStormBasic(t *testing.T) {
-	CommonMonitorBasicTest(t, "sematext_monitor_storm")
+	CommonMonitorBasicTest(t, "sematext_monitor_storm", "Storm")
 }
 
 // TestAccSematextMonitorStormUpdate tests for resource updates.
 func TestAccSematextMonitorStormUpdate(t *testing.T) {
-	CommonMonitorUpdateTest(t, "sematext_monitor_storm")
+	CommonMonitorUpdateTest(t, "sematext_monitor_storm", "Storm")
 }

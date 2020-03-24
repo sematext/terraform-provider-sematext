@@ -13,9 +13,7 @@ import (
 // resourceSematextMonitorHaproxy TODO Doc Comment
 func resourceSematextMonitorHaproxy() *schema.Resource {
 
-	fieldSchema := MonitorSchemaCommon
-
-	// TODO AWS* metadata replacement target
+	fieldSchema := MonitorSchemaCommon("Haproxy")
 
 	return &schema.Resource{
 		Create: resourceMonitorCreateHaproxy,

@@ -13,9 +13,7 @@ import (
 // resourceSematextMonitorKafka TODO Doc Comment
 func resourceSematextMonitorKafka() *schema.Resource {
 
-	fieldSchema := MonitorSchemaCommon
-
-	// TODO AWS* metadata replacement target
+	fieldSchema := MonitorSchemaCommon("Kafka")
 
 	return &schema.Resource{
 		Create: resourceMonitorCreateKafka,

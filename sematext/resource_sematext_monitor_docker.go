@@ -13,9 +13,7 @@ import (
 // resourceSematextMonitorDocker TODO Doc Comment
 func resourceSematextMonitorDocker() *schema.Resource {
 
-	fieldSchema := MonitorSchemaCommon
-
-	// TODO AWS* metadata replacement target
+	fieldSchema := MonitorSchemaCommon("Docker")
 
 	return &schema.Resource{
 		Create: resourceMonitorCreateDocker,
