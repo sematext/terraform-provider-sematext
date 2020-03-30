@@ -54,12 +54,6 @@ func MonitorSchemaCommon(appType string) map[string]*schema.Schema {
 			Type:        schema.TypeString,
 			Optional:    true,
 			ForceNew:    false,
-			ValidateFunc: func(value interface{}, key string) (warns []string, errs []error) {
-				if len(value.(string)) == 0 {
-					errs = append(errs, errors.New("discount_code is present but is empty"))
-				}
-				return warns, errs
-			},
 		},
 	}
 

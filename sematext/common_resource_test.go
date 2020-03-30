@@ -56,7 +56,10 @@ func (rtf *ResourceTestFixtureDefault) hydrate(resourceType string, appType stri
 	rtf.Name = rtf.ResourceName
 	rtf.StatePath = rtf.ResourceType + "." + rtf.ResourceName
 	rtf.PlanID = api.AssignPlanID(rtf.AppType)
-	rtf.DiscountCode = api.TestDiscountCodeMetrics
+	if appType != "Logsene" {
+		rtf.DiscountCode = api.TestDiscountCodeMetrics
+	}
+
 }
 
 func (rtf *ResourceTestFixtureAWS) hydrate(resourceType string, appType string) {
@@ -68,7 +71,9 @@ func (rtf *ResourceTestFixtureAWS) hydrate(resourceType string, appType string) 
 	rtf.Name = rtf.ResourceName
 	rtf.StatePath = rtf.ResourceType + "." + rtf.ResourceName
 	rtf.PlanID = api.AssignPlanID(rtf.AppType)
-	rtf.DiscountCode = api.TestDiscountCodeMetrics
+	if appType != "Logsene" {
+		rtf.DiscountCode = api.TestDiscountCodeMetrics
+	}
 	rtf.AwsRegion = os.Getenv("AWS_REGION")
 	rtf.AwsAccessKey = os.Getenv("AWS_ACCESS_KEY_ID")
 	rtf.AwsSecretKey = os.Getenv("AWS_SECRET_ACCESS_KEY")
@@ -222,7 +227,7 @@ func CommonMonitorUpdateTest(t *testing.T, resourceType string, appType string) 
 					Config: fixture0,
 					Check: resource.ComposeTestCheckFunc(
 						ConfirmMonitorCreationAWS(rtf0),
-						//resource.TestCheckResourceAttr(rtf0.StatePath, "name", workaround),
+						//resource.TestCheckResourceAttr(rtf0.StatePath, "name", workaround), //TODO-workaround.
 						resource.TestCheckResourceAttr(rtf0.StatePath, "billing_plan_id", strconv.Itoa(rtf0.PlanID)),
 						resource.TestCheckResourceAttr(rtf0.StatePath, "discount_code", rtf0.DiscountCode),
 					),

@@ -19,6 +19,7 @@ apptypes=(
     "HBase"
     "JVM"
     "Kafka"
+    "Logsene"
     "MongoDB"
     "MySQL"
     "Nginx"

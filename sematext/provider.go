@@ -53,6 +53,7 @@ func Provider() terraform.ResourceProvider {
 			"sematext_monitor_hbase":         resourceSematextMonitorHbase(),
 			"sematext_monitor_jvm":           resourceSematextMonitorJvm(),
 			"sematext_monitor_kafka":         resourceSematextMonitorKafka(),
+			"sematext_monitor_logsene":       resourceSematextMonitorLogsene(),
 			"sematext_monitor_mongodb":       resourceSematextMonitorMongodb(),
 			"sematext_monitor_mysql":         resourceSematextMonitorMysql(),
 			"sematext_monitor_nginx":         resourceSematextMonitorNginx(),
