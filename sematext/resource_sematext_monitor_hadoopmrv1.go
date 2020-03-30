@@ -13,7 +13,7 @@ import (
 // resourceSematextMonitorHadoopmrv1 TODO Doc Comment
 func resourceSematextMonitorHadoopmrv1() *schema.Resource {
 
-	fieldSchema := MonitorSchemaCommon("Hadoopmrv1")
+	fieldSchema := MonitorSchemaCommon("Hadoop-MRv1")
 
 	return &schema.Resource{
 		Create: resourceMonitorCreateHadoopmrv1,

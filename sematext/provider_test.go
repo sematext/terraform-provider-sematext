@@ -54,5 +54,17 @@ func testAccPreCheck(t *testing.T) {
 		t.Fatal("SEMATEXT_REGION environment not set correctly")
 	}
 
+	if os.Getenv("AWS_ACCESS_KEY_ID") == "" {
+		t.Fatal("AWS_ACCESS_KEY_ID must be set for acceptance tests")
+	}
+
+	if os.Getenv("AWS_ACCESS_KEY_ID") != "" && os.Getenv("AWS_SECRET_ACCESS_KEY") == "" {
+		t.Fatal("AWS_SECRET_ACCESS_KEY must be set for acceptance tests")
+	}
+
+	if os.Getenv("AWS_REGION") == "" {
+		t.Fatal("AWS_REGION must be set for acceptance tests")
+	}
+
 	return
 }

@@ -13,7 +13,7 @@ import (
 // resourceSematextMonitorMysql TODO Doc Comment
 func resourceSematextMonitorMysql() *schema.Resource {
 
-	fieldSchema := MonitorSchemaCommon("Mysql")
+	fieldSchema := MonitorSchemaCommon("MySQL")
 
 	return &schema.Resource{
 		Create: resourceMonitorCreateMysql,

@@ -13,7 +13,7 @@ import (
 // resourceSematextMonitorHbase TODO Doc Comment
 func resourceSematextMonitorHbase() *schema.Resource {
 
-	fieldSchema := MonitorSchemaCommon("Hbase")
+	fieldSchema := MonitorSchemaCommon("HBase")
 
 	return &schema.Resource{
 		Create: resourceMonitorCreateHbase,

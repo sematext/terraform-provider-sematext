@@ -17,7 +17,6 @@ apptypes=(
     "Hadoop-YARN"
     "HAProxy"
     "HBase"
-    "Infra"
     "JVM"
     "Kafka"
     "MongoDB"
@@ -26,7 +25,6 @@ apptypes=(
     "Nginx-Plus"
     "Node.js"
     "Redis"
-    "Sensei"
     "Solr"
     "SolrCloud"
     "Spark"
@@ -35,7 +33,7 @@ apptypes=(
     "ZooKeeper"
 )
 
-# removed "Kafka-0.7.2" "Memcached" "SearchAnalytics"
+# removed "Kafka-0.7.2" "Memcached" "SearchAnalytics" "Sensei" "Infra"
 
 resourcelist=""
 

@@ -13,7 +13,7 @@ import (
 // resourceSematextMonitorHaproxy TODO Doc Comment
 func resourceSematextMonitorHaproxy() *schema.Resource {
 
-	fieldSchema := MonitorSchemaCommon("Haproxy")
+	fieldSchema := MonitorSchemaCommon("HAProxy")
 
 	return &schema.Resource{
 		Create: resourceMonitorCreateHaproxy,

@@ -13,7 +13,7 @@ import (
 // resourceSematextMonitorNodejs TODO Doc Comment
 func resourceSematextMonitorNodejs() *schema.Resource {
 
-	fieldSchema := MonitorSchemaCommon("Nodejs")
+	fieldSchema := MonitorSchemaCommon("Node.js")
 
 	return &schema.Resource{
 		Create: resourceMonitorCreateNodejs,

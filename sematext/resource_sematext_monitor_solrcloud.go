@@ -13,7 +13,7 @@ import (
 // resourceSematextMonitorSolrcloud TODO Doc Comment
 func resourceSematextMonitorSolrcloud() *schema.Resource {
 
-	fieldSchema := MonitorSchemaCommon("Solrcloud")
+	fieldSchema := MonitorSchemaCommon("SolrCloud")
 
 	return &schema.Resource{
 		Create: resourceMonitorCreateSolrcloud,

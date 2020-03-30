@@ -13,7 +13,7 @@ import (
 // resourceSematextMonitorHadoopyarn TODO Doc Comment
 func resourceSematextMonitorHadoopyarn() *schema.Resource {
 
-	fieldSchema := MonitorSchemaCommon("Hadoopyarn")
+	fieldSchema := MonitorSchemaCommon("Hadoop-YARN")
 
 	return &schema.Resource{
 		Create: resourceMonitorCreateHadoopyarn,

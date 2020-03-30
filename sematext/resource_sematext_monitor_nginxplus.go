@@ -13,7 +13,7 @@ import (
 // resourceSematextMonitorNginxplus TODO Doc Comment
 func resourceSematextMonitorNginxplus() *schema.Resource {
 
-	fieldSchema := MonitorSchemaCommon("Nginxplus")
+	fieldSchema := MonitorSchemaCommon("Nginx-Plus")
 
 	return &schema.Resource{
 		Create: resourceMonitorCreateNginxplus,

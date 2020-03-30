@@ -13,7 +13,7 @@ import (
 // resourceSematextMonitor<<CLASS_NAME>> TODO Doc Comment
 func resourceSematextMonitor<<CLASS_NAME>>() *schema.Resource {
 
-	fieldSchema := MonitorSchemaCommon("<<CLASS_NAME>>")
+	fieldSchema := MonitorSchemaCommon("<<APP_TYPE>>")
 
 	return &schema.Resource{
 		Create: resourceMonitorCreate<<CLASS_NAME>>,

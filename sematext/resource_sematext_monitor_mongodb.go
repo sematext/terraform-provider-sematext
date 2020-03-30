@@ -13,7 +13,7 @@ import (
 // resourceSematextMonitorMongodb TODO Doc Comment
 func resourceSematextMonitorMongodb() *schema.Resource {
 
-	fieldSchema := MonitorSchemaCommon("Mongodb")
+	fieldSchema := MonitorSchemaCommon("MongoDB")
 
 	return &schema.Resource{
 		Create: resourceMonitorCreateMongodb,

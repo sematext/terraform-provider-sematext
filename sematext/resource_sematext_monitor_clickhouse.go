@@ -13,7 +13,7 @@ import (
 // resourceSematextMonitorClickhouse TODO Doc Comment
 func resourceSematextMonitorClickhouse() *schema.Resource {
 
-	fieldSchema := MonitorSchemaCommon("Clickhouse")
+	fieldSchema := MonitorSchemaCommon("ClickHouse")
 
 	return &schema.Resource{
 		Create: resourceMonitorCreateClickhouse,

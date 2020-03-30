@@ -13,7 +13,7 @@ import (
 // resourceSematextMonitorAwselb TODO Doc Comment
 func resourceSematextMonitorAwselb() *schema.Resource {
 
-	fieldSchema := MonitorSchemaCommon("Awselb")
+	fieldSchema := MonitorSchemaCommon("AWS ELB")
 
 	return &schema.Resource{
 		Create: resourceMonitorCreateAwselb,

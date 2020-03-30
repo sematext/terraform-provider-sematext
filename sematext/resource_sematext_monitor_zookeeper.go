@@ -13,7 +13,7 @@ import (
 // resourceSematextMonitorZookeeper TODO Doc Comment
 func resourceSematextMonitorZookeeper() *schema.Resource {
 
-	fieldSchema := MonitorSchemaCommon("Zookeeper")
+	fieldSchema := MonitorSchemaCommon("ZooKeeper")
 
 	return &schema.Resource{
 		Create: resourceMonitorCreateZookeeper,

@@ -13,7 +13,7 @@ import (
 // resourceSematextMonitorJvm TODO Doc Comment
 func resourceSematextMonitorJvm() *schema.Resource {
 
-	fieldSchema := MonitorSchemaCommon("Jvm")
+	fieldSchema := MonitorSchemaCommon("JVM")
 
 	return &schema.Resource{
 		Create: resourceMonitorCreateJvm,

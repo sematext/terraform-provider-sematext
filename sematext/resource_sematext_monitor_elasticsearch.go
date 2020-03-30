@@ -13,7 +13,7 @@ import (
 // resourceSematextMonitorElasticsearch TODO Doc Comment
 func resourceSematextMonitorElasticsearch() *schema.Resource {
 
-	fieldSchema := MonitorSchemaCommon("Elasticsearch")
+	fieldSchema := MonitorSchemaCommon("Elastic Search")
 
 	return &schema.Resource{
 		Create: resourceMonitorCreateElasticsearch,
