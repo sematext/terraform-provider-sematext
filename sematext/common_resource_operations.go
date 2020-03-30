@@ -112,8 +112,7 @@ func CommonMonitorRead(d *schema.ResourceData, meta interface{}, apptype string)
 		return err
 	}
 
-	d.Set("name", app.Name)
-	d.Set("billing_plan_id", app.Plan.ID)
+	// TODO - Check if more required here.
 
 	return nil
 }
