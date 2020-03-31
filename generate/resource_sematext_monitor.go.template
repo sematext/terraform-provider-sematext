@@ -1,0 +1,65 @@
+package sematext
+
+/*
+	Note: Generated file, any edits will be overwritten!
+	Correct way to alter is to edit generate/resource_sematext_monitor.go.template
+	Then run generate/generate.sh
+*/
+
+import (
+	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
+)
+
+// resourceSematextMonitor<<CLASS_NAME>> TODO Doc Comment
+func resourceSematextMonitor<<CLASS_NAME>>() *schema.Resource {
+
+	fieldSchema := MonitorSchemaCommon("<<APP_TYPE>>")
+
+	return &schema.Resource{
+		Create: resourceMonitorCreate<<CLASS_NAME>>,
+		Read:   resourceMonitorRead<<CLASS_NAME>>,
+		Update: resourceMonitorUpdate<<CLASS_NAME>>,
+		Delete: resourceMonitorDelete<<CLASS_NAME>>,
+		Exists: resourceMonitorExists<<CLASS_NAME>>,
+		Schema: fieldSchema,
+	}
+}
+
+// resourceMonitorCreate<<CLASS_NAME>> TODO Doc Comment
+func resourceMonitorCreate<<CLASS_NAME>>(d *schema.ResourceData, meta interface{}) error {
+	apptype := "<<APP_TYPE>>"
+	err := CommonMonitorCreate(d, meta, apptype)
+
+	return err
+}
+
+// resourceMonitorRead<<CLASS_NAME>> TODO Doc Comment
+func resourceMonitorRead<<CLASS_NAME>>(d *schema.ResourceData, meta interface{}) error {
+	apptype := "<<APP_TYPE>>"
+	return CommonMonitorRead(d, meta, apptype)
+}
+
+// resourceMonitorUpdate<<CLASS_NAME>> TODO Doc Comment
+func resourceMonitorUpdate<<CLASS_NAME>>(d *schema.ResourceData, meta interface{}) error {
+	apptype := "<<APP_TYPE>>"
+	return CommonMonitorUpdate(d, meta, apptype)
+}
+
+// resourceMonitorDelete<<CLASS_NAME>> TODO Doc Comment
+func resourceMonitorDelete<<CLASS_NAME>>(d *schema.ResourceData, meta interface{}) error { // TODO Check default is respected
+	apptype := "<<APP_TYPE>>"
+	return CommonMonitorDelete(d, meta, apptype)
+}
+
+// TODO Consider necessity for an app edit-version to catch edit-version mis-match back into state.
+// resourceMonitorExists<<CLASS_NAME>> TODO Doc Comment
+func resourceMonitorExists<<CLASS_NAME>>(d *schema.ResourceData, meta interface{}) (b bool, e error) {
+	apptype := "<<APP_TYPE>>"
+	return CommonMonitorExists(d, meta, apptype)
+}
+
+// resourceSematextMonitorImport<<CLASS_NAME>> TODO Doc Comment
+func resourceSematextMonitorImport<<CLASS_NAME>>(d *schema.ResourceData, meta interface{}) ([]*schema.ResourceData, error) {
+	apptype := "<<APP_TYPE>>"
+	return CommonMonitorImport(d, meta, apptype)
+}
