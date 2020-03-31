@@ -144,7 +144,6 @@ func CommonMonitorBasicTest(t *testing.T, resourceType string, appType string) {
 
 		rtf := ResourceTestFixtureAWS{}
 		rtf.hydrate(resourceType, appType)
-		//workaround := fmt.Sprintf("%s %s", appType, rtf.Name) // WORKAROUND
 
 		fixture := rtf.toHCL()
 		resource.Test(t, resource.TestCase{
@@ -156,7 +155,7 @@ func CommonMonitorBasicTest(t *testing.T, resourceType string, appType string) {
 					Config: fixture,
 					Check: resource.ComposeTestCheckFunc(
 						ConfirmMonitorCreationAWS(rtf),
-						//resource.TestCheckResourceAttr(rtf.StatePath, "name", workaround),
+						resource.TestCheckResourceAttr(rtf.StatePath, "name", rtf.Name),
 						resource.TestCheckResourceAttr(rtf.StatePath, "billing_plan_id", strconv.Itoa(rtf.PlanID)),
 						resource.TestCheckResourceAttr(rtf.StatePath, "discount_code", rtf.DiscountCode),
 					),
@@ -211,7 +210,6 @@ func CommonMonitorUpdateTest(t *testing.T, resourceType string, appType string) 
 
 		rtf0 := ResourceTestFixtureAWS{}
 		rtf0.hydrate(resourceType, appType)
-		//workaround := fmt.Sprintf("%s %s", appType, rtf0.Name) // WORKAROUND
 		fixture0 := rtf0.toHCL()
 
 		rtf1 := rtf0
@@ -227,7 +225,7 @@ func CommonMonitorUpdateTest(t *testing.T, resourceType string, appType string) 
 					Config: fixture0,
 					Check: resource.ComposeTestCheckFunc(
 						ConfirmMonitorCreationAWS(rtf0),
-						//resource.TestCheckResourceAttr(rtf0.StatePath, "name", workaround), //TODO-workaround.
+						resource.TestCheckResourceAttr(rtf0.StatePath, "name", rtf0.Name),
 						resource.TestCheckResourceAttr(rtf0.StatePath, "billing_plan_id", strconv.Itoa(rtf0.PlanID)),
 						resource.TestCheckResourceAttr(rtf0.StatePath, "discount_code", rtf0.DiscountCode),
 					),
@@ -236,7 +234,7 @@ func CommonMonitorUpdateTest(t *testing.T, resourceType string, appType string) 
 					Config: fixture1,
 					Check: resource.ComposeTestCheckFunc(
 						ConfirmMonitorCreationAWS(rtf1),
-						//resource.TestCheckResourceAttr(rtf1.StatePath, "name", workaround), //TODO-workaround.
+						resource.TestCheckResourceAttr(rtf1.StatePath, "name", rtf1.Name),
 						resource.TestCheckResourceAttr(rtf1.StatePath, "billing_plan_id", strconv.Itoa(rtf1.PlanID)),
 						resource.TestCheckResourceAttr(rtf1.StatePath, "discount_code", rtf1.DiscountCode),
 					),
