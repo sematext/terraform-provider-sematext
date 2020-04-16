@@ -6,7 +6,7 @@ import (
 	"regexp"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
-	"github.com/sematext/sematext-api-client/api"
+	"github.com/sematext/sematext-api-client/stcloud"
 )
 
 // MonitorSchemaCommon contains common resource fields
@@ -36,7 +36,7 @@ func MonitorSchemaCommon(appType string) map[string]*schema.Schema {
 
 				planID := value.(int)
 
-				if appTypeForPlanID, found := api.LookupPlanID2Apptypes[planID]; found {
+				if appTypeForPlanID, found := stcloud.LookupPlanID2Apptypes[planID]; found {
 					if appType != appTypeForPlanID {
 						errs = append(errs, fmt.Errorf("billing_plan_id %d is not a valid billing code for resource type %s", planID, appType))
 					}
@@ -117,7 +117,7 @@ func MonitorSchemaCommon(appType string) map[string]*schema.Schema {
 			ForceNew:    false,
 			ValidateFunc: func(value interface{}, key string) (warns []string, errs []error) {
 				fmt.Println(value.(string))
-				if _, found := api.AWSRegion2STRegion[value.(string)]; !found {
+				if _, found := stcloud.AWSRegion2STRegion[value.(string)]; !found {
 					errs = append(errs, errors.New("Invalid aws_region"))
 				}
 				return warns, errs

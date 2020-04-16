@@ -13,7 +13,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/terraform"
-	"github.com/sematext/sematext-api-client/api"
+	"github.com/sematext/sematext-api-client/stcloud"
 )
 
 type ResourceTestFixture interface {
@@ -55,9 +55,9 @@ func (rtf *ResourceTestFixtureDefault) hydrate(resourceType string, appType stri
 	rtf.AppType = appType
 	rtf.Name = rtf.ResourceName
 	rtf.StatePath = rtf.ResourceType + "." + rtf.ResourceName
-	rtf.PlanID = api.AssignPlanID(rtf.AppType)
+	rtf.PlanID = stcloud.AssignPlanID(rtf.AppType)
 	if appType != "Logsene" {
-		rtf.DiscountCode = api.TestDiscountCodeMetrics
+		rtf.DiscountCode = stcloud.TestDiscountCodeMetrics
 	}
 
 }
@@ -70,9 +70,9 @@ func (rtf *ResourceTestFixtureAWS) hydrate(resourceType string, appType string) 
 	rtf.AppType = appType
 	rtf.Name = rtf.ResourceName
 	rtf.StatePath = rtf.ResourceType + "." + rtf.ResourceName
-	rtf.PlanID = api.AssignPlanID(rtf.AppType)
+	rtf.PlanID = stcloud.AssignPlanID(rtf.AppType)
 	if appType != "Logsene" {
-		rtf.DiscountCode = api.TestDiscountCodeMetrics
+		rtf.DiscountCode = stcloud.TestDiscountCodeMetrics
 	}
 	rtf.AwsRegion = os.Getenv("AWS_REGION")
 	rtf.AwsAccessKey = os.Getenv("AWS_ACCESS_KEY_ID")
@@ -283,7 +283,7 @@ func CommonMonitorUpdateTest(t *testing.T, resourceType string, appType string) 
 
 }
 
-// ConfirmMonitorCreationDefault checks the App ID exists in both state and API.
+// ConfirmMonitorCreationDefault checks the App ID exists in both state and stcloud.
 func ConfirmMonitorCreationDefault(rtf ResourceTestFixtureDefault) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 
@@ -294,10 +294,10 @@ func ConfirmMonitorCreationDefault(rtf ResourceTestFixtureDefault) resource.Test
 		var id int
 		var found bool
 		var err error
-		var app *api.App
+		var app *stcloud.App
 		var rs *terraform.ResourceState
 
-		client := testAccProvider.Meta().(*api.Client)
+		client := testAccProvider.Meta().(*stcloud.Client)
 
 		fmt.Println("---------------------------------------")
 		fmt.Println("rtf.StatePath")
@@ -320,7 +320,7 @@ func ConfirmMonitorCreationDefault(rtf ResourceTestFixtureDefault) resource.Test
 		fmt.Println("HERE D")
 
 		fmt.Println("Loading App " + string(id))
-		if app, err = (&api.App{}).Load(id, client); err != nil {
+		if app, err = (&stcloud.App{}).Load(id, client); err != nil {
 			return fmt.Errorf("ConfirmMonitorCreation : Error in checking monitor %s, %s", rtf.StatePath, err) //TODO Check return value fs function sig
 		}
 		if app == nil {
@@ -331,7 +331,7 @@ func ConfirmMonitorCreationDefault(rtf ResourceTestFixtureDefault) resource.Test
 	}
 }
 
-// ConfirmMonitorCreationAWS checks the App ID exists in both state and API.
+// ConfirmMonitorCreationAWS checks the App ID exists in both state and stcloud.
 func ConfirmMonitorCreationAWS(rtf ResourceTestFixtureAWS) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 
@@ -342,10 +342,10 @@ func ConfirmMonitorCreationAWS(rtf ResourceTestFixtureAWS) resource.TestCheckFun
 		var id int
 		var found bool
 		var err error
-		var app *api.App
+		var app *stcloud.App
 		var rs *terraform.ResourceState
 
-		client := testAccProvider.Meta().(*api.Client)
+		client := testAccProvider.Meta().(*stcloud.Client)
 
 		spew.Dump(s.RootModule().Resources)
 
@@ -357,7 +357,7 @@ func ConfirmMonitorCreationAWS(rtf ResourceTestFixtureAWS) resource.TestCheckFun
 			return err
 		}
 
-		if app, err = (&api.App{}).Load(id, client); err != nil {
+		if app, err = (&stcloud.App{}).Load(id, client); err != nil {
 			return fmt.Errorf("ConfirmMonitorCreation : Error in checking monitor %s, %s", rtf.StatePath, err) //TODO Check return value fs function sig
 		}
 
@@ -382,7 +382,7 @@ func ConfirmMonitorDestructionDefault(rtf ResourceTestFixtureDefault) resource.T
 		var retired bool
 		var err error
 		var rs *terraform.ResourceState
-		client := testAccProvider.Meta().(*api.Client)
+		client := testAccProvider.Meta().(*stcloud.Client)
 
 		fmt.Println("HERE 1")
 
@@ -396,7 +396,7 @@ func ConfirmMonitorDestructionDefault(rtf ResourceTestFixtureDefault) resource.T
 
 			if id, err = strconv.Atoi(rs.Primary.ID); err != nil {
 				fmt.Println("HERE 2 " + string(id))
-				retired, err = (&api.App{}).Retired(id, client)
+				retired, err = (&stcloud.App{}).Retired(id, client)
 				if !retired {
 					fmt.Println("HERE 3")
 					return fmt.Errorf("ConfirmMonitorDestructionDefault : Error in checking monitor %s : %s", rtf.StatePath, err)
@@ -426,7 +426,7 @@ func ConfirmMonitorDestructionAWS(rtf ResourceTestFixtureAWS) resource.TestCheck
 		var retired bool
 		var err error
 		var rs *terraform.ResourceState
-		client := testAccProvider.Meta().(*api.Client)
+		client := testAccProvider.Meta().(*stcloud.Client)
 
 		for _, rs = range s.RootModule().Resources {
 
@@ -435,7 +435,7 @@ func ConfirmMonitorDestructionAWS(rtf ResourceTestFixtureAWS) resource.TestCheck
 			}
 
 			if id, err = strconv.Atoi(rs.Primary.ID); err != nil {
-				retired, err = (&api.App{}).Retired(id, client)
+				retired, err = (&stcloud.App{}).Retired(id, client)
 				if !retired {
 					return fmt.Errorf("ConfirmMonitorDestructionDefault : Error in checking monitor %s : %s", rtf.StatePath, err)
 				}

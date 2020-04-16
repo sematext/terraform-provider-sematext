@@ -13,7 +13,7 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/terraform"
-	"github.com/sematext/sematext-api-client/api"
+	"github.com/sematext/sematext-api-client/stcloud"
 )
 
 // Provider  - TODO Doc Comment
@@ -63,7 +63,7 @@ func Provider() terraform.ResourceProvider {
 			return nil, errors.New("ERROR : Missing or invalid env SEMATEXT_API_TOKEN")
 		}
 
-		client := new(api.Client)
+		client := new(stcloud.Client)
 		err := client.Init(region, terraformVersion)
 		if err != nil {
 			return nil, err

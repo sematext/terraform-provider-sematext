@@ -15,4 +15,4 @@ require (
 	github.com/thoas/go-funk v0.5.0
 )
 
-replace github.com/sematext/sematext-api-client/api => /home/euan/go/src/github.com/sematext/sematext-api-client/
+replace github.com/sematext/sematext-api-client/stcloud => /home/euan/go/src/github.com/sematext/sematext-api-client/
