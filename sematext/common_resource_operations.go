@@ -18,9 +18,9 @@ func CommonMonitorCreate(d *schema.ResourceData, meta interface{}, appType strin
 	fmt.Println("---------------------------------------")
 
 	var err error
-	var genericAPIResponse GenericAPIResponse
+	var genericAPIResponse stcloud.GenericAPIResponse
 
-	client := meta.(*stcloud.client)
+	client := meta.(*stcloud.APIClient)
 
 	// TODO - Check pre-existence of same name/apptype in API (consider as a status update) - post MVP.
 
@@ -64,7 +64,7 @@ func CommonMonitorCreate(d *schema.ResourceData, meta interface{}, appType strin
 		if _, found := stcloud.LookupPlanID2Apptypes[initialPlanID.(int)]; !found {
 			return fmt.Errorf("%v is invalid billing_plan_id for %v", initialPlanID, appType)
 		}
-		createAppInfo.InitialPlanID = initialPlanID.(int)
+		createAppInfo.InitialPlanID = initialPlanID.(int64)
 	} else {
 		return errors.New("Missing billing_plan_id")
 	}
@@ -87,20 +87,21 @@ func CommonMonitorCreate(d *schema.ResourceData, meta interface{}, appType strin
 	switch appType {
 
 	case "Logsene":
-		genericAPIResponse, err = client.LogsAppAPI.CreateLogseneApplication(context.Background(), createAppInfo)
+		genericAPIResponse, _, err = client.LogsAppAPI.CreateLogseneApplication(context.Background(), *createAppInfo)
 
 	default:
-		genericAPIResponse, err = client.CreateSpmApplication1.CreateLogseneApplication(context.Background(), createAppInfo)
+		genericAPIResponse, _, err = client.MonitoringAppAPI.CreateSpmApplication1(context.Background(), *createAppInfo)
 	}
 
 	if err != nil {
 		return err
 	}
+	var app *stcloud.App
 	app, err = genericAPIResponse.ExtractApp()
 	if err != nil {
 		return err
 	}
-	d.SetId(strconv.Itoa(app.ID))
+	d.SetId(strconv.FormatInt(app.ID, 10))
 	d.Set("token", app.Token) //TODO confirm this becomes available to other resources and decide if it should be a resource paramater in .tf script
 
 	return nil
@@ -114,17 +115,18 @@ func CommonMonitorRead(d *schema.ResourceData, meta interface{}, appType string)
 	fmt.Println("CommonMonitorRead Called")
 	fmt.Println("---------------------------------------")
 
-	client := meta.(*stcloud.client)
+	client := meta.(*stcloud.APIClient)
 	var genericAPIResponse stcloud.GenericAPIResponse
-	var app *stcloud.App
 	var id int
 	var err error
+	var app *stcloud.App
 
 	if id, err = strconv.Atoi(d.Id()); err != nil {
 		return err
 	}
 
-	if genericAPIResponse, err = client.AppsAPIService.GetUsingGET(context.Background(), id); err != nil {
+	genericAPIResponse, _, err = client.AppsAPI.GetUsingGET(context.Background(), int64(id))
+	if err != nil {
 		return err
 	}
 
@@ -133,7 +135,21 @@ func CommonMonitorRead(d *schema.ResourceData, meta interface{}, appType string)
 		return err
 	}
 
-	// TODO - Check if more required here.
+	switch appType {
+
+	case "AWS EBS", "AWS EC2", "AWS ELB":
+		d.Set("name", app.Name)
+		d.Set("billing_plan_id", app.Plan.ID)
+		// TODO - how to read back "aws_access_key"
+		// TODO - how to read back "aws_secret_key"
+		// TODO - how to read back "aws_fetch_frequency"
+		// TODO - how to read back "aws_region"
+
+	default:
+		d.Set("name", app.Name)
+		d.Set("billing_plan_id", app.Plan.ID)
+
+	}
 
 	return nil
 }
@@ -145,15 +161,11 @@ func CommonMonitorUpdate(d *schema.ResourceData, meta interface{}, apptype strin
 	fmt.Println("CommonMonitorUpdate Called")
 	fmt.Println("---------------------------------------")
 
-	// TODO - accomodate new endpoint for metadata update
-
-	var genericAPIResponse stcloud.GenericAPIResponse
-	var id int
+	var id int64
 	var err error
-	var valid bool
 
-	client := meta.(*stcloud.client)
-	if id, err = strconv.Atoi(d.Id()); err != nil {
+	client := meta.(*stcloud.APIClient)
+	if id, err = strconv.ParseInt(d.Id(), 10, 64); err != nil {
 		return err
 	}
 
@@ -162,13 +174,17 @@ func CommonMonitorUpdate(d *schema.ResourceData, meta interface{}, apptype strin
 
 	if d.HasChange("name") {
 		_, newName := d.GetChange("name")
-		updateAppInfo.Name = newName.(string) // TODO name vs resource name/label in terraform
+		updateAppInfo.Name = newName.(string)
 		appInfoChanged = true
 	}
 
 	if appInfoChanged {
-		updateAppInfo.Status = "ACTIVE" // TODO Consider if is this correct or not?
-		updateAppInfo.Persist(id, client)
+		updateAppInfo.Status = "ACTIVE"
+		_, _, err = client.AppsAPI.UpdateUsingPUT1(context.Background(), *updateAppInfo, id)
+		if err != nil {
+			return err
+		}
+
 	}
 
 	billingInfo := &stcloud.BillingInfo{}
@@ -176,7 +192,7 @@ func CommonMonitorUpdate(d *schema.ResourceData, meta interface{}, apptype strin
 
 	if d.HasChange("billing_plan_id") {
 		_, newBillingPlanID := d.GetChange("billing_plan_id")
-		billingInfo.PlanID = newBillingPlanID.(int)
+		billingInfo.PlanID = newBillingPlanID.(int64)
 		billingInfoChanged = true
 	}
 
@@ -185,50 +201,45 @@ func CommonMonitorUpdate(d *schema.ResourceData, meta interface{}, apptype strin
 
 	if d.HasChange("aws_access_key") {
 		_, newAwsAccessKey := d.GetChange("aws_access_key")
-		cloudWatchSettings.AwsCloudWatchAccessKey = newAwsAccessKey.(string)
+		cloudWatchSettings.AccessKey = newAwsAccessKey.(string)
 		cloudWatchSettingsChanged = true
 	}
 	if d.HasChange("aws_secret_key") {
 		_, newAwsSecretKey := d.GetChange("aws_secret_key")
-		cloudWatchSettings.AwsCloudWatchSecretKey = newAwsSecretKey.(string)
+		cloudWatchSettings.SecretKey = newAwsSecretKey.(string)
 		cloudWatchSettingsChanged = true
 	}
 	if d.HasChange("aws_fetch_frequency") {
 		_, newAwsFetchFrequency := d.GetChange("aws_fetch_frequency")
-		cloudWatchSettings.AwsFetchFrequency = newAwsFetchFrequency.(string)
+		cloudWatchSettings.FetchFrequency = newAwsFetchFrequency.(string)
 		cloudWatchSettingsChanged = true
 	}
 	if d.HasChange("aws_region") {
 		_, newAwsRegion := d.GetChange("aws_region")
-		cloudWatchSettings.AwsRegion = newAwsRegion.(string)
+		cloudWatchSettings.Region = newAwsRegion.(string)
 		cloudWatchSettingsChanged = true
 	}
 
 	if appInfoChanged {
-		genericAPIResponse, err = client.AppsAPIService.UpdateUsingPUT1(context.Background(), updateAppInfo, id)
+		_, _, err = client.AppsAPI.UpdateUsingPUT1(context.Background(), *updateAppInfo, id)
 		if err != nil {
 			return err
 		}
-
-		// TODO - check status?
 	}
 
 	if billingInfoChanged {
-		genericAPIResponse, err = client.BillingAPIService.UpdatePlanUsingPUT(context.Background(), id, updateAppInfo)
+		_, _, err = client.BillingAPI.UpdatePlanUsingPUT(context.Background(), id, *billingInfo)
 		if err != nil {
 			return err
 		}
-
-		// TODO - check status?
 	}
 
 	if cloudWatchSettingsChanged {
-		genericAPIResponse, err = client.AwsSettingsControllerAPIService.UpdateUsingPUT(context.Background(), id, cloudWatchSettings)
+		_, _, err = client.AwsSettingsControllerAPI.UpdateUsingPUT(context.Background(), id, *cloudWatchSettings)
 		if err != nil {
 			return err
 		}
 
-		// TODO - check status?
 	}
 
 	return nil
@@ -242,15 +253,17 @@ func CommonMonitorDelete(d *schema.ResourceData, meta interface{}, apptype strin
 	fmt.Println("CommonMonitorDelete Called")
 	fmt.Println("---------------------------------------")
 
-	var id int
+	var id int64
 	var err error
-	client := meta.(*stcloud.client)
-	if id, err = strconv.Atoi(d.Id()); err != nil {
+
+	client := meta.(*stcloud.APIClient)
+	if id, err = strconv.ParseInt(d.Id(), 10, 64); err != nil {
 		return err
 	}
+
 	updateAppInfo := &stcloud.UpdateAppInfo{}
 	updateAppInfo.Status = "DISABLED"
-	genericAPIResponse, err = client.AppsAPIService.UpdateUsingPUT1(context.Background(), updateAppInfo, id)
+	_, _, err = client.AppsAPI.UpdateUsingPUT1(context.Background(), *updateAppInfo, id)
 	if err != nil {
 		return err
 	}
@@ -266,25 +279,28 @@ func CommonMonitorExists(d *schema.ResourceData, meta interface{}, apptype strin
 	fmt.Println("---------------------------------------")
 
 	// TODO Consider necessity for an app edit-version to catch edit-version mis-match back into state.
-	var id int
-	var app stcloud.App
+	var id int64
+	var app *stcloud.App
+	var genericAPIResponse stcloud.GenericAPIResponse
 
-	client := meta.(*stcloud.client)
-	if id, err = strconv.Atoi(d.Id()); err != nil {
+	client := meta.(*stcloud.APIClient)
+
+	if id, err = strconv.ParseInt(d.Id(), 10, 64); err != nil {
 		return false, err
 	}
 
-	if genericAPIResponse, err = client.AppsAPIService.GetUsingGET(context.Background(), id); err != nil {
-		return err
+	if genericAPIResponse, _, err = client.AppsAPI.GetUsingGET(context.Background(), id); err != nil {
+		return false, nil
 	}
 
 	app, err = genericAPIResponse.ExtractApp()
 	if err != nil {
-		return err
+		return false, err
 	}
 
-	exists, err = app.Retired(id, client)
-	return exists, err
+	exists = app.Status != "ARCHIVED" // TODO revist logic once some examples available
+
+	return exists, nil
 }
 
 // CommonMonitorImport TODO Doc Comment

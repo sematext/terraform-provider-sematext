@@ -73,7 +73,7 @@ func Provider() terraform.ResourceProvider {
 	provider.ConfigureFunc = func(d *schema.ResourceData) (interface{}, error) {
 
 		var err error
-		var baseURL url.URL
+		var baseURL *url.URL
 
 		/*
 			Terraform 0.12 introduced this field to the protocol
@@ -97,7 +97,7 @@ func Provider() terraform.ResourceProvider {
 		cfg := stcloud.NewConfiguration()
 
 		if baseURL, err = url.Parse("https://apps.sematext.com"); err != nil {
-			return err
+			return nil, err
 		}
 
 		switch region {
@@ -110,7 +110,7 @@ func Provider() terraform.ResourceProvider {
 		}
 
 		if err != nil {
-			return err
+			return nil, err
 		}
 
 		cfg.BasePath = baseURL.String()

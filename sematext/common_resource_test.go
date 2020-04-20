@@ -3,6 +3,7 @@ package sematext
 // TODO - Expand Resource test cases to full checks.
 
 import (
+	"context"
 	"fmt"
 	"os"
 	"strconv"
@@ -291,13 +292,14 @@ func ConfirmMonitorCreationDefault(rtf ResourceTestFixtureDefault) resource.Test
 		fmt.Println("ConfirmMonitorCreationDefault func Called")
 		fmt.Println("---------------------------------------")
 
-		var id int
+		var id int64
 		var found bool
 		var err error
 		var app *stcloud.App
 		var rs *terraform.ResourceState
+		var genericAPIResponse stcloud.GenericAPIResponse
 
-		client := testAccProvider.Meta().(*stcloud.Client)
+		client := testAccProvider.Meta().(*stcloud.APIClient)
 
 		fmt.Println("---------------------------------------")
 		fmt.Println("rtf.StatePath")
@@ -306,23 +308,21 @@ func ConfirmMonitorCreationDefault(rtf ResourceTestFixtureDefault) resource.Test
 		fmt.Println("---------------------------------------")
 
 		if rs, found = s.RootModule().Resources[rtf.StatePath]; !found {
-			fmt.Println("HERE A")
 			return fmt.Errorf("ConfirmMonitorCreation : Resource not found in state: %s %s", rtf.ResourceType, rtf.ResourceName)
 		}
-		fmt.Println("HERE B")
 
-		if id, err = strconv.Atoi(rs.Primary.ID); err != nil {
-			fmt.Println("HERE C")
-
+		if id, err = strconv.ParseInt(rs.Primary.ID, 10, 64); err != nil {
 			return err
 		}
 
-		fmt.Println("HERE D")
-
-		fmt.Println("Loading App " + string(id))
-		if app, err = (&stcloud.App{}).Load(id, client); err != nil {
-			return fmt.Errorf("ConfirmMonitorCreation : Error in checking monitor %s, %s", rtf.StatePath, err) //TODO Check return value fs function sig
+		if genericAPIResponse, _, err = client.AppsAPI.GetUsingGET(context.Background(), id); err != nil {
+			return fmt.Errorf("ConfirmMonitorCreation : Error in checking monitor %s, %s", rtf.StatePath, err)
 		}
+
+		if app, err = genericAPIResponse.ExtractApp(); err != nil {
+			return err
+		}
+
 		if app == nil {
 			return fmt.Errorf("ConfirmMonitorCreation : Error in checking monitor %s", rtf.StatePath)
 		}
@@ -339,26 +339,29 @@ func ConfirmMonitorCreationAWS(rtf ResourceTestFixtureAWS) resource.TestCheckFun
 		fmt.Println("ConfirmMonitorCreationAWS func Called")
 		fmt.Println("---------------------------------------")
 
-		var id int
+		var id int64
 		var found bool
 		var err error
 		var app *stcloud.App
 		var rs *terraform.ResourceState
+		var genericAPIResponse stcloud.GenericAPIResponse
 
-		client := testAccProvider.Meta().(*stcloud.Client)
-
-		spew.Dump(s.RootModule().Resources)
+		client := testAccProvider.Meta().(*stcloud.APIClient)
 
 		if rs, found = s.RootModule().Resources[rtf.StatePath]; !found {
 			return fmt.Errorf("ConfirmMonitorCreation : Resource not found in state: %s %s", rtf.ResourceType, rtf.ResourceName)
 		}
 
-		if id, err = strconv.Atoi(rs.Primary.ID); err != nil {
+		if id, err = strconv.ParseInt(rs.Primary.ID, 10, 64); err != nil {
 			return err
 		}
 
-		if app, err = (&stcloud.App{}).Load(id, client); err != nil {
-			return fmt.Errorf("ConfirmMonitorCreation : Error in checking monitor %s, %s", rtf.StatePath, err) //TODO Check return value fs function sig
+		if genericAPIResponse, _, err = client.AppsAPI.GetUsingGET(context.Background(), id); err != nil {
+			return fmt.Errorf("ConfirmMonitorCreation : Error in checking monitor %s, %s", rtf.StatePath, err)
+		}
+
+		if app, err = genericAPIResponse.ExtractApp(); err != nil {
+			return err
 		}
 
 		if app == nil {
@@ -378,39 +381,42 @@ func ConfirmMonitorDestructionDefault(rtf ResourceTestFixtureDefault) resource.T
 		fmt.Println("ConfirmMonitorDestructionDefault func Called")
 		fmt.Println("---------------------------------------")
 
-		var id int
-		var retired bool
+		var id int64
 		var err error
 		var rs *terraform.ResourceState
-		client := testAccProvider.Meta().(*stcloud.Client)
+		var app *stcloud.App
+		var genericAPIResponse stcloud.GenericAPIResponse
 
-		fmt.Println("HERE 1")
+		client := testAccProvider.Meta().(*stcloud.APIClient)
 
 		for _, rs = range s.RootModule().Resources {
 
 			if !strings.HasPrefix(rs.Type, "sematext_") { // TODO shift to template and make check more explicit after MVP
 				continue
 			}
-
-			fmt.Println("HERE 2")
-
-			if id, err = strconv.Atoi(rs.Primary.ID); err != nil {
-				fmt.Println("HERE 2 " + string(id))
-				retired, err = (&stcloud.App{}).Retired(id, client)
-				if !retired {
-					fmt.Println("HERE 3")
-					return fmt.Errorf("ConfirmMonitorDestructionDefault : Error in checking monitor %s : %s", rtf.StatePath, err)
-				}
+			if id, err = strconv.ParseInt(rs.Primary.ID, 10, 64); err != nil {
+				return err
 			}
-			if err != nil {
-				fmt.Println("HERE 4")
-				break
+
+			if genericAPIResponse, _, err = client.AppsAPI.GetUsingGET(context.Background(), id); err != nil {
+				return fmt.Errorf("ConfirmMonitorDestructionDefault : Error in checking monitor %s, %s", rtf.StatePath, err)
 			}
+
+			if app, err = genericAPIResponse.ExtractApp(); err != nil {
+				return err
+			}
+
+			if app == nil {
+				return fmt.Errorf("ConfirmMonitorDestructionDefault : Error in checking monitor %s", rtf.StatePath)
+			}
+
+			if app.Status != "ARCHIVED" {
+				return fmt.Errorf("ConfirmMonitorDestructionDefault : Error in checking monitor %s : %s", rtf.StatePath, err)
+			}
+
 		}
 
-		fmt.Println("EXIT ")
-
-		return err
+		return nil
 	}
 }
 
@@ -419,32 +425,44 @@ func ConfirmMonitorDestructionAWS(rtf ResourceTestFixtureAWS) resource.TestCheck
 	return func(s *terraform.State) error {
 
 		fmt.Println("---------------------------------------")
-		fmt.Println("ConfirmMonitorDestructionAWS func Called")
+		fmt.Println("ConfirmMonitorDestructionDefaultAWS func Called")
 		fmt.Println("---------------------------------------")
 
-		var id int
-		var retired bool
+		var id int64
 		var err error
 		var rs *terraform.ResourceState
-		client := testAccProvider.Meta().(*stcloud.Client)
+		var app *stcloud.App
+		var genericAPIResponse stcloud.GenericAPIResponse
+
+		client := testAccProvider.Meta().(*stcloud.APIClient)
 
 		for _, rs = range s.RootModule().Resources {
 
 			if !strings.HasPrefix(rs.Type, "sematext_") { // TODO shift to template and make check more explicit after MVP
 				continue
 			}
+			if id, err = strconv.ParseInt(rs.Primary.ID, 10, 64); err != nil {
+				return err
+			}
 
-			if id, err = strconv.Atoi(rs.Primary.ID); err != nil {
-				retired, err = (&stcloud.App{}).Retired(id, client)
-				if !retired {
-					return fmt.Errorf("ConfirmMonitorDestructionDefault : Error in checking monitor %s : %s", rtf.StatePath, err)
-				}
+			if genericAPIResponse, _, err = client.AppsAPI.GetUsingGET(context.Background(), id); err != nil {
+				return fmt.Errorf("ConfirmMonitorDestructionAWS : Error in checking monitor %s, %s", rtf.StatePath, err)
 			}
-			if err != nil {
-				break
+
+			if app, err = genericAPIResponse.ExtractApp(); err != nil {
+				return err
 			}
+
+			if app == nil {
+				return fmt.Errorf("ConfirmMonitorDestructionAWS : Error in checking monitor %s", rtf.StatePath)
+			}
+
+			if app.Status != "ARCHIVED" {
+				return fmt.Errorf("ConfirmMonitorDestructionAWS : Error in checking monitor %s : %s", rtf.StatePath, err)
+			}
+
 		}
 
-		return err
+		return nil
 	}
 }

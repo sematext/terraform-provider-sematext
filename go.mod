@@ -11,7 +11,7 @@ require (
 	github.com/google/uuid v1.1.1
 	github.com/hashicorp/terraform v0.12.23
 	github.com/hashicorp/terraform-plugin-sdk v1.7.0
-	github.com/sematext/sematext-api-client/api v0.0.0
+	github.com/sematext/sematext-api-client/stcloud v0.0.0
 	github.com/thoas/go-funk v0.5.0
 )
 
