@@ -389,6 +389,8 @@ func ConfirmMonitorDestructionDefault(rtf ResourceTestFixtureDefault) resource.T
 
 		client := testAccProvider.Meta().(*stcloud.APIClient)
 
+		spew.Dump(s.RootModule().Resources)
+
 		for _, rs = range s.RootModule().Resources {
 
 			if !strings.HasPrefix(rs.Type, "sematext_") { // TODO shift to template and make check more explicit after MVP
@@ -398,8 +400,10 @@ func ConfirmMonitorDestructionDefault(rtf ResourceTestFixtureDefault) resource.T
 				return err
 			}
 
+			// time.Sleep(time.Second * 4) // TODO - propagation delay
+
 			if genericAPIResponse, _, err = client.AppsAPI.GetUsingGET(context.Background(), id); err != nil {
-				return fmt.Errorf("ConfirmMonitorDestructionDefault : Error in checking monitor %s, %s", rtf.StatePath, err)
+				return fmt.Errorf("ConfirmMonitorDestructionDefault : Failed to pull app in checking monitor %s, %s", rtf.StatePath, err)
 			}
 
 			if app, err = genericAPIResponse.ExtractApp(); err != nil {
@@ -407,11 +411,11 @@ func ConfirmMonitorDestructionDefault(rtf ResourceTestFixtureDefault) resource.T
 			}
 
 			if app == nil {
-				return fmt.Errorf("ConfirmMonitorDestructionDefault : Error in checking monitor %s", rtf.StatePath)
+				return fmt.Errorf("ConfirmMonitorDestructionDefault : Missing app in genericAPIResponse checking monitor %s", rtf.StatePath)
 			}
 
-			if app.Status != "ARCHIVED" {
-				return fmt.Errorf("ConfirmMonitorDestructionDefault : Error in checking monitor %s : %s", rtf.StatePath, err)
+			if app.Status != "DISABLED" {
+				return fmt.Errorf("ConfirmMonitorDestructionDefault : Unexpected status in checking monitor %s : Expected DISABLED, got %s ", rtf.StatePath, app.Status)
 			}
 
 		}
@@ -446,7 +450,7 @@ func ConfirmMonitorDestructionAWS(rtf ResourceTestFixtureAWS) resource.TestCheck
 			}
 
 			if genericAPIResponse, _, err = client.AppsAPI.GetUsingGET(context.Background(), id); err != nil {
-				return fmt.Errorf("ConfirmMonitorDestructionAWS : Error in checking monitor %s, %s", rtf.StatePath, err)
+				return fmt.Errorf("ConfirmMonitorDestructionDefaultAWS : Failed to pull app in checking monitor %s, %s", rtf.StatePath, err)
 			}
 
 			if app, err = genericAPIResponse.ExtractApp(); err != nil {
@@ -454,11 +458,11 @@ func ConfirmMonitorDestructionAWS(rtf ResourceTestFixtureAWS) resource.TestCheck
 			}
 
 			if app == nil {
-				return fmt.Errorf("ConfirmMonitorDestructionAWS : Error in checking monitor %s", rtf.StatePath)
+				return fmt.Errorf("ConfirmMonitorDestructionDefaultAWS : Missing app in genericAPIResponse checking monitor %s", rtf.StatePath)
 			}
 
-			if app.Status != "ARCHIVED" {
-				return fmt.Errorf("ConfirmMonitorDestructionAWS : Error in checking monitor %s : %s", rtf.StatePath, err)
+			if app.Status != "DISABLED" {
+				return fmt.Errorf("ConfirmMonitorDestructionDefaultAWS : Unexpected status in checking monitor %s : Expected DISABLED, got %s ", rtf.StatePath, app.Status)
 			}
 
 		}

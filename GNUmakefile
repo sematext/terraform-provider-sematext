@@ -8,7 +8,7 @@ default: build
 
 build: fmtcheck
 	go install
-	
+
 generate:
 	@echo "INFO: Generating resource and test code."
 	@./generate/generate.sh
@@ -22,7 +22,7 @@ test: fmtcheck
 	go test $(TEST) -timeout=30s -parallel=4
 
 testacc: fmtcheck
-	TF_ACC=1 go test $(TEST) -v -count 1 -parallel 20 $(TESTARGS) -timeout 120m
+	TF_ACC=1 go test $(TEST) -v -count 1 -parallel 1 $(TESTARGS) -timeout 120m
 
 fmt:
 	@echo "==> Fixing source code with gofmt..."

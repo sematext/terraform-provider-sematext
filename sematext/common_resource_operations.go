@@ -64,7 +64,7 @@ func CommonMonitorCreate(d *schema.ResourceData, meta interface{}, appType strin
 		if _, found := stcloud.LookupPlanID2Apptypes[initialPlanID.(int)]; !found {
 			return fmt.Errorf("%v is invalid billing_plan_id for %v", initialPlanID, appType)
 		}
-		createAppInfo.InitialPlanID = initialPlanID.(int64)
+		createAppInfo.InitialPlanID = int64(initialPlanID.(int))
 	} else {
 		return errors.New("Missing billing_plan_id")
 	}
@@ -117,15 +117,15 @@ func CommonMonitorRead(d *schema.ResourceData, meta interface{}, appType string)
 
 	client := meta.(*stcloud.APIClient)
 	var genericAPIResponse stcloud.GenericAPIResponse
-	var id int
+	var id int64
 	var err error
 	var app *stcloud.App
 
-	if id, err = strconv.Atoi(d.Id()); err != nil {
+	if id, err = strconv.ParseInt(d.Id(), 10, 64); err != nil {
 		return err
 	}
 
-	genericAPIResponse, _, err = client.AppsAPI.GetUsingGET(context.Background(), int64(id))
+	genericAPIResponse, _, err = client.AppsAPI.GetUsingGET(context.Background(), id)
 	if err != nil {
 		return err
 	}
