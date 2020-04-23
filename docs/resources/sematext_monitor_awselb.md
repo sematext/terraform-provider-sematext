@@ -1,4 +1,4 @@
-# Sematext Spark Monitoring Resource
+# Sematext AWS ELB Monitoring Resource
 
 Creates a monitoring application within Sematext Cloud. 
 Refer to [Refer to Sematext Provider for authentication detail](../index.md) 
@@ -12,7 +12,7 @@ provider "sematext" {
 }
 
 # Create a monitoring application
-resource "sematext_monitor_spark" "mymonitor" {
+resource "sematext_monitor_awselb" "mymonitor" {
   name = "my monitor name"
   billing_plan_id = 6
   discount_code = "<discount code>"
@@ -24,7 +24,10 @@ resource "sematext_monitor_spark" "mymonitor" {
 * `name` - List attributes that this resource exports.
 * `billing_plan_id` - List attributes that this resource exports. [Refer to plan guidance for list of legal values](../guides/plans.md) 
 * `discount_code` - List attributes that this resource exports.
-
+* `aws_access_key` - (optional) if not set then reads from env TODO
+* `aws_secret_key` - List attributes that this resource exports
+* `aws_fetch_frequency` - (required) List attributes that this resource exports.
+* `aws_region` - List attributes that this resource exports.
 
 
 ## Exports
