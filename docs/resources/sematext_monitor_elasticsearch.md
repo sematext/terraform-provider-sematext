@@ -29,3 +29,4 @@ resource "sematext_monitor_elasticsearch" "mymonitor" {
 
 ## Exports
 
+TODO

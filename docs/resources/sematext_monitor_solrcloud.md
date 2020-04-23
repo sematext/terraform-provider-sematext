@@ -29,3 +29,4 @@ resource "sematext_monitor_solrcloud" "mymonitor" {
 
 ## Exports
 
+TODO

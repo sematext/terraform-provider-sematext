@@ -1,0 +1,59 @@
+# Sematext Provider
+
+The Sematext provider is used to interact with Sematext Cloud related resources.
+
+
+## Example Usage
+
+```hcl
+# Configure the Sematext Provider
+provider "sematext" {
+  sematext_region = "US"
+}
+
+# Create a monitoring application
+resource "sematext_monitor_nodejs" "mymonitor" {
+  name = "mymonitor"
+  billing_plan_id = 6
+  discount_code = "<discount code>"
+}
+```
+
+## Argument Reference
+
+The following arguments are supported:
+
+* `sematext_region` - (Required) desired Sematext Cloud Region  "US" or "EU";
+
+
+## Authentication
+
+There are two authentication tokens
+
+* Sematext Cloud API access token - [available from your account](https://apps.sematext.com/ui/account/api)
+
+When the Sematext Terraform Provider connects to Sematext Cloud it authenticates with an access token.
+You'll need to gain this via your login to your Sematext Cloud account. TODO
+Note this is different from the app key
+
+
+## Enviropnment Variables
+
+The following environment variables are required:
+
+* SEMATEXT_REGION="US"
+* SEMATEXT_API_TOKEN="&lt;Sematext-Cloud-Token&gt;"
+
+If working with AWS Cloudwatch the following environment vars should be set:
+
+* AWS_ACCESS_KEY_ID
+* AWS_SECRET_ACCESS_KEY
+* AWS_REGION
+
+
+## Resources 
+
+The following terraform resources are supported.
+
+<<RESOURCE_LINKS>>
+

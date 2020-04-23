@@ -57,8 +57,9 @@ func MonitorSchemaCommon(appType string) map[string]*schema.Schema {
 		},
 	}
 
-	if appType == "AWS EBS" || appType == "AWS EC2" || appType == "AWS ELB" { // TODO Pull out of env - look at how aws do this.
+	if appType == "AWS EBS" || appType == "AWS EC2" || appType == "AWS ELB" {
 
+		// TODO Pull out of env - look at how aws do this.
 		//schema.EnvDefaultFunc("DOCKER_CERT_PATH", "")
 
 		resourceSchema["aws_access_key"] = &schema.Schema{
