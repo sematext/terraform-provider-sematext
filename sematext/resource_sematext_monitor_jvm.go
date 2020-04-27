@@ -10,7 +10,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
-// resourceSematextMonitorJvm TODO Doc Comment
+// resourceSematextMonitorJvm is the resource class that handles sematext_monitor_jvm
 func resourceSematextMonitorJvm() *schema.Resource {
 
 	fieldSchema := MonitorSchemaCommon("JVM")
@@ -25,7 +25,7 @@ func resourceSematextMonitorJvm() *schema.Resource {
 	}
 }
 
-// resourceMonitorCreateJvm TODO Doc Comment
+// resourceMonitorCreateJvm creates the sematext_monitor_jvm resource.
 func resourceMonitorCreateJvm(d *schema.ResourceData, meta interface{}) error {
 	apptype := "JVM"
 	err := CommonMonitorCreate(d, meta, apptype)
@@ -33,33 +33,38 @@ func resourceMonitorCreateJvm(d *schema.ResourceData, meta interface{}) error {
 	return err
 }
 
-// resourceMonitorReadJvm TODO Doc Comment
+// resourceMonitorReadJvm reads the sematext_monitor_jvm resource from Sematext Cloud.
 func resourceMonitorReadJvm(d *schema.ResourceData, meta interface{}) error {
 	apptype := "JVM"
 	return CommonMonitorRead(d, meta, apptype)
 }
 
-// resourceMonitorUpdateJvm TODO Doc Comment
+// resourceMonitorUpdateJvm updates Sematext Cloud from the sematext_monitor_jvm resource.
 func resourceMonitorUpdateJvm(d *schema.ResourceData, meta interface{}) error {
 	apptype := "JVM"
 	return CommonMonitorUpdate(d, meta, apptype)
 }
 
-// resourceMonitorDeleteJvm TODO Doc Comment
-func resourceMonitorDeleteJvm(d *schema.ResourceData, meta interface{}) error { // TODO Check default is respected
+// resourceMonitorDeleteJvm marks a sematext_monitor_jvm resource as retired.
+func resourceMonitorDeleteJvm(d *schema.ResourceData, meta interface{}) error {
 	apptype := "JVM"
 	return CommonMonitorDelete(d, meta, apptype)
 }
 
-// TODO Consider necessity for an app edit-version to catch edit-version mis-match back into state.
-// resourceMonitorExistsJvm TODO Doc Comment
+// resourceMonitorExistsJvm checks a sematext_monitor_jvm resource exists in Sematext Cloud.
 func resourceMonitorExistsJvm(d *schema.ResourceData, meta interface{}) (b bool, e error) {
 	apptype := "JVM"
 	return CommonMonitorExists(d, meta, apptype)
 }
 
-// resourceSematextMonitorImportJvm TODO Doc Comment
+/*
+
+Placeholder - not implemented
+
+// resourceSematextMonitorImportJvm checks a sematext_monitor_jvm resource exists in Sematext Cloud.
 func resourceSematextMonitorImportJvm(d *schema.ResourceData, meta interface{}) ([]*schema.ResourceData, error) {
 	apptype := "JVM"
 	return CommonMonitorImport(d, meta, apptype)
 }
+
+*/

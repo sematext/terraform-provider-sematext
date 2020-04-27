@@ -27,6 +27,3 @@ resource "sematext_monitor_clickhouse" "mymonitor" {
 
 
 
-## Exports
-
-TODO

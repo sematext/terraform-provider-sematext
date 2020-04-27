@@ -10,7 +10,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
-// resourceSematextMonitorHadoopyarn TODO Doc Comment
+// resourceSematextMonitorHadoopyarn is the resource class that handles sematext_monitor_hadoopyarn
 func resourceSematextMonitorHadoopyarn() *schema.Resource {
 
 	fieldSchema := MonitorSchemaCommon("Hadoop-YARN")
@@ -25,7 +25,7 @@ func resourceSematextMonitorHadoopyarn() *schema.Resource {
 	}
 }
 
-// resourceMonitorCreateHadoopyarn TODO Doc Comment
+// resourceMonitorCreateHadoopyarn creates the sematext_monitor_hadoopyarn resource.
 func resourceMonitorCreateHadoopyarn(d *schema.ResourceData, meta interface{}) error {
 	apptype := "Hadoop-YARN"
 	err := CommonMonitorCreate(d, meta, apptype)
@@ -33,33 +33,38 @@ func resourceMonitorCreateHadoopyarn(d *schema.ResourceData, meta interface{}) e
 	return err
 }
 
-// resourceMonitorReadHadoopyarn TODO Doc Comment
+// resourceMonitorReadHadoopyarn reads the sematext_monitor_hadoopyarn resource from Sematext Cloud.
 func resourceMonitorReadHadoopyarn(d *schema.ResourceData, meta interface{}) error {
 	apptype := "Hadoop-YARN"
 	return CommonMonitorRead(d, meta, apptype)
 }
 
-// resourceMonitorUpdateHadoopyarn TODO Doc Comment
+// resourceMonitorUpdateHadoopyarn updates Sematext Cloud from the sematext_monitor_hadoopyarn resource.
 func resourceMonitorUpdateHadoopyarn(d *schema.ResourceData, meta interface{}) error {
 	apptype := "Hadoop-YARN"
 	return CommonMonitorUpdate(d, meta, apptype)
 }
 
-// resourceMonitorDeleteHadoopyarn TODO Doc Comment
-func resourceMonitorDeleteHadoopyarn(d *schema.ResourceData, meta interface{}) error { // TODO Check default is respected
+// resourceMonitorDeleteHadoopyarn marks a sematext_monitor_hadoopyarn resource as retired.
+func resourceMonitorDeleteHadoopyarn(d *schema.ResourceData, meta interface{}) error {
 	apptype := "Hadoop-YARN"
 	return CommonMonitorDelete(d, meta, apptype)
 }
 
-// TODO Consider necessity for an app edit-version to catch edit-version mis-match back into state.
-// resourceMonitorExistsHadoopyarn TODO Doc Comment
+// resourceMonitorExistsHadoopyarn checks a sematext_monitor_hadoopyarn resource exists in Sematext Cloud.
 func resourceMonitorExistsHadoopyarn(d *schema.ResourceData, meta interface{}) (b bool, e error) {
 	apptype := "Hadoop-YARN"
 	return CommonMonitorExists(d, meta, apptype)
 }
 
-// resourceSematextMonitorImportHadoopyarn TODO Doc Comment
+/*
+
+Placeholder - not implemented
+
+// resourceSematextMonitorImportHadoopyarn checks a sematext_monitor_hadoopyarn resource exists in Sematext Cloud.
 func resourceSematextMonitorImportHadoopyarn(d *schema.ResourceData, meta interface{}) ([]*schema.ResourceData, error) {
 	apptype := "Hadoop-YARN"
 	return CommonMonitorImport(d, meta, apptype)
 }
+
+*/

@@ -27,6 +27,3 @@ resource "<<RESOURCE_NAME>>" "mymonitor" {
 <<AWS_ARGSREF>>
 
 
-## Exports
-
-TODO

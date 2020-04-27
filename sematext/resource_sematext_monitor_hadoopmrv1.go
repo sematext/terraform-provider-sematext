@@ -10,7 +10,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
-// resourceSematextMonitorHadoopmrv1 TODO Doc Comment
+// resourceSematextMonitorHadoopmrv1 is the resource class that handles sematext_monitor_hadoopmrv1
 func resourceSematextMonitorHadoopmrv1() *schema.Resource {
 
 	fieldSchema := MonitorSchemaCommon("Hadoop-MRv1")
@@ -25,7 +25,7 @@ func resourceSematextMonitorHadoopmrv1() *schema.Resource {
 	}
 }
 
-// resourceMonitorCreateHadoopmrv1 TODO Doc Comment
+// resourceMonitorCreateHadoopmrv1 creates the sematext_monitor_hadoopmrv1 resource.
 func resourceMonitorCreateHadoopmrv1(d *schema.ResourceData, meta interface{}) error {
 	apptype := "Hadoop-MRv1"
 	err := CommonMonitorCreate(d, meta, apptype)
@@ -33,33 +33,38 @@ func resourceMonitorCreateHadoopmrv1(d *schema.ResourceData, meta interface{}) e
 	return err
 }
 
-// resourceMonitorReadHadoopmrv1 TODO Doc Comment
+// resourceMonitorReadHadoopmrv1 reads the sematext_monitor_hadoopmrv1 resource from Sematext Cloud.
 func resourceMonitorReadHadoopmrv1(d *schema.ResourceData, meta interface{}) error {
 	apptype := "Hadoop-MRv1"
 	return CommonMonitorRead(d, meta, apptype)
 }
 
-// resourceMonitorUpdateHadoopmrv1 TODO Doc Comment
+// resourceMonitorUpdateHadoopmrv1 updates Sematext Cloud from the sematext_monitor_hadoopmrv1 resource.
 func resourceMonitorUpdateHadoopmrv1(d *schema.ResourceData, meta interface{}) error {
 	apptype := "Hadoop-MRv1"
 	return CommonMonitorUpdate(d, meta, apptype)
 }
 
-// resourceMonitorDeleteHadoopmrv1 TODO Doc Comment
-func resourceMonitorDeleteHadoopmrv1(d *schema.ResourceData, meta interface{}) error { // TODO Check default is respected
+// resourceMonitorDeleteHadoopmrv1 marks a sematext_monitor_hadoopmrv1 resource as retired.
+func resourceMonitorDeleteHadoopmrv1(d *schema.ResourceData, meta interface{}) error {
 	apptype := "Hadoop-MRv1"
 	return CommonMonitorDelete(d, meta, apptype)
 }
 
-// TODO Consider necessity for an app edit-version to catch edit-version mis-match back into state.
-// resourceMonitorExistsHadoopmrv1 TODO Doc Comment
+// resourceMonitorExistsHadoopmrv1 checks a sematext_monitor_hadoopmrv1 resource exists in Sematext Cloud.
 func resourceMonitorExistsHadoopmrv1(d *schema.ResourceData, meta interface{}) (b bool, e error) {
 	apptype := "Hadoop-MRv1"
 	return CommonMonitorExists(d, meta, apptype)
 }
 
-// resourceSematextMonitorImportHadoopmrv1 TODO Doc Comment
+/*
+
+Placeholder - not implemented
+
+// resourceSematextMonitorImportHadoopmrv1 checks a sematext_monitor_hadoopmrv1 resource exists in Sematext Cloud.
 func resourceSematextMonitorImportHadoopmrv1(d *schema.ResourceData, meta interface{}) ([]*schema.ResourceData, error) {
 	apptype := "Hadoop-MRv1"
 	return CommonMonitorImport(d, meta, apptype)
 }
+
+*/

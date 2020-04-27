@@ -10,7 +10,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
-// resourceSematextMonitorCassandra TODO Doc Comment
+// resourceSematextMonitorCassandra is the resource class that handles sematext_monitor_cassandra
 func resourceSematextMonitorCassandra() *schema.Resource {
 
 	fieldSchema := MonitorSchemaCommon("Cassandra")
@@ -25,7 +25,7 @@ func resourceSematextMonitorCassandra() *schema.Resource {
 	}
 }
 
-// resourceMonitorCreateCassandra TODO Doc Comment
+// resourceMonitorCreateCassandra creates the sematext_monitor_cassandra resource.
 func resourceMonitorCreateCassandra(d *schema.ResourceData, meta interface{}) error {
 	apptype := "Cassandra"
 	err := CommonMonitorCreate(d, meta, apptype)
@@ -33,33 +33,38 @@ func resourceMonitorCreateCassandra(d *schema.ResourceData, meta interface{}) er
 	return err
 }
 
-// resourceMonitorReadCassandra TODO Doc Comment
+// resourceMonitorReadCassandra reads the sematext_monitor_cassandra resource from Sematext Cloud.
 func resourceMonitorReadCassandra(d *schema.ResourceData, meta interface{}) error {
 	apptype := "Cassandra"
 	return CommonMonitorRead(d, meta, apptype)
 }
 
-// resourceMonitorUpdateCassandra TODO Doc Comment
+// resourceMonitorUpdateCassandra updates Sematext Cloud from the sematext_monitor_cassandra resource.
 func resourceMonitorUpdateCassandra(d *schema.ResourceData, meta interface{}) error {
 	apptype := "Cassandra"
 	return CommonMonitorUpdate(d, meta, apptype)
 }
 
-// resourceMonitorDeleteCassandra TODO Doc Comment
-func resourceMonitorDeleteCassandra(d *schema.ResourceData, meta interface{}) error { // TODO Check default is respected
+// resourceMonitorDeleteCassandra marks a sematext_monitor_cassandra resource as retired.
+func resourceMonitorDeleteCassandra(d *schema.ResourceData, meta interface{}) error {
 	apptype := "Cassandra"
 	return CommonMonitorDelete(d, meta, apptype)
 }
 
-// TODO Consider necessity for an app edit-version to catch edit-version mis-match back into state.
-// resourceMonitorExistsCassandra TODO Doc Comment
+// resourceMonitorExistsCassandra checks a sematext_monitor_cassandra resource exists in Sematext Cloud.
 func resourceMonitorExistsCassandra(d *schema.ResourceData, meta interface{}) (b bool, e error) {
 	apptype := "Cassandra"
 	return CommonMonitorExists(d, meta, apptype)
 }
 
-// resourceSematextMonitorImportCassandra TODO Doc Comment
+/*
+
+Placeholder - not implemented
+
+// resourceSematextMonitorImportCassandra checks a sematext_monitor_cassandra resource exists in Sematext Cloud.
 func resourceSematextMonitorImportCassandra(d *schema.ResourceData, meta interface{}) ([]*schema.ResourceData, error) {
 	apptype := "Cassandra"
 	return CommonMonitorImport(d, meta, apptype)
 }
+
+*/

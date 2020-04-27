@@ -30,6 +30,3 @@ resource "sematext_monitor_awselb" "mymonitor" {
 * `aws_region` - (optional) if not present withh set from env AWS_REGION.
 
 
-## Exports
-
-TODO

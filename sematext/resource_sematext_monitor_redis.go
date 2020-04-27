@@ -10,7 +10,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
-// resourceSematextMonitorRedis TODO Doc Comment
+// resourceSematextMonitorRedis is the resource class that handles sematext_monitor_redis
 func resourceSematextMonitorRedis() *schema.Resource {
 
 	fieldSchema := MonitorSchemaCommon("Redis")
@@ -25,7 +25,7 @@ func resourceSematextMonitorRedis() *schema.Resource {
 	}
 }
 
-// resourceMonitorCreateRedis TODO Doc Comment
+// resourceMonitorCreateRedis creates the sematext_monitor_redis resource.
 func resourceMonitorCreateRedis(d *schema.ResourceData, meta interface{}) error {
 	apptype := "Redis"
 	err := CommonMonitorCreate(d, meta, apptype)
@@ -33,33 +33,38 @@ func resourceMonitorCreateRedis(d *schema.ResourceData, meta interface{}) error 
 	return err
 }
 
-// resourceMonitorReadRedis TODO Doc Comment
+// resourceMonitorReadRedis reads the sematext_monitor_redis resource from Sematext Cloud.
 func resourceMonitorReadRedis(d *schema.ResourceData, meta interface{}) error {
 	apptype := "Redis"
 	return CommonMonitorRead(d, meta, apptype)
 }
 
-// resourceMonitorUpdateRedis TODO Doc Comment
+// resourceMonitorUpdateRedis updates Sematext Cloud from the sematext_monitor_redis resource.
 func resourceMonitorUpdateRedis(d *schema.ResourceData, meta interface{}) error {
 	apptype := "Redis"
 	return CommonMonitorUpdate(d, meta, apptype)
 }
 
-// resourceMonitorDeleteRedis TODO Doc Comment
-func resourceMonitorDeleteRedis(d *schema.ResourceData, meta interface{}) error { // TODO Check default is respected
+// resourceMonitorDeleteRedis marks a sematext_monitor_redis resource as retired.
+func resourceMonitorDeleteRedis(d *schema.ResourceData, meta interface{}) error {
 	apptype := "Redis"
 	return CommonMonitorDelete(d, meta, apptype)
 }
 
-// TODO Consider necessity for an app edit-version to catch edit-version mis-match back into state.
-// resourceMonitorExistsRedis TODO Doc Comment
+// resourceMonitorExistsRedis checks a sematext_monitor_redis resource exists in Sematext Cloud.
 func resourceMonitorExistsRedis(d *schema.ResourceData, meta interface{}) (b bool, e error) {
 	apptype := "Redis"
 	return CommonMonitorExists(d, meta, apptype)
 }
 
-// resourceSematextMonitorImportRedis TODO Doc Comment
+/*
+
+Placeholder - not implemented
+
+// resourceSematextMonitorImportRedis checks a sematext_monitor_redis resource exists in Sematext Cloud.
 func resourceSematextMonitorImportRedis(d *schema.ResourceData, meta interface{}) ([]*schema.ResourceData, error) {
 	apptype := "Redis"
 	return CommonMonitorImport(d, meta, apptype)
 }
+
+*/

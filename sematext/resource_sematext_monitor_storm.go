@@ -10,7 +10,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
-// resourceSematextMonitorStorm TODO Doc Comment
+// resourceSematextMonitorStorm is the resource class that handles sematext_monitor_storm
 func resourceSematextMonitorStorm() *schema.Resource {
 
 	fieldSchema := MonitorSchemaCommon("Storm")
@@ -25,7 +25,7 @@ func resourceSematextMonitorStorm() *schema.Resource {
 	}
 }
 
-// resourceMonitorCreateStorm TODO Doc Comment
+// resourceMonitorCreateStorm creates the sematext_monitor_storm resource.
 func resourceMonitorCreateStorm(d *schema.ResourceData, meta interface{}) error {
 	apptype := "Storm"
 	err := CommonMonitorCreate(d, meta, apptype)
@@ -33,33 +33,38 @@ func resourceMonitorCreateStorm(d *schema.ResourceData, meta interface{}) error 
 	return err
 }
 
-// resourceMonitorReadStorm TODO Doc Comment
+// resourceMonitorReadStorm reads the sematext_monitor_storm resource from Sematext Cloud.
 func resourceMonitorReadStorm(d *schema.ResourceData, meta interface{}) error {
 	apptype := "Storm"
 	return CommonMonitorRead(d, meta, apptype)
 }
 
-// resourceMonitorUpdateStorm TODO Doc Comment
+// resourceMonitorUpdateStorm updates Sematext Cloud from the sematext_monitor_storm resource.
 func resourceMonitorUpdateStorm(d *schema.ResourceData, meta interface{}) error {
 	apptype := "Storm"
 	return CommonMonitorUpdate(d, meta, apptype)
 }
 
-// resourceMonitorDeleteStorm TODO Doc Comment
-func resourceMonitorDeleteStorm(d *schema.ResourceData, meta interface{}) error { // TODO Check default is respected
+// resourceMonitorDeleteStorm marks a sematext_monitor_storm resource as retired.
+func resourceMonitorDeleteStorm(d *schema.ResourceData, meta interface{}) error {
 	apptype := "Storm"
 	return CommonMonitorDelete(d, meta, apptype)
 }
 
-// TODO Consider necessity for an app edit-version to catch edit-version mis-match back into state.
-// resourceMonitorExistsStorm TODO Doc Comment
+// resourceMonitorExistsStorm checks a sematext_monitor_storm resource exists in Sematext Cloud.
 func resourceMonitorExistsStorm(d *schema.ResourceData, meta interface{}) (b bool, e error) {
 	apptype := "Storm"
 	return CommonMonitorExists(d, meta, apptype)
 }
 
-// resourceSematextMonitorImportStorm TODO Doc Comment
+/*
+
+Placeholder - not implemented
+
+// resourceSematextMonitorImportStorm checks a sematext_monitor_storm resource exists in Sematext Cloud.
 func resourceSematextMonitorImportStorm(d *schema.ResourceData, meta interface{}) ([]*schema.ResourceData, error) {
 	apptype := "Storm"
 	return CommonMonitorImport(d, meta, apptype)
 }
+
+*/

@@ -10,7 +10,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
-// resourceSematextMonitorAwsebs TODO Doc Comment
+// resourceSematextMonitorAwsebs is the resource class that handles sematext_monitor_awsebs
 func resourceSematextMonitorAwsebs() *schema.Resource {
 
 	fieldSchema := MonitorSchemaCommon("AWS EBS")
@@ -25,7 +25,7 @@ func resourceSematextMonitorAwsebs() *schema.Resource {
 	}
 }
 
-// resourceMonitorCreateAwsebs TODO Doc Comment
+// resourceMonitorCreateAwsebs creates the sematext_monitor_awsebs resource.
 func resourceMonitorCreateAwsebs(d *schema.ResourceData, meta interface{}) error {
 	apptype := "AWS EBS"
 	err := CommonMonitorCreate(d, meta, apptype)
@@ -33,33 +33,38 @@ func resourceMonitorCreateAwsebs(d *schema.ResourceData, meta interface{}) error
 	return err
 }
 
-// resourceMonitorReadAwsebs TODO Doc Comment
+// resourceMonitorReadAwsebs reads the sematext_monitor_awsebs resource from Sematext Cloud.
 func resourceMonitorReadAwsebs(d *schema.ResourceData, meta interface{}) error {
 	apptype := "AWS EBS"
 	return CommonMonitorRead(d, meta, apptype)
 }
 
-// resourceMonitorUpdateAwsebs TODO Doc Comment
+// resourceMonitorUpdateAwsebs updates Sematext Cloud from the sematext_monitor_awsebs resource.
 func resourceMonitorUpdateAwsebs(d *schema.ResourceData, meta interface{}) error {
 	apptype := "AWS EBS"
 	return CommonMonitorUpdate(d, meta, apptype)
 }
 
-// resourceMonitorDeleteAwsebs TODO Doc Comment
-func resourceMonitorDeleteAwsebs(d *schema.ResourceData, meta interface{}) error { // TODO Check default is respected
+// resourceMonitorDeleteAwsebs marks a sematext_monitor_awsebs resource as retired.
+func resourceMonitorDeleteAwsebs(d *schema.ResourceData, meta interface{}) error {
 	apptype := "AWS EBS"
 	return CommonMonitorDelete(d, meta, apptype)
 }
 
-// TODO Consider necessity for an app edit-version to catch edit-version mis-match back into state.
-// resourceMonitorExistsAwsebs TODO Doc Comment
+// resourceMonitorExistsAwsebs checks a sematext_monitor_awsebs resource exists in Sematext Cloud.
 func resourceMonitorExistsAwsebs(d *schema.ResourceData, meta interface{}) (b bool, e error) {
 	apptype := "AWS EBS"
 	return CommonMonitorExists(d, meta, apptype)
 }
 
-// resourceSematextMonitorImportAwsebs TODO Doc Comment
+/*
+
+Placeholder - not implemented
+
+// resourceSematextMonitorImportAwsebs checks a sematext_monitor_awsebs resource exists in Sematext Cloud.
 func resourceSematextMonitorImportAwsebs(d *schema.ResourceData, meta interface{}) ([]*schema.ResourceData, error) {
 	apptype := "AWS EBS"
 	return CommonMonitorImport(d, meta, apptype)
 }
+
+*/

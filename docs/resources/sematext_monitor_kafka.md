@@ -27,6 +27,3 @@ resource "sematext_monitor_kafka" "mymonitor" {
 
 
 
-## Exports
-
-TODO

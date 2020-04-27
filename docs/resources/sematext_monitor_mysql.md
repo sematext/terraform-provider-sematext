@@ -27,6 +27,3 @@ resource "sematext_monitor_mysql" "mymonitor" {
 
 
 
-## Exports
-
-TODO

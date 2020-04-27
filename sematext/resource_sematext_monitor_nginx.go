@@ -10,7 +10,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
-// resourceSematextMonitorNginx TODO Doc Comment
+// resourceSematextMonitorNginx is the resource class that handles sematext_monitor_nginx
 func resourceSematextMonitorNginx() *schema.Resource {
 
 	fieldSchema := MonitorSchemaCommon("Nginx")
@@ -25,7 +25,7 @@ func resourceSematextMonitorNginx() *schema.Resource {
 	}
 }
 
-// resourceMonitorCreateNginx TODO Doc Comment
+// resourceMonitorCreateNginx creates the sematext_monitor_nginx resource.
 func resourceMonitorCreateNginx(d *schema.ResourceData, meta interface{}) error {
 	apptype := "Nginx"
 	err := CommonMonitorCreate(d, meta, apptype)
@@ -33,33 +33,38 @@ func resourceMonitorCreateNginx(d *schema.ResourceData, meta interface{}) error 
 	return err
 }
 
-// resourceMonitorReadNginx TODO Doc Comment
+// resourceMonitorReadNginx reads the sematext_monitor_nginx resource from Sematext Cloud.
 func resourceMonitorReadNginx(d *schema.ResourceData, meta interface{}) error {
 	apptype := "Nginx"
 	return CommonMonitorRead(d, meta, apptype)
 }
 
-// resourceMonitorUpdateNginx TODO Doc Comment
+// resourceMonitorUpdateNginx updates Sematext Cloud from the sematext_monitor_nginx resource.
 func resourceMonitorUpdateNginx(d *schema.ResourceData, meta interface{}) error {
 	apptype := "Nginx"
 	return CommonMonitorUpdate(d, meta, apptype)
 }
 
-// resourceMonitorDeleteNginx TODO Doc Comment
-func resourceMonitorDeleteNginx(d *schema.ResourceData, meta interface{}) error { // TODO Check default is respected
+// resourceMonitorDeleteNginx marks a sematext_monitor_nginx resource as retired.
+func resourceMonitorDeleteNginx(d *schema.ResourceData, meta interface{}) error {
 	apptype := "Nginx"
 	return CommonMonitorDelete(d, meta, apptype)
 }
 
-// TODO Consider necessity for an app edit-version to catch edit-version mis-match back into state.
-// resourceMonitorExistsNginx TODO Doc Comment
+// resourceMonitorExistsNginx checks a sematext_monitor_nginx resource exists in Sematext Cloud.
 func resourceMonitorExistsNginx(d *schema.ResourceData, meta interface{}) (b bool, e error) {
 	apptype := "Nginx"
 	return CommonMonitorExists(d, meta, apptype)
 }
 
-// resourceSematextMonitorImportNginx TODO Doc Comment
+/*
+
+Placeholder - not implemented
+
+// resourceSematextMonitorImportNginx checks a sematext_monitor_nginx resource exists in Sematext Cloud.
 func resourceSematextMonitorImportNginx(d *schema.ResourceData, meta interface{}) ([]*schema.ResourceData, error) {
 	apptype := "Nginx"
 	return CommonMonitorImport(d, meta, apptype)
 }
+
+*/

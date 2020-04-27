@@ -10,7 +10,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
-// resourceSematextMonitorSpark TODO Doc Comment
+// resourceSematextMonitorSpark is the resource class that handles sematext_monitor_spark
 func resourceSematextMonitorSpark() *schema.Resource {
 
 	fieldSchema := MonitorSchemaCommon("Spark")
@@ -25,7 +25,7 @@ func resourceSematextMonitorSpark() *schema.Resource {
 	}
 }
 
-// resourceMonitorCreateSpark TODO Doc Comment
+// resourceMonitorCreateSpark creates the sematext_monitor_spark resource.
 func resourceMonitorCreateSpark(d *schema.ResourceData, meta interface{}) error {
 	apptype := "Spark"
 	err := CommonMonitorCreate(d, meta, apptype)
@@ -33,33 +33,38 @@ func resourceMonitorCreateSpark(d *schema.ResourceData, meta interface{}) error 
 	return err
 }
 
-// resourceMonitorReadSpark TODO Doc Comment
+// resourceMonitorReadSpark reads the sematext_monitor_spark resource from Sematext Cloud.
 func resourceMonitorReadSpark(d *schema.ResourceData, meta interface{}) error {
 	apptype := "Spark"
 	return CommonMonitorRead(d, meta, apptype)
 }
 
-// resourceMonitorUpdateSpark TODO Doc Comment
+// resourceMonitorUpdateSpark updates Sematext Cloud from the sematext_monitor_spark resource.
 func resourceMonitorUpdateSpark(d *schema.ResourceData, meta interface{}) error {
 	apptype := "Spark"
 	return CommonMonitorUpdate(d, meta, apptype)
 }
 
-// resourceMonitorDeleteSpark TODO Doc Comment
-func resourceMonitorDeleteSpark(d *schema.ResourceData, meta interface{}) error { // TODO Check default is respected
+// resourceMonitorDeleteSpark marks a sematext_monitor_spark resource as retired.
+func resourceMonitorDeleteSpark(d *schema.ResourceData, meta interface{}) error {
 	apptype := "Spark"
 	return CommonMonitorDelete(d, meta, apptype)
 }
 
-// TODO Consider necessity for an app edit-version to catch edit-version mis-match back into state.
-// resourceMonitorExistsSpark TODO Doc Comment
+// resourceMonitorExistsSpark checks a sematext_monitor_spark resource exists in Sematext Cloud.
 func resourceMonitorExistsSpark(d *schema.ResourceData, meta interface{}) (b bool, e error) {
 	apptype := "Spark"
 	return CommonMonitorExists(d, meta, apptype)
 }
 
-// resourceSematextMonitorImportSpark TODO Doc Comment
+/*
+
+Placeholder - not implemented
+
+// resourceSematextMonitorImportSpark checks a sematext_monitor_spark resource exists in Sematext Cloud.
 func resourceSematextMonitorImportSpark(d *schema.ResourceData, meta interface{}) ([]*schema.ResourceData, error) {
 	apptype := "Spark"
 	return CommonMonitorImport(d, meta, apptype)
 }
+
+*/

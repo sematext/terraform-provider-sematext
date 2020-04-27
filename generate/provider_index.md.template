@@ -30,11 +30,10 @@ The following arguments are supported:
 
 There are two authentication tokens
 
-* Sematext Cloud API access token - [available from your account](https://apps.sematext.com/ui/account/api)
+There are two authentication tokens
 
-When the Sematext Terraform Provider connects to Sematext Cloud it authenticates with an access token.
-You'll need to gain this via your login to your Sematext Cloud account. TODO
-Note this is different from the app key
+* Sematext Cloud API access token - [available from your account](https://apps.sematext.com/ui/account/api);
+* Sematext Cloud App access token - retrieved on resource creation - refer to examples on how to access this inside your Terrform scripting.
 
 
 ## Enviropnment Variables
@@ -51,9 +50,8 @@ If working with AWS Cloudwatch the following environment vars should be set:
 * AWS_REGION
 
 
-## Resources 
+## Resources
 
 The following terraform resources are supported.
 
 <<RESOURCE_LINKS>>
-

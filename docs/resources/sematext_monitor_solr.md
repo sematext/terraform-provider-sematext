@@ -27,6 +27,3 @@ resource "sematext_monitor_solr" "mymonitor" {
 
 
 
-## Exports
-
-TODO

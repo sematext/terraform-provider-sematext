@@ -27,6 +27,3 @@ resource "sematext_monitor_redis" "mymonitor" {
 
 
 
-## Exports
-
-TODO

@@ -27,6 +27,3 @@ resource "sematext_monitor_logsene" "mymonitor" {
 
 
 
-## Exports
-
-TODO

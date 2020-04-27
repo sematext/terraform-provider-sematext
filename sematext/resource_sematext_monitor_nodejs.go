@@ -10,7 +10,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
-// resourceSematextMonitorNodejs TODO Doc Comment
+// resourceSematextMonitorNodejs is the resource class that handles sematext_monitor_nodejs
 func resourceSematextMonitorNodejs() *schema.Resource {
 
 	fieldSchema := MonitorSchemaCommon("Node.js")
@@ -25,7 +25,7 @@ func resourceSematextMonitorNodejs() *schema.Resource {
 	}
 }
 
-// resourceMonitorCreateNodejs TODO Doc Comment
+// resourceMonitorCreateNodejs creates the sematext_monitor_nodejs resource.
 func resourceMonitorCreateNodejs(d *schema.ResourceData, meta interface{}) error {
 	apptype := "Node.js"
 	err := CommonMonitorCreate(d, meta, apptype)
@@ -33,33 +33,38 @@ func resourceMonitorCreateNodejs(d *schema.ResourceData, meta interface{}) error
 	return err
 }
 
-// resourceMonitorReadNodejs TODO Doc Comment
+// resourceMonitorReadNodejs reads the sematext_monitor_nodejs resource from Sematext Cloud.
 func resourceMonitorReadNodejs(d *schema.ResourceData, meta interface{}) error {
 	apptype := "Node.js"
 	return CommonMonitorRead(d, meta, apptype)
 }
 
-// resourceMonitorUpdateNodejs TODO Doc Comment
+// resourceMonitorUpdateNodejs updates Sematext Cloud from the sematext_monitor_nodejs resource.
 func resourceMonitorUpdateNodejs(d *schema.ResourceData, meta interface{}) error {
 	apptype := "Node.js"
 	return CommonMonitorUpdate(d, meta, apptype)
 }
 
-// resourceMonitorDeleteNodejs TODO Doc Comment
-func resourceMonitorDeleteNodejs(d *schema.ResourceData, meta interface{}) error { // TODO Check default is respected
+// resourceMonitorDeleteNodejs marks a sematext_monitor_nodejs resource as retired.
+func resourceMonitorDeleteNodejs(d *schema.ResourceData, meta interface{}) error {
 	apptype := "Node.js"
 	return CommonMonitorDelete(d, meta, apptype)
 }
 
-// TODO Consider necessity for an app edit-version to catch edit-version mis-match back into state.
-// resourceMonitorExistsNodejs TODO Doc Comment
+// resourceMonitorExistsNodejs checks a sematext_monitor_nodejs resource exists in Sematext Cloud.
 func resourceMonitorExistsNodejs(d *schema.ResourceData, meta interface{}) (b bool, e error) {
 	apptype := "Node.js"
 	return CommonMonitorExists(d, meta, apptype)
 }
 
-// resourceSematextMonitorImportNodejs TODO Doc Comment
+/*
+
+Placeholder - not implemented
+
+// resourceSematextMonitorImportNodejs checks a sematext_monitor_nodejs resource exists in Sematext Cloud.
 func resourceSematextMonitorImportNodejs(d *schema.ResourceData, meta interface{}) ([]*schema.ResourceData, error) {
 	apptype := "Node.js"
 	return CommonMonitorImport(d, meta, apptype)
 }
+
+*/

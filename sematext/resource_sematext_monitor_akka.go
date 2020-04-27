@@ -10,7 +10,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
-// resourceSematextMonitorAkka TODO Doc Comment
+// resourceSematextMonitorAkka is the resource class that handles sematext_monitor_akka
 func resourceSematextMonitorAkka() *schema.Resource {
 
 	fieldSchema := MonitorSchemaCommon("Akka")
@@ -25,7 +25,7 @@ func resourceSematextMonitorAkka() *schema.Resource {
 	}
 }
 
-// resourceMonitorCreateAkka TODO Doc Comment
+// resourceMonitorCreateAkka creates the sematext_monitor_akka resource.
 func resourceMonitorCreateAkka(d *schema.ResourceData, meta interface{}) error {
 	apptype := "Akka"
 	err := CommonMonitorCreate(d, meta, apptype)
@@ -33,33 +33,38 @@ func resourceMonitorCreateAkka(d *schema.ResourceData, meta interface{}) error {
 	return err
 }
 
-// resourceMonitorReadAkka TODO Doc Comment
+// resourceMonitorReadAkka reads the sematext_monitor_akka resource from Sematext Cloud.
 func resourceMonitorReadAkka(d *schema.ResourceData, meta interface{}) error {
 	apptype := "Akka"
 	return CommonMonitorRead(d, meta, apptype)
 }
 
-// resourceMonitorUpdateAkka TODO Doc Comment
+// resourceMonitorUpdateAkka updates Sematext Cloud from the sematext_monitor_akka resource.
 func resourceMonitorUpdateAkka(d *schema.ResourceData, meta interface{}) error {
 	apptype := "Akka"
 	return CommonMonitorUpdate(d, meta, apptype)
 }
 
-// resourceMonitorDeleteAkka TODO Doc Comment
-func resourceMonitorDeleteAkka(d *schema.ResourceData, meta interface{}) error { // TODO Check default is respected
+// resourceMonitorDeleteAkka marks a sematext_monitor_akka resource as retired.
+func resourceMonitorDeleteAkka(d *schema.ResourceData, meta interface{}) error {
 	apptype := "Akka"
 	return CommonMonitorDelete(d, meta, apptype)
 }
 
-// TODO Consider necessity for an app edit-version to catch edit-version mis-match back into state.
-// resourceMonitorExistsAkka TODO Doc Comment
+// resourceMonitorExistsAkka checks a sematext_monitor_akka resource exists in Sematext Cloud.
 func resourceMonitorExistsAkka(d *schema.ResourceData, meta interface{}) (b bool, e error) {
 	apptype := "Akka"
 	return CommonMonitorExists(d, meta, apptype)
 }
 
-// resourceSematextMonitorImportAkka TODO Doc Comment
+/*
+
+Placeholder - not implemented
+
+// resourceSematextMonitorImportAkka checks a sematext_monitor_akka resource exists in Sematext Cloud.
 func resourceSematextMonitorImportAkka(d *schema.ResourceData, meta interface{}) ([]*schema.ResourceData, error) {
 	apptype := "Akka"
 	return CommonMonitorImport(d, meta, apptype)
 }
+
+*/

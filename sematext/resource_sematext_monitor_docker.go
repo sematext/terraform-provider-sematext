@@ -10,7 +10,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
-// resourceSematextMonitorDocker TODO Doc Comment
+// resourceSematextMonitorDocker is the resource class that handles sematext_monitor_docker
 func resourceSematextMonitorDocker() *schema.Resource {
 
 	fieldSchema := MonitorSchemaCommon("Docker")
@@ -25,7 +25,7 @@ func resourceSematextMonitorDocker() *schema.Resource {
 	}
 }
 
-// resourceMonitorCreateDocker TODO Doc Comment
+// resourceMonitorCreateDocker creates the sematext_monitor_docker resource.
 func resourceMonitorCreateDocker(d *schema.ResourceData, meta interface{}) error {
 	apptype := "Docker"
 	err := CommonMonitorCreate(d, meta, apptype)
@@ -33,33 +33,38 @@ func resourceMonitorCreateDocker(d *schema.ResourceData, meta interface{}) error
 	return err
 }
 
-// resourceMonitorReadDocker TODO Doc Comment
+// resourceMonitorReadDocker reads the sematext_monitor_docker resource from Sematext Cloud.
 func resourceMonitorReadDocker(d *schema.ResourceData, meta interface{}) error {
 	apptype := "Docker"
 	return CommonMonitorRead(d, meta, apptype)
 }
 
-// resourceMonitorUpdateDocker TODO Doc Comment
+// resourceMonitorUpdateDocker updates Sematext Cloud from the sematext_monitor_docker resource.
 func resourceMonitorUpdateDocker(d *schema.ResourceData, meta interface{}) error {
 	apptype := "Docker"
 	return CommonMonitorUpdate(d, meta, apptype)
 }
 
-// resourceMonitorDeleteDocker TODO Doc Comment
-func resourceMonitorDeleteDocker(d *schema.ResourceData, meta interface{}) error { // TODO Check default is respected
+// resourceMonitorDeleteDocker marks a sematext_monitor_docker resource as retired.
+func resourceMonitorDeleteDocker(d *schema.ResourceData, meta interface{}) error {
 	apptype := "Docker"
 	return CommonMonitorDelete(d, meta, apptype)
 }
 
-// TODO Consider necessity for an app edit-version to catch edit-version mis-match back into state.
-// resourceMonitorExistsDocker TODO Doc Comment
+// resourceMonitorExistsDocker checks a sematext_monitor_docker resource exists in Sematext Cloud.
 func resourceMonitorExistsDocker(d *schema.ResourceData, meta interface{}) (b bool, e error) {
 	apptype := "Docker"
 	return CommonMonitorExists(d, meta, apptype)
 }
 
-// resourceSematextMonitorImportDocker TODO Doc Comment
+/*
+
+Placeholder - not implemented
+
+// resourceSematextMonitorImportDocker checks a sematext_monitor_docker resource exists in Sematext Cloud.
 func resourceSematextMonitorImportDocker(d *schema.ResourceData, meta interface{}) ([]*schema.ResourceData, error) {
 	apptype := "Docker"
 	return CommonMonitorImport(d, meta, apptype)
 }
+
+*/

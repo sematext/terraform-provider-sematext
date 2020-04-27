@@ -10,7 +10,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
-// resourceSematextMonitorKafka TODO Doc Comment
+// resourceSematextMonitorKafka is the resource class that handles sematext_monitor_kafka
 func resourceSematextMonitorKafka() *schema.Resource {
 
 	fieldSchema := MonitorSchemaCommon("Kafka")
@@ -25,7 +25,7 @@ func resourceSematextMonitorKafka() *schema.Resource {
 	}
 }
 
-// resourceMonitorCreateKafka TODO Doc Comment
+// resourceMonitorCreateKafka creates the sematext_monitor_kafka resource.
 func resourceMonitorCreateKafka(d *schema.ResourceData, meta interface{}) error {
 	apptype := "Kafka"
 	err := CommonMonitorCreate(d, meta, apptype)
@@ -33,33 +33,38 @@ func resourceMonitorCreateKafka(d *schema.ResourceData, meta interface{}) error 
 	return err
 }
 
-// resourceMonitorReadKafka TODO Doc Comment
+// resourceMonitorReadKafka reads the sematext_monitor_kafka resource from Sematext Cloud.
 func resourceMonitorReadKafka(d *schema.ResourceData, meta interface{}) error {
 	apptype := "Kafka"
 	return CommonMonitorRead(d, meta, apptype)
 }
 
-// resourceMonitorUpdateKafka TODO Doc Comment
+// resourceMonitorUpdateKafka updates Sematext Cloud from the sematext_monitor_kafka resource.
 func resourceMonitorUpdateKafka(d *schema.ResourceData, meta interface{}) error {
 	apptype := "Kafka"
 	return CommonMonitorUpdate(d, meta, apptype)
 }
 
-// resourceMonitorDeleteKafka TODO Doc Comment
-func resourceMonitorDeleteKafka(d *schema.ResourceData, meta interface{}) error { // TODO Check default is respected
+// resourceMonitorDeleteKafka marks a sematext_monitor_kafka resource as retired.
+func resourceMonitorDeleteKafka(d *schema.ResourceData, meta interface{}) error {
 	apptype := "Kafka"
 	return CommonMonitorDelete(d, meta, apptype)
 }
 
-// TODO Consider necessity for an app edit-version to catch edit-version mis-match back into state.
-// resourceMonitorExistsKafka TODO Doc Comment
+// resourceMonitorExistsKafka checks a sematext_monitor_kafka resource exists in Sematext Cloud.
 func resourceMonitorExistsKafka(d *schema.ResourceData, meta interface{}) (b bool, e error) {
 	apptype := "Kafka"
 	return CommonMonitorExists(d, meta, apptype)
 }
 
-// resourceSematextMonitorImportKafka TODO Doc Comment
+/*
+
+Placeholder - not implemented
+
+// resourceSematextMonitorImportKafka checks a sematext_monitor_kafka resource exists in Sematext Cloud.
 func resourceSematextMonitorImportKafka(d *schema.ResourceData, meta interface{}) ([]*schema.ResourceData, error) {
 	apptype := "Kafka"
 	return CommonMonitorImport(d, meta, apptype)
 }
+
+*/

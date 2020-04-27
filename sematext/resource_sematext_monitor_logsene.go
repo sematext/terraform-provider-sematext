@@ -10,7 +10,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
-// resourceSematextMonitorLogsene TODO Doc Comment
+// resourceSematextMonitorLogsene is the resource class that handles sematext_monitor_logsene
 func resourceSematextMonitorLogsene() *schema.Resource {
 
 	fieldSchema := MonitorSchemaCommon("Logsene")
@@ -25,7 +25,7 @@ func resourceSematextMonitorLogsene() *schema.Resource {
 	}
 }
 
-// resourceMonitorCreateLogsene TODO Doc Comment
+// resourceMonitorCreateLogsene creates the sematext_monitor_logsene resource.
 func resourceMonitorCreateLogsene(d *schema.ResourceData, meta interface{}) error {
 	apptype := "Logsene"
 	err := CommonMonitorCreate(d, meta, apptype)
@@ -33,33 +33,38 @@ func resourceMonitorCreateLogsene(d *schema.ResourceData, meta interface{}) erro
 	return err
 }
 
-// resourceMonitorReadLogsene TODO Doc Comment
+// resourceMonitorReadLogsene reads the sematext_monitor_logsene resource from Sematext Cloud.
 func resourceMonitorReadLogsene(d *schema.ResourceData, meta interface{}) error {
 	apptype := "Logsene"
 	return CommonMonitorRead(d, meta, apptype)
 }
 
-// resourceMonitorUpdateLogsene TODO Doc Comment
+// resourceMonitorUpdateLogsene updates Sematext Cloud from the sematext_monitor_logsene resource.
 func resourceMonitorUpdateLogsene(d *schema.ResourceData, meta interface{}) error {
 	apptype := "Logsene"
 	return CommonMonitorUpdate(d, meta, apptype)
 }
 
-// resourceMonitorDeleteLogsene TODO Doc Comment
-func resourceMonitorDeleteLogsene(d *schema.ResourceData, meta interface{}) error { // TODO Check default is respected
+// resourceMonitorDeleteLogsene marks a sematext_monitor_logsene resource as retired.
+func resourceMonitorDeleteLogsene(d *schema.ResourceData, meta interface{}) error {
 	apptype := "Logsene"
 	return CommonMonitorDelete(d, meta, apptype)
 }
 
-// TODO Consider necessity for an app edit-version to catch edit-version mis-match back into state.
-// resourceMonitorExistsLogsene TODO Doc Comment
+// resourceMonitorExistsLogsene checks a sematext_monitor_logsene resource exists in Sematext Cloud.
 func resourceMonitorExistsLogsene(d *schema.ResourceData, meta interface{}) (b bool, e error) {
 	apptype := "Logsene"
 	return CommonMonitorExists(d, meta, apptype)
 }
 
-// resourceSematextMonitorImportLogsene TODO Doc Comment
+/*
+
+Placeholder - not implemented
+
+// resourceSematextMonitorImportLogsene checks a sematext_monitor_logsene resource exists in Sematext Cloud.
 func resourceSematextMonitorImportLogsene(d *schema.ResourceData, meta interface{}) ([]*schema.ResourceData, error) {
 	apptype := "Logsene"
 	return CommonMonitorImport(d, meta, apptype)
 }
+
+*/

@@ -10,7 +10,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
-// resourceSematextMonitorSolr TODO Doc Comment
+// resourceSematextMonitorSolr is the resource class that handles sematext_monitor_solr
 func resourceSematextMonitorSolr() *schema.Resource {
 
 	fieldSchema := MonitorSchemaCommon("Solr")
@@ -25,7 +25,7 @@ func resourceSematextMonitorSolr() *schema.Resource {
 	}
 }
 
-// resourceMonitorCreateSolr TODO Doc Comment
+// resourceMonitorCreateSolr creates the sematext_monitor_solr resource.
 func resourceMonitorCreateSolr(d *schema.ResourceData, meta interface{}) error {
 	apptype := "Solr"
 	err := CommonMonitorCreate(d, meta, apptype)
@@ -33,33 +33,38 @@ func resourceMonitorCreateSolr(d *schema.ResourceData, meta interface{}) error {
 	return err
 }
 
-// resourceMonitorReadSolr TODO Doc Comment
+// resourceMonitorReadSolr reads the sematext_monitor_solr resource from Sematext Cloud.
 func resourceMonitorReadSolr(d *schema.ResourceData, meta interface{}) error {
 	apptype := "Solr"
 	return CommonMonitorRead(d, meta, apptype)
 }
 
-// resourceMonitorUpdateSolr TODO Doc Comment
+// resourceMonitorUpdateSolr updates Sematext Cloud from the sematext_monitor_solr resource.
 func resourceMonitorUpdateSolr(d *schema.ResourceData, meta interface{}) error {
 	apptype := "Solr"
 	return CommonMonitorUpdate(d, meta, apptype)
 }
 
-// resourceMonitorDeleteSolr TODO Doc Comment
-func resourceMonitorDeleteSolr(d *schema.ResourceData, meta interface{}) error { // TODO Check default is respected
+// resourceMonitorDeleteSolr marks a sematext_monitor_solr resource as retired.
+func resourceMonitorDeleteSolr(d *schema.ResourceData, meta interface{}) error {
 	apptype := "Solr"
 	return CommonMonitorDelete(d, meta, apptype)
 }
 
-// TODO Consider necessity for an app edit-version to catch edit-version mis-match back into state.
-// resourceMonitorExistsSolr TODO Doc Comment
+// resourceMonitorExistsSolr checks a sematext_monitor_solr resource exists in Sematext Cloud.
 func resourceMonitorExistsSolr(d *schema.ResourceData, meta interface{}) (b bool, e error) {
 	apptype := "Solr"
 	return CommonMonitorExists(d, meta, apptype)
 }
 
-// resourceSematextMonitorImportSolr TODO Doc Comment
+/*
+
+Placeholder - not implemented
+
+// resourceSematextMonitorImportSolr checks a sematext_monitor_solr resource exists in Sematext Cloud.
 func resourceSematextMonitorImportSolr(d *schema.ResourceData, meta interface{}) ([]*schema.ResourceData, error) {
 	apptype := "Solr"
 	return CommonMonitorImport(d, meta, apptype)
 }
+
+*/

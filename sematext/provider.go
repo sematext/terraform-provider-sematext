@@ -17,7 +17,7 @@ import (
 	"github.com/sematext/sematext-api-client/stcloud"
 )
 
-// Provider  - TODO Doc Comment
+// Provider is the connection to Sematext Cloud.
 func Provider() terraform.ResourceProvider {
 
 	provider := &schema.Provider{

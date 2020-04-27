@@ -10,7 +10,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
-// resourceSematextMonitorNginxplus TODO Doc Comment
+// resourceSematextMonitorNginxplus is the resource class that handles sematext_monitor_nginxplus
 func resourceSematextMonitorNginxplus() *schema.Resource {
 
 	fieldSchema := MonitorSchemaCommon("Nginx-Plus")
@@ -25,7 +25,7 @@ func resourceSematextMonitorNginxplus() *schema.Resource {
 	}
 }
 
-// resourceMonitorCreateNginxplus TODO Doc Comment
+// resourceMonitorCreateNginxplus creates the sematext_monitor_nginxplus resource.
 func resourceMonitorCreateNginxplus(d *schema.ResourceData, meta interface{}) error {
 	apptype := "Nginx-Plus"
 	err := CommonMonitorCreate(d, meta, apptype)
@@ -33,33 +33,38 @@ func resourceMonitorCreateNginxplus(d *schema.ResourceData, meta interface{}) er
 	return err
 }
 
-// resourceMonitorReadNginxplus TODO Doc Comment
+// resourceMonitorReadNginxplus reads the sematext_monitor_nginxplus resource from Sematext Cloud.
 func resourceMonitorReadNginxplus(d *schema.ResourceData, meta interface{}) error {
 	apptype := "Nginx-Plus"
 	return CommonMonitorRead(d, meta, apptype)
 }
 
-// resourceMonitorUpdateNginxplus TODO Doc Comment
+// resourceMonitorUpdateNginxplus updates Sematext Cloud from the sematext_monitor_nginxplus resource.
 func resourceMonitorUpdateNginxplus(d *schema.ResourceData, meta interface{}) error {
 	apptype := "Nginx-Plus"
 	return CommonMonitorUpdate(d, meta, apptype)
 }
 
-// resourceMonitorDeleteNginxplus TODO Doc Comment
-func resourceMonitorDeleteNginxplus(d *schema.ResourceData, meta interface{}) error { // TODO Check default is respected
+// resourceMonitorDeleteNginxplus marks a sematext_monitor_nginxplus resource as retired.
+func resourceMonitorDeleteNginxplus(d *schema.ResourceData, meta interface{}) error {
 	apptype := "Nginx-Plus"
 	return CommonMonitorDelete(d, meta, apptype)
 }
 
-// TODO Consider necessity for an app edit-version to catch edit-version mis-match back into state.
-// resourceMonitorExistsNginxplus TODO Doc Comment
+// resourceMonitorExistsNginxplus checks a sematext_monitor_nginxplus resource exists in Sematext Cloud.
 func resourceMonitorExistsNginxplus(d *schema.ResourceData, meta interface{}) (b bool, e error) {
 	apptype := "Nginx-Plus"
 	return CommonMonitorExists(d, meta, apptype)
 }
 
-// resourceSematextMonitorImportNginxplus TODO Doc Comment
+/*
+
+Placeholder - not implemented
+
+// resourceSematextMonitorImportNginxplus checks a sematext_monitor_nginxplus resource exists in Sematext Cloud.
 func resourceSematextMonitorImportNginxplus(d *schema.ResourceData, meta interface{}) ([]*schema.ResourceData, error) {
 	apptype := "Nginx-Plus"
 	return CommonMonitorImport(d, meta, apptype)
 }
+
+*/

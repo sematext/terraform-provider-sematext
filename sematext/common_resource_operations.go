@@ -10,12 +10,8 @@ import (
 	"github.com/sematext/sematext-api-client/stcloud"
 )
 
-// CommonMonitorCreate TODO Doc Comment
+// CommonMonitorCreate is a common creation handler used by most resources.
 func CommonMonitorCreate(d *schema.ResourceData, meta interface{}, appType string) error {
-
-	fmt.Println("---------------------------------------")
-	fmt.Println("CommonMonitorCreate Called")
-	fmt.Println("---------------------------------------")
 
 	var err error
 	var genericAPIResponse stcloud.GenericAPIResponse
@@ -43,11 +39,6 @@ func CommonMonitorCreate(d *schema.ResourceData, meta interface{}, appType strin
 	default:
 		createAppInfo.AppType = appType
 	}
-
-	fmt.Println("------------------")
-	fmt.Println("AppType")
-	fmt.Println(createAppInfo.AppType)
-	fmt.Println("------------------")
 
 	name, namePresent := d.GetOkExists("name")
 	if namePresent {
@@ -108,12 +99,8 @@ func CommonMonitorCreate(d *schema.ResourceData, meta interface{}, appType strin
 
 }
 
-// CommonMonitorRead TODO Doc Comment
+// CommonMonitorRead is a common read handler used by most resources.
 func CommonMonitorRead(d *schema.ResourceData, meta interface{}, appType string) error {
-
-	fmt.Println("---------------------------------------")
-	fmt.Println("CommonMonitorRead Called")
-	fmt.Println("---------------------------------------")
 
 	client := meta.(*stcloud.APIClient)
 	var genericAPIResponse stcloud.GenericAPIResponse
@@ -140,10 +127,6 @@ func CommonMonitorRead(d *schema.ResourceData, meta interface{}, appType string)
 	case "AWS EBS", "AWS EC2", "AWS ELB":
 		d.Set("name", app.Name)
 		d.Set("billing_plan_id", app.Plan.ID)
-		// TODO - how to read back "aws_access_key"
-		// TODO - how to read back "aws_secret_key"
-		// TODO - how to read back "aws_fetch_frequency"
-		// TODO - how to read back "aws_region"
 
 	default:
 		d.Set("name", app.Name)
@@ -154,12 +137,8 @@ func CommonMonitorRead(d *schema.ResourceData, meta interface{}, appType string)
 	return nil
 }
 
-// CommonMonitorUpdate TODO Doc Comment
+// CommonMonitorUpdate is a common update handler used by most resources.
 func CommonMonitorUpdate(d *schema.ResourceData, meta interface{}, apptype string) error {
-
-	fmt.Println("---------------------------------------")
-	fmt.Println("CommonMonitorUpdate Called")
-	fmt.Println("---------------------------------------")
 
 	var id int64
 	var err error
@@ -246,12 +225,8 @@ func CommonMonitorUpdate(d *schema.ResourceData, meta interface{}, apptype strin
 
 }
 
-// CommonMonitorDelete TODO Doc Comment
+// CommonMonitorDelete is a common retire handler used by most resources.
 func CommonMonitorDelete(d *schema.ResourceData, meta interface{}, apptype string) error {
-
-	fmt.Println("---------------------------------------")
-	fmt.Println("CommonMonitorDelete Called")
-	fmt.Println("---------------------------------------")
 
 	var id int64
 	var err error
@@ -271,14 +246,9 @@ func CommonMonitorDelete(d *schema.ResourceData, meta interface{}, apptype strin
 	return nil
 }
 
-// CommonMonitorExists TODO Doc Comment
+// CommonMonitorExists is a common existance check handler used by most resources.
 func CommonMonitorExists(d *schema.ResourceData, meta interface{}, apptype string) (exists bool, err error) {
 
-	fmt.Println("---------------------------------------")
-	fmt.Println("CommonMonitorExists Called")
-	fmt.Println("---------------------------------------")
-
-	// TODO Consider necessity for an app edit-version to catch edit-version mis-match back into state.
 	var id int64
 	var app *stcloud.App
 	var genericAPIResponse stcloud.GenericAPIResponse
@@ -298,12 +268,16 @@ func CommonMonitorExists(d *schema.ResourceData, meta interface{}, apptype strin
 		return false, err
 	}
 
-	exists = app.Status != "ARCHIVED" // TODO revist logic once some examples available
+	exists = app.Status != "ARCHIVED" // TODO Reconfirm archive vs deletion once some examples available post MVP
 
 	return exists, nil
 }
 
-// CommonMonitorImport TODO Doc Comment
+/*
+
+Placeholder - not implemented
+
+// CommonMonitorImport  is a common import handler used by most resources.
 func CommonMonitorImport(d *schema.ResourceData, meta interface{}, apptype string) ([]*schema.ResourceData, error) {
 
 	// TODO Decide if Resource Import necessary post-MVP
@@ -315,3 +289,5 @@ func CommonMonitorImport(d *schema.ResourceData, meta interface{}, apptype strin
 	return nil, nil
 
 }
+
+*/

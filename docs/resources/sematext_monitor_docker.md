@@ -27,6 +27,3 @@ resource "sematext_monitor_docker" "mymonitor" {
 
 
 
-## Exports
-
-TODO

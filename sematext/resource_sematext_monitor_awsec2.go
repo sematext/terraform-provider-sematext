@@ -10,7 +10,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
-// resourceSematextMonitorAwsec2 TODO Doc Comment
+// resourceSematextMonitorAwsec2 is the resource class that handles sematext_monitor_awsec2
 func resourceSematextMonitorAwsec2() *schema.Resource {
 
 	fieldSchema := MonitorSchemaCommon("AWS EC2")
@@ -25,7 +25,7 @@ func resourceSematextMonitorAwsec2() *schema.Resource {
 	}
 }
 
-// resourceMonitorCreateAwsec2 TODO Doc Comment
+// resourceMonitorCreateAwsec2 creates the sematext_monitor_awsec2 resource.
 func resourceMonitorCreateAwsec2(d *schema.ResourceData, meta interface{}) error {
 	apptype := "AWS EC2"
 	err := CommonMonitorCreate(d, meta, apptype)
@@ -33,33 +33,38 @@ func resourceMonitorCreateAwsec2(d *schema.ResourceData, meta interface{}) error
 	return err
 }
 
-// resourceMonitorReadAwsec2 TODO Doc Comment
+// resourceMonitorReadAwsec2 reads the sematext_monitor_awsec2 resource from Sematext Cloud.
 func resourceMonitorReadAwsec2(d *schema.ResourceData, meta interface{}) error {
 	apptype := "AWS EC2"
 	return CommonMonitorRead(d, meta, apptype)
 }
 
-// resourceMonitorUpdateAwsec2 TODO Doc Comment
+// resourceMonitorUpdateAwsec2 updates Sematext Cloud from the sematext_monitor_awsec2 resource.
 func resourceMonitorUpdateAwsec2(d *schema.ResourceData, meta interface{}) error {
 	apptype := "AWS EC2"
 	return CommonMonitorUpdate(d, meta, apptype)
 }
 
-// resourceMonitorDeleteAwsec2 TODO Doc Comment
-func resourceMonitorDeleteAwsec2(d *schema.ResourceData, meta interface{}) error { // TODO Check default is respected
+// resourceMonitorDeleteAwsec2 marks a sematext_monitor_awsec2 resource as retired.
+func resourceMonitorDeleteAwsec2(d *schema.ResourceData, meta interface{}) error {
 	apptype := "AWS EC2"
 	return CommonMonitorDelete(d, meta, apptype)
 }
 
-// TODO Consider necessity for an app edit-version to catch edit-version mis-match back into state.
-// resourceMonitorExistsAwsec2 TODO Doc Comment
+// resourceMonitorExistsAwsec2 checks a sematext_monitor_awsec2 resource exists in Sematext Cloud.
 func resourceMonitorExistsAwsec2(d *schema.ResourceData, meta interface{}) (b bool, e error) {
 	apptype := "AWS EC2"
 	return CommonMonitorExists(d, meta, apptype)
 }
 
-// resourceSematextMonitorImportAwsec2 TODO Doc Comment
+/*
+
+Placeholder - not implemented
+
+// resourceSematextMonitorImportAwsec2 checks a sematext_monitor_awsec2 resource exists in Sematext Cloud.
 func resourceSematextMonitorImportAwsec2(d *schema.ResourceData, meta interface{}) ([]*schema.ResourceData, error) {
 	apptype := "AWS EC2"
 	return CommonMonitorImport(d, meta, apptype)
 }
+
+*/

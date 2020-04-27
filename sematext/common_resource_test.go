@@ -1,7 +1,5 @@
 package sematext
 
-// TODO - Expand Resource test cases to full checks.
-
 import (
 	"context"
 	"fmt"
@@ -9,6 +7,7 @@ import (
 	"strconv"
 	"strings"
 	"testing"
+	"time"
 
 	"github.com/davecgh/go-spew/spew"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
@@ -372,7 +371,6 @@ func ConfirmMonitorCreationAWS(rtf ResourceTestFixtureAWS) resource.TestCheckFun
 	}
 }
 
-// TODO - shift this into the temaplate
 // ConfirmMonitorDestructionDefault checks the App ID has been removed from state and the API has marked the app as DISABLED.
 func ConfirmMonitorDestructionDefault(rtf ResourceTestFixtureDefault) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
@@ -393,14 +391,14 @@ func ConfirmMonitorDestructionDefault(rtf ResourceTestFixtureDefault) resource.T
 
 		for _, rs = range s.RootModule().Resources {
 
-			if !strings.HasPrefix(rs.Type, "sematext_") { // TODO shift to template and make check more explicit after MVP
+			if !strings.HasPrefix(rs.Type, "sematext_") { // TODO Consider shift to template and make check tighter after MVP
 				continue
 			}
 			if id, err = strconv.ParseInt(rs.Primary.ID, 10, 64); err != nil {
 				return err
 			}
 
-			// time.Sleep(time.Second * 4) // TODO - propagation delay
+			time.Sleep(time.Second * 4) // TODO - workaround for cache latency on SC API, no longer required, confirm and obsolete after MVP.
 
 			if genericAPIResponse, _, err = client.AppsAPI.GetUsingGET(context.Background(), id); err != nil {
 				return fmt.Errorf("ConfirmMonitorDestructionDefault : Failed to pull app in checking monitor %s, %s", rtf.StatePath, err)
@@ -442,7 +440,7 @@ func ConfirmMonitorDestructionAWS(rtf ResourceTestFixtureAWS) resource.TestCheck
 
 		for _, rs = range s.RootModule().Resources {
 
-			if !strings.HasPrefix(rs.Type, "sematext_") { // TODO shift to template and make check more explicit after MVP
+			if !strings.HasPrefix(rs.Type, "sematext_") { // TODO Consider shift to template and make check tighter after MVP
 				continue
 			}
 			if id, err = strconv.ParseInt(rs.Primary.ID, 10, 64); err != nil {

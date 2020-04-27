@@ -1,16 +1,16 @@
-## 0.0.1 (Unreleased)
+## 0.1.0 (Alpha)
 
 FEATURES:
 
-* **Feature One:** `aws_organizations_organizational_units` ([#<github issue>](https://github.com/terraform-providers/terraform-provider-sematext/issues/<github issue>))
+* **Initial Alpha Release:** 
 
 
 ENHANCEMENTS:
 
-* resource/<stack>: Loris ipsum `Issue Label` dolor sit amet, consectetur adipiscing elit. Nulla mollis enim at elit ullamcorper ullamcorper. [<Github PR>]
+* None
 
 BUG FIXES:
 
-* resource/<stack>: Loris ipsum `Issue Label` dolor sit amet, consectetur adipiscing elit. Nulla mollis enim at elit ullamcorper ullamcorper. [<Github PR>]
+* None
 
 

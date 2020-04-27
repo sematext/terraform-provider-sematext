@@ -14,8 +14,8 @@ func MonitorSchemaCommon(appType string) map[string]*schema.Schema {
 
 	resourceSchema := map[string]*schema.Schema{
 
-		"name": { // TODO validate func
-			Description: "TODO",
+		"name": {
+			Description: "(Required) Label for the monitor app in Sematext Cloud.",
 			Type:        schema.TypeString,
 			Required:    true,
 			ForceNew:    false,
@@ -28,7 +28,7 @@ func MonitorSchemaCommon(appType string) map[string]*schema.Schema {
 		},
 
 		"billing_plan_id": {
-			Description: "TODO",
+			Description: "(Required) Plan ID attached to the monitor app in Sematext Cloud.",
 			Type:        schema.TypeInt,
 			Required:    true,
 			ForceNew:    false,
@@ -50,7 +50,7 @@ func MonitorSchemaCommon(appType string) map[string]*schema.Schema {
 		},
 
 		"discount_code": {
-			Description: "TODO",
+			Description: "(Optional) Iniitial discount code attached to the monitor app in Sematext Cloud.",
 			Type:        schema.TypeString,
 			Optional:    true,
 			ForceNew:    false,
@@ -59,8 +59,7 @@ func MonitorSchemaCommon(appType string) map[string]*schema.Schema {
 
 	if appType == "AWS EBS" || appType == "AWS EC2" || appType == "AWS ELB" {
 
-		// TODO Pull out of env - look at how aws do this.
-		//schema.EnvDefaultFunc("DOCKER_CERT_PATH", "")
+		// TODO Pull aws credentials out of .config in OS dependant manner, override with env.
 
 		resourceSchema["aws_access_key"] = &schema.Schema{
 			Description: "The access key for retrieval of stats from AWS Cloudwatch. You can retrieve this\nfrom the 'Security & Credentials' section of the AWS console.",
@@ -104,7 +103,7 @@ func MonitorSchemaCommon(appType string) map[string]*schema.Schema {
 			ForceNew:    false,
 			ValidateFunc: func(value interface{}, key string) (warns []string, errs []error) {
 				fmt.Println(value.(string))
-				if valid, _ := regexp.MatchString(`(MINUTE|FIVE_MINUTES|FIFTEEN_MINUTES)`, value.(string)); !valid { // TODO check regex
+				if valid, _ := regexp.MatchString(`(MINUTE|FIVE_MINUTES|FIFTEEN_MINUTES)`, value.(string)); !valid {
 					errs = append(errs, errors.New("Invalid aws_fetch_frequency"))
 				}
 				return warns, errs

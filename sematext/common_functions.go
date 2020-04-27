@@ -22,7 +22,7 @@ func IsValidUUID(u string) bool {
 	return err == nil
 }
 
-// PrettyPrintJSON TODO Doc Comment
+// PrettyPrintJSON is a utility function to format a JSON byte array.
 func PrettyPrintJSON(b []byte) ([]byte, error) {
 	var out bytes.Buffer
 	err := json.Indent(&out, b, "", "    ")

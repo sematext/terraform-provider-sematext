@@ -10,7 +10,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
-// resourceSematextMonitor<<CLASS_NAME>> TODO Doc Comment
+// resourceSematextMonitor<<CLASS_NAME>> is the resource class that handles <<RESOURCE_NAME>>
 func resourceSematextMonitor<<CLASS_NAME>>() *schema.Resource {
 
 	fieldSchema := MonitorSchemaCommon("<<APP_TYPE>>")
@@ -25,7 +25,7 @@ func resourceSematextMonitor<<CLASS_NAME>>() *schema.Resource {
 	}
 }
 
-// resourceMonitorCreate<<CLASS_NAME>> TODO Doc Comment
+// resourceMonitorCreate<<CLASS_NAME>> creates the <<RESOURCE_NAME>> resource.
 func resourceMonitorCreate<<CLASS_NAME>>(d *schema.ResourceData, meta interface{}) error {
 	apptype := "<<APP_TYPE>>"
 	err := CommonMonitorCreate(d, meta, apptype)
@@ -33,33 +33,39 @@ func resourceMonitorCreate<<CLASS_NAME>>(d *schema.ResourceData, meta interface{
 	return err
 }
 
-// resourceMonitorRead<<CLASS_NAME>> TODO Doc Comment
+// resourceMonitorRead<<CLASS_NAME>> reads the <<RESOURCE_NAME>> resource from Sematext Cloud.
 func resourceMonitorRead<<CLASS_NAME>>(d *schema.ResourceData, meta interface{}) error {
 	apptype := "<<APP_TYPE>>"
 	return CommonMonitorRead(d, meta, apptype)
 }
 
-// resourceMonitorUpdate<<CLASS_NAME>> TODO Doc Comment
+// resourceMonitorUpdate<<CLASS_NAME>> updates Sematext Cloud from the <<RESOURCE_NAME>> resource.
 func resourceMonitorUpdate<<CLASS_NAME>>(d *schema.ResourceData, meta interface{}) error {
 	apptype := "<<APP_TYPE>>"
 	return CommonMonitorUpdate(d, meta, apptype)
 }
 
-// resourceMonitorDelete<<CLASS_NAME>> TODO Doc Comment
-func resourceMonitorDelete<<CLASS_NAME>>(d *schema.ResourceData, meta interface{}) error { // TODO Check default is respected
+// resourceMonitorDelete<<CLASS_NAME>> marks a <<RESOURCE_NAME>> resource as retired.
+func resourceMonitorDelete<<CLASS_NAME>>(d *schema.ResourceData, meta interface{}) error {
 	apptype := "<<APP_TYPE>>"
 	return CommonMonitorDelete(d, meta, apptype)
 }
 
-// TODO Consider necessity for an app edit-version to catch edit-version mis-match back into state.
-// resourceMonitorExists<<CLASS_NAME>> TODO Doc Comment
+// resourceMonitorExists<<CLASS_NAME>> checks a <<RESOURCE_NAME>> resource exists in Sematext Cloud.
 func resourceMonitorExists<<CLASS_NAME>>(d *schema.ResourceData, meta interface{}) (b bool, e error) {
 	apptype := "<<APP_TYPE>>"
 	return CommonMonitorExists(d, meta, apptype)
 }
 
-// resourceSematextMonitorImport<<CLASS_NAME>> TODO Doc Comment
+
+/*
+
+Placeholder - not implemented
+
+// resourceSematextMonitorImport<<CLASS_NAME>> checks a <<RESOURCE_NAME>> resource exists in Sematext Cloud.
 func resourceSematextMonitorImport<<CLASS_NAME>>(d *schema.ResourceData, meta interface{}) ([]*schema.ResourceData, error) {
 	apptype := "<<APP_TYPE>>"
 	return CommonMonitorImport(d, meta, apptype)
 }
+
+*/

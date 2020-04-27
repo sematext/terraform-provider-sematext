@@ -10,7 +10,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
-// resourceSematextMonitorApache TODO Doc Comment
+// resourceSematextMonitorApache is the resource class that handles sematext_monitor_apache
 func resourceSematextMonitorApache() *schema.Resource {
 
 	fieldSchema := MonitorSchemaCommon("Apache")
@@ -25,7 +25,7 @@ func resourceSematextMonitorApache() *schema.Resource {
 	}
 }
 
-// resourceMonitorCreateApache TODO Doc Comment
+// resourceMonitorCreateApache creates the sematext_monitor_apache resource.
 func resourceMonitorCreateApache(d *schema.ResourceData, meta interface{}) error {
 	apptype := "Apache"
 	err := CommonMonitorCreate(d, meta, apptype)
@@ -33,33 +33,38 @@ func resourceMonitorCreateApache(d *schema.ResourceData, meta interface{}) error
 	return err
 }
 
-// resourceMonitorReadApache TODO Doc Comment
+// resourceMonitorReadApache reads the sematext_monitor_apache resource from Sematext Cloud.
 func resourceMonitorReadApache(d *schema.ResourceData, meta interface{}) error {
 	apptype := "Apache"
 	return CommonMonitorRead(d, meta, apptype)
 }
 
-// resourceMonitorUpdateApache TODO Doc Comment
+// resourceMonitorUpdateApache updates Sematext Cloud from the sematext_monitor_apache resource.
 func resourceMonitorUpdateApache(d *schema.ResourceData, meta interface{}) error {
 	apptype := "Apache"
 	return CommonMonitorUpdate(d, meta, apptype)
 }
 
-// resourceMonitorDeleteApache TODO Doc Comment
-func resourceMonitorDeleteApache(d *schema.ResourceData, meta interface{}) error { // TODO Check default is respected
+// resourceMonitorDeleteApache marks a sematext_monitor_apache resource as retired.
+func resourceMonitorDeleteApache(d *schema.ResourceData, meta interface{}) error {
 	apptype := "Apache"
 	return CommonMonitorDelete(d, meta, apptype)
 }
 
-// TODO Consider necessity for an app edit-version to catch edit-version mis-match back into state.
-// resourceMonitorExistsApache TODO Doc Comment
+// resourceMonitorExistsApache checks a sematext_monitor_apache resource exists in Sematext Cloud.
 func resourceMonitorExistsApache(d *schema.ResourceData, meta interface{}) (b bool, e error) {
 	apptype := "Apache"
 	return CommonMonitorExists(d, meta, apptype)
 }
 
-// resourceSematextMonitorImportApache TODO Doc Comment
+/*
+
+Placeholder - not implemented
+
+// resourceSematextMonitorImportApache checks a sematext_monitor_apache resource exists in Sematext Cloud.
 func resourceSematextMonitorImportApache(d *schema.ResourceData, meta interface{}) ([]*schema.ResourceData, error) {
 	apptype := "Apache"
 	return CommonMonitorImport(d, meta, apptype)
 }
+
+*/
