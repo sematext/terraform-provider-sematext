@@ -35,7 +35,8 @@ $ gnumake build
 Using the provider
 ----------------------
 
-Detailed documentation for the GitHub provider can be found [here](https://www.terraform.io/docs/providers/sematext/index.html).
+Detailed documentation for the Sematext provider can be found [here](https://www.terraform.io/docs/providers/sematext/index.html).
+
 
 Developing the Provider
 ---------------------------
