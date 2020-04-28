@@ -10,7 +10,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
-// resourceSematextMonitorElasticsearch TODO Doc Comment
+// resourceSematextMonitorElasticsearch is the resource class that handles sematext_monitor_elasticsearch
 func resourceSematextMonitorElasticsearch() *schema.Resource {
 
 	fieldSchema := MonitorSchemaCommon("Elastic Search")
@@ -25,7 +25,7 @@ func resourceSematextMonitorElasticsearch() *schema.Resource {
 	}
 }
 
-// resourceMonitorCreateElasticsearch TODO Doc Comment
+// resourceMonitorCreateElasticsearch creates the sematext_monitor_elasticsearch resource.
 func resourceMonitorCreateElasticsearch(d *schema.ResourceData, meta interface{}) error {
 	apptype := "Elastic Search"
 	err := CommonMonitorCreate(d, meta, apptype)
@@ -33,33 +33,38 @@ func resourceMonitorCreateElasticsearch(d *schema.ResourceData, meta interface{}
 	return err
 }
 
-// resourceMonitorReadElasticsearch TODO Doc Comment
+// resourceMonitorReadElasticsearch reads the sematext_monitor_elasticsearch resource from Sematext Cloud.
 func resourceMonitorReadElasticsearch(d *schema.ResourceData, meta interface{}) error {
 	apptype := "Elastic Search"
 	return CommonMonitorRead(d, meta, apptype)
 }
 
-// resourceMonitorUpdateElasticsearch TODO Doc Comment
+// resourceMonitorUpdateElasticsearch updates Sematext Cloud from the sematext_monitor_elasticsearch resource.
 func resourceMonitorUpdateElasticsearch(d *schema.ResourceData, meta interface{}) error {
 	apptype := "Elastic Search"
 	return CommonMonitorUpdate(d, meta, apptype)
 }
 
-// resourceMonitorDeleteElasticsearch TODO Doc Comment
-func resourceMonitorDeleteElasticsearch(d *schema.ResourceData, meta interface{}) error { // TODO Check default is respected
+// resourceMonitorDeleteElasticsearch marks a sematext_monitor_elasticsearch resource as retired.
+func resourceMonitorDeleteElasticsearch(d *schema.ResourceData, meta interface{}) error {
 	apptype := "Elastic Search"
 	return CommonMonitorDelete(d, meta, apptype)
 }
 
-// TODO Consider necessity for an app edit-version to catch edit-version mis-match back into state.
-// resourceMonitorExistsElasticsearch TODO Doc Comment
+// resourceMonitorExistsElasticsearch checks a sematext_monitor_elasticsearch resource exists in Sematext Cloud.
 func resourceMonitorExistsElasticsearch(d *schema.ResourceData, meta interface{}) (b bool, e error) {
 	apptype := "Elastic Search"
 	return CommonMonitorExists(d, meta, apptype)
 }
 
-// resourceSematextMonitorImportElasticsearch TODO Doc Comment
+/*
+
+Placeholder - not implemented
+
+// resourceSematextMonitorImportElasticsearch checks a sematext_monitor_elasticsearch resource exists in Sematext Cloud.
 func resourceSematextMonitorImportElasticsearch(d *schema.ResourceData, meta interface{}) ([]*schema.ResourceData, error) {
 	apptype := "Elastic Search"
 	return CommonMonitorImport(d, meta, apptype)
 }
+
+*/

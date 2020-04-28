@@ -10,7 +10,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
-// resourceSematextMonitorHbase TODO Doc Comment
+// resourceSematextMonitorHbase is the resource class that handles sematext_monitor_hbase
 func resourceSematextMonitorHbase() *schema.Resource {
 
 	fieldSchema := MonitorSchemaCommon("HBase")
@@ -25,7 +25,7 @@ func resourceSematextMonitorHbase() *schema.Resource {
 	}
 }
 
-// resourceMonitorCreateHbase TODO Doc Comment
+// resourceMonitorCreateHbase creates the sematext_monitor_hbase resource.
 func resourceMonitorCreateHbase(d *schema.ResourceData, meta interface{}) error {
 	apptype := "HBase"
 	err := CommonMonitorCreate(d, meta, apptype)
@@ -33,33 +33,38 @@ func resourceMonitorCreateHbase(d *schema.ResourceData, meta interface{}) error 
 	return err
 }
 
-// resourceMonitorReadHbase TODO Doc Comment
+// resourceMonitorReadHbase reads the sematext_monitor_hbase resource from Sematext Cloud.
 func resourceMonitorReadHbase(d *schema.ResourceData, meta interface{}) error {
 	apptype := "HBase"
 	return CommonMonitorRead(d, meta, apptype)
 }
 
-// resourceMonitorUpdateHbase TODO Doc Comment
+// resourceMonitorUpdateHbase updates Sematext Cloud from the sematext_monitor_hbase resource.
 func resourceMonitorUpdateHbase(d *schema.ResourceData, meta interface{}) error {
 	apptype := "HBase"
 	return CommonMonitorUpdate(d, meta, apptype)
 }
 
-// resourceMonitorDeleteHbase TODO Doc Comment
-func resourceMonitorDeleteHbase(d *schema.ResourceData, meta interface{}) error { // TODO Check default is respected
+// resourceMonitorDeleteHbase marks a sematext_monitor_hbase resource as retired.
+func resourceMonitorDeleteHbase(d *schema.ResourceData, meta interface{}) error {
 	apptype := "HBase"
 	return CommonMonitorDelete(d, meta, apptype)
 }
 
-// TODO Consider necessity for an app edit-version to catch edit-version mis-match back into state.
-// resourceMonitorExistsHbase TODO Doc Comment
+// resourceMonitorExistsHbase checks a sematext_monitor_hbase resource exists in Sematext Cloud.
 func resourceMonitorExistsHbase(d *schema.ResourceData, meta interface{}) (b bool, e error) {
 	apptype := "HBase"
 	return CommonMonitorExists(d, meta, apptype)
 }
 
-// resourceSematextMonitorImportHbase TODO Doc Comment
+/*
+
+Placeholder - not implemented
+
+// resourceSematextMonitorImportHbase checks a sematext_monitor_hbase resource exists in Sematext Cloud.
 func resourceSematextMonitorImportHbase(d *schema.ResourceData, meta interface{}) ([]*schema.ResourceData, error) {
 	apptype := "HBase"
 	return CommonMonitorImport(d, meta, apptype)
 }
+
+*/

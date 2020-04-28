@@ -1,50 +1,44 @@
 package sematext
 
 import (
+	"context"
 	"errors"
 	"fmt"
 	"strconv"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
-	"github.com/sematext/sematext-api-client/api"
+	"github.com/sematext/sematext-api-client/stcloud"
 )
 
-// CommonMonitorCreate TODO Doc Comment
+// CommonMonitorCreate is a common creation handler used by most resources.
 func CommonMonitorCreate(d *schema.ResourceData, meta interface{}, appType string) error {
 
-	fmt.Println("---------------------------------------")
-	fmt.Println("CommonMonitorCreate Called")
-	fmt.Println("---------------------------------------")
-
 	var err error
-	client := meta.(*api.Client)
+	var genericAPIResponse stcloud.GenericAPIResponse
+
+	client := meta.(*stcloud.APIClient)
 
 	// TODO - Check pre-existence of same name/apptype in API (consider as a status update) - post MVP.
 
-	createAppInfo := &api.CreateAppInfo{}
+	createAppInfo := &stcloud.CreateAppInfo{}
 
 	switch appType {
 
 	case "AWS EBS":
-		createAppInfo.MetaData = &api.AppMetadata{}
+		createAppInfo.MetaData = &stcloud.AppMetadata{}
 		createAppInfo.MetaData.SubTypes = []string{"AWS EBS"}
 		createAppInfo.AppType = "aws"
 	case "AWS ELB":
-		createAppInfo.MetaData = &api.AppMetadata{}
+		createAppInfo.MetaData = &stcloud.AppMetadata{}
 		createAppInfo.MetaData.SubTypes = []string{"AWS ELB"}
 		createAppInfo.AppType = "aws"
 	case "AWS EC2":
-		createAppInfo.MetaData = &api.AppMetadata{}
+		createAppInfo.MetaData = &stcloud.AppMetadata{}
 		createAppInfo.MetaData.SubTypes = []string{"AWS EC2"}
 		createAppInfo.AppType = "aws"
 	default:
 		createAppInfo.AppType = appType
 	}
-
-	fmt.Println("------------------")
-	fmt.Println("AppType")
-	fmt.Println(createAppInfo.AppType)
-	fmt.Println("------------------")
 
 	name, namePresent := d.GetOkExists("name")
 	if namePresent {
@@ -58,16 +52,16 @@ func CommonMonitorCreate(d *schema.ResourceData, meta interface{}, appType strin
 	}
 
 	if initialPlanID, initialPlanIDPresent := d.GetOkExists("billing_plan_id"); initialPlanIDPresent {
-		if _, found := api.LookupPlanID2Apptypes[initialPlanID.(int)]; !found {
+		if _, found := stcloud.LookupPlanID2Apptypes[initialPlanID.(int)]; !found {
 			return fmt.Errorf("%v is invalid billing_plan_id for %v", initialPlanID, appType)
 		}
-		createAppInfo.InitialPlanID = initialPlanID.(int)
+		createAppInfo.InitialPlanID = int64(initialPlanID.(int))
 	} else {
 		return errors.New("Missing billing_plan_id")
 	}
 
 	if awsRegion, awsRegionPresent := d.GetOkExists("aws_region"); awsRegionPresent {
-		if stRegion, found := api.AWSRegion2STRegion[awsRegion.(string)]; found {
+		if stRegion, found := stcloud.AWSRegion2STRegion[awsRegion.(string)]; found {
 			createAppInfo.MetaData.AwsRegion = stRegion
 		}
 	}
@@ -81,187 +75,209 @@ func CommonMonitorCreate(d *schema.ResourceData, meta interface{}, appType strin
 		createAppInfo.MetaData.AwsFetchFrequency = awsFetchFrequency.(string)
 	}
 
-	app, err := createAppInfo.Persist(client)
+	switch appType {
+
+	case "Logsene":
+		genericAPIResponse, _, err = client.LogsAppAPI.CreateLogseneApplication(context.Background(), *createAppInfo)
+
+	default:
+		genericAPIResponse, _, err = client.MonitoringAppAPI.CreateSpmApplication1(context.Background(), *createAppInfo)
+	}
+
 	if err != nil {
 		return err
 	}
-
-	d.SetId(strconv.Itoa(app.ID))
+	var app *stcloud.App
+	app, err = genericAPIResponse.ExtractApp()
+	if err != nil {
+		return err
+	}
+	d.SetId(strconv.FormatInt(app.ID, 10))
 	d.Set("token", app.Token) //TODO confirm this becomes available to other resources and decide if it should be a resource paramater in .tf script
 
 	return nil
 
 }
 
-// CommonMonitorRead TODO Doc Comment
-func CommonMonitorRead(d *schema.ResourceData, meta interface{}, apptype string) error {
+// CommonMonitorRead is a common read handler used by most resources.
+func CommonMonitorRead(d *schema.ResourceData, meta interface{}, appType string) error {
 
-	fmt.Println("---------------------------------------")
-	fmt.Println("CommonMonitorRead Called")
-	fmt.Println("---------------------------------------")
-
-	client := meta.(*api.Client)
-	var app *api.App
-	var id int
+	client := meta.(*stcloud.APIClient)
+	var genericAPIResponse stcloud.GenericAPIResponse
+	var id int64
 	var err error
-	if id, err = strconv.Atoi(d.Id()); err != nil {
+	var app *stcloud.App
+
+	if id, err = strconv.ParseInt(d.Id(), 10, 64); err != nil {
 		return err
 	}
 
-	if app, err = app.Load(id, client); err != nil {
+	genericAPIResponse, _, err = client.AppsAPI.GetUsingGET(context.Background(), id)
+	if err != nil {
 		return err
 	}
 
-	// TODO - Check if more required here.
+	app, err = genericAPIResponse.ExtractApp()
+	if err != nil {
+		return err
+	}
+
+	switch appType {
+
+	case "AWS EBS", "AWS EC2", "AWS ELB":
+		d.Set("name", app.Name)
+		d.Set("billing_plan_id", app.Plan.ID)
+
+	default:
+		d.Set("name", app.Name)
+		d.Set("billing_plan_id", app.Plan.ID)
+
+	}
 
 	return nil
 }
 
-// CommonMonitorUpdate TODO Doc Comment
+// CommonMonitorUpdate is a common update handler used by most resources.
 func CommonMonitorUpdate(d *schema.ResourceData, meta interface{}, apptype string) error {
 
-	fmt.Println("---------------------------------------")
-	fmt.Println("CommonMonitorUpdate Called")
-	fmt.Println("---------------------------------------")
-
-	// TODO - accomodate new endpoint for metadata update
-
-	var id int
+	var id int64
 	var err error
-	var valid bool
 
-	client := meta.(*api.Client)
-	if id, err = strconv.Atoi(d.Id()); err != nil {
+	client := meta.(*stcloud.APIClient)
+	if id, err = strconv.ParseInt(d.Id(), 10, 64); err != nil {
 		return err
 	}
 
-	updateAppInfo := &api.UpdateAppInfo{}
+	updateAppInfo := &stcloud.UpdateAppInfo{}
 	appInfoChanged := false
 
 	if d.HasChange("name") {
 		_, newName := d.GetChange("name")
-		updateAppInfo.Name = newName.(string) // TODO name vs resource name/label in terraform
+		updateAppInfo.Name = newName.(string)
 		appInfoChanged = true
 	}
 
 	if appInfoChanged {
-		updateAppInfo.Status = "ACTIVE" // TODO Consider if is this correct or not?
-		updateAppInfo.Persist(id, client)
+		updateAppInfo.Status = "ACTIVE"
+		_, _, err = client.AppsAPI.UpdateUsingPUT1(context.Background(), *updateAppInfo, id)
+		if err != nil {
+			return err
+		}
+
 	}
 
-	billingInfo := &api.BillingInfo{}
+	billingInfo := &stcloud.BillingInfo{}
 	billingInfoChanged := false
 
 	if d.HasChange("billing_plan_id") {
 		_, newBillingPlanID := d.GetChange("billing_plan_id")
-		billingInfo.PlanID = newBillingPlanID.(int)
+		billingInfo.PlanID = newBillingPlanID.(int64)
 		billingInfoChanged = true
 	}
 
-	cloudWatchSettings := &api.CloudWatchSettings{}
+	cloudWatchSettings := &stcloud.CloudWatchSettings{}
 	cloudWatchSettingsChanged := false
 
 	if d.HasChange("aws_access_key") {
 		_, newAwsAccessKey := d.GetChange("aws_access_key")
-		cloudWatchSettings.AwsCloudWatchAccessKey = newAwsAccessKey.(string)
+		cloudWatchSettings.AccessKey = newAwsAccessKey.(string)
 		cloudWatchSettingsChanged = true
 	}
 	if d.HasChange("aws_secret_key") {
 		_, newAwsSecretKey := d.GetChange("aws_secret_key")
-		cloudWatchSettings.AwsCloudWatchSecretKey = newAwsSecretKey.(string)
+		cloudWatchSettings.SecretKey = newAwsSecretKey.(string)
 		cloudWatchSettingsChanged = true
 	}
 	if d.HasChange("aws_fetch_frequency") {
 		_, newAwsFetchFrequency := d.GetChange("aws_fetch_frequency")
-		cloudWatchSettings.AwsFetchFrequency = newAwsFetchFrequency.(string)
+		cloudWatchSettings.FetchFrequency = newAwsFetchFrequency.(string)
 		cloudWatchSettingsChanged = true
 	}
 	if d.HasChange("aws_region") {
 		_, newAwsRegion := d.GetChange("aws_region")
-		cloudWatchSettings.AwsRegion = newAwsRegion.(string)
+		cloudWatchSettings.Region = newAwsRegion.(string)
 		cloudWatchSettingsChanged = true
 	}
 
-	// update only if both are valid
-
 	if appInfoChanged {
-		valid, err = updateAppInfo.IsValid()
-		if !valid {
-			return err
-		}
-	}
-	if billingInfoChanged {
-		valid, err = billingInfo.IsValid()
-		if !valid {
-			return err
-		}
-	}
-	if appInfoChanged {
-		_, err = updateAppInfo.Persist(id, client)
+		_, _, err = client.AppsAPI.UpdateUsingPUT1(context.Background(), *updateAppInfo, id)
 		if err != nil {
 			return err
 		}
 	}
+
 	if billingInfoChanged {
-		err = billingInfo.Persist(id, client)
+		_, _, err = client.BillingAPI.UpdatePlanUsingPUT(context.Background(), id, *billingInfo)
 		if err != nil {
 			return err
 		}
 	}
 
 	if cloudWatchSettingsChanged {
-		_, err = cloudWatchSettings.Persist(id, client)
+		_, _, err = client.AwsSettingsControllerAPI.UpdateUsingPUT(context.Background(), id, *cloudWatchSettings)
 		if err != nil {
 			return err
 		}
+
 	}
 
 	return nil
 
 }
 
-// CommonMonitorDelete TODO Doc Comment
+// CommonMonitorDelete is a common retire handler used by most resources.
 func CommonMonitorDelete(d *schema.ResourceData, meta interface{}, apptype string) error {
 
-	fmt.Println("---------------------------------------")
-	fmt.Println("CommonMonitorDelete Called")
-	fmt.Println("---------------------------------------")
-
-	var id int
+	var id int64
 	var err error
-	client := meta.(*api.Client)
-	if id, err = strconv.Atoi(d.Id()); err != nil {
+
+	client := meta.(*stcloud.APIClient)
+	if id, err = strconv.ParseInt(d.Id(), 10, 64); err != nil {
 		return err
 	}
-	updateAppInfo := &api.UpdateAppInfo{}
+
+	updateAppInfo := &stcloud.UpdateAppInfo{}
 	updateAppInfo.Status = "DISABLED"
-	if _, err = updateAppInfo.Persist(id, client); err != nil {
+	_, _, err = client.AppsAPI.UpdateUsingPUT1(context.Background(), *updateAppInfo, id)
+	if err != nil {
 		return err
 	}
 
 	return nil
 }
 
-// CommonMonitorExists TODO Doc Comment
+// CommonMonitorExists is a common existance check handler used by most resources.
 func CommonMonitorExists(d *schema.ResourceData, meta interface{}, apptype string) (exists bool, err error) {
 
-	fmt.Println("---------------------------------------")
-	fmt.Println("CommonMonitorExists Called")
-	fmt.Println("---------------------------------------")
+	var id int64
+	var app *stcloud.App
+	var genericAPIResponse stcloud.GenericAPIResponse
 
-	// TODO Consider necessity for an app edit-version to catch edit-version mis-match back into state.
-	var id int
-	var app api.App
+	client := meta.(*stcloud.APIClient)
 
-	client := meta.(*api.Client)
-	if id, err = strconv.Atoi(d.Id()); err != nil {
+	if id, err = strconv.ParseInt(d.Id(), 10, 64); err != nil {
 		return false, err
 	}
-	exists, err = app.Retired(id, client)
-	return exists, err
+
+	if genericAPIResponse, _, err = client.AppsAPI.GetUsingGET(context.Background(), id); err != nil {
+		return false, nil
+	}
+
+	app, err = genericAPIResponse.ExtractApp()
+	if err != nil {
+		return false, err
+	}
+
+	exists = app.Status != "ARCHIVED" // TODO Reconfirm archive vs deletion once some examples available post MVP
+
+	return exists, nil
 }
 
-// CommonMonitorImport TODO Doc Comment
+/*
+
+Placeholder - not implemented
+
+// CommonMonitorImport  is a common import handler used by most resources.
 func CommonMonitorImport(d *schema.ResourceData, meta interface{}, apptype string) ([]*schema.ResourceData, error) {
 
 	// TODO Decide if Resource Import necessary post-MVP
@@ -273,3 +289,5 @@ func CommonMonitorImport(d *schema.ResourceData, meta interface{}, apptype strin
 	return nil, nil
 
 }
+
+*/

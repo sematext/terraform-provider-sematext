@@ -10,7 +10,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
-// resourceSematextMonitorHaproxy TODO Doc Comment
+// resourceSematextMonitorHaproxy is the resource class that handles sematext_monitor_haproxy
 func resourceSematextMonitorHaproxy() *schema.Resource {
 
 	fieldSchema := MonitorSchemaCommon("HAProxy")
@@ -25,7 +25,7 @@ func resourceSematextMonitorHaproxy() *schema.Resource {
 	}
 }
 
-// resourceMonitorCreateHaproxy TODO Doc Comment
+// resourceMonitorCreateHaproxy creates the sematext_monitor_haproxy resource.
 func resourceMonitorCreateHaproxy(d *schema.ResourceData, meta interface{}) error {
 	apptype := "HAProxy"
 	err := CommonMonitorCreate(d, meta, apptype)
@@ -33,33 +33,38 @@ func resourceMonitorCreateHaproxy(d *schema.ResourceData, meta interface{}) erro
 	return err
 }
 
-// resourceMonitorReadHaproxy TODO Doc Comment
+// resourceMonitorReadHaproxy reads the sematext_monitor_haproxy resource from Sematext Cloud.
 func resourceMonitorReadHaproxy(d *schema.ResourceData, meta interface{}) error {
 	apptype := "HAProxy"
 	return CommonMonitorRead(d, meta, apptype)
 }
 
-// resourceMonitorUpdateHaproxy TODO Doc Comment
+// resourceMonitorUpdateHaproxy updates Sematext Cloud from the sematext_monitor_haproxy resource.
 func resourceMonitorUpdateHaproxy(d *schema.ResourceData, meta interface{}) error {
 	apptype := "HAProxy"
 	return CommonMonitorUpdate(d, meta, apptype)
 }
 
-// resourceMonitorDeleteHaproxy TODO Doc Comment
-func resourceMonitorDeleteHaproxy(d *schema.ResourceData, meta interface{}) error { // TODO Check default is respected
+// resourceMonitorDeleteHaproxy marks a sematext_monitor_haproxy resource as retired.
+func resourceMonitorDeleteHaproxy(d *schema.ResourceData, meta interface{}) error {
 	apptype := "HAProxy"
 	return CommonMonitorDelete(d, meta, apptype)
 }
 
-// TODO Consider necessity for an app edit-version to catch edit-version mis-match back into state.
-// resourceMonitorExistsHaproxy TODO Doc Comment
+// resourceMonitorExistsHaproxy checks a sematext_monitor_haproxy resource exists in Sematext Cloud.
 func resourceMonitorExistsHaproxy(d *schema.ResourceData, meta interface{}) (b bool, e error) {
 	apptype := "HAProxy"
 	return CommonMonitorExists(d, meta, apptype)
 }
 
-// resourceSematextMonitorImportHaproxy TODO Doc Comment
+/*
+
+Placeholder - not implemented
+
+// resourceSematextMonitorImportHaproxy checks a sematext_monitor_haproxy resource exists in Sematext Cloud.
 func resourceSematextMonitorImportHaproxy(d *schema.ResourceData, meta interface{}) ([]*schema.ResourceData, error) {
 	apptype := "HAProxy"
 	return CommonMonitorImport(d, meta, apptype)
 }
+
+*/

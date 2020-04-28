@@ -10,7 +10,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
-// resourceSematextMonitorMysql TODO Doc Comment
+// resourceSematextMonitorMysql is the resource class that handles sematext_monitor_mysql
 func resourceSematextMonitorMysql() *schema.Resource {
 
 	fieldSchema := MonitorSchemaCommon("MySQL")
@@ -25,7 +25,7 @@ func resourceSematextMonitorMysql() *schema.Resource {
 	}
 }
 
-// resourceMonitorCreateMysql TODO Doc Comment
+// resourceMonitorCreateMysql creates the sematext_monitor_mysql resource.
 func resourceMonitorCreateMysql(d *schema.ResourceData, meta interface{}) error {
 	apptype := "MySQL"
 	err := CommonMonitorCreate(d, meta, apptype)
@@ -33,33 +33,38 @@ func resourceMonitorCreateMysql(d *schema.ResourceData, meta interface{}) error 
 	return err
 }
 
-// resourceMonitorReadMysql TODO Doc Comment
+// resourceMonitorReadMysql reads the sematext_monitor_mysql resource from Sematext Cloud.
 func resourceMonitorReadMysql(d *schema.ResourceData, meta interface{}) error {
 	apptype := "MySQL"
 	return CommonMonitorRead(d, meta, apptype)
 }
 
-// resourceMonitorUpdateMysql TODO Doc Comment
+// resourceMonitorUpdateMysql updates Sematext Cloud from the sematext_monitor_mysql resource.
 func resourceMonitorUpdateMysql(d *schema.ResourceData, meta interface{}) error {
 	apptype := "MySQL"
 	return CommonMonitorUpdate(d, meta, apptype)
 }
 
-// resourceMonitorDeleteMysql TODO Doc Comment
-func resourceMonitorDeleteMysql(d *schema.ResourceData, meta interface{}) error { // TODO Check default is respected
+// resourceMonitorDeleteMysql marks a sematext_monitor_mysql resource as retired.
+func resourceMonitorDeleteMysql(d *schema.ResourceData, meta interface{}) error {
 	apptype := "MySQL"
 	return CommonMonitorDelete(d, meta, apptype)
 }
 
-// TODO Consider necessity for an app edit-version to catch edit-version mis-match back into state.
-// resourceMonitorExistsMysql TODO Doc Comment
+// resourceMonitorExistsMysql checks a sematext_monitor_mysql resource exists in Sematext Cloud.
 func resourceMonitorExistsMysql(d *schema.ResourceData, meta interface{}) (b bool, e error) {
 	apptype := "MySQL"
 	return CommonMonitorExists(d, meta, apptype)
 }
 
-// resourceSematextMonitorImportMysql TODO Doc Comment
+/*
+
+Placeholder - not implemented
+
+// resourceSematextMonitorImportMysql checks a sematext_monitor_mysql resource exists in Sematext Cloud.
 func resourceSematextMonitorImportMysql(d *schema.ResourceData, meta interface{}) ([]*schema.ResourceData, error) {
 	apptype := "MySQL"
 	return CommonMonitorImport(d, meta, apptype)
 }
+
+*/

@@ -9,14 +9,15 @@ package sematext
 import (
 	"errors"
 	"fmt"
+	"net/url"
 	"os"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/terraform"
-	"github.com/sematext/sematext-api-client/api"
+	"github.com/sematext/sematext-api-client/stcloud"
 )
 
-// Provider  - TODO Doc Comment
+// Provider is the connection to Sematext Cloud.
 func Provider() terraform.ResourceProvider {
 
 	provider := &schema.Provider{
@@ -71,6 +72,9 @@ func Provider() terraform.ResourceProvider {
 
 	provider.ConfigureFunc = func(d *schema.ResourceData) (interface{}, error) {
 
+		var err error
+		var baseURL *url.URL
+
 		/*
 			Terraform 0.12 introduced this field to the protocol
 			We can therefore assume that if it's missing it's 0.10 or 0.11
@@ -90,12 +94,30 @@ func Provider() terraform.ResourceProvider {
 			return nil, errors.New("ERROR : Missing or invalid env SEMATEXT_API_TOKEN")
 		}
 
-		client := new(api.Client)
-		err := client.Init(region, terraformVersion)
+		cfg := stcloud.NewConfiguration()
+
+		if baseURL, err = url.Parse("https://apps.sematext.com"); err != nil {
+			return nil, err
+		}
+
+		switch region {
+		case "US":
+			baseURL, err = url.Parse("https://apps.sematext.com")
+		case "EU":
+			baseURL, err = url.Parse("https://apps.eu.sematext.com")
+		default:
+			err = errors.New("sematext_region must be one of EU, US")
+		}
+
 		if err != nil {
 			return nil, err
 		}
-		client.SetAuthorization(token)
+
+		cfg.BasePath = baseURL.String()
+		cfg.UserAgent = fmt.Sprintf("HashiCorp/1.0 Terraform/%s", terraformVersion)
+		cfg.AddDefaultHeader("Authorization", fmt.Sprintf("apiKey %s", token))
+
+		client := stcloud.NewAPIClient(cfg)
 
 		return client, nil
 	}

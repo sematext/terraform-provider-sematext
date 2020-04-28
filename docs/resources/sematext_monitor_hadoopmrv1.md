@@ -1,4 +1,4 @@
-# Sematext Kafka Monitoring Resource
+# Sematext Hadoop-MRv1 Monitoring Resource
 
 Creates a monitoring application within Sematext Cloud. 
 Refer to [Refer to Sematext Provider for authentication detail](../index.md) 
@@ -12,7 +12,7 @@ provider "sematext" {
 }
 
 # Create a monitoring application
-resource "sematext_monitor_kafka" "mymonitor" {
+resource "sematext_monitor_hadoopmrv1" "mymonitor" {
   name = "my monitor name"
   billing_plan_id = 6
   discount_code = "<discount code>"

@@ -10,7 +10,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
-// resourceSematextMonitorAwselb TODO Doc Comment
+// resourceSematextMonitorAwselb is the resource class that handles sematext_monitor_awselb
 func resourceSematextMonitorAwselb() *schema.Resource {
 
 	fieldSchema := MonitorSchemaCommon("AWS ELB")
@@ -25,7 +25,7 @@ func resourceSematextMonitorAwselb() *schema.Resource {
 	}
 }
 
-// resourceMonitorCreateAwselb TODO Doc Comment
+// resourceMonitorCreateAwselb creates the sematext_monitor_awselb resource.
 func resourceMonitorCreateAwselb(d *schema.ResourceData, meta interface{}) error {
 	apptype := "AWS ELB"
 	err := CommonMonitorCreate(d, meta, apptype)
@@ -33,33 +33,38 @@ func resourceMonitorCreateAwselb(d *schema.ResourceData, meta interface{}) error
 	return err
 }
 
-// resourceMonitorReadAwselb TODO Doc Comment
+// resourceMonitorReadAwselb reads the sematext_monitor_awselb resource from Sematext Cloud.
 func resourceMonitorReadAwselb(d *schema.ResourceData, meta interface{}) error {
 	apptype := "AWS ELB"
 	return CommonMonitorRead(d, meta, apptype)
 }
 
-// resourceMonitorUpdateAwselb TODO Doc Comment
+// resourceMonitorUpdateAwselb updates Sematext Cloud from the sematext_monitor_awselb resource.
 func resourceMonitorUpdateAwselb(d *schema.ResourceData, meta interface{}) error {
 	apptype := "AWS ELB"
 	return CommonMonitorUpdate(d, meta, apptype)
 }
 
-// resourceMonitorDeleteAwselb TODO Doc Comment
-func resourceMonitorDeleteAwselb(d *schema.ResourceData, meta interface{}) error { // TODO Check default is respected
+// resourceMonitorDeleteAwselb marks a sematext_monitor_awselb resource as retired.
+func resourceMonitorDeleteAwselb(d *schema.ResourceData, meta interface{}) error {
 	apptype := "AWS ELB"
 	return CommonMonitorDelete(d, meta, apptype)
 }
 
-// TODO Consider necessity for an app edit-version to catch edit-version mis-match back into state.
-// resourceMonitorExistsAwselb TODO Doc Comment
+// resourceMonitorExistsAwselb checks a sematext_monitor_awselb resource exists in Sematext Cloud.
 func resourceMonitorExistsAwselb(d *schema.ResourceData, meta interface{}) (b bool, e error) {
 	apptype := "AWS ELB"
 	return CommonMonitorExists(d, meta, apptype)
 }
 
-// resourceSematextMonitorImportAwselb TODO Doc Comment
+/*
+
+Placeholder - not implemented
+
+// resourceSematextMonitorImportAwselb checks a sematext_monitor_awselb resource exists in Sematext Cloud.
 func resourceSematextMonitorImportAwselb(d *schema.ResourceData, meta interface{}) ([]*schema.ResourceData, error) {
 	apptype := "AWS ELB"
 	return CommonMonitorImport(d, meta, apptype)
 }
+
+*/
