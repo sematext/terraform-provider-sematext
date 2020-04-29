@@ -6,7 +6,7 @@ import (
 	"regexp"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
-	"github.com/sematext/sematext-api-client/stcloud"
+	"github.com/sematext/sematext-api-client-go/stcloud"
 )
 
 // MonitorSchemaCommon contains common resource fields
