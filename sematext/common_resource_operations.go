@@ -7,7 +7,7 @@ import (
 	"strconv"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
-	"github.com/sematext/sematext-api-client/stcloud"
+	"github.com/sematext/sematext-api-client-go/stcloud"
 )
 
 // CommonMonitorCreate is a common creation handler used by most resources.

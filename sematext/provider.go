@@ -14,7 +14,7 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/terraform"
-	"github.com/sematext/sematext-api-client/stcloud"
+	"github.com/sematext/sematext-api-client-go/stcloud"
 )
 
 // Provider is the connection to Sematext Cloud.
