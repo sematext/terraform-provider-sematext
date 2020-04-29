@@ -14,27 +14,49 @@ Requirements
 -	[Go](https://golang.org/doc/install) 1.13 (to build the provider plugin)
 
 
-Building The Provider
----------------------
 
-Clone repository to: `$GOPATH/src/github.com/terraform-providers/terraform-provider-sematext`
+Installation
+------------
 
-```sh
-$ mkdir -p $GOPATH/src/github.com/terraform-providers; cd $GOPATH/src/github.com/terraform-providers
-$ git clone git@github.com:terraform-providers/terraform-provider-sematext.git
+Build the provider and put it in Terraform's third-party providers directory in `~/.terraform.d/plugins`:
+
+```bash
+go get github.com/sematext/terraform-provider-sematext
+mkdir -p ~/.terraform.d/plugins
+go build -o ~/.terraform.d/plugins/terraform-provider-sematext github.com/sematext/terraform-provider-sematext
 ```
 
-Enter the provider directory and build the provider
+I recommend using [Go modules](https://github.com/golang/go/wiki/Modules) to ensure
+using the same version in development and production.
 
-```sh
-$ cd $GOPATH/src/github.com/terraform-providers/terraform-provider-sematext
-$ make build
+Configuration
+------------
+
+In your Terraform configuration:
+
+```terraform
+provider "sematext" {
+    sematext_region = "US"
+}
+
+resource "sematext_monitor_elasticsearch" "mymonitor" {
+    name "mymonitor name"
+    billing_plan_id 12
+}
 ```
 
-Using the provider
+Refer to [documentation](docs/index.md) for more detail.
+Refer to [plan guide](docs/guides/plans.md) for more detail.
+
+
+Using the Provider
 ----------------------
 
-Detailed documentation for the Sematext provider can be found [here](https://www.terraform.io/docs/providers/sematext/index.html).
+To use a released provider in your Terraform environment, run [`terraform init`](https://www.terraform.io/docs/commands/init.html) and Terraform will automatically install the provider. To specify a particular provider version when installing released providers, see the [Terraform documentation on provider versioning](https://www.terraform.io/docs/configuration/providers.html#version-provider-versions).
+
+To instead use a custom-built provider in your Terraform environment (e.g. the provider binary from the build instructions above), follow the instructions to [install it as a plugin.](https://www.terraform.io/docs/plugins/basics.html#installing-a-plugin) After placing it into your plugins directory,  run `terraform init` to initialize it.
+
+For either installation method, documentation about the provider specific configuration options can be found on the [provider's website](https://www.terraform.io/docs/providers/aws/index.html).
 
 
 Developing the Provider
@@ -51,14 +73,20 @@ $ $GOPATH/bin/terraform-provider-sematext
 ...
 ```
 
-Using the Provider
-----------------------
+Clone repository to: `$GOPATH/src/github.com/terraform-providers/terraform-provider-sematext`
 
-To use a released provider in your Terraform environment, run [`terraform init`](https://www.terraform.io/docs/commands/init.html) and Terraform will automatically install the provider. To specify a particular provider version when installing released providers, see the [Terraform documentation on provider versioning](https://www.terraform.io/docs/configuration/providers.html#version-provider-versions).
+```sh
+$ mkdir -p $GOPATH/src/github.com/terraform-providers; cd $GOPATH/src/github.com/terraform-providers
+$ git clone git@github.com:terraform-providers/terraform-provider-sematext.git
+```
 
-To instead use a custom-built provider in your Terraform environment (e.g. the provider binary from the build instructions above), follow the instructions to [install it as a plugin.](https://www.terraform.io/docs/plugins/basics.html#installing-a-plugin) After placing it into your plugins directory,  run `terraform init` to initialize it.
+Enter the provider directory and build the provider
 
-For either installation method, documentation about the provider specific configuration options can be found on the [provider's website](https://www.terraform.io/docs/providers/aws/index.html).
+```sh
+$ cd $GOPATH/src/github.com/terraform-providers/terraform-provider-sematext
+$ make build
+```
+
 
 
 Testing the Provider
@@ -80,7 +108,7 @@ In order to successfully run the full suite of acceptance tests, you will need t
 ### Sematext Cloud Access Token
 
 You will need get your [Sematext Cloud API Access Token](https://apps.sematext.com/ui/account/api) for
-testing. 
+testing.
 
 Once you have your token the following should be exported in your environment:
 
@@ -88,7 +116,7 @@ Once you have your token the following should be exported in your environment:
 export TF_ACC=1
 export SEMATEXT_REGION="US"
 export SEMATEXT_API_TOKEN="<your api token>"
-export AWS_ACCESS_KEY_ID="<your aws access key id>"
-export AWS_SECRET_ACCESS_KEY="<your aws secret access key>"
+export AWS_ACCESS_KEY_ID="<your aws access key>"
+export AWS_SECRET_ACCESS_KEY="<aws secret key>"
 export AWS_REGION="<us-east-1>"
 ````
