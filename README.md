@@ -87,8 +87,7 @@ Once you have your token the following should be exported in your environment:
 ````sh
 export TF_ACC=1
 export SEMATEXT_REGION="US"
-export SEMATEXT_API_TOKEN="&lt;your api roken&gt;"
-export AWS_ACCESS_KEY_ID="&lt;your aws access key&gt;"
-export AWS_SECRET_ACCESS_KEY="&lt;bAZztV1M+dekhod5AIQ/K5GCIOPeJnY2fckrsjV+&gt;"
-export AWS_REGION="&lt;us-east-1&gt;"
-````
+export SEMATEXT_API_TOKEN="<your api token>"
+export AWS_ACCESS_KEY_ID="<your aws access key id>"
+export AWS_SECRET_ACCESS_KEY="<your aws secret access key>"
+export AWS_REGION="<us-east-1>"````
