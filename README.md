@@ -106,7 +106,7 @@ In order to successfully run the full suite of acceptance tests, you will need t
 
 ### Sematext Cloud Access Token
 
-You will need get your [Sematext Cloud API Access Token](https://apps.sematext.com/ui/account/api) for
+You will need get your [Sematext Cloud API Key](https://apps.sematext.com/ui/account/api) for
 testing.
 
 Once you have your token the following should be exported in your environment:
