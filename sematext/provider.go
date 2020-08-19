@@ -7,7 +7,7 @@ package sematext
 */
 
 import (
-	"errors"
+	"errors" 
 	"fmt"
 	"net/url"
 	"os"

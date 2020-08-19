@@ -1,4 +1,7 @@
-# Sematext Provider
+# <img src="./assets/octi-blue.png" valign="bottom" width="60px"/>**&nbsp;&nbsp;Terraform Provider For Sematext Cloud**
+
+
+# Overview
 
 The Sematext provider is used to interact with Sematext Cloud related resources.
 
