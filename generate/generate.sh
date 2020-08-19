@@ -1,5 +1,7 @@
 #/bin/bash
 
+# This file is used to genrate the various provider files from a common template.
+
 dir=`pwd`
 cd "$(dirname "${BASH_SOURCE[0]}")"
 
