@@ -1,11 +1,11 @@
 # <img src="../assets/octi-blue.png" valign="bottom" width="60px"/>**&nbsp;&nbsp;Terraform Provider For Sematext Cloud**
 
-# Sematext Hadoop-MRv1 Monitoring Resource
+### Sematext Monitoring Resource for Hadoop-MRv1 
 
 Creates a monitoring application within Sematext Cloud. 
 Refer to [Refer to Sematext Provider for authentication detail](../index.md) 
 
-## Example Usage
+#### Example Usage
 
 ```hcl
 # Configure the Sematext Provider
@@ -21,7 +21,7 @@ resource "sematext_monitor_hadoopmrv1" "mymonitor" {
 }
 ```
 
-## Argument Reference
+#### Argument Reference
 
 * `name` - List attributes that this resource exports.
 * `billing_plan_id` - List attributes that this resource exports. [Refer to plan guidance for list of legal values](../guides/plans.md) 
