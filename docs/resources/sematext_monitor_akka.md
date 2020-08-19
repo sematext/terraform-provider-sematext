@@ -1,6 +1,6 @@
 # <img src="../assets/octi-blue.png" valign="bottom" width="60px"/>**&nbsp;&nbsp;Terraform Provider For Sematext Cloud**
 
-### Sematext Monitoring Resource : Akka
+### Sematext Monitoring Resource for Akka
 
 Creates a monitoring application within Sematext Cloud. 
 Refer to [Refer to Sematext Provider for authentication detail](../index.md) 
