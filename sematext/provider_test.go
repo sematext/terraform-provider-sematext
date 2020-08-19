@@ -43,9 +43,9 @@ func TestProviderConfigure(t *testing.T) {
 
 func testAccPreCheck(t *testing.T) {
 
-	token := os.Getenv("SEMATEXT_API_TOKEN")
+	token := os.Getenv("SEMATEXT_API_KEY")
 	if !IsValidUUID(token) {
-		t.Fatal("SEMATEXT_API_TOKEN environment not set correctly")
+		t.Fatal("SEMATEXT_API_KEY environment not set correctly")
 		return
 	}
 
