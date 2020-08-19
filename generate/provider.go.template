@@ -62,9 +62,9 @@ func Provider() terraform.ResourceProvider {
 			return nil, errors.New("ERROR : Missing or invalid sematext_region parameter in provider tf")
 		}
 
-		token := os.Getenv("SEMATEXT_API_TOKEN")
+		token := os.Getenv("SEMATEXT_API_KEY")
 		if !IsValidUUID(token) {
-			return nil, errors.New("ERROR : Missing or invalid env SEMATEXT_API_TOKEN")
+			return nil, errors.New("ERROR : Missing or invalid env SEMATEXT_API_KEY")
 		}
 
 		cfg := stcloud.NewConfiguration()

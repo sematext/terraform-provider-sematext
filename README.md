@@ -9,8 +9,8 @@ Terraform Provider For Sematext Cloud
 Requirements
 ------------
 
--	[Terraform](https://www.terraform.io/downloads.html) 0.12.x
--	[Go](https://golang.org/doc/install) 1.13 (to build the provider plugin)
+-	[Terraform](https://www.terraform.io/downloads.html) v0.12+
+-	[Go](https://golang.org/doc/install) v1.14 (to build the provider plugin)
 
 
 
@@ -114,7 +114,7 @@ Once you have your token the following should be exported in your environment:
 ````sh
 export TF_ACC=1
 export SEMATEXT_REGION="US"
-export SEMATEXT_API_TOKEN="<your api token>"
+export SEMATEXT_API_KEY="<your api token>"
 export AWS_ACCESS_KEY_ID="<your aws access key>"
 export AWS_SECRET_ACCESS_KEY="<aws secret key>"
 export AWS_REGION="<us-east-1>"
