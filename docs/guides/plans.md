@@ -1,5 +1,5 @@
 # <img src="../assets/octi-blue.png" valign="bottom" width="60px"/>**&nbsp;&nbsp;Terraform Provider For Sematext Cloud**
-==================
+
 
 The Sematext provider is used to interact with Sematext Cloud related resources.
 
@@ -7,6 +7,7 @@ The Sematext provider is used to interact with Sematext Cloud related resources.
 
 The following table containes valid plan id values to be used in resource definitions.
 <br>
+
 
 | PlanID |&nbsp;&nbsp;Resource |Plan Name |
 |  ------------  :|:--------------------------------|:---------------------------:|
