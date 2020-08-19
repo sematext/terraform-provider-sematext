@@ -1,5 +1,4 @@
 # <img src="../assets/octi-blue.png" valign="bottom" width="60px"/>**&nbsp;&nbsp;Terraform Provider For Sematext Cloud**
-==================
 
 # Sematext Akka Monitoring Resource
 
