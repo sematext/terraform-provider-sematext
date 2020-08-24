@@ -3,7 +3,7 @@
 
 # Overview
 
-The Sematext provider is used to interact with Sematext Cloud related resources.
+The Sematext provider is used to interact with resources supplied by [Sematext Cloud](https://sematext.com/cloud/).
 
 
 ## Example Usage
