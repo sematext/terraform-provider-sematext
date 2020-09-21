@@ -1,6 +1,5 @@
 # <img src="https://sematext.com/wp-content/uploads/2020/09/just-octi-blue.png" valign="bottom" width="60px"/>**&nbsp;&nbsp;Terraform Provider For Sematext Cloud**
 
-
 # Overview
 
 The Sematext provider is used to interact with resources supplied by [Sematext Cloud](https://sematext.com/cloud/).
@@ -9,16 +8,22 @@ The Sematext provider is used to interact with resources supplied by [Sematext C
 ## Example Usage
 
 ```hcl
-# Configure the Sematext Provider
-provider "sematext" {
-  sematext_region = "US"
+terraform {
+  required_providers {
+    sematext = {
+      source = "sematext/sematext"
+      version = ">=0.1.3"
+    }
+  }
 }
 
-# Create a monitoring application
+provider "sematext" {
+    sematext_region = "US"
+}
+
 resource "sematext_monitor_nodejs" "mymonitor" {
-  name = "mymonitor"
-  billing_plan_id = 6
-  discount_code = "<discount code>"
+    name = "Node.js Monitor Example"
+    billing_plan_id = 6
 }
 ```
 
@@ -37,12 +42,11 @@ There are two authentication tokens
 * Sematext Cloud App access token - retrieved on resource creation - refer to examples on how to access this inside your Terrform scripting.
 
 
-
 ## Enviropnment Variables
 
 The following environment variables are required:
 
-* SEMATEXT_REGION="US" (or "EU")
+* SEMATEXT_REGION="US"
 * SEMATEXT_API_KEY="&lt;Sematext-Cloud-Token&gt;"
 
 If working with AWS Cloudwatch the following environment vars should be set:
@@ -84,3 +88,4 @@ The following terraform resources are supported.
 * [Storm](./resources/sematext_monitor_storm.md)
 * [Tomcat](./resources/sematext_monitor_tomcat.md)
 * [ZooKeeper](./resources/sematext_monitor_zookeeper.md)
+
