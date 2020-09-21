@@ -92,7 +92,7 @@ func Provider() terraform.ResourceProvider {
 
 		expectedRange, err := semver.ParseRange(">=13.0.0")
 		if !expectedRange(v) {
-			return nil, errors.New("ERROR : Terraform version must be >=13.0.0")
+			return nil, errors.New("ERROR : Terraform version must be >=0.13.0")
 		}
 
 		region := d.Get("sematext_region").(string)
