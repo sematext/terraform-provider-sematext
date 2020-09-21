@@ -1,29 +1,34 @@
 # <img src="https://sematext.com/wp-content/uploads/2020/09/just-octi-blue.png" valign="bottom" width="60px"/>**&nbsp;&nbsp;Terraform Provider For Sematext Cloud**
 
-
-### Sematext Monitoring Resource for Java JVM
+# Sematext JVM Resource
 
 Creates a monitoring application within [Sematext Cloud](https://sematext.com/cloud/).
 Refer to [Refer to Sematext Provider for authentication detail](../index.md)
 
-#### Example Usage
+## Example Usage
 
 ```hcl
-# Configure the Sematext Provider
+terraform {
+  required_providers {
+    sematext = {
+      source = "sematext/sematext"
+      version = ">=0.1.3"
+    }
+  }
+}
+
 provider "sematext" {
   sematext_region = "US"
 }
 
-# Create a monitoring application
 resource "sematext_monitor_jvm" "mymonitor" {
   name = "my monitor name"
-  billing_plan_id = 6
-  discount_code = "<discount code>"
+  billing_plan_id = <[plan id](../guides/plans.md)>
 }
 ```
 
-#### Argument Reference
+## Argument Reference
 
 * `name` - List attributes that this resource exports.
 * `billing_plan_id` - List attributes that this resource exports. [Refer to plan guidance for list of legal values](../guides/plans.md)
-* `discount_code` - List attributes that this resource exports.
+

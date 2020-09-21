@@ -9,8 +9,8 @@
 Requirements
 ------------
 
--	[Terraform](https://www.terraform.io/downloads.html) v0.12+
--	[Go](https://golang.org/doc/install) v1.14 (to build the provider plugin)
+- [Terraform v0.13+](https://www.terraform.io/downloads.html)
+- [Go](https://golang.org/doc/install) v1.14 (to build the provider plugin)
 
 
 
@@ -33,14 +33,23 @@ Configuration
 
 In your Terraform configuration:
 
-```terraform
+```hcl
+terraform {
+  required_providers {
+    sematext = {
+      source = "sematext/sematext"
+      version = ">=0.1.3"
+    }
+  }
+}
+
 provider "sematext" {
     sematext_region = "US"
 }
 
 resource "sematext_monitor_elasticsearch" "mymonitor" {
-    name "mymonitor name"
-    billing_plan_id 12
+    name = "Node.js Monitor Example"
+    billing_plan_id = 12
 }
 ```
 

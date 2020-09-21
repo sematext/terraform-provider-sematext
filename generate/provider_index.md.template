@@ -8,16 +8,22 @@ The Sematext provider is used to interact with resources supplied by [Sematext C
 ## Example Usage
 
 ```hcl
-# Configure the Sematext Provider
-provider "sematext" {
-  sematext_region = "US"
+terraform {
+  required_providers {
+    sematext = {
+      source = "sematext/sematext"
+      version = ">=0.1.3"
+    }
+  }
 }
 
-# Create a monitoring application
+provider "sematext" {
+    sematext_region = "US"
+}
+
 resource "sematext_monitor_nodejs" "mymonitor" {
-  name = "mymonitor"
-  billing_plan_id = 6
-  discount_code = "<discount code>"
+    name = "Node.js Monitor Example"
+    billing_plan_id = 6
 }
 ```
 
