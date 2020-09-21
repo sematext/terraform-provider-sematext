@@ -13,7 +13,6 @@ generate:
 	@echo "INFO: Generating resource and test code."
 	@./generate/generate.sh
 
-
 sweep:
 	@echo "WARNING: This will destroy infrastructure. Use only in development accounts."
 	go test $(TEST) -v -sweep=$(SWEEP) $(SWEEPARGS)

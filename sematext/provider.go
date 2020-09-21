@@ -7,11 +7,12 @@ package sematext
 */
 
 import (
-	"errors" 
+	"errors"
 	"fmt"
 	"net/url"
 	"os"
 
+	"github.com/blang/semver/v4"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"github.com/sematext/sematext-api-client-go/stcloud"
@@ -81,7 +82,17 @@ func Provider() terraform.ResourceProvider {
 		*/
 		terraformVersion := provider.TerraformVersion
 		if terraformVersion == "" {
-			terraformVersion = "0.11+compatible"
+			return nil, errors.New("ERROR : Terraform version must be >=13.0.0")
+		}
+
+		v, err := semver.Parse(terraformVersion)
+		if err != nil {
+			return nil, errors.New("ERROR : problem trying to parse Terraform version")
+		}
+
+		expectedRange, err := semver.ParseRange(">=13.0.0")
+		if !expectedRange(v) {
+			return nil, errors.New("ERROR : Terraform version must be >=13.0.0")
 		}
 
 		region := d.Get("sematext_region").(string)

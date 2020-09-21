@@ -1,4 +1,6 @@
-# Sematext Provider
+# <img src="https://sematext.com/wp-content/uploads/2020/09/just-octi-blue.png" valign="bottom" width="60px"/>**&nbsp;&nbsp;Terraform Provider For Sematext Cloud**
+
+# Overview
 
 The Sematext provider is used to interact with resources supplied by [Sematext Cloud](https://sematext.com/cloud/).
 
@@ -27,8 +29,6 @@ The following arguments are supported:
 
 
 ## Authentication
-
-There are two authentication tokens
 
 There are two authentication tokens
 
