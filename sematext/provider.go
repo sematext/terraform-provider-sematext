@@ -82,7 +82,7 @@ func Provider() terraform.ResourceProvider {
 		*/
 		terraformVersion := provider.TerraformVersion
 		if terraformVersion == "" {
-			return nil, errors.New("ERROR : Terraform version must be >=13.0.0")
+			return nil, errors.New("ERROR : Terraform version must be >=0.13.0")
 		}
 
 		v, err := semver.Parse(terraformVersion)
@@ -90,14 +90,14 @@ func Provider() terraform.ResourceProvider {
 			return nil, errors.New("ERROR : problem trying to parse Terraform version")
 		}
 
-		expectedRange, err := semver.ParseRange(">=13.0.0")
+		expectedRange, err := semver.ParseRange(">=0.13.0")
 		if !expectedRange(v) {
-			return nil, errors.New("ERROR : Terraform version must be >=13.0.0")
+			return nil, errors.New("ERROR : Terraform version must be >=0.13.0")
 		}
 
 		region := d.Get("sematext_region").(string)
 		if !IsValidSematextRegion(region) {
-			return nil, errors.New("ERROR : Missing or invalid sematext_region parameter in provider tf")
+			return nil, errors.New("ERROR : Missing or invalid sematext_region parameter in provider stanza")
 		}
 
 		token := os.Getenv("SEMATEXT_API_KEY")
