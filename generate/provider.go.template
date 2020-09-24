@@ -15,6 +15,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"github.com/sematext/sematext-api-client-go/stcloud"
+	"github.com/blang/semver/v4"
 )
 
 // Provider is the connection to Sematext Cloud.
@@ -66,6 +67,11 @@ func Provider() terraform.ResourceProvider {
 		expectedRange, err := semver.ParseRange(">=0.13.0")
 		if !expectedRange(v) {
 			return nil, errors.New("ERROR : Terraform version must be >=0.13.0")
+		}
+
+		region := d.Get("sematext_region").(string)
+		if !IsValidSematextRegion(region) {
+			return nil, errors.New("ERROR : Missing or invalid sematext_region parameter in provider stanza")
 		}
 
 		token := os.Getenv("SEMATEXT_API_KEY")
