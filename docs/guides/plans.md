@@ -195,3 +195,88 @@ The following table containes valid plan id values to be used in resource defini
 |     42 | &nbsp;&nbsp;sematext_monitor_zookeeper     |    Standard SPM ZooKeeper    |
 |     43 | &nbsp;&nbsp;sematext_monitor_zookeeper     |      Pro SPM ZooKeeper       |
 |     44 | &nbsp;&nbsp;sematext_monitor_zookeeper     |   Pro Silver SPM ZooKeeper   |
+|   5004 | &nbsp;&nbsp;sematext_monitor_postgresql    |     Basic SPM PostgreSql     |
+|   5005 | &nbsp;&nbsp;sematext_monitor_postgresql    |   Standard SPM PostgreSql    |
+|   5006 | &nbsp;&nbsp;sematext_monitor_postgresql    |      Pro SPM PostgreSql      |
+|   5007 | &nbsp;&nbsp;sematext_monitor_postgresql    |  Pro Silver SPM PostgreSql   |
+|   5008 | &nbsp;&nbsp;sematext_monitor_rabbitmq      |      Basic SPM RabbitMQ      |
+|   5009 | &nbsp;&nbsp;sematext_monitor_rabbitmq      |    Standard SPM RabbitMQ     |
+|   5010 | &nbsp;&nbsp;sematext_monitor_rabbitmq      |       Pro SPM RabbitMQ       |
+|   5011 | &nbsp;&nbsp;sematext_monitor_rabbitmq      |   Pro Silver SPM RabbitMQ    |
+|  10533 | &nbsp;&nbsp;sematext_monitor_mobile        |    Mobile_Logs_Basic_1_7     |
+|  10534 | &nbsp;&nbsp;sematext_monitor_mobilelogs    |   Mobile_Logs_Standard_1_7   |
+|  10535 | &nbsp;&nbsp;sematext_monitor_mobilelogs    |   Mobile_Logs_Standard_5_7   |
+|  10536 | &nbsp;&nbsp;sematext_monitor_mobilelogs    |  Mobile_Logs_Standard_10_7   |
+|  10537 | &nbsp;&nbsp;sematext_monitor_mobilelogs    |  Mobile_Logs_Standard_1_15   |
+|  10538 | &nbsp;&nbsp;sematext_monitor_mobilelogs    |  Mobile_Logs_Standard_5_15   |
+|  10539 | &nbsp;&nbsp;sematext_monitor_mobilelogs    |  Mobile_Logs_Standard_10_15  |
+|  10540 | &nbsp;&nbsp;sematext_monitor_mobilelogs    |     Mobile_Logs_Pro_1_7      |
+|  10541 | &nbsp;&nbsp;sematext_monitor_mobilelogs    |     Mobile_Logs_Pro_5_7      |
+|  10542 | &nbsp;&nbsp;sematext_monitor_mobilelogs    |     Mobile_Logs_Pro_10_7     |
+|  10543 | &nbsp;&nbsp;sematext_monitor_mobilelogs    |     Mobile_Logs_Pro_15_7     |
+|  10544 | &nbsp;&nbsp;sematext_monitor_mobilelogs    |     Mobile_Logs_Pro_20_7     |
+|  10545 | &nbsp;&nbsp;sematext_monitor_mobilelogs    |     Mobile_Logs_Pro_35_7     |
+|  10546 | &nbsp;&nbsp;sematext_monitor_mobilelogs    |     Mobile_Logs_Pro_50_7     |
+|  10547 | &nbsp;&nbsp;sematext_monitor_mobilelogs    |     Mobile_Logs_Pro_75_7     |
+|  10548 | &nbsp;&nbsp;sematext_monitor_mobilelogs    |    Mobile_Logs_Pro_100_7     |
+|  10549 | &nbsp;&nbsp;sematext_monitor_mobilelogs    |    Mobile_Logs_Pro_150_7     |
+|  10550 | &nbsp;&nbsp;sematext_monitor_mobilelogs    |     Mobile_Logs_Pro_1_15     |
+|  10551 | &nbsp;&nbsp;sematext_monitor_mobilelogs    |     Mobile_Logs_Pro_5_15     |
+|  10552 | &nbsp;&nbsp;sematext_monitor_mobilelogs    |    Mobile_Logs_Pro_10_15     |
+|  10553 | &nbsp;&nbsp;sematext_monitor_mobilelogs    |    Mobile_Logs_Pro_15_15     |
+|  10554 | &nbsp;&nbsp;sematext_monitor_mobilelogs    |    Mobile_Logs_Pro_20_15     |
+|  10555 | &nbsp;&nbsp;sematext_monitor_mobilelogs    |    Mobile_Logs_Pro_35_15     |
+|  10556 | &nbsp;&nbsp;sematext_monitor_mobilelogs    |    Mobile_Logs_Pro_50_15     |
+|  10557 | &nbsp;&nbsp;sematext_monitor_mobilelogs    |    Mobile_Logs_Pro_75_15     |
+|  10558 | &nbsp;&nbsp;sematext_monitor_mobilelogs    |    Mobile_Logs_Pro_100_15    |
+|  10559 | &nbsp;&nbsp;sematext_monitor_mobilelogs    |    Mobile_Logs_Pro_150_15    |
+|  10560 | &nbsp;&nbsp;sematext_monitor_mobilelogs    |     Mobile_Logs_Pro_1_30     |
+|  10561 | &nbsp;&nbsp;sematext_monitor_mobilelogs    |     Mobile_Logs_Pro_5_30     |
+|  10562 | &nbsp;&nbsp;sematext_monitor_mobilelogs    |    Mobile_Logs_Pro_10_30     |
+|  10563 | &nbsp;&nbsp;sematext_monitor_mobilelogs    |    Mobile_Logs_Pro_15_30     |
+|  10564 | &nbsp;&nbsp;sematext_monitor_mobilelogs    |    Mobile_Logs_Pro_20_30     |
+|  10565 | &nbsp;&nbsp;sematext_monitor_mobilelogs    |    Mobile_Logs_Pro_35_30     |
+|  10566 | &nbsp;&nbsp;sematext_monitor_mobilelogs    |    Mobile_Logs_Pro_50_30     |
+|  10567 | &nbsp;&nbsp;sematext_monitor_mobilelogs    |    Mobile_Logs_Pro_75_30     |
+|  10568 | &nbsp;&nbsp;sematext_monitor_mobilelogs    |    Mobile_Logs_Pro_100_30    |
+|  10569 | &nbsp;&nbsp;sematext_monitor_mobilelogs    |    Mobile_Logs_Pro_150_30    |
+|  10570 | &nbsp;&nbsp;sematext_monitor_mobilelogs    |     Mobile_Logs_Pro_1_60     |
+|  10571 | &nbsp;&nbsp;sematext_monitor_mobilelogs    |     Mobile_Logs_Pro_5_60     |
+|  10572 | &nbsp;&nbsp;sematext_monitor_mobilelogs    |    Mobile_Logs_Pro_10_60     |
+|  10573 | &nbsp;&nbsp;sematext_monitor_mobilelogs    |    Mobile_Logs_Pro_15_60     |
+|  10574 | &nbsp;&nbsp;sematext_monitor_mobilelogs    |    Mobile_Logs_Pro_20_60     |
+|  10575 | &nbsp;&nbsp;sematext_monitor_mobilelogs    |    Mobile_Logs_Pro_35_60     |
+|  10576 | &nbsp;&nbsp;sematext_monitor_mobilelogs    |    Mobile_Logs_Pro_50_60     |
+|  10577 | &nbsp;&nbsp;sematext_monitor_mobilelogs    |    Mobile_Logs_Pro_75_60     |
+|  10578 | &nbsp;&nbsp;sematext_monitor_mobilelogs    |    Mobile_Logs_Pro_100_60    |
+|  10579 | &nbsp;&nbsp;sematext_monitor_mobilelogs    |    Mobile_Logs_Pro_150_60    |
+|  10580 | &nbsp;&nbsp;sematext_monitor_mobilelogs    |     Mobile_Logs_Pro_1_90     |
+|  10581 | &nbsp;&nbsp;sematext_monitor_mobilelogs    |     Mobile_Logs_Pro_5_90     |
+|  10582 | &nbsp;&nbsp;sematext_monitor_mobilelogs    |    Mobile_Logs_Pro_10_90     |
+|  10583 | &nbsp;&nbsp;sematext_monitor_mobilelogs    |    Mobile_Logs_Pro_15_90     |
+|  10584 | &nbsp;&nbsp;sematext_monitor_mobilelogs    |    Mobile_Logs_Pro_20_90     |
+|  10585 | &nbsp;&nbsp;sematext_monitor_mobilelogs    |    Mobile_Logs_Pro_35_90     |
+|  10586 | &nbsp;&nbsp;sematext_monitor_mobilelogs    |    Mobile_Logs_Pro_50_90     |
+|  10587 | &nbsp;&nbsp;sematext_monitor_mobilelogs    |    Mobile_Logs_Pro_75_90     |
+|  10588 | &nbsp;&nbsp;sematext_monitor_mobilelogs    |    Mobile_Logs_Pro_100_90    |
+|  10589 | &nbsp;&nbsp;sematext_monitor_mobilelogs    |    Mobile_Logs_Pro_150_90    |
+|  10590 | &nbsp;&nbsp;sematext_monitor_mobilelogs    |          Pro_1_180           |
+|  10591 | &nbsp;&nbsp;sematext_monitor_mobilelogs    |          Pro_5_180           |
+|  10592 | &nbsp;&nbsp;sematext_monitor_mobilelogs    |          Pro_10_180          |
+|  10593 | &nbsp;&nbsp;sematext_monitor_mobilelogs    |          Pro_15_180          |
+|  10594 | &nbsp;&nbsp;sematext_monitor_mobilelogs    |          Pro_20_180          |
+|  10595 | &nbsp;&nbsp;sematext_monitor_mobilelogs    |          Pro_35_180          |
+|  10596 | &nbsp;&nbsp;sematext_monitor_mobilelogs    |          Pro_50_180          |
+|  10597 | &nbsp;&nbsp;sematext_monitor_mobilelogs    |          Pro_75_180          |
+|  10598 | &nbsp;&nbsp;sematext_monitor_mobilelogs    |         Pro_100_180          |
+|  10599 | &nbsp;&nbsp;sematext_monitor_mobilelogs    |         Pro_150_180          |
+|  10600 | &nbsp;&nbsp;sematext_monitor_mobilelogs    |          Pro_1_365           |
+|  10601 | &nbsp;&nbsp;sematext_monitor_mobilelogs    |          Pro_5_365           |
+|  10602 | &nbsp;&nbsp;sematext_monitor_mobilelogs    |          Pro_10_365          |
+|  10603 | &nbsp;&nbsp;sematext_monitor_mobilelogs    |          Pro_15_365          |
+|  10604 | &nbsp;&nbsp;sematext_monitor_mobilelogs    |          Pro_20_365          |
+|  10605 | &nbsp;&nbsp;sematext_monitor_mobilelogs    |          Pro_35_365          |
+|  10606 | &nbsp;&nbsp;sematext_monitor_mobilelogs    |          Pro_50_365          |
+|  10607 | &nbsp;&nbsp;sematext_monitor_mobilelogs    |          Pro_75_365          |
+|  10608 | &nbsp;&nbsp;sematext_monitor_mobilelogs    |         Pro_100_365          |
+|  10609 | &nbsp;&nbsp;sematext_monitor_mobilelogs    |         Pro_150_365          |

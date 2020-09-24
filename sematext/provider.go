@@ -12,7 +12,6 @@ import (
 	"net/url"
 	"os"
 
-	"github.com/blang/semver/v4"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"github.com/sematext/sematext-api-client-go/stcloud"
@@ -68,6 +67,9 @@ func Provider() terraform.ResourceProvider {
 			"sematext_monitor_storm":         resourceSematextMonitorStorm(),
 			"sematext_monitor_tomcat":        resourceSematextMonitorTomcat(),
 			"sematext_monitor_zookeeper":     resourceSematextMonitorZookeeper(),
+			"sematext_monitor_postgresql":    resourceSematextMonitorPostgresql(),
+			"sematext_monitor_rabbitmq":      resourceSematextMonitorRabbitmq(),
+			"sematext_monitor_mobilelogs":    resourceSematextMonitorMobilelogs(),
 		},
 	}
 
@@ -93,11 +95,6 @@ func Provider() terraform.ResourceProvider {
 		expectedRange, err := semver.ParseRange(">=0.13.0")
 		if !expectedRange(v) {
 			return nil, errors.New("ERROR : Terraform version must be >=0.13.0")
-		}
-
-		region := d.Get("sematext_region").(string)
-		if !IsValidSematextRegion(region) {
-			return nil, errors.New("ERROR : Missing or invalid sematext_region parameter in provider stanza")
 		}
 
 		token := os.Getenv("SEMATEXT_API_KEY")

@@ -48,18 +48,24 @@ func Provider() terraform.ResourceProvider {
 		var err error
 		var baseURL *url.URL
 
+
 		/*
 			Terraform 0.12 introduced this field to the protocol
 			We can therefore assume that if it's missing it's 0.10 or 0.11
 		*/
 		terraformVersion := provider.TerraformVersion
 		if terraformVersion == "" {
-			terraformVersion = "0.11+compatible"
+			return nil, errors.New("ERROR : Terraform version must be >=0.13.0")
 		}
 
-		region := d.Get("sematext_region").(string)
-		if !IsValidSematextRegion(region) {
-			return nil, errors.New("ERROR : Missing or invalid sematext_region parameter in provider tf")
+		v, err := semver.Parse(terraformVersion)
+		if err != nil {
+			return nil, errors.New("ERROR : problem trying to parse Terraform version")
+		}
+
+		expectedRange, err := semver.ParseRange(">=0.13.0")
+		if !expectedRange(v) {
+			return nil, errors.New("ERROR : Terraform version must be >=0.13.0")
 		}
 
 		token := os.Getenv("SEMATEXT_API_KEY")
