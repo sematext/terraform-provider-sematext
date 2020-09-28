@@ -203,7 +203,7 @@ The following table containes valid plan id values to be used in resource defini
 |   5009 | &nbsp;&nbsp;sematext_monitor_rabbitmq      |    Standard SPM RabbitMQ     |
 |   5010 | &nbsp;&nbsp;sematext_monitor_rabbitmq      |       Pro SPM RabbitMQ       |
 |   5011 | &nbsp;&nbsp;sematext_monitor_rabbitmq      |   Pro Silver SPM RabbitMQ    |
-|  10533 | &nbsp;&nbsp;sematext_monitor_mobile        |    Mobile_Logs_Basic_1_7     |
+|  10533 | &nbsp;&nbsp;sematext_monitor_mobilelogs    |    Mobile_Logs_Basic_1_7     |
 |  10534 | &nbsp;&nbsp;sematext_monitor_mobilelogs    |   Mobile_Logs_Standard_1_7   |
 |  10535 | &nbsp;&nbsp;sematext_monitor_mobilelogs    |   Mobile_Logs_Standard_5_7   |
 |  10536 | &nbsp;&nbsp;sematext_monitor_mobilelogs    |  Mobile_Logs_Standard_10_7   |

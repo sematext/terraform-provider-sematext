@@ -31,8 +31,6 @@ fmt:
 fmtcheck:
 	@sh -c "'$(CURDIR)/scripts/gofmtcheck.sh'"
 
-websitefmtcheck:
-	@sh -c "'$(CURDIR)/scripts/websitefmtcheck.sh'"
 
 depscheck:
 	@echo "==> Checking source code with go mod tidy..."
@@ -88,4 +86,4 @@ test-compile:
 	fi
 	go test -c $(TEST) $(TESTARGS)
 
-.PHONY: build sweep test testacc fmt fmtcheck lint tools test-compile website website-lint website-test depscheck docscheck
+.PHONY: build sweep test testacc fmt fmtcheck lint tools test-compile depscheck docscheck

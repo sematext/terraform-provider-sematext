@@ -7,7 +7,7 @@ package sematext
 */
 
 import (
-	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
 // resourceSematextMonitorNginx is the resource class that handles sematext_monitor_nginx

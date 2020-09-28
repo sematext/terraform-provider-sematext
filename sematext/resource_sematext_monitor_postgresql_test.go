@@ -12,10 +12,10 @@ import (
 
 // TestAccSematextMonitorPostgresqlBasic tests resource creation.
 func TestAccSematextMonitorPostgresqlBasic(t *testing.T) {
-	CommonMonitorBasicTest(t, "sematext_monitor_postgresql", "Postgresql")
+	CommonMonitorBasicTest(t, "sematext_monitor_postgresql", "postgresql")
 }
 
 // TestAccSematextMonitorPostgresqlUpdate tests for resource updates.
 func TestAccSematextMonitorPostgresqlUpdate(t *testing.T) {
-	CommonMonitorUpdateTest(t, "sematext_monitor_postgresql", "Postgresql")
+	CommonMonitorUpdateTest(t, "sematext_monitor_postgresql", "postgresql")
 }

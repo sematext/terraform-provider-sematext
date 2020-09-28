@@ -12,10 +12,10 @@ import (
 
 // TestAccSematextMonitorMobilelogsBasic tests resource creation.
 func TestAccSematextMonitorMobilelogsBasic(t *testing.T) {
-	CommonMonitorBasicTest(t, "sematext_monitor_mobilelogs", "Mobile-Logs")
+	CommonMonitorBasicTest(t, "sematext_monitor_mobilelogs", "mobile-logs")
 }
 
 // TestAccSematextMonitorMobilelogsUpdate tests for resource updates.
 func TestAccSematextMonitorMobilelogsUpdate(t *testing.T) {
-	CommonMonitorUpdateTest(t, "sematext_monitor_mobilelogs", "Mobile-Logs")
+	CommonMonitorUpdateTest(t, "sematext_monitor_mobilelogs", "mobile-logs")
 }

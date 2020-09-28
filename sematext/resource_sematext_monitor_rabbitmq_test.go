@@ -12,10 +12,10 @@ import (
 
 // TestAccSematextMonitorRabbitmqBasic tests resource creation.
 func TestAccSematextMonitorRabbitmqBasic(t *testing.T) {
-	CommonMonitorBasicTest(t, "sematext_monitor_rabbitmq", "RabbitMQ")
+	CommonMonitorBasicTest(t, "sematext_monitor_rabbitmq", "rabbitmq")
 }
 
 // TestAccSematextMonitorRabbitmqUpdate tests for resource updates.
 func TestAccSematextMonitorRabbitmqUpdate(t *testing.T) {
-	CommonMonitorUpdateTest(t, "sematext_monitor_rabbitmq", "RabbitMQ")
+	CommonMonitorUpdateTest(t, "sematext_monitor_rabbitmq", "rabbitmq")
 }

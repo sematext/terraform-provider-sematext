@@ -12,14 +12,14 @@ import (
 	"os"
 	"net/url"
 
-	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
-	"github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/meta"
 	"github.com/sematext/sematext-api-client-go/stcloud"
 	"github.com/blang/semver/v4"
 )
 
 // Provider is the connection to Sematext Cloud.
-func Provider() terraform.ResourceProvider {
+func Provider() *schema.Provider {
 
 	provider := &schema.Provider{
 
@@ -44,28 +44,55 @@ func Provider() terraform.ResourceProvider {
 		},
 	}
 
-	provider.ConfigureFunc = func(d *schema.ResourceData) (interface{}, error) {
+provider.ConfigureFunc = func(d *schema.ResourceData) (interface{}, error) {
 
 		var err error
+		var tfVersionString string
+		var tfVersionSemver semver.Version
+		var tfVersionSupportedRange semver.Range
+		var sdkVersionString string
+		var sdkVersionSemver semver.Version
+		var sdkVersionSupportedRange semver.Range
 		var baseURL *url.URL
 
+		tfVersionString = provider.TerraformVersion
+		if tfVersionString == "" {
 
-		/*
-			Terraform 0.12 introduced this field to the protocol
-			We can therefore assume that if it's missing it's 0.10 or 0.11
-		*/
-		terraformVersion := provider.TerraformVersion
-		if terraformVersion == "" {
-			return nil, errors.New("ERROR : Terraform version must be >=0.13.0")
+			sdkVersionString = meta.SDKVersion
+
+			if sdkVersionString == "" {
+				return nil, errors.New("ERROR : problem trying to parse Terraform SDK version")
+			}
+
+			sdkVersionSemver, err = semver.Parse(sdkVersionString)
+			if err != nil {
+				return nil, err
+			}
+
+			sdkVersionSupportedRange, err = semver.ParseRange(">=2.0.3")
+			if err != nil {
+				return nil, err
+			}
+
+			if !sdkVersionSupportedRange(sdkVersionSemver) {
+				return nil, errors.New("ERROR : Terraform sdk version not supported")
+			}
+
+			tfVersionString = "0.13.0"
+
 		}
 
-		v, err := semver.Parse(terraformVersion)
+		tfVersionSemver, err = semver.Parse(tfVersionString)
 		if err != nil {
-			return nil, errors.New("ERROR : problem trying to parse Terraform version")
+			return nil, err
 		}
 
-		expectedRange, err := semver.ParseRange(">=0.13.0")
-		if !expectedRange(v) {
+		tfVersionSupportedRange, err = semver.ParseRange(">=0.13.0")
+		if err != nil {
+			return nil, err
+		}
+
+		if !tfVersionSupportedRange(tfVersionSemver) {
 			return nil, errors.New("ERROR : Terraform version must be >=0.13.0")
 		}
 
@@ -99,7 +126,7 @@ func Provider() terraform.ResourceProvider {
 		}
 
 		cfg.BasePath = baseURL.String()
-		cfg.UserAgent = fmt.Sprintf("HashiCorp/1.0 Terraform/%s", terraformVersion)
+		cfg.UserAgent = fmt.Sprintf("HashiCorp/1.0 Terraform/%s", tfVersionString)
 		cfg.AddDefaultHeader("Authorization", fmt.Sprintf("apiKey %s", token))
 
 		client := stcloud.NewAPIClient(cfg)
@@ -108,5 +135,4 @@ func Provider() terraform.ResourceProvider {
 	}
 
 	return provider
-
 }

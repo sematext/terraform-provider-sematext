@@ -7,13 +7,13 @@ package sematext
 */
 
 import (
-	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
 // resourceSematextMonitorRabbitmq is the resource class that handles sematext_monitor_rabbitmq
 func resourceSematextMonitorRabbitmq() *schema.Resource {
 
-	fieldSchema := MonitorSchemaCommon("RabbitMQ")
+	fieldSchema := MonitorSchemaCommon("rabbitmq")
 
 	return &schema.Resource{
 		Create: resourceMonitorCreateRabbitmq,
@@ -27,7 +27,7 @@ func resourceSematextMonitorRabbitmq() *schema.Resource {
 
 // resourceMonitorCreateRabbitmq creates the sematext_monitor_rabbitmq resource.
 func resourceMonitorCreateRabbitmq(d *schema.ResourceData, meta interface{}) error {
-	apptype := "RabbitMQ"
+	apptype := "rabbitmq"
 	err := CommonMonitorCreate(d, meta, apptype)
 
 	return err
@@ -35,25 +35,25 @@ func resourceMonitorCreateRabbitmq(d *schema.ResourceData, meta interface{}) err
 
 // resourceMonitorReadRabbitmq reads the sematext_monitor_rabbitmq resource from Sematext Cloud.
 func resourceMonitorReadRabbitmq(d *schema.ResourceData, meta interface{}) error {
-	apptype := "RabbitMQ"
+	apptype := "rabbitmq"
 	return CommonMonitorRead(d, meta, apptype)
 }
 
 // resourceMonitorUpdateRabbitmq updates Sematext Cloud from the sematext_monitor_rabbitmq resource.
 func resourceMonitorUpdateRabbitmq(d *schema.ResourceData, meta interface{}) error {
-	apptype := "RabbitMQ"
+	apptype := "rabbitmq"
 	return CommonMonitorUpdate(d, meta, apptype)
 }
 
 // resourceMonitorDeleteRabbitmq marks a sematext_monitor_rabbitmq resource as retired.
 func resourceMonitorDeleteRabbitmq(d *schema.ResourceData, meta interface{}) error {
-	apptype := "RabbitMQ"
+	apptype := "rabbitmq"
 	return CommonMonitorDelete(d, meta, apptype)
 }
 
 // resourceMonitorExistsRabbitmq checks a sematext_monitor_rabbitmq resource exists in Sematext Cloud.
 func resourceMonitorExistsRabbitmq(d *schema.ResourceData, meta interface{}) (b bool, e error) {
-	apptype := "RabbitMQ"
+	apptype := "rabbitmq"
 	return CommonMonitorExists(d, meta, apptype)
 }
 
@@ -63,7 +63,7 @@ Placeholder - not implemented
 
 // resourceSematextMonitorImportRabbitmq checks a sematext_monitor_rabbitmq resource exists in Sematext Cloud.
 func resourceSematextMonitorImportRabbitmq(d *schema.ResourceData, meta interface{}) ([]*schema.ResourceData, error) {
-	apptype := "RabbitMQ"
+	apptype := "rabbitmq"
 	return CommonMonitorImport(d, meta, apptype)
 }
 

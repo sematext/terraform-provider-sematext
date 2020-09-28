@@ -7,13 +7,13 @@ package sematext
 */
 
 import (
-	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
 // resourceSematextMonitorPostgresql is the resource class that handles sematext_monitor_postgresql
 func resourceSematextMonitorPostgresql() *schema.Resource {
 
-	fieldSchema := MonitorSchemaCommon("Postgresql")
+	fieldSchema := MonitorSchemaCommon("postgresql")
 
 	return &schema.Resource{
 		Create: resourceMonitorCreatePostgresql,
@@ -27,7 +27,7 @@ func resourceSematextMonitorPostgresql() *schema.Resource {
 
 // resourceMonitorCreatePostgresql creates the sematext_monitor_postgresql resource.
 func resourceMonitorCreatePostgresql(d *schema.ResourceData, meta interface{}) error {
-	apptype := "Postgresql"
+	apptype := "postgresql"
 	err := CommonMonitorCreate(d, meta, apptype)
 
 	return err
@@ -35,25 +35,25 @@ func resourceMonitorCreatePostgresql(d *schema.ResourceData, meta interface{}) e
 
 // resourceMonitorReadPostgresql reads the sematext_monitor_postgresql resource from Sematext Cloud.
 func resourceMonitorReadPostgresql(d *schema.ResourceData, meta interface{}) error {
-	apptype := "Postgresql"
+	apptype := "postgresql"
 	return CommonMonitorRead(d, meta, apptype)
 }
 
 // resourceMonitorUpdatePostgresql updates Sematext Cloud from the sematext_monitor_postgresql resource.
 func resourceMonitorUpdatePostgresql(d *schema.ResourceData, meta interface{}) error {
-	apptype := "Postgresql"
+	apptype := "postgresql"
 	return CommonMonitorUpdate(d, meta, apptype)
 }
 
 // resourceMonitorDeletePostgresql marks a sematext_monitor_postgresql resource as retired.
 func resourceMonitorDeletePostgresql(d *schema.ResourceData, meta interface{}) error {
-	apptype := "Postgresql"
+	apptype := "postgresql"
 	return CommonMonitorDelete(d, meta, apptype)
 }
 
 // resourceMonitorExistsPostgresql checks a sematext_monitor_postgresql resource exists in Sematext Cloud.
 func resourceMonitorExistsPostgresql(d *schema.ResourceData, meta interface{}) (b bool, e error) {
-	apptype := "Postgresql"
+	apptype := "postgresql"
 	return CommonMonitorExists(d, meta, apptype)
 }
 
@@ -63,7 +63,7 @@ Placeholder - not implemented
 
 // resourceSematextMonitorImportPostgresql checks a sematext_monitor_postgresql resource exists in Sematext Cloud.
 func resourceSematextMonitorImportPostgresql(d *schema.ResourceData, meta interface{}) ([]*schema.ResourceData, error) {
-	apptype := "Postgresql"
+	apptype := "postgresql"
 	return CommonMonitorImport(d, meta, apptype)
 }
 

@@ -1,6 +1,6 @@
 # <img src="https://sematext.com/wp-content/uploads/2020/09/just-octi-blue.png" valign="bottom" width="60px"/>**&nbsp;&nbsp;Terraform Provider For Sematext Cloud**
 
-# Sematext Postgresql Resource
+# Sematext postgresql Resource
 
 Creates a monitoring application within [Sematext Cloud](https://sematext.com/cloud/).
 Refer to [Refer to Sematext Provider for authentication detail](../index.md)
