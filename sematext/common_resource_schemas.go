@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"regexp"
 
-	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/sematext/sematext-api-client-go/stcloud"
 )
 
@@ -54,6 +54,12 @@ func MonitorSchemaCommon(appType string) map[string]*schema.Schema {
 			Type:        schema.TypeString,
 			Optional:    true,
 			ForceNew:    false,
+			ValidateFunc: func(value interface{}, key string) (warns []string, errs []error) {
+				if appType == "mobile-logs" {
+					warns = append(warns, fmt.Sprintf("discount_code is not yet supported for resource type %s, ignoring", appType))
+				}
+				return warns, errs
+			},
 		},
 	}
 

@@ -88,4 +88,7 @@ The following terraform resources are supported.
 * [Storm](./resources/sematext_monitor_storm.md)
 * [Tomcat](./resources/sematext_monitor_tomcat.md)
 * [ZooKeeper](./resources/sematext_monitor_zookeeper.md)
+* [postgresql](./resources/sematext_monitor_postgresql.md)
+* [rabbitmq](./resources/sematext_monitor_rabbitmq.md)
+* [mobile-logs](./resources/sematext_monitor_mobilelogs.md)
 

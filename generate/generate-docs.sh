@@ -32,6 +32,9 @@ apptypes=(
     "Storm"
     "Tomcat"
     "ZooKeeper"
+    "postgresql"
+    "rabbitmq"
+    "mobile-logs"
 )
 
 # removed "Kafka-0.7.2" "Memcached" "SearchAnalytics" "Sensei" "Infra"
