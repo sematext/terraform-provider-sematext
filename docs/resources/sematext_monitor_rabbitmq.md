@@ -1,6 +1,6 @@
 # <img src="https://sematext.com/wp-content/uploads/2020/09/just-octi-blue.png" valign="bottom" width="60px"/>**&nbsp;&nbsp;Terraform Provider For Sematext Cloud**
 
-# Sematext Spark Resource
+# Sematext rabbitmq Resource
 
 Creates a monitoring application within [Sematext Cloud](https://sematext.com/cloud/).
 Refer to [Refer to Sematext Provider for authentication detail](../index.md)
@@ -21,7 +21,7 @@ provider "sematext" {
   sematext_region = "US"
 }
 
-resource "sematext_monitor_spark" "mymonitor" {
+resource "sematext_monitor_rabbitmq" "mymonitor" {
   name = "my monitor name"
   billing_plan_id = <[plan id](../guides/plans.md)>
 }

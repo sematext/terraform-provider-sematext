@@ -7,7 +7,7 @@ package sematext
 */
 
 import (
-	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
 // resourceSematextMonitor<<CLASS_NAME>> is the resource class that handles <<RESOURCE_NAME>>
