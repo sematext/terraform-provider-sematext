@@ -75,18 +75,15 @@ func CommonMonitorCreate(d *schema.ResourceData, meta interface{}, appType strin
 		createAppInfo.MetaData.AwsFetchFrequency = awsFetchFrequency.(string)
 	}
 
-	switch appType {
-
-	case "Logsene":
+	if appType == "Logsene" || appType == "mobile-logs" {
 		genericAPIResponse, _, err = client.LogsAppAPI.CreateLogseneApplication(context.Background(), *createAppInfo)
-
-	default:
+	} else {
 		genericAPIResponse, _, err = client.MonitoringAppAPI.CreateSpmApplication1(context.Background(), *createAppInfo)
 	}
-
 	if err != nil {
 		return err
 	}
+
 	var app *stcloud.App
 	app, err = genericAPIResponse.ExtractApp()
 	if err != nil {

@@ -56,7 +56,13 @@ func (rtf *ResourceTestFixtureDefault) hydrate(resourceType string, appType stri
 	rtf.Name = rtf.ResourceName
 	rtf.StatePath = rtf.ResourceType + "." + rtf.ResourceName
 	rtf.PlanID = stcloud.AssignPlanID(rtf.AppType)
-	if appType != "Logsene" {
+
+	switch appType {
+	case "Logsene":
+		rtf.DiscountCode = stcloud.TestDiscountCodeLogs
+	case "mobile-logs":
+		//rtf.DiscountCode = stcloud.TestDiscountCodeLogs @TODO reinstate once API discountCode for mobile-logs is in place.
+	default:
 		rtf.DiscountCode = stcloud.TestDiscountCodeMetrics
 	}
 
