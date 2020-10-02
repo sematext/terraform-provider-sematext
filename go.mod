@@ -9,6 +9,6 @@ require (
 	github.com/google/uuid v1.1.2
 	github.com/hashicorp/go-hclog v0.14.1 //indirect
 	github.com/hashicorp/terraform-plugin-sdk/v2 v2.0.3
-	github.com/sematext/sematext-api-client-go v1.1.4
+	github.com/sematext/sematext-api-client-go v1.1.5
 
 )

@@ -4,7 +4,9 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"net/http"
 	"strconv"
+	"time"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/sematext/sematext-api-client-go/stcloud"
@@ -227,6 +229,7 @@ func CommonMonitorDelete(d *schema.ResourceData, meta interface{}, apptype strin
 
 	var id int64
 	var err error
+	var response *http.Response
 
 	client := meta.(*stcloud.APIClient)
 	if id, err = strconv.ParseInt(d.Id(), 10, 64); err != nil {
@@ -238,6 +241,17 @@ func CommonMonitorDelete(d *schema.ResourceData, meta interface{}, apptype strin
 	_, _, err = client.AppsAPI.UpdateUsingPUT1(context.Background(), *updateAppInfo, id)
 	if err != nil {
 		return err
+	}
+
+	time.Sleep(1 * time.Second)
+
+	_, response, err = client.AppsAPI.DeleteUsingDELETE1(context.Background(), id)
+	if err != nil {
+		return err
+	}
+
+	if response.StatusCode != 200 {
+		return errors.New("ERROR : problem prevented app from being deleted")
 	}
 
 	return nil
