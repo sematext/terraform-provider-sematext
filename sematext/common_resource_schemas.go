@@ -55,9 +55,6 @@ func MonitorSchemaCommon(appType string) map[string]*schema.Schema {
 			Optional:    true,
 			ForceNew:    false,
 			ValidateFunc: func(value interface{}, key string) (warns []string, errs []error) {
-				if appType == "mobile-logs" {
-					warns = append(warns, fmt.Sprintf("discount_code is not yet supported for resource type %s, ignoring", appType))
-				}
 				return warns, errs
 			},
 		},
