@@ -20,8 +20,6 @@ func CommonMonitorCreate(d *schema.ResourceData, meta interface{}, appType strin
 
 	client := meta.(*stcloud.APIClient)
 
-	// TODO - Check pre-existence of same name/apptype in API (consider as a status update) - post MVP.
-
 	createAppInfo := &stcloud.CreateAppInfo{}
 
 	switch appType {
@@ -92,7 +90,6 @@ func CommonMonitorCreate(d *schema.ResourceData, meta interface{}, appType strin
 		return err
 	}
 	d.SetId(strconv.FormatInt(app.ID, 10))
-	//d.Set("token", app.Token) //TODO confirm this becomes available to other resources and decide if it should be a resource paramater in .tf script
 
 	return nil
 

@@ -61,7 +61,7 @@ func (rtf *ResourceTestFixtureDefault) hydrate(resourceType string, appType stri
 	case "Logsene":
 		rtf.DiscountCode = stcloud.TestDiscountCodeLogs
 	case "mobile-logs":
-		//rtf.DiscountCode = stcloud.TestDiscountCodeLogs @TODO reinstate once API discountCode for mobile-logs is in place.
+		rtf.DiscountCode = stcloud.TestDiscountCodeLogs
 	default:
 		rtf.DiscountCode = stcloud.TestDiscountCodeMetrics
 	}
