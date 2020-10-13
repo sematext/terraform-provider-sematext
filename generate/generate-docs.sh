@@ -58,7 +58,7 @@ do
     classname=${titlecase}
     resourcename="sematext_monitor_${lowercase}"
     resourcetargetfile="../docs/resources/${resourcename}.md"
-    resourcelinks+="\* [$apptype](.\/resources\/${resourcename}.md)\n"
+    resourcelinks+="\* [$apptype](..\/docs\/resources\/${resourcename}.md)\n"
 
     sed -e "s/<<APP_TYPE>>/${apptype}/g" -e "s/<<RESOURCE_NAME>>/${resourcename}/g" $resourcetemplatefile > $resourcetargetfile
 

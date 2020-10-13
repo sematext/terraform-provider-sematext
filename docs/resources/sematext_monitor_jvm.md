@@ -12,7 +12,7 @@ terraform {
   required_providers {
     sematext = {
       source = "sematext/sematext"
-      version = ">=0.1.5"
+      version = ">=0.1.9"
     }
   }
 }
@@ -32,3 +32,9 @@ resource "sematext_monitor_jvm" "mymonitor" {
 * `name` - List attributes that this resource exports.
 * `billing_plan_id` - List attributes that this resource exports. [Refer to plan guidance for list of legal values](../guides/plans.md)
 
+
+
+## Outputs
+
+* `id` - The app id. Provided on creation and used in terraform destroy operations.
+* `token` - On creation of the resource an app-token is generated for re-use in configuration of collection agents.
