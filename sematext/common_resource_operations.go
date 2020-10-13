@@ -90,6 +90,7 @@ func CommonMonitorCreate(d *schema.ResourceData, meta interface{}, appType strin
 		return err
 	}
 	d.SetId(strconv.FormatInt(app.ID, 10))
+	d.Set("token", app.Token)
 
 	return nil
 
