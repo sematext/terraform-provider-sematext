@@ -77,7 +77,12 @@ func (rtf *ResourceTestFixtureAWS) hydrate(resourceType string, appType string) 
 	rtf.Name = rtf.ResourceName
 	rtf.StatePath = rtf.ResourceType + "." + rtf.ResourceName
 	rtf.PlanID = stcloud.AssignPlanID(rtf.AppType)
-	if appType != "Logsene" {
+	switch appType {
+	case "Logsene":
+		rtf.DiscountCode = stcloud.TestDiscountCodeLogs
+	case "mobile-logs":
+		rtf.DiscountCode = stcloud.TestDiscountCodeLogs
+	default:
 		rtf.DiscountCode = stcloud.TestDiscountCodeMetrics
 	}
 	rtf.AwsRegion = os.Getenv("AWS_REGION")
@@ -164,6 +169,7 @@ func CommonMonitorBasicTest(t *testing.T, resourceType string, appType string) {
 						resource.TestCheckResourceAttr(rtf.StatePath, "name", rtf.Name),
 						resource.TestCheckResourceAttr(rtf.StatePath, "billing_plan_id", strconv.Itoa(rtf.PlanID)),
 						resource.TestCheckResourceAttr(rtf.StatePath, "discount_code", rtf.DiscountCode),
+						resource.TestCheckResourceAttrSet(rtf.StatePath, "token"),
 					),
 				},
 			},
@@ -190,6 +196,7 @@ func CommonMonitorBasicTest(t *testing.T, resourceType string, appType string) {
 						resource.TestCheckResourceAttr(rtf.StatePath, "name", rtf.Name),
 						resource.TestCheckResourceAttr(rtf.StatePath, "billing_plan_id", strconv.Itoa(rtf.PlanID)),
 						resource.TestCheckResourceAttr(rtf.StatePath, "discount_code", rtf.DiscountCode),
+						resource.TestCheckResourceAttrSet(rtf.StatePath, "token"),
 					),
 				},
 			},
