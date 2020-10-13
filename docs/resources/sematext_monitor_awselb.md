@@ -12,7 +12,7 @@ terraform {
   required_providers {
     sematext = {
       source = "sematext/sematext"
-      version = ">=0.1.5"
+      version = ">=0.1.9"
     }
   }
 }
@@ -35,3 +35,9 @@ resource "sematext_monitor_awselb" "mymonitor" {
 * `aws_secret_key` - (optionl) is not present set from env AWS_SECRET_ACCESS_KEY
 * `aws_fetch_frequency` - (required) one of MINUTE|FIVE_MINUTES|FIFTEEN_MINUTES.
 * `aws_region` - (optional) if not present withh set from env AWS_REGION.
+
+
+## Outputs
+
+* `id` - The app id. Provided on creation and used in terraform destroy operations.
+* `token` - On creation of the resource an app-token is generated for re-use in configuration of collection agents.
