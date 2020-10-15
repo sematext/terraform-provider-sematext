@@ -58,6 +58,12 @@ func MonitorSchemaCommon(appType string) map[string]*schema.Schema {
 				return warns, errs
 			},
 		},
+
+		"token": {
+			Description: "(Computed) App-token as supplied when a resource is created.",
+			Type:        schema.TypeString,
+			Computed:    true,
+		},
 	}
 
 	if appType == "AWS EBS" || appType == "AWS EC2" || appType == "AWS ELB" {

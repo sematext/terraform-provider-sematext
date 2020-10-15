@@ -58,6 +58,4 @@ If working with AWS Cloudwatch the following environment vars should be set:
 
 ## Resources
 
-The following terraform resources are supported.
-
-<<RESOURCE_LINKS>>
+Refer to docs/resources for guidance on individual resources.

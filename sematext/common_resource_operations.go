@@ -80,6 +80,10 @@ func CommonMonitorCreate(d *schema.ResourceData, meta interface{}, appType strin
 	} else {
 		genericAPIResponse, _, err = client.MonitoringAppAPI.CreateSpmApplication1(context.Background(), *createAppInfo)
 	}
+
+	//spew.Dump(createAppInfo)
+	//spew.Dump(genericAPIResponse)
+
 	if err != nil {
 		return err
 	}
@@ -241,7 +245,7 @@ func CommonMonitorDelete(d *schema.ResourceData, meta interface{}, apptype strin
 		return err
 	}
 
-	time.Sleep(1 * time.Second)
+	time.Sleep(2 * time.Second)
 
 	_, response, err = client.AppsAPI.DeleteUsingDELETE1(context.Background(), id)
 	if err != nil {

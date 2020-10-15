@@ -41,3 +41,5 @@ override.tf.json
 *.out
 .vscode
 vendor
+
+dist

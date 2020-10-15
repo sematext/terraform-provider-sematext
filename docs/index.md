@@ -58,37 +58,4 @@ If working with AWS Cloudwatch the following environment vars should be set:
 
 ## Resources
 
-The following terraform resources are supported.
-
-* [Akka](../docs/resources/sematext_monitor_akka.md)
-* [Apache](../docs/resources/sematext_monitor_apache.md)
-* [AWS EBS](../docs/resources/sematext_monitor_awsebs.md)
-* [AWS EC2](../docs/resources/sematext_monitor_awsec2.md)
-* [AWS ELB](../docs/resources/sematext_monitor_awselb.md)
-* [Cassandra](../docs/resources/sematext_monitor_cassandra.md)
-* [ClickHouse](../docs/resources/sematext_monitor_clickhouse.md)
-* [Docker](../docs/resources/sematext_monitor_docker.md)
-* [Elastic Search](../docs/resources/sematext_monitor_elasticsearch.md)
-* [Hadoop-MRv1](../docs/resources/sematext_monitor_hadoopmrv1.md)
-* [Hadoop-YARN](../docs/resources/sematext_monitor_hadoopyarn.md)
-* [HAProxy](../docs/resources/sematext_monitor_haproxy.md)
-* [HBase](../docs/resources/sematext_monitor_hbase.md)
-* [JVM](../docs/resources/sematext_monitor_jvm.md)
-* [Kafka](../docs/resources/sematext_monitor_kafka.md)
-* [Logsene](../docs/resources/sematext_monitor_logsene.md)
-* [MongoDB](../docs/resources/sematext_monitor_mongodb.md)
-* [MySQL](../docs/resources/sematext_monitor_mysql.md)
-* [Nginx](../docs/resources/sematext_monitor_nginx.md)
-* [Nginx-Plus](../docs/resources/sematext_monitor_nginxplus.md)
-* [Node.js](../docs/resources/sematext_monitor_nodejs.md)
-* [Redis](../docs/resources/sematext_monitor_redis.md)
-* [Solr](../docs/resources/sematext_monitor_solr.md)
-* [SolrCloud](../docs/resources/sematext_monitor_solrcloud.md)
-* [Spark](../docs/resources/sematext_monitor_spark.md)
-* [Storm](../docs/resources/sematext_monitor_storm.md)
-* [Tomcat](../docs/resources/sematext_monitor_tomcat.md)
-* [ZooKeeper](../docs/resources/sematext_monitor_zookeeper.md)
-* [postgresql](../docs/resources/sematext_monitor_postgresql.md)
-* [rabbitmq](../docs/resources/sematext_monitor_rabbitmq.md)
-* [mobile-logs](../docs/resources/sematext_monitor_mobilelogs.md)
-
+Refer to docs/resources for guidance on individual resources.
