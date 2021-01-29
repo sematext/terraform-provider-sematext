@@ -38,10 +38,6 @@ The following table containes valid plan id values to be used in resource defini
 |    131 | &nbsp;&nbsp;sematext_monitor_clickhouse    |   Standard SPM ClickHouse    |
 |    132 | &nbsp;&nbsp;sematext_monitor_clickhouse    |      Pro SPM ClickHouse      |
 |    133 | &nbsp;&nbsp;sematext_monitor_clickhouse    |  Pro Silver SPM ClickHouse   |
-|    117 | &nbsp;&nbsp;sematext_monitor_docker        |       Basic SPM Docker       |
-|    118 | &nbsp;&nbsp;sematext_monitor_docker        |     Standard SPM Docker      |
-|    119 | &nbsp;&nbsp;sematext_monitor_docker        |        Pro SPM Docker        |
-|    120 | &nbsp;&nbsp;sematext_monitor_docker        |    Pro Silver SPM Docker     |
 |     12 | &nbsp;&nbsp;sematext_monitor_elasticsearch |   Basic SPM Elasticsearch    |
 |     13 | &nbsp;&nbsp;sematext_monitor_elasticsearch |  Standard SPM Elasticsearch  |
 |     14 | &nbsp;&nbsp;sematext_monitor_elasticsearch |    Pro SPM Elasticsearch     |
@@ -62,6 +58,10 @@ The following table containes valid plan id values to be used in resource defini
 |      5 | &nbsp;&nbsp;sematext_monitor_hbase         |      Standard SPM HBase      |
 |      6 | &nbsp;&nbsp;sematext_monitor_hbase         |        Pro SPM HBase         |
 |     28 | &nbsp;&nbsp;sematext_monitor_hbase         |     Pro Silver SPM HBase     |
+|    129 | &nbsp;&nbsp;sematext_monitor_infra         |         Basic Infra          |
+|    300 | &nbsp;&nbsp;sematext_monitor_infra         |        Standard Infra        |
+|    301 | &nbsp;&nbsp;sematext_monitor_infra         |          Pro Infra           |
+|    302 | &nbsp;&nbsp;sematext_monitor_infra         |       Pro Silver Infra       |
 |     18 | &nbsp;&nbsp;sematext_monitor_jvm           |        Basic SPM JVM         |
 |     19 | &nbsp;&nbsp;sematext_monitor_jvm           |       Standard SPM JVM       |
 |     20 | &nbsp;&nbsp;sematext_monitor_jvm           |         Pro SPM JVM          |
