@@ -11,12 +11,12 @@ apptypes=(
     "AWS ELB"
     "Cassandra"
     "ClickHouse"
-    "Docker"
     "Elastic Search"
     "Hadoop-MRv1"
     "Hadoop-YARN"
     "HAProxy"
     "HBase"
+    "Infra"
     "JVM"
     "Kafka"
     "Logsene"
@@ -37,7 +37,7 @@ apptypes=(
     "mobile-logs"
 )
 
-# removed "Kafka-0.7.2" "Memcached" "SearchAnalytics" "Sensei" "Infra"
+# removed "Kafka-0.7.2" "Memcached" "SearchAnalytics" "Sensei" 
 
 
 awsparas='\* `aws_access_key` - (optional) if not set then reads from env AWS_ACCESS_KEY_ID.\n\* `aws_secret_key` - (optionl) is not present set from env AWS_SECRET_ACCESS_KEY\n\* `aws_fetch_frequency` - (required) one of MINUTE|FIVE_MINUTES|FIFTEEN_MINUTES.\n\* `aws_region` - (optional) if not present withh set from env AWS_REGION.'

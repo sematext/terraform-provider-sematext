@@ -384,7 +384,7 @@ func ConfirmMonitorCreationAWS(rtf ResourceTestFixtureAWS) resource.TestCheckFun
 	}
 }
 
-// ConfirmMonitorDestructionDefault checks the App ID has been removed from state and the API has marked the app as DISABLED.
+// ConfirmMonitorDestructionDefault checks the App ID has been removed from state and the API has marked the app as DELETED.
 func ConfirmMonitorDestructionDefault(rtf ResourceTestFixtureDefault) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 
@@ -425,8 +425,8 @@ func ConfirmMonitorDestructionDefault(rtf ResourceTestFixtureDefault) resource.T
 				return fmt.Errorf("ConfirmMonitorDestructionDefault : Missing app in genericAPIResponse checking monitor %s", rtf.StatePath)
 			}
 
-			if app.Status != "DISABLED" {
-				return fmt.Errorf("ConfirmMonitorDestructionDefault : Unexpected status in checking monitor %s : Expected DISABLED, got %s ", rtf.StatePath, app.Status)
+			if app.Status != "DELETED" {
+				return fmt.Errorf("ConfirmMonitorDestructionDefault : Unexpected status in checking monitor %s : Expected DELETED, got %s ", rtf.StatePath, app.Status)
 			}
 
 		}
@@ -435,7 +435,7 @@ func ConfirmMonitorDestructionDefault(rtf ResourceTestFixtureDefault) resource.T
 	}
 }
 
-// ConfirmMonitorDestructionAWS checks the App ID exists in both state and API and is marked as DISABLED.
+// ConfirmMonitorDestructionAWS checks the App ID exists in both state and API and is marked as DELETED.
 func ConfirmMonitorDestructionAWS(rtf ResourceTestFixtureAWS) resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 
@@ -472,8 +472,8 @@ func ConfirmMonitorDestructionAWS(rtf ResourceTestFixtureAWS) resource.TestCheck
 				return fmt.Errorf("ConfirmMonitorDestructionDefaultAWS : Missing app in genericAPIResponse checking monitor %s", rtf.StatePath)
 			}
 
-			if app.Status != "DISABLED" {
-				return fmt.Errorf("ConfirmMonitorDestructionDefaultAWS : Unexpected status in checking monitor %s : Expected DISABLED, got %s ", rtf.StatePath, app.Status)
+			if app.Status != "DELETED" {
+				return fmt.Errorf("ConfirmMonitorDestructionDefaultAWS : Unexpected status in checking monitor %s : Expected DELETED, got %s ", rtf.StatePath, app.Status)
 			}
 
 		}
