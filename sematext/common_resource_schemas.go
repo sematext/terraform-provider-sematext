@@ -59,10 +59,32 @@ func MonitorSchemaCommon(appType string) map[string]*schema.Schema {
 			},
 		},
 
-		"token": {
-			Description: "(Computed) App-token as supplied when a resource is created.",
-			Type:        schema.TypeString,
-			Computed:    true,
+		"apptoken": {
+			Description: "Associated Sematext Cloud app-token details. Note an SC app can have multiple app-tokens.",
+			Type:        schema.TypeSet,
+			Elem: &schema.Resource{
+				Schema: map[string]*schema.Schema{
+					"name": {
+						Description: "Unique Name of the Sematext Cloud app-token. Note SC app can have mutliple tokens.",
+						Type:        schema.TypeString,
+						Required:    true,
+						ForceNew:    false,
+					},
+					"create_missing": {
+						Description: "If true will create a new app-token if the named app-token is missing. If false will throw an error.",
+						Type:        schema.TypeBool,
+						Required:    true,
+						ForceNew:    false,
+						Default:     false,
+					},
+					"id": {
+						Description: "Unique Name of the Sematext Cloud app-token. Note SC app can have mutliple tokens.",
+						Type:        schema.TypeString,
+						Computed:    true,
+						ForceNew:    false,
+					},
+				},
+			},
 		},
 	}
 
