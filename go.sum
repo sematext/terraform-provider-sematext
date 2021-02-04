@@ -332,6 +332,10 @@ github.com/sematext/sematext-api-client-go v1.1.5 h1:b1qoq+E3hLCDlhMjHswdEOem3/b
 github.com/sematext/sematext-api-client-go v1.1.5/go.mod h1:5XUX7QTO1UmiGXDtG8jcrALTjaDBl0V/6u0NV6hJQaM=
 github.com/sematext/sematext-api-client-go v1.2.1 h1:oQaeH4EysOnSe2xkwRpprC5ihCddj+J73kwsn/DhW84=
 github.com/sematext/sematext-api-client-go v1.2.1/go.mod h1:qMod5cWDOoHOOM9jBf56S7Aj3wGOChe823fzFzcX018=
+github.com/sematext/sematext-api-client-go v1.2.2 h1:dRR+x8+EkMuPul2JqtbLt/OSlaIp8djQwauLhDtlyjU=
+github.com/sematext/sematext-api-client-go v1.2.2/go.mod h1:qMod5cWDOoHOOM9jBf56S7Aj3wGOChe823fzFzcX018=
+github.com/sematext/sematext-api-client-go v1.2.4 h1:rT6hYWjLPqJPen4nIhLtJ9We+v+0O9q2/2gvujNBMoM=
+github.com/sematext/sematext-api-client-go v1.2.4/go.mod h1:qMod5cWDOoHOOM9jBf56S7Aj3wGOChe823fzFzcX018=
 github.com/sergi/go-diff v1.0.0 h1:Kpca3qRNrduNnOQeazBd0ysaKrUJiIuISHxogkT9RPQ=
 github.com/sergi/go-diff v1.0.0/go.mod h1:0CfEIISq7TuYL3j771MWULgwwjU+GofnZX9QAmXWZgo=
 github.com/sergi/go-diff v1.1.0 h1:we8PVUC3FE2uYfodKH/nBHMSetSfHDR6scGdBi+erh0=

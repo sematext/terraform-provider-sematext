@@ -24,17 +24,32 @@ provider "sematext" {
 resource "sematext_monitor_rabbitmq" "mymonitor" {
   name = "my monitor name"
   billing_plan_id = <[plan id](../guides/plans.md)>
+  apptoken {
+    name "my apptoken name"
+    create_missing true
+  }
 }
 ```
 
 ## Argument Reference
 
-* `name` - List attributes that this resource exports.
-* `billing_plan_id` - List attributes that this resource exports. [Refer to plan guidance for list of legal values](../guides/plans.md)
+* `name` - List attributes that this resource exports;
+* `billing_plan_id` - List attributes that this resource exports. [Refer to plan guidance for list of legal values](../guides/plans.md);
+* `apptoken.name` - Refer note below;
 
 
+## App-tokens
+
+Sematext Cloud Apps have one or more apptokens. These app-tokens are named and have an id issued on creation.
+This is so that downstream resources can be grouped, with the instances within each group using the same app-token.
+
+Within Terraform state the apptoken.id is a calculated value, issued by Sematext Cloud.
+When provisioning, downstream resources should set the app-token id in their configuration.
+
+To prevent redeployment of downstream resources on change to apptokens we recommend using [null resource provider](https://registry.terraform.io/providers/hashicorp/null/latest/docs/resources/resource)
+to handle the provisioning.
 
 ## Outputs
 
 * `id` - The app id. Provided on creation and used in terraform destroy operations.
-* `token` - On creation of the resource an app-token is generated for re-use in configuration of collection agents.
+* `apptoken.id` - On creation of the resource an app-token is generated for re-use in configuration of APM / collectors.

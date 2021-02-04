@@ -9,12 +9,16 @@ import (
 	"testing"
 	"time"
 
-	"github.com/davecgh/go-spew/spew"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/acctest"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
 	"github.com/sematext/sematext-api-client-go/stcloud"
 )
+
+type AppTokenType struct {
+	Name          string
+	CreateMissing string
+}
 
 type ResourceTestFixture interface {
 	hydrate(resourceType string, appType string)
@@ -30,6 +34,7 @@ type ResourceTestFixtureDefault struct {
 	StatePath    string
 	PlanID       int
 	DiscountCode string
+	AppToken     AppTokenType
 }
 
 // ResourceTestFixtureAWS a test fixture representing a resource - AWS EBS, AWS EC2, AWS ELB
@@ -41,6 +46,7 @@ type ResourceTestFixtureAWS struct {
 	StatePath         string
 	PlanID            int
 	DiscountCode      string
+	AppToken          AppTokenType
 	AwsRegion         string
 	AwsSecretKey      string
 	AwsAccessKey      string
@@ -66,6 +72,11 @@ func (rtf *ResourceTestFixtureDefault) hydrate(resourceType string, appType stri
 		rtf.DiscountCode = stcloud.TestDiscountCodeMetrics
 	}
 
+	rtf.AppToken = AppTokenType{
+		Name:          "Test Token",
+		CreateMissing: "true",
+	}
+
 }
 
 func (rtf *ResourceTestFixtureAWS) hydrate(resourceType string, appType string) {
@@ -85,6 +96,12 @@ func (rtf *ResourceTestFixtureAWS) hydrate(resourceType string, appType string) 
 	default:
 		rtf.DiscountCode = stcloud.TestDiscountCodeMetrics
 	}
+
+	rtf.AppToken = AppTokenType{
+		Name:          "Test Token",
+		CreateMissing: "true",
+	}
+
 	rtf.AwsRegion = os.Getenv("AWS_REGION")
 	rtf.AwsAccessKey = os.Getenv("AWS_ACCESS_KEY_ID")
 	rtf.AwsSecretKey = os.Getenv("AWS_SECRET_ACCESS_KEY")
@@ -98,6 +115,8 @@ func (rtf *ResourceTestFixtureDefault) toHCL() string {
 		name = "%s"
 		billing_plan_id = %d
 		discount_code = "%s"
+		apptoken_name = "%s"
+		apptoken_create_missing = %s
 	}
 	`,
 		rtf.ResourceType,
@@ -105,6 +124,8 @@ func (rtf *ResourceTestFixtureDefault) toHCL() string {
 		rtf.Name,
 		rtf.PlanID,
 		rtf.DiscountCode,
+		rtf.AppToken.Name,
+		rtf.AppToken.CreateMissing,
 	)
 
 }
@@ -116,6 +137,8 @@ func (rtf *ResourceTestFixtureAWS) toHCL() string {
 		name = "%s"
 		billing_plan_id = %d
 		discount_code = "%s"
+		apptoken_name = "%s"
+		apptoken_create_missing = %s
 		aws_region = "%s"
 		aws_secret_key = "%s"
 		aws_access_key = "%s"
@@ -127,6 +150,8 @@ func (rtf *ResourceTestFixtureAWS) toHCL() string {
 		rtf.Name,
 		rtf.PlanID,
 		rtf.DiscountCode,
+		rtf.AppToken.Name,
+		rtf.AppToken.CreateMissing,
 		rtf.AwsRegion,
 		rtf.AwsSecretKey,
 		rtf.AwsAccessKey,
@@ -169,7 +194,8 @@ func CommonMonitorBasicTest(t *testing.T, resourceType string, appType string) {
 						resource.TestCheckResourceAttr(rtf.StatePath, "name", rtf.Name),
 						resource.TestCheckResourceAttr(rtf.StatePath, "billing_plan_id", strconv.Itoa(rtf.PlanID)),
 						resource.TestCheckResourceAttr(rtf.StatePath, "discount_code", rtf.DiscountCode),
-						resource.TestCheckResourceAttrSet(rtf.StatePath, "token"),
+						resource.TestCheckResourceAttr(rtf.StatePath, "apptoken_name", rtf.AppToken.Name),
+						resource.TestCheckResourceAttr(rtf.StatePath, "apptoken_create_missing", rtf.AppToken.CreateMissing),
 					),
 				},
 			},
@@ -184,6 +210,9 @@ func CommonMonitorBasicTest(t *testing.T, resourceType string, appType string) {
 		rtf := ResourceTestFixtureDefault{}
 		rtf.hydrate(resourceType, appType)
 		fixture := rtf.toHCL()
+
+		fmt.Println(fixture)
+
 		resource.Test(t, resource.TestCase{
 			PreCheck:     func() { testAccPreCheck(t) },
 			Providers:    testAccProviders,
@@ -196,7 +225,8 @@ func CommonMonitorBasicTest(t *testing.T, resourceType string, appType string) {
 						resource.TestCheckResourceAttr(rtf.StatePath, "name", rtf.Name),
 						resource.TestCheckResourceAttr(rtf.StatePath, "billing_plan_id", strconv.Itoa(rtf.PlanID)),
 						resource.TestCheckResourceAttr(rtf.StatePath, "discount_code", rtf.DiscountCode),
-						resource.TestCheckResourceAttrSet(rtf.StatePath, "token"),
+						resource.TestCheckResourceAttr(rtf.StatePath, "apptoken_name", rtf.AppToken.Name),
+						resource.TestCheckResourceAttr(rtf.StatePath, "apptoken_create_missing", rtf.AppToken.CreateMissing),
 					),
 				},
 			},
@@ -241,6 +271,8 @@ func CommonMonitorUpdateTest(t *testing.T, resourceType string, appType string) 
 						resource.TestCheckResourceAttr(rtf0.StatePath, "name", rtf0.Name),
 						resource.TestCheckResourceAttr(rtf0.StatePath, "billing_plan_id", strconv.Itoa(rtf0.PlanID)),
 						resource.TestCheckResourceAttr(rtf0.StatePath, "discount_code", rtf0.DiscountCode),
+						resource.TestCheckResourceAttr(rtf0.StatePath, "apptoken_name", rtf0.AppToken.Name),
+						resource.TestCheckResourceAttr(rtf0.StatePath, "apptoken_create_missing", rtf0.AppToken.CreateMissing),
 					),
 				},
 				{
@@ -250,6 +282,8 @@ func CommonMonitorUpdateTest(t *testing.T, resourceType string, appType string) 
 						resource.TestCheckResourceAttr(rtf1.StatePath, "name", rtf1.Name),
 						resource.TestCheckResourceAttr(rtf1.StatePath, "billing_plan_id", strconv.Itoa(rtf1.PlanID)),
 						resource.TestCheckResourceAttr(rtf1.StatePath, "discount_code", rtf1.DiscountCode),
+						resource.TestCheckResourceAttr(rtf1.StatePath, "apptoken_name", rtf1.AppToken.Name),
+						resource.TestCheckResourceAttr(rtf1.StatePath, "apptoken_create_missing", rtf1.AppToken.CreateMissing),
 					),
 				},
 			},
@@ -279,6 +313,8 @@ func CommonMonitorUpdateTest(t *testing.T, resourceType string, appType string) 
 						resource.TestCheckResourceAttr(rtf0.StatePath, "name", rtf0.Name),
 						resource.TestCheckResourceAttr(rtf0.StatePath, "billing_plan_id", strconv.Itoa(rtf0.PlanID)),
 						resource.TestCheckResourceAttr(rtf0.StatePath, "discount_code", rtf0.DiscountCode),
+						resource.TestCheckResourceAttr(rtf0.StatePath, "apptoken_name", rtf0.AppToken.Name),
+						resource.TestCheckResourceAttr(rtf0.StatePath, "apptoken_create_missing", rtf0.AppToken.CreateMissing),
 					),
 				},
 				{
@@ -288,6 +324,8 @@ func CommonMonitorUpdateTest(t *testing.T, resourceType string, appType string) 
 						resource.TestCheckResourceAttr(rtf1.StatePath, "name", rtf1.Name),
 						resource.TestCheckResourceAttr(rtf1.StatePath, "billing_plan_id", strconv.Itoa(rtf1.PlanID)),
 						resource.TestCheckResourceAttr(rtf1.StatePath, "discount_code", rtf1.DiscountCode),
+						resource.TestCheckResourceAttr(rtf1.StatePath, "apptoken_name", rtf1.AppToken.Name),
+						resource.TestCheckResourceAttr(rtf1.StatePath, "apptoken_create_missing", rtf1.AppToken.CreateMissing),
 					),
 				},
 			},
@@ -313,12 +351,13 @@ func ConfirmMonitorCreationDefault(rtf ResourceTestFixtureDefault) resource.Test
 
 		client := testAccProvider.Meta().(*stcloud.APIClient)
 
-		fmt.Println("---------------------------------------")
-		fmt.Println("rtf.StatePath")
-		fmt.Println(rtf.StatePath)
-		spew.Dump(s.RootModule().Resources)
-		fmt.Println("---------------------------------------")
-
+		/*
+			fmt.Println("---------------------------------------")
+			fmt.Println("rtf.StatePath")
+			fmt.Println(rtf.StatePath)
+			spew.Dump(s.RootModule().Resources)
+			fmt.Println("---------------------------------------")
+		*/
 		if rs, found = s.RootModule().Resources[rtf.StatePath]; !found {
 			return fmt.Errorf("ConfirmMonitorCreation : Resource not found in state: %s %s", rtf.ResourceType, rtf.ResourceName)
 		}
@@ -400,7 +439,7 @@ func ConfirmMonitorDestructionDefault(rtf ResourceTestFixtureDefault) resource.T
 
 		client := testAccProvider.Meta().(*stcloud.APIClient)
 
-		spew.Dump(s.RootModule().Resources)
+		//spew.Dump(s.RootModule().Resources)
 
 		for _, rs = range s.RootModule().Resources {
 
