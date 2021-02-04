@@ -50,6 +50,8 @@ provider "sematext" {
 resource "sematext_monitor_elasticsearch" "mymonitor" {
     name = "Node.js Monitor Example"
     billing_plan_id = 12
+    apptoken_name = "my apptoken name"
+    apptoken_create_missing = true
 }
 ```
 

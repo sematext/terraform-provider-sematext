@@ -9,7 +9,6 @@ import (
 	"testing"
 	"time"
 
-	"github.com/davecgh/go-spew/spew"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/acctest"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
@@ -116,10 +115,8 @@ func (rtf *ResourceTestFixtureDefault) toHCL() string {
 		name = "%s"
 		billing_plan_id = %d
 		discount_code = "%s"
-		apptoken {
-			name = %s
-			create_missing = %s
-		}
+		apptoken_name = "%s"
+		apptoken_create_missing = %s
 	}
 	`,
 		rtf.ResourceType,
@@ -140,10 +137,8 @@ func (rtf *ResourceTestFixtureAWS) toHCL() string {
 		name = "%s"
 		billing_plan_id = %d
 		discount_code = "%s"
-		apptoken {
-			name = %s
-			create_missing = %s
-		}
+		apptoken_name = "%s"
+		apptoken_create_missing = %s
 		aws_region = "%s"
 		aws_secret_key = "%s"
 		aws_access_key = "%s"
@@ -199,9 +194,8 @@ func CommonMonitorBasicTest(t *testing.T, resourceType string, appType string) {
 						resource.TestCheckResourceAttr(rtf.StatePath, "name", rtf.Name),
 						resource.TestCheckResourceAttr(rtf.StatePath, "billing_plan_id", strconv.Itoa(rtf.PlanID)),
 						resource.TestCheckResourceAttr(rtf.StatePath, "discount_code", rtf.DiscountCode),
-						resource.TestCheckResourceAttrSet(rtf.StatePath, "apptoken.name"),
-						resource.TestCheckResourceAttrSet(rtf.StatePath, "apptoken.create_missing"),
-						resource.TestCheckResourceAttrSet(rtf.StatePath, "apptoken.id"),
+						resource.TestCheckResourceAttr(rtf.StatePath, "apptoken_name", rtf.AppToken.Name),
+						resource.TestCheckResourceAttr(rtf.StatePath, "apptoken_create_missing", rtf.AppToken.CreateMissing),
 					),
 				},
 			},
@@ -216,6 +210,9 @@ func CommonMonitorBasicTest(t *testing.T, resourceType string, appType string) {
 		rtf := ResourceTestFixtureDefault{}
 		rtf.hydrate(resourceType, appType)
 		fixture := rtf.toHCL()
+
+		fmt.Println(fixture)
+
 		resource.Test(t, resource.TestCase{
 			PreCheck:     func() { testAccPreCheck(t) },
 			Providers:    testAccProviders,
@@ -228,9 +225,8 @@ func CommonMonitorBasicTest(t *testing.T, resourceType string, appType string) {
 						resource.TestCheckResourceAttr(rtf.StatePath, "name", rtf.Name),
 						resource.TestCheckResourceAttr(rtf.StatePath, "billing_plan_id", strconv.Itoa(rtf.PlanID)),
 						resource.TestCheckResourceAttr(rtf.StatePath, "discount_code", rtf.DiscountCode),
-						resource.TestCheckResourceAttrSet(rtf.StatePath, "apptoken.name"),
-						resource.TestCheckResourceAttrSet(rtf.StatePath, "apptoken.create_missing"),
-						resource.TestCheckResourceAttrSet(rtf.StatePath, "apptoken.id"),
+						resource.TestCheckResourceAttr(rtf.StatePath, "apptoken_name", rtf.AppToken.Name),
+						resource.TestCheckResourceAttr(rtf.StatePath, "apptoken_create_missing", rtf.AppToken.CreateMissing),
 					),
 				},
 			},
@@ -275,9 +271,8 @@ func CommonMonitorUpdateTest(t *testing.T, resourceType string, appType string) 
 						resource.TestCheckResourceAttr(rtf0.StatePath, "name", rtf0.Name),
 						resource.TestCheckResourceAttr(rtf0.StatePath, "billing_plan_id", strconv.Itoa(rtf0.PlanID)),
 						resource.TestCheckResourceAttr(rtf0.StatePath, "discount_code", rtf0.DiscountCode),
-						resource.TestCheckResourceAttrSet(rtf0.StatePath, "apptoken.name"),
-						resource.TestCheckResourceAttrSet(rtf0.StatePath, "apptoken.create_missing"),
-						resource.TestCheckResourceAttrSet(rtf0.StatePath, "apptoken.id"),
+						resource.TestCheckResourceAttr(rtf0.StatePath, "apptoken_name", rtf0.AppToken.Name),
+						resource.TestCheckResourceAttr(rtf0.StatePath, "apptoken_create_missing", rtf0.AppToken.CreateMissing),
 					),
 				},
 				{
@@ -287,9 +282,8 @@ func CommonMonitorUpdateTest(t *testing.T, resourceType string, appType string) 
 						resource.TestCheckResourceAttr(rtf1.StatePath, "name", rtf1.Name),
 						resource.TestCheckResourceAttr(rtf1.StatePath, "billing_plan_id", strconv.Itoa(rtf1.PlanID)),
 						resource.TestCheckResourceAttr(rtf1.StatePath, "discount_code", rtf1.DiscountCode),
-						resource.TestCheckResourceAttrSet(rtf1.StatePath, "apptoken.name"),
-						resource.TestCheckResourceAttrSet(rtf1.StatePath, "apptoken.create_missing"),
-						resource.TestCheckResourceAttrSet(rtf1.StatePath, "apptoken.id"),
+						resource.TestCheckResourceAttr(rtf1.StatePath, "apptoken_name", rtf1.AppToken.Name),
+						resource.TestCheckResourceAttr(rtf1.StatePath, "apptoken_create_missing", rtf1.AppToken.CreateMissing),
 					),
 				},
 			},
@@ -319,9 +313,8 @@ func CommonMonitorUpdateTest(t *testing.T, resourceType string, appType string) 
 						resource.TestCheckResourceAttr(rtf0.StatePath, "name", rtf0.Name),
 						resource.TestCheckResourceAttr(rtf0.StatePath, "billing_plan_id", strconv.Itoa(rtf0.PlanID)),
 						resource.TestCheckResourceAttr(rtf0.StatePath, "discount_code", rtf0.DiscountCode),
-						resource.TestCheckResourceAttrSet(rtf0.StatePath, "apptoken.name"),
-						resource.TestCheckResourceAttrSet(rtf0.StatePath, "apptoken.create_missing"),
-						resource.TestCheckResourceAttrSet(rtf0.StatePath, "apptoken.id"),
+						resource.TestCheckResourceAttr(rtf0.StatePath, "apptoken_name", rtf0.AppToken.Name),
+						resource.TestCheckResourceAttr(rtf0.StatePath, "apptoken_create_missing", rtf0.AppToken.CreateMissing),
 					),
 				},
 				{
@@ -331,9 +324,8 @@ func CommonMonitorUpdateTest(t *testing.T, resourceType string, appType string) 
 						resource.TestCheckResourceAttr(rtf1.StatePath, "name", rtf1.Name),
 						resource.TestCheckResourceAttr(rtf1.StatePath, "billing_plan_id", strconv.Itoa(rtf1.PlanID)),
 						resource.TestCheckResourceAttr(rtf1.StatePath, "discount_code", rtf1.DiscountCode),
-						resource.TestCheckResourceAttrSet(rtf1.StatePath, "apptoken.name"),
-						resource.TestCheckResourceAttrSet(rtf1.StatePath, "apptoken.create_missing"),
-						resource.TestCheckResourceAttrSet(rtf1.StatePath, "apptoken.id"),
+						resource.TestCheckResourceAttr(rtf1.StatePath, "apptoken_name", rtf1.AppToken.Name),
+						resource.TestCheckResourceAttr(rtf1.StatePath, "apptoken_create_missing", rtf1.AppToken.CreateMissing),
 					),
 				},
 			},
@@ -359,12 +351,13 @@ func ConfirmMonitorCreationDefault(rtf ResourceTestFixtureDefault) resource.Test
 
 		client := testAccProvider.Meta().(*stcloud.APIClient)
 
-		fmt.Println("---------------------------------------")
-		fmt.Println("rtf.StatePath")
-		fmt.Println(rtf.StatePath)
-		spew.Dump(s.RootModule().Resources)
-		fmt.Println("---------------------------------------")
-
+		/*
+			fmt.Println("---------------------------------------")
+			fmt.Println("rtf.StatePath")
+			fmt.Println(rtf.StatePath)
+			spew.Dump(s.RootModule().Resources)
+			fmt.Println("---------------------------------------")
+		*/
 		if rs, found = s.RootModule().Resources[rtf.StatePath]; !found {
 			return fmt.Errorf("ConfirmMonitorCreation : Resource not found in state: %s %s", rtf.ResourceType, rtf.ResourceName)
 		}
@@ -446,7 +439,7 @@ func ConfirmMonitorDestructionDefault(rtf ResourceTestFixtureDefault) resource.T
 
 		client := testAccProvider.Meta().(*stcloud.APIClient)
 
-		spew.Dump(s.RootModule().Resources)
+		//spew.Dump(s.RootModule().Resources)
 
 		for _, rs = range s.RootModule().Resources {
 
