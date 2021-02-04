@@ -4,10 +4,12 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"math"
 	"net/http"
 	"strconv"
 	"time"
 
+	"github.com/davecgh/go-spew/spew"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/sematext/sematext-api-client-go/stcloud"
 )
@@ -17,6 +19,7 @@ func CommonMonitorCreate(d *schema.ResourceData, meta interface{}, appType strin
 
 	var err error
 	var genericAPIResponse stcloud.GenericAPIResponse
+	var appTokenEntries *[]stcloud.AppTokenEntry
 
 	client := meta.(*stcloud.APIClient)
 
@@ -93,8 +96,28 @@ func CommonMonitorCreate(d *schema.ResourceData, meta interface{}, appType strin
 	if err != nil {
 		return err
 	}
+
 	d.SetId(strconv.FormatInt(app.ID, 10))
-	d.Set("token", app.Token)
+
+	createTokenDto := stcloud.CreateTokenDto{}
+	createTokenDto.Name = d.Get("apptoken_name").(string)
+	createTokenDto.Readable = true
+	createTokenDto.Writeable = true
+
+	genericAPIResponse, _, err = client.TokensAPIControllerAPI.CreateAppToken(context.Background(), createTokenDto, app.ID)
+	if err != nil {
+		return err
+	}
+
+	appTokenEntries, err = ExtractAppTokens(genericAPIResponse)
+	if err != nil {
+		return err
+	}
+
+	spew.Dump((*appTokenEntries)[0])
+
+	d.Set("apptoken_id", (*appTokenEntries)[0].ID)
+	d.Set("apptoken_token", (*appTokenEntries)[0].Token)
 
 	return nil
 
@@ -108,6 +131,7 @@ func CommonMonitorRead(d *schema.ResourceData, meta interface{}, appType string)
 	var id int64
 	var err error
 	var app *stcloud.App
+	var appTokenEntries *[]stcloud.AppTokenEntry
 
 	if id, err = strconv.ParseInt(d.Id(), 10, 64); err != nil {
 		return err
@@ -135,7 +159,35 @@ func CommonMonitorRead(d *schema.ResourceData, meta interface{}, appType string)
 
 	}
 
-	return nil
+	appTokenName, appTokenNamePresent := d.GetOkExists("apptoken_name")
+	if !appTokenNamePresent {
+		return errors.New("Missing apptoken_name in resource")
+	}
+
+	// pull tokens for this app.
+	genericAPIResponse, _, err = client.TokensAPIControllerAPI.GetAppTokens1(context.Background(), id)
+	if err != nil {
+		return err
+	}
+
+	appTokenEntries, err = ExtractAppTokens(genericAPIResponse)
+	if err != nil {
+		return err
+	}
+
+	// Note if the id changes then downstream reconfig of dependant resources should occur.
+	for _, appTokenEntry := range *appTokenEntries {
+		if appTokenEntry.Name == appTokenName {
+			if d.Get("apptoken_id") != appTokenEntry.ID {
+				fmt.Println("Note  - resource " + d.Get("name").(string) + " has changed had the apptoken reset for " + appTokenName.(string) + " - dependant resources should reconfigure APM clients")
+				d.Set("apptoken_id", appTokenEntry.ID)
+				d.Set("apptoken_token", appTokenEntry.Token)
+			}
+			return nil
+		}
+	}
+
+	return errors.New(d.Get("apptoken_name").(string) + " expected in Sematext Cloud but cannot be found")
 }
 
 // CommonMonitorUpdate is a common update handler used by most resources.
@@ -143,6 +195,8 @@ func CommonMonitorUpdate(d *schema.ResourceData, meta interface{}, apptype strin
 
 	var id int64
 	var err error
+	var genericAPIResponse stcloud.GenericAPIResponse
+	var appTokenEntries *[]stcloud.AppTokenEntry
 
 	client := meta.(*stcloud.APIClient)
 	if id, err = strconv.ParseInt(d.Id(), 10, 64); err != nil {
@@ -222,6 +276,56 @@ func CommonMonitorUpdate(d *schema.ResourceData, meta interface{}, apptype strin
 
 	}
 
+	if d.HasChange("apptoken_name") {
+		_, newTokenName := d.GetChange("apptoken_name")
+
+		// pull tokens for this app.
+		genericAPIResponse, _, err = client.TokensAPIControllerAPI.GetAppTokens1(context.Background(), id)
+		if err != nil {
+			return err
+		}
+
+		appTokenEntries, err = ExtractAppTokens(genericAPIResponse)
+		if err != nil {
+			return err
+		}
+
+		// Note if the id changes then downstream reconfig of dependant resources should occur.
+		for _, appTokenEntry := range *appTokenEntries {
+			if appTokenEntry.Name == newTokenName {
+				if d.Get("apptoken_token") != appTokenEntry.Token {
+					fmt.Println("Note  - Detected a change on resource " + d.Get("name").(string) + " - apptoken_token reset for " + newTokenName.(string) + " - dependant resources should reconfigure APM clients")
+					d.Set("apptoken_id", appTokenEntry.ID)
+					d.Set("apptoken_token", appTokenEntry.Token)
+				}
+				return nil
+			}
+		}
+
+		// check if apptoken.name exists, create and record apptoken.id to state if not
+
+		if d.Get("apptoken_create_missing").(bool) {
+			createTokenDto := &stcloud.CreateTokenDto{}
+			createTokenDto.Name = newTokenName.(string)
+			createTokenDto.Readable = true
+			createTokenDto.Writeable = true
+			genericAPIResponse, _, err = client.TokensAPIControllerAPI.CreateAppToken(context.Background(), *createTokenDto, id)
+			if err != nil {
+				return err
+			}
+			appTokenEntries, err = ExtractAppTokens(genericAPIResponse)
+			if err != nil {
+				return err
+			}
+			d.Set("apptoken_id", (*appTokenEntries)[0].ID)
+			d.Set("apptoken_token", (*appTokenEntries)[0].Token)
+
+		} else {
+			return errors.New("Note : Detected a change to apptoken_name in resource " + d.Get("name").(string) + " prevented from creating a new apptoken as apptoken.create_missing is turned off")
+		}
+
+	}
+
 	return nil
 
 }
@@ -281,7 +385,7 @@ func CommonMonitorExists(d *schema.ResourceData, meta interface{}, apptype strin
 		return false, err
 	}
 
-	exists = app.Status != "ARCHIVED" // TODO Reconfirm archive vs deletion once some examples available post MVP
+	exists = !(app.Status == "ARCHIVED" || app.Status == "DELETED")
 
 	return exists, nil
 }
@@ -304,3 +408,47 @@ func CommonMonitorImport(d *schema.ResourceData, meta interface{}, apptype strin
 }
 
 */
+
+// ExtractAppTokens pulls token or tokens field out of GenericAPIResponse
+func ExtractAppTokens(genericAPIResponse stcloud.GenericAPIResponse) (*[]stcloud.AppTokenEntry, error) {
+
+	var dataField map[string]interface{}
+	var appTokensField []interface{}
+	var appTokenField map[string]interface{}
+	var appTokenEntries []stcloud.AppTokenEntry
+	var appTokenEntry stcloud.AppTokenEntry
+	var exists bool
+
+	dataField = (*genericAPIResponse.Data).(map[string]interface{})
+
+	if appTokensField, exists = dataField["tokens"].([]interface{}); exists {
+		for _, appTokenFieldEntry := range appTokensField {
+			atfe := appTokenFieldEntry.(map[string]interface{})
+			appTokenEntry = stcloud.AppTokenEntry{}
+			appTokenEntry.ID = int(math.Round(atfe["id"].(float64)))
+			appTokenEntry.Name = atfe["name"].(string)
+			appTokenEntry.Token = atfe["token"].(string)
+			appTokenEntry.Readable = atfe["readable"].(bool)
+			appTokenEntry.Writable = atfe["writeable"].(bool)
+			appTokenEntries = append(appTokenEntries, appTokenEntry)
+
+		}
+		return &appTokenEntries, nil
+	}
+
+	if appTokenField, exists = dataField["token"].(map[string]interface{}); exists {
+
+		spew.Dump(appTokenField)
+		appTokenEntry.ID = int(math.Round(appTokenField["id"].(float64)))
+		appTokenEntry.Name = appTokenField["name"].(string)
+		appTokenEntry.Token = appTokenField["token"].(string)
+		appTokenEntry.Readable = appTokenField["readable"].(bool)
+		appTokenEntry.Writable = appTokenField["writeable"].(bool)
+		appTokenEntries = append(appTokenEntries, appTokenEntry)
+
+		return &appTokenEntries, nil
+	}
+
+	return nil, fmt.Errorf("Unexpected missing token(s) field in API response")
+
+}
