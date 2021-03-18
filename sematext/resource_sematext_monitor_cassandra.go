@@ -7,6 +7,9 @@ package sematext
 */
 
 import (
+	"context"
+
+	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
@@ -16,45 +19,38 @@ func resourceSematextMonitorCassandra() *schema.Resource {
 	fieldSchema := MonitorSchemaCommon("Cassandra")
 
 	return &schema.Resource{
-		Create: resourceMonitorCreateCassandra,
-		Read:   resourceMonitorReadCassandra,
-		Update: resourceMonitorUpdateCassandra,
-		Delete: resourceMonitorDeleteCassandra,
-		Exists: resourceMonitorExistsCassandra,
-		Schema: fieldSchema,
+		CreateContext: resourceMonitorCreateCassandra,
+		ReadContext:   resourceMonitorReadCassandra,
+		UpdateContext: resourceMonitorUpdateCassandra,
+		DeleteContext: resourceMonitorDeleteCassandra,
+		Schema:        fieldSchema,
 	}
 }
 
 // resourceMonitorCreateCassandra creates the sematext_monitor_cassandra resource.
-func resourceMonitorCreateCassandra(d *schema.ResourceData, meta interface{}) error {
+func resourceMonitorCreateCassandra(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	apptype := "Cassandra"
-	err := CommonMonitorCreate(d, meta, apptype)
+	err := CommonMonitorCreate(ctx, d, meta, apptype)
 
 	return err
 }
 
 // resourceMonitorReadCassandra reads the sematext_monitor_cassandra resource from Sematext Cloud.
-func resourceMonitorReadCassandra(d *schema.ResourceData, meta interface{}) error {
+func resourceMonitorReadCassandra(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	apptype := "Cassandra"
-	return CommonMonitorRead(d, meta, apptype)
+	return CommonMonitorRead(ctx, d, meta, apptype)
 }
 
 // resourceMonitorUpdateCassandra updates Sematext Cloud from the sematext_monitor_cassandra resource.
-func resourceMonitorUpdateCassandra(d *schema.ResourceData, meta interface{}) error {
+func resourceMonitorUpdateCassandra(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	apptype := "Cassandra"
-	return CommonMonitorUpdate(d, meta, apptype)
+	return CommonMonitorUpdate(ctx, d, meta, apptype)
 }
 
 // resourceMonitorDeleteCassandra marks a sematext_monitor_cassandra resource as retired.
-func resourceMonitorDeleteCassandra(d *schema.ResourceData, meta interface{}) error {
+func resourceMonitorDeleteCassandra(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	apptype := "Cassandra"
-	return CommonMonitorDelete(d, meta, apptype)
-}
-
-// resourceMonitorExistsCassandra checks a sematext_monitor_cassandra resource exists in Sematext Cloud.
-func resourceMonitorExistsCassandra(d *schema.ResourceData, meta interface{}) (b bool, e error) {
-	apptype := "Cassandra"
-	return CommonMonitorExists(d, meta, apptype)
+	return CommonMonitorDelete(ctx, d, meta, apptype)
 }
 
 /*

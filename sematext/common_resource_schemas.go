@@ -59,33 +59,84 @@ func MonitorSchemaCommon(appType string) map[string]*schema.Schema {
 			},
 		},
 
-		"apptoken_name": {
-			Description: "Unique Name of the Sematext Cloud app-token. Note SC app can have mutliple tokens.",
-			Type:        schema.TypeString,
-			Required:    true,
-			ForceNew:    false,
+		// At this point the association is with all app-tokens in the SC app. Association of individual app-token with container instance is set in the provisioner(s).
+		"apptoken": {
+			Description: "(required) apptoken(s) attached to the monitor app in Sematext Cloud.",
+			Type:        schema.TypeSet,
+			Elem: &schema.Resource{
+				Schema: map[string]*schema.Schema{
+					"names": {
+						Type: schema.TypeList,
+						Elem: &schema.Schema{
+							Type: schema.TypeString,
+						},
+						Required: true,
+						ForceNew: false,
+					},
+				},
+			},
 		},
 
-		"apptoken_create_missing": {
-			Description: "If true will create a new app-token if the named app-token is missing. If false will throw an error.",
-			Type:        schema.TypeBool,
-			Optional:    true,
-			ForceNew:    false,
-			Default:     true,
-		},
+		/*
+			// Above
+			// Once the app is created this is pulled back from SC and lives only in state file. This is checked each time to see ids line up with names.
+			"apptoken_entries": {
+				Description: "One or more apptoken entries. Calculated, supplied by SC Cloud.",
+				Type:        schema.TypeSet,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"CreatedAt": {
+							Type:     schema.TypeString,
+							Computed: true,
+							ForceNew: false,
+						},
+						"Enabled": {
+							Type:     schema.TypeBool,
+							Computed: true,
+							ForceNew: false,
+						},
+						"ID": {
+							Type:     schema.TypeInt,
+							Computed: true,
+							ForceNew: false,
+						},
+						"Name": {
+							Type:     schema.TypeString,
+							Computed: true,
+							ForceNew: false,
+						},
+						"Readable": {
+							Type:     schema.TypeBool,
+							Computed: true,
+							ForceNew: false,
+						},
+						"Token": {
+							Type:     schema.TypeString,
+							Computed: true,
+							ForceNew: false,
+						},
+						"Writeable": {
+							Type:     schema.TypeBool,
+							Computed: true,
+							ForceNew: false,
+						},
+					},
+				},
+				Computed: true,
+				ForceNew: false,
+			},
+		*/
 
-		"apptoken_id": {
-			Description: "Unique ID of the Sematext Cloud app-token. Note SC app can have mutliple tokens. Supplied by SC Cloud.",
-			Type:        schema.TypeInt,
-			Computed:    true,
-			ForceNew:    false,
-		},
-
-		"apptoken_token": {
-			Description: "Unique value of the Sematext Cloud app-token. Note SC app can have mutliple tokens. Supplied by SC Cloud.",
-			Type:        schema.TypeString,
-			Computed:    true,
-			ForceNew:    false,
+		// Once the app is created this is pulled back from SC and lives only in state file. This is checked each time to see ids line up with names.
+		// Note : Simplified from above to make lookup more readible in scripts that use this.
+		"sc_apptoken_entries": {
+			Description: "Map of apptoken name -> id. Calculated, supplied by SC Cloud.",
+			Type:        schema.TypeMap,
+			Elem: &schema.Schema{
+				Type: schema.TypeString,
+			},
+			Computed: true,
+			ForceNew: false,
 		},
 	}
 
@@ -101,7 +152,7 @@ func MonitorSchemaCommon(appType string) map[string]*schema.Schema {
 			ValidateFunc: func(value interface{}, key string) (warns []string, errs []error) {
 				fmt.Println(value.(string))
 				if matched, err := regexp.MatchString(`([0-9A-Za-z]{20})`, value.(string)); !matched {
-					errs = append(errs, errors.New("Invalid aws_access_key"))
+					errs = append(errs, errors.New("invalid aws_access_key"))
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -118,7 +169,7 @@ func MonitorSchemaCommon(appType string) map[string]*schema.Schema {
 			ValidateFunc: func(value interface{}, key string) (warns []string, errs []error) {
 				fmt.Println(value.(string))
 				if matched, err := regexp.MatchString(`([0-9A-Za-z+/=]{40})`, value.(string)); !matched {
-					errs = append(errs, errors.New("Invalid aws_secret_key"))
+					errs = append(errs, errors.New("invalid aws_secret_key"))
 					if err != nil {
 						errs = append(errs, err)
 					}
@@ -136,7 +187,7 @@ func MonitorSchemaCommon(appType string) map[string]*schema.Schema {
 			ValidateFunc: func(value interface{}, key string) (warns []string, errs []error) {
 				fmt.Println(value.(string))
 				if valid, _ := regexp.MatchString(`(MINUTE|FIVE_MINUTES|FIFTEEN_MINUTES)`, value.(string)); !valid {
-					errs = append(errs, errors.New("Invalid aws_fetch_frequency"))
+					errs = append(errs, errors.New("invalid aws_fetch_frequency"))
 				}
 				return warns, errs
 			},
@@ -150,7 +201,7 @@ func MonitorSchemaCommon(appType string) map[string]*schema.Schema {
 			ValidateFunc: func(value interface{}, key string) (warns []string, errs []error) {
 				fmt.Println(value.(string))
 				if _, found := stcloud.AWSRegion2STRegion[value.(string)]; !found {
-					errs = append(errs, errors.New("Invalid aws_region"))
+					errs = append(errs, errors.New("invalid aws_region"))
 				}
 				return warns, errs
 			},

@@ -7,6 +7,9 @@ package sematext
 */
 
 import (
+	"context"
+
+	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
@@ -16,45 +19,38 @@ func resourceSematextMonitorMobilelogs() *schema.Resource {
 	fieldSchema := MonitorSchemaCommon("mobile-logs")
 
 	return &schema.Resource{
-		Create: resourceMonitorCreateMobilelogs,
-		Read:   resourceMonitorReadMobilelogs,
-		Update: resourceMonitorUpdateMobilelogs,
-		Delete: resourceMonitorDeleteMobilelogs,
-		Exists: resourceMonitorExistsMobilelogs,
-		Schema: fieldSchema,
+		CreateContext: resourceMonitorCreateMobilelogs,
+		ReadContext:   resourceMonitorReadMobilelogs,
+		UpdateContext: resourceMonitorUpdateMobilelogs,
+		DeleteContext: resourceMonitorDeleteMobilelogs,
+		Schema:        fieldSchema,
 	}
 }
 
 // resourceMonitorCreateMobilelogs creates the sematext_monitor_mobilelogs resource.
-func resourceMonitorCreateMobilelogs(d *schema.ResourceData, meta interface{}) error {
+func resourceMonitorCreateMobilelogs(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	apptype := "mobile-logs"
-	err := CommonMonitorCreate(d, meta, apptype)
+	err := CommonMonitorCreate(ctx, d, meta, apptype)
 
 	return err
 }
 
 // resourceMonitorReadMobilelogs reads the sematext_monitor_mobilelogs resource from Sematext Cloud.
-func resourceMonitorReadMobilelogs(d *schema.ResourceData, meta interface{}) error {
+func resourceMonitorReadMobilelogs(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	apptype := "mobile-logs"
-	return CommonMonitorRead(d, meta, apptype)
+	return CommonMonitorRead(ctx, d, meta, apptype)
 }
 
 // resourceMonitorUpdateMobilelogs updates Sematext Cloud from the sematext_monitor_mobilelogs resource.
-func resourceMonitorUpdateMobilelogs(d *schema.ResourceData, meta interface{}) error {
+func resourceMonitorUpdateMobilelogs(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	apptype := "mobile-logs"
-	return CommonMonitorUpdate(d, meta, apptype)
+	return CommonMonitorUpdate(ctx, d, meta, apptype)
 }
 
 // resourceMonitorDeleteMobilelogs marks a sematext_monitor_mobilelogs resource as retired.
-func resourceMonitorDeleteMobilelogs(d *schema.ResourceData, meta interface{}) error {
+func resourceMonitorDeleteMobilelogs(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	apptype := "mobile-logs"
-	return CommonMonitorDelete(d, meta, apptype)
-}
-
-// resourceMonitorExistsMobilelogs checks a sematext_monitor_mobilelogs resource exists in Sematext Cloud.
-func resourceMonitorExistsMobilelogs(d *schema.ResourceData, meta interface{}) (b bool, e error) {
-	apptype := "mobile-logs"
-	return CommonMonitorExists(d, meta, apptype)
+	return CommonMonitorDelete(ctx, d, meta, apptype)
 }
 
 /*

@@ -7,6 +7,9 @@ package sematext
 */
 
 import (
+	"context"
+
+	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
@@ -16,45 +19,38 @@ func resourceSematextMonitorHbase() *schema.Resource {
 	fieldSchema := MonitorSchemaCommon("HBase")
 
 	return &schema.Resource{
-		Create: resourceMonitorCreateHbase,
-		Read:   resourceMonitorReadHbase,
-		Update: resourceMonitorUpdateHbase,
-		Delete: resourceMonitorDeleteHbase,
-		Exists: resourceMonitorExistsHbase,
-		Schema: fieldSchema,
+		CreateContext: resourceMonitorCreateHbase,
+		ReadContext:   resourceMonitorReadHbase,
+		UpdateContext: resourceMonitorUpdateHbase,
+		DeleteContext: resourceMonitorDeleteHbase,
+		Schema:        fieldSchema,
 	}
 }
 
 // resourceMonitorCreateHbase creates the sematext_monitor_hbase resource.
-func resourceMonitorCreateHbase(d *schema.ResourceData, meta interface{}) error {
+func resourceMonitorCreateHbase(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	apptype := "HBase"
-	err := CommonMonitorCreate(d, meta, apptype)
+	err := CommonMonitorCreate(ctx, d, meta, apptype)
 
 	return err
 }
 
 // resourceMonitorReadHbase reads the sematext_monitor_hbase resource from Sematext Cloud.
-func resourceMonitorReadHbase(d *schema.ResourceData, meta interface{}) error {
+func resourceMonitorReadHbase(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	apptype := "HBase"
-	return CommonMonitorRead(d, meta, apptype)
+	return CommonMonitorRead(ctx, d, meta, apptype)
 }
 
 // resourceMonitorUpdateHbase updates Sematext Cloud from the sematext_monitor_hbase resource.
-func resourceMonitorUpdateHbase(d *schema.ResourceData, meta interface{}) error {
+func resourceMonitorUpdateHbase(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	apptype := "HBase"
-	return CommonMonitorUpdate(d, meta, apptype)
+	return CommonMonitorUpdate(ctx, d, meta, apptype)
 }
 
 // resourceMonitorDeleteHbase marks a sematext_monitor_hbase resource as retired.
-func resourceMonitorDeleteHbase(d *schema.ResourceData, meta interface{}) error {
+func resourceMonitorDeleteHbase(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	apptype := "HBase"
-	return CommonMonitorDelete(d, meta, apptype)
-}
-
-// resourceMonitorExistsHbase checks a sematext_monitor_hbase resource exists in Sematext Cloud.
-func resourceMonitorExistsHbase(d *schema.ResourceData, meta interface{}) (b bool, e error) {
-	apptype := "HBase"
-	return CommonMonitorExists(d, meta, apptype)
+	return CommonMonitorDelete(ctx, d, meta, apptype)
 }
 
 /*

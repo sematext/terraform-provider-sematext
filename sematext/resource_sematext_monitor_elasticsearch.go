@@ -7,6 +7,9 @@ package sematext
 */
 
 import (
+	"context"
+
+	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
@@ -16,45 +19,38 @@ func resourceSematextMonitorElasticsearch() *schema.Resource {
 	fieldSchema := MonitorSchemaCommon("Elastic Search")
 
 	return &schema.Resource{
-		Create: resourceMonitorCreateElasticsearch,
-		Read:   resourceMonitorReadElasticsearch,
-		Update: resourceMonitorUpdateElasticsearch,
-		Delete: resourceMonitorDeleteElasticsearch,
-		Exists: resourceMonitorExistsElasticsearch,
-		Schema: fieldSchema,
+		CreateContext: resourceMonitorCreateElasticsearch,
+		ReadContext:   resourceMonitorReadElasticsearch,
+		UpdateContext: resourceMonitorUpdateElasticsearch,
+		DeleteContext: resourceMonitorDeleteElasticsearch,
+		Schema:        fieldSchema,
 	}
 }
 
 // resourceMonitorCreateElasticsearch creates the sematext_monitor_elasticsearch resource.
-func resourceMonitorCreateElasticsearch(d *schema.ResourceData, meta interface{}) error {
+func resourceMonitorCreateElasticsearch(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	apptype := "Elastic Search"
-	err := CommonMonitorCreate(d, meta, apptype)
+	err := CommonMonitorCreate(ctx, d, meta, apptype)
 
 	return err
 }
 
 // resourceMonitorReadElasticsearch reads the sematext_monitor_elasticsearch resource from Sematext Cloud.
-func resourceMonitorReadElasticsearch(d *schema.ResourceData, meta interface{}) error {
+func resourceMonitorReadElasticsearch(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	apptype := "Elastic Search"
-	return CommonMonitorRead(d, meta, apptype)
+	return CommonMonitorRead(ctx, d, meta, apptype)
 }
 
 // resourceMonitorUpdateElasticsearch updates Sematext Cloud from the sematext_monitor_elasticsearch resource.
-func resourceMonitorUpdateElasticsearch(d *schema.ResourceData, meta interface{}) error {
+func resourceMonitorUpdateElasticsearch(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	apptype := "Elastic Search"
-	return CommonMonitorUpdate(d, meta, apptype)
+	return CommonMonitorUpdate(ctx, d, meta, apptype)
 }
 
 // resourceMonitorDeleteElasticsearch marks a sematext_monitor_elasticsearch resource as retired.
-func resourceMonitorDeleteElasticsearch(d *schema.ResourceData, meta interface{}) error {
+func resourceMonitorDeleteElasticsearch(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	apptype := "Elastic Search"
-	return CommonMonitorDelete(d, meta, apptype)
-}
-
-// resourceMonitorExistsElasticsearch checks a sematext_monitor_elasticsearch resource exists in Sematext Cloud.
-func resourceMonitorExistsElasticsearch(d *schema.ResourceData, meta interface{}) (b bool, e error) {
-	apptype := "Elastic Search"
-	return CommonMonitorExists(d, meta, apptype)
+	return CommonMonitorDelete(ctx, d, meta, apptype)
 }
 
 /*

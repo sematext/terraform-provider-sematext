@@ -7,6 +7,9 @@ package sematext
 */
 
 import (
+	"context"
+
+	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
@@ -16,45 +19,38 @@ func resourceSematextMonitorAwselb() *schema.Resource {
 	fieldSchema := MonitorSchemaCommon("AWS ELB")
 
 	return &schema.Resource{
-		Create: resourceMonitorCreateAwselb,
-		Read:   resourceMonitorReadAwselb,
-		Update: resourceMonitorUpdateAwselb,
-		Delete: resourceMonitorDeleteAwselb,
-		Exists: resourceMonitorExistsAwselb,
-		Schema: fieldSchema,
+		CreateContext: resourceMonitorCreateAwselb,
+		ReadContext:   resourceMonitorReadAwselb,
+		UpdateContext: resourceMonitorUpdateAwselb,
+		DeleteContext: resourceMonitorDeleteAwselb,
+		Schema:        fieldSchema,
 	}
 }
 
 // resourceMonitorCreateAwselb creates the sematext_monitor_awselb resource.
-func resourceMonitorCreateAwselb(d *schema.ResourceData, meta interface{}) error {
+func resourceMonitorCreateAwselb(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	apptype := "AWS ELB"
-	err := CommonMonitorCreate(d, meta, apptype)
+	err := CommonMonitorCreate(ctx, d, meta, apptype)
 
 	return err
 }
 
 // resourceMonitorReadAwselb reads the sematext_monitor_awselb resource from Sematext Cloud.
-func resourceMonitorReadAwselb(d *schema.ResourceData, meta interface{}) error {
+func resourceMonitorReadAwselb(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	apptype := "AWS ELB"
-	return CommonMonitorRead(d, meta, apptype)
+	return CommonMonitorRead(ctx, d, meta, apptype)
 }
 
 // resourceMonitorUpdateAwselb updates Sematext Cloud from the sematext_monitor_awselb resource.
-func resourceMonitorUpdateAwselb(d *schema.ResourceData, meta interface{}) error {
+func resourceMonitorUpdateAwselb(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	apptype := "AWS ELB"
-	return CommonMonitorUpdate(d, meta, apptype)
+	return CommonMonitorUpdate(ctx, d, meta, apptype)
 }
 
 // resourceMonitorDeleteAwselb marks a sematext_monitor_awselb resource as retired.
-func resourceMonitorDeleteAwselb(d *schema.ResourceData, meta interface{}) error {
+func resourceMonitorDeleteAwselb(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	apptype := "AWS ELB"
-	return CommonMonitorDelete(d, meta, apptype)
-}
-
-// resourceMonitorExistsAwselb checks a sematext_monitor_awselb resource exists in Sematext Cloud.
-func resourceMonitorExistsAwselb(d *schema.ResourceData, meta interface{}) (b bool, e error) {
-	apptype := "AWS ELB"
-	return CommonMonitorExists(d, meta, apptype)
+	return CommonMonitorDelete(ctx, d, meta, apptype)
 }
 
 /*

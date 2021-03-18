@@ -7,6 +7,9 @@ package sematext
 */
 
 import (
+	"context"
+
+	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
@@ -16,45 +19,38 @@ func resourceSematextMonitorHadoopyarn() *schema.Resource {
 	fieldSchema := MonitorSchemaCommon("Hadoop-YARN")
 
 	return &schema.Resource{
-		Create: resourceMonitorCreateHadoopyarn,
-		Read:   resourceMonitorReadHadoopyarn,
-		Update: resourceMonitorUpdateHadoopyarn,
-		Delete: resourceMonitorDeleteHadoopyarn,
-		Exists: resourceMonitorExistsHadoopyarn,
-		Schema: fieldSchema,
+		CreateContext: resourceMonitorCreateHadoopyarn,
+		ReadContext:   resourceMonitorReadHadoopyarn,
+		UpdateContext: resourceMonitorUpdateHadoopyarn,
+		DeleteContext: resourceMonitorDeleteHadoopyarn,
+		Schema:        fieldSchema,
 	}
 }
 
 // resourceMonitorCreateHadoopyarn creates the sematext_monitor_hadoopyarn resource.
-func resourceMonitorCreateHadoopyarn(d *schema.ResourceData, meta interface{}) error {
+func resourceMonitorCreateHadoopyarn(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	apptype := "Hadoop-YARN"
-	err := CommonMonitorCreate(d, meta, apptype)
+	err := CommonMonitorCreate(ctx, d, meta, apptype)
 
 	return err
 }
 
 // resourceMonitorReadHadoopyarn reads the sematext_monitor_hadoopyarn resource from Sematext Cloud.
-func resourceMonitorReadHadoopyarn(d *schema.ResourceData, meta interface{}) error {
+func resourceMonitorReadHadoopyarn(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	apptype := "Hadoop-YARN"
-	return CommonMonitorRead(d, meta, apptype)
+	return CommonMonitorRead(ctx, d, meta, apptype)
 }
 
 // resourceMonitorUpdateHadoopyarn updates Sematext Cloud from the sematext_monitor_hadoopyarn resource.
-func resourceMonitorUpdateHadoopyarn(d *schema.ResourceData, meta interface{}) error {
+func resourceMonitorUpdateHadoopyarn(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	apptype := "Hadoop-YARN"
-	return CommonMonitorUpdate(d, meta, apptype)
+	return CommonMonitorUpdate(ctx, d, meta, apptype)
 }
 
 // resourceMonitorDeleteHadoopyarn marks a sematext_monitor_hadoopyarn resource as retired.
-func resourceMonitorDeleteHadoopyarn(d *schema.ResourceData, meta interface{}) error {
+func resourceMonitorDeleteHadoopyarn(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	apptype := "Hadoop-YARN"
-	return CommonMonitorDelete(d, meta, apptype)
-}
-
-// resourceMonitorExistsHadoopyarn checks a sematext_monitor_hadoopyarn resource exists in Sematext Cloud.
-func resourceMonitorExistsHadoopyarn(d *schema.ResourceData, meta interface{}) (b bool, e error) {
-	apptype := "Hadoop-YARN"
-	return CommonMonitorExists(d, meta, apptype)
+	return CommonMonitorDelete(ctx, d, meta, apptype)
 }
 
 /*

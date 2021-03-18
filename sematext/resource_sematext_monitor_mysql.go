@@ -7,6 +7,9 @@ package sematext
 */
 
 import (
+	"context"
+
+	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
@@ -16,45 +19,38 @@ func resourceSematextMonitorMysql() *schema.Resource {
 	fieldSchema := MonitorSchemaCommon("MySQL")
 
 	return &schema.Resource{
-		Create: resourceMonitorCreateMysql,
-		Read:   resourceMonitorReadMysql,
-		Update: resourceMonitorUpdateMysql,
-		Delete: resourceMonitorDeleteMysql,
-		Exists: resourceMonitorExistsMysql,
-		Schema: fieldSchema,
+		CreateContext: resourceMonitorCreateMysql,
+		ReadContext:   resourceMonitorReadMysql,
+		UpdateContext: resourceMonitorUpdateMysql,
+		DeleteContext: resourceMonitorDeleteMysql,
+		Schema:        fieldSchema,
 	}
 }
 
 // resourceMonitorCreateMysql creates the sematext_monitor_mysql resource.
-func resourceMonitorCreateMysql(d *schema.ResourceData, meta interface{}) error {
+func resourceMonitorCreateMysql(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	apptype := "MySQL"
-	err := CommonMonitorCreate(d, meta, apptype)
+	err := CommonMonitorCreate(ctx, d, meta, apptype)
 
 	return err
 }
 
 // resourceMonitorReadMysql reads the sematext_monitor_mysql resource from Sematext Cloud.
-func resourceMonitorReadMysql(d *schema.ResourceData, meta interface{}) error {
+func resourceMonitorReadMysql(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	apptype := "MySQL"
-	return CommonMonitorRead(d, meta, apptype)
+	return CommonMonitorRead(ctx, d, meta, apptype)
 }
 
 // resourceMonitorUpdateMysql updates Sematext Cloud from the sematext_monitor_mysql resource.
-func resourceMonitorUpdateMysql(d *schema.ResourceData, meta interface{}) error {
+func resourceMonitorUpdateMysql(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	apptype := "MySQL"
-	return CommonMonitorUpdate(d, meta, apptype)
+	return CommonMonitorUpdate(ctx, d, meta, apptype)
 }
 
 // resourceMonitorDeleteMysql marks a sematext_monitor_mysql resource as retired.
-func resourceMonitorDeleteMysql(d *schema.ResourceData, meta interface{}) error {
+func resourceMonitorDeleteMysql(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	apptype := "MySQL"
-	return CommonMonitorDelete(d, meta, apptype)
-}
-
-// resourceMonitorExistsMysql checks a sematext_monitor_mysql resource exists in Sematext Cloud.
-func resourceMonitorExistsMysql(d *schema.ResourceData, meta interface{}) (b bool, e error) {
-	apptype := "MySQL"
-	return CommonMonitorExists(d, meta, apptype)
+	return CommonMonitorDelete(ctx, d, meta, apptype)
 }
 
 /*

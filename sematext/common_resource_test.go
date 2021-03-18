@@ -347,7 +347,7 @@ func ConfirmMonitorCreationDefault(rtf ResourceTestFixtureDefault) resource.Test
 		var err error
 		var app *stcloud.App
 		var rs *terraform.ResourceState
-		var genericAPIResponse stcloud.GenericAPIResponse
+		var appResponse stcloud.AppResponse
 
 		client := testAccProvider.Meta().(*stcloud.APIClient)
 
@@ -366,11 +366,11 @@ func ConfirmMonitorCreationDefault(rtf ResourceTestFixtureDefault) resource.Test
 			return err
 		}
 
-		if genericAPIResponse, _, err = client.AppsAPI.GetUsingGET(context.Background(), id); err != nil {
+		if appResponse, _, err = client.AppsAPI.GetUsingGET(context.Background(), id); err != nil {
 			return fmt.Errorf("ConfirmMonitorCreation : Error in checking monitor %s, %s", rtf.StatePath, err)
 		}
 
-		if app, err = genericAPIResponse.ExtractApp(); err != nil {
+		if app, err = extractApp(&appResponse); err != nil {
 			return err
 		}
 
@@ -395,7 +395,7 @@ func ConfirmMonitorCreationAWS(rtf ResourceTestFixtureAWS) resource.TestCheckFun
 		var err error
 		var app *stcloud.App
 		var rs *terraform.ResourceState
-		var genericAPIResponse stcloud.GenericAPIResponse
+		var appResponse stcloud.AppResponse
 
 		client := testAccProvider.Meta().(*stcloud.APIClient)
 
@@ -407,11 +407,11 @@ func ConfirmMonitorCreationAWS(rtf ResourceTestFixtureAWS) resource.TestCheckFun
 			return err
 		}
 
-		if genericAPIResponse, _, err = client.AppsAPI.GetUsingGET(context.Background(), id); err != nil {
-			return fmt.Errorf("ConfirmMonitorCreation : Error in checking monitor %s, %s", rtf.StatePath, err)
+		if appResponse, _, err = client.AppsAPI.GetUsingGET(context.Background(), id); err != nil {
+			return fmt.Errorf("ConfirmMonitorCreationAWS : Error in checking monitor %s, %s", rtf.StatePath, err)
 		}
 
-		if app, err = genericAPIResponse.ExtractApp(); err != nil {
+		if app, err = extractApp(&appResponse); err != nil {
 			return err
 		}
 
@@ -435,7 +435,7 @@ func ConfirmMonitorDestructionDefault(rtf ResourceTestFixtureDefault) resource.T
 		var err error
 		var rs *terraform.ResourceState
 		var app *stcloud.App
-		var genericAPIResponse stcloud.GenericAPIResponse
+		var appResponse stcloud.AppResponse
 
 		client := testAccProvider.Meta().(*stcloud.APIClient)
 
@@ -452,11 +452,11 @@ func ConfirmMonitorDestructionDefault(rtf ResourceTestFixtureDefault) resource.T
 
 			time.Sleep(time.Second * 4) // TODO - workaround for cache latency on SC API, no longer required, confirm and obsolete after MVP.
 
-			if genericAPIResponse, _, err = client.AppsAPI.GetUsingGET(context.Background(), id); err != nil {
+			if appResponse, _, err = client.AppsAPI.GetUsingGET(context.Background(), id); err != nil {
 				return fmt.Errorf("ConfirmMonitorDestructionDefault : Failed to pull app in checking monitor %s, %s", rtf.StatePath, err)
 			}
 
-			if app, err = genericAPIResponse.ExtractApp(); err != nil {
+			if app, err = extractApp(&appResponse); err != nil {
 				return err
 			}
 
@@ -486,7 +486,7 @@ func ConfirmMonitorDestructionAWS(rtf ResourceTestFixtureAWS) resource.TestCheck
 		var err error
 		var rs *terraform.ResourceState
 		var app *stcloud.App
-		var genericAPIResponse stcloud.GenericAPIResponse
+		var appResponse stcloud.AppResponse
 
 		client := testAccProvider.Meta().(*stcloud.APIClient)
 
@@ -499,11 +499,11 @@ func ConfirmMonitorDestructionAWS(rtf ResourceTestFixtureAWS) resource.TestCheck
 				return err
 			}
 
-			if genericAPIResponse, _, err = client.AppsAPI.GetUsingGET(context.Background(), id); err != nil {
+			if appResponse, _, err = client.AppsAPI.GetUsingGET(context.Background(), id); err != nil {
 				return fmt.Errorf("ConfirmMonitorDestructionDefaultAWS : Failed to pull app in checking monitor %s, %s", rtf.StatePath, err)
 			}
 
-			if app, err = genericAPIResponse.ExtractApp(); err != nil {
+			if app, err = extractApp(&appResponse); err != nil {
 				return err
 			}
 

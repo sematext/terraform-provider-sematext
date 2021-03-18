@@ -7,6 +7,9 @@ package sematext
 */
 
 import (
+	"context"
+
+	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
@@ -16,45 +19,38 @@ func resourceSematextMonitorTomcat() *schema.Resource {
 	fieldSchema := MonitorSchemaCommon("Tomcat")
 
 	return &schema.Resource{
-		Create: resourceMonitorCreateTomcat,
-		Read:   resourceMonitorReadTomcat,
-		Update: resourceMonitorUpdateTomcat,
-		Delete: resourceMonitorDeleteTomcat,
-		Exists: resourceMonitorExistsTomcat,
-		Schema: fieldSchema,
+		CreateContext: resourceMonitorCreateTomcat,
+		ReadContext:   resourceMonitorReadTomcat,
+		UpdateContext: resourceMonitorUpdateTomcat,
+		DeleteContext: resourceMonitorDeleteTomcat,
+		Schema:        fieldSchema,
 	}
 }
 
 // resourceMonitorCreateTomcat creates the sematext_monitor_tomcat resource.
-func resourceMonitorCreateTomcat(d *schema.ResourceData, meta interface{}) error {
+func resourceMonitorCreateTomcat(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	apptype := "Tomcat"
-	err := CommonMonitorCreate(d, meta, apptype)
+	err := CommonMonitorCreate(ctx, d, meta, apptype)
 
 	return err
 }
 
 // resourceMonitorReadTomcat reads the sematext_monitor_tomcat resource from Sematext Cloud.
-func resourceMonitorReadTomcat(d *schema.ResourceData, meta interface{}) error {
+func resourceMonitorReadTomcat(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	apptype := "Tomcat"
-	return CommonMonitorRead(d, meta, apptype)
+	return CommonMonitorRead(ctx, d, meta, apptype)
 }
 
 // resourceMonitorUpdateTomcat updates Sematext Cloud from the sematext_monitor_tomcat resource.
-func resourceMonitorUpdateTomcat(d *schema.ResourceData, meta interface{}) error {
+func resourceMonitorUpdateTomcat(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	apptype := "Tomcat"
-	return CommonMonitorUpdate(d, meta, apptype)
+	return CommonMonitorUpdate(ctx, d, meta, apptype)
 }
 
 // resourceMonitorDeleteTomcat marks a sematext_monitor_tomcat resource as retired.
-func resourceMonitorDeleteTomcat(d *schema.ResourceData, meta interface{}) error {
+func resourceMonitorDeleteTomcat(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	apptype := "Tomcat"
-	return CommonMonitorDelete(d, meta, apptype)
-}
-
-// resourceMonitorExistsTomcat checks a sematext_monitor_tomcat resource exists in Sematext Cloud.
-func resourceMonitorExistsTomcat(d *schema.ResourceData, meta interface{}) (b bool, e error) {
-	apptype := "Tomcat"
-	return CommonMonitorExists(d, meta, apptype)
+	return CommonMonitorDelete(ctx, d, meta, apptype)
 }
 
 /*
