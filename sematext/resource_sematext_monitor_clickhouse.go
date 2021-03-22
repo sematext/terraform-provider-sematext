@@ -7,6 +7,9 @@ package sematext
 */
 
 import (
+	"context"
+
+	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
@@ -16,45 +19,38 @@ func resourceSematextMonitorClickhouse() *schema.Resource {
 	fieldSchema := MonitorSchemaCommon("ClickHouse")
 
 	return &schema.Resource{
-		Create: resourceMonitorCreateClickhouse,
-		Read:   resourceMonitorReadClickhouse,
-		Update: resourceMonitorUpdateClickhouse,
-		Delete: resourceMonitorDeleteClickhouse,
-		Exists: resourceMonitorExistsClickhouse,
-		Schema: fieldSchema,
+		CreateContext: resourceMonitorCreateClickhouse,
+		ReadContext:   resourceMonitorReadClickhouse,
+		UpdateContext: resourceMonitorUpdateClickhouse,
+		DeleteContext: resourceMonitorDeleteClickhouse,
+		Schema:        fieldSchema,
 	}
 }
 
 // resourceMonitorCreateClickhouse creates the sematext_monitor_clickhouse resource.
-func resourceMonitorCreateClickhouse(d *schema.ResourceData, meta interface{}) error {
+func resourceMonitorCreateClickhouse(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	apptype := "ClickHouse"
-	err := CommonMonitorCreate(d, meta, apptype)
+	err := CommonMonitorCreate(ctx, d, meta, apptype)
 
 	return err
 }
 
 // resourceMonitorReadClickhouse reads the sematext_monitor_clickhouse resource from Sematext Cloud.
-func resourceMonitorReadClickhouse(d *schema.ResourceData, meta interface{}) error {
+func resourceMonitorReadClickhouse(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	apptype := "ClickHouse"
-	return CommonMonitorRead(d, meta, apptype)
+	return CommonMonitorRead(ctx, d, meta, apptype)
 }
 
 // resourceMonitorUpdateClickhouse updates Sematext Cloud from the sematext_monitor_clickhouse resource.
-func resourceMonitorUpdateClickhouse(d *schema.ResourceData, meta interface{}) error {
+func resourceMonitorUpdateClickhouse(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	apptype := "ClickHouse"
-	return CommonMonitorUpdate(d, meta, apptype)
+	return CommonMonitorUpdate(ctx, d, meta, apptype)
 }
 
 // resourceMonitorDeleteClickhouse marks a sematext_monitor_clickhouse resource as retired.
-func resourceMonitorDeleteClickhouse(d *schema.ResourceData, meta interface{}) error {
+func resourceMonitorDeleteClickhouse(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	apptype := "ClickHouse"
-	return CommonMonitorDelete(d, meta, apptype)
-}
-
-// resourceMonitorExistsClickhouse checks a sematext_monitor_clickhouse resource exists in Sematext Cloud.
-func resourceMonitorExistsClickhouse(d *schema.ResourceData, meta interface{}) (b bool, e error) {
-	apptype := "ClickHouse"
-	return CommonMonitorExists(d, meta, apptype)
+	return CommonMonitorDelete(ctx, d, meta, apptype)
 }
 
 /*

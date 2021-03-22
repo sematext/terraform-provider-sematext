@@ -7,6 +7,9 @@ package sematext
 */
 
 import (
+	"context"
+
+	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
@@ -16,45 +19,38 @@ func resourceSematextMonitorApache() *schema.Resource {
 	fieldSchema := MonitorSchemaCommon("Apache")
 
 	return &schema.Resource{
-		Create: resourceMonitorCreateApache,
-		Read:   resourceMonitorReadApache,
-		Update: resourceMonitorUpdateApache,
-		Delete: resourceMonitorDeleteApache,
-		Exists: resourceMonitorExistsApache,
-		Schema: fieldSchema,
+		CreateContext: resourceMonitorCreateApache,
+		ReadContext:   resourceMonitorReadApache,
+		UpdateContext: resourceMonitorUpdateApache,
+		DeleteContext: resourceMonitorDeleteApache,
+		Schema:        fieldSchema,
 	}
 }
 
 // resourceMonitorCreateApache creates the sematext_monitor_apache resource.
-func resourceMonitorCreateApache(d *schema.ResourceData, meta interface{}) error {
+func resourceMonitorCreateApache(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	apptype := "Apache"
-	err := CommonMonitorCreate(d, meta, apptype)
+	err := CommonMonitorCreate(ctx, d, meta, apptype)
 
 	return err
 }
 
 // resourceMonitorReadApache reads the sematext_monitor_apache resource from Sematext Cloud.
-func resourceMonitorReadApache(d *schema.ResourceData, meta interface{}) error {
+func resourceMonitorReadApache(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	apptype := "Apache"
-	return CommonMonitorRead(d, meta, apptype)
+	return CommonMonitorRead(ctx, d, meta, apptype)
 }
 
 // resourceMonitorUpdateApache updates Sematext Cloud from the sematext_monitor_apache resource.
-func resourceMonitorUpdateApache(d *schema.ResourceData, meta interface{}) error {
+func resourceMonitorUpdateApache(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	apptype := "Apache"
-	return CommonMonitorUpdate(d, meta, apptype)
+	return CommonMonitorUpdate(ctx, d, meta, apptype)
 }
 
 // resourceMonitorDeleteApache marks a sematext_monitor_apache resource as retired.
-func resourceMonitorDeleteApache(d *schema.ResourceData, meta interface{}) error {
+func resourceMonitorDeleteApache(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	apptype := "Apache"
-	return CommonMonitorDelete(d, meta, apptype)
-}
-
-// resourceMonitorExistsApache checks a sematext_monitor_apache resource exists in Sematext Cloud.
-func resourceMonitorExistsApache(d *schema.ResourceData, meta interface{}) (b bool, e error) {
-	apptype := "Apache"
-	return CommonMonitorExists(d, meta, apptype)
+	return CommonMonitorDelete(ctx, d, meta, apptype)
 }
 
 /*

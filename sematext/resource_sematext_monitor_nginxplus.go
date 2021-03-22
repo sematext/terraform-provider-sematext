@@ -7,6 +7,9 @@ package sematext
 */
 
 import (
+	"context"
+
+	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
@@ -16,45 +19,38 @@ func resourceSematextMonitorNginxplus() *schema.Resource {
 	fieldSchema := MonitorSchemaCommon("Nginx-Plus")
 
 	return &schema.Resource{
-		Create: resourceMonitorCreateNginxplus,
-		Read:   resourceMonitorReadNginxplus,
-		Update: resourceMonitorUpdateNginxplus,
-		Delete: resourceMonitorDeleteNginxplus,
-		Exists: resourceMonitorExistsNginxplus,
-		Schema: fieldSchema,
+		CreateContext: resourceMonitorCreateNginxplus,
+		ReadContext:   resourceMonitorReadNginxplus,
+		UpdateContext: resourceMonitorUpdateNginxplus,
+		DeleteContext: resourceMonitorDeleteNginxplus,
+		Schema:        fieldSchema,
 	}
 }
 
 // resourceMonitorCreateNginxplus creates the sematext_monitor_nginxplus resource.
-func resourceMonitorCreateNginxplus(d *schema.ResourceData, meta interface{}) error {
+func resourceMonitorCreateNginxplus(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	apptype := "Nginx-Plus"
-	err := CommonMonitorCreate(d, meta, apptype)
+	err := CommonMonitorCreate(ctx, d, meta, apptype)
 
 	return err
 }
 
 // resourceMonitorReadNginxplus reads the sematext_monitor_nginxplus resource from Sematext Cloud.
-func resourceMonitorReadNginxplus(d *schema.ResourceData, meta interface{}) error {
+func resourceMonitorReadNginxplus(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	apptype := "Nginx-Plus"
-	return CommonMonitorRead(d, meta, apptype)
+	return CommonMonitorRead(ctx, d, meta, apptype)
 }
 
 // resourceMonitorUpdateNginxplus updates Sematext Cloud from the sematext_monitor_nginxplus resource.
-func resourceMonitorUpdateNginxplus(d *schema.ResourceData, meta interface{}) error {
+func resourceMonitorUpdateNginxplus(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	apptype := "Nginx-Plus"
-	return CommonMonitorUpdate(d, meta, apptype)
+	return CommonMonitorUpdate(ctx, d, meta, apptype)
 }
 
 // resourceMonitorDeleteNginxplus marks a sematext_monitor_nginxplus resource as retired.
-func resourceMonitorDeleteNginxplus(d *schema.ResourceData, meta interface{}) error {
+func resourceMonitorDeleteNginxplus(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	apptype := "Nginx-Plus"
-	return CommonMonitorDelete(d, meta, apptype)
-}
-
-// resourceMonitorExistsNginxplus checks a sematext_monitor_nginxplus resource exists in Sematext Cloud.
-func resourceMonitorExistsNginxplus(d *schema.ResourceData, meta interface{}) (b bool, e error) {
-	apptype := "Nginx-Plus"
-	return CommonMonitorExists(d, meta, apptype)
+	return CommonMonitorDelete(ctx, d, meta, apptype)
 }
 
 /*

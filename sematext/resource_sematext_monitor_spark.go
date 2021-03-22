@@ -7,6 +7,9 @@ package sematext
 */
 
 import (
+	"context"
+
+	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
@@ -16,45 +19,38 @@ func resourceSematextMonitorSpark() *schema.Resource {
 	fieldSchema := MonitorSchemaCommon("Spark")
 
 	return &schema.Resource{
-		Create: resourceMonitorCreateSpark,
-		Read:   resourceMonitorReadSpark,
-		Update: resourceMonitorUpdateSpark,
-		Delete: resourceMonitorDeleteSpark,
-		Exists: resourceMonitorExistsSpark,
-		Schema: fieldSchema,
+		CreateContext: resourceMonitorCreateSpark,
+		ReadContext:   resourceMonitorReadSpark,
+		UpdateContext: resourceMonitorUpdateSpark,
+		DeleteContext: resourceMonitorDeleteSpark,
+		Schema:        fieldSchema,
 	}
 }
 
 // resourceMonitorCreateSpark creates the sematext_monitor_spark resource.
-func resourceMonitorCreateSpark(d *schema.ResourceData, meta interface{}) error {
+func resourceMonitorCreateSpark(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	apptype := "Spark"
-	err := CommonMonitorCreate(d, meta, apptype)
+	err := CommonMonitorCreate(ctx, d, meta, apptype)
 
 	return err
 }
 
 // resourceMonitorReadSpark reads the sematext_monitor_spark resource from Sematext Cloud.
-func resourceMonitorReadSpark(d *schema.ResourceData, meta interface{}) error {
+func resourceMonitorReadSpark(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	apptype := "Spark"
-	return CommonMonitorRead(d, meta, apptype)
+	return CommonMonitorRead(ctx, d, meta, apptype)
 }
 
 // resourceMonitorUpdateSpark updates Sematext Cloud from the sematext_monitor_spark resource.
-func resourceMonitorUpdateSpark(d *schema.ResourceData, meta interface{}) error {
+func resourceMonitorUpdateSpark(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	apptype := "Spark"
-	return CommonMonitorUpdate(d, meta, apptype)
+	return CommonMonitorUpdate(ctx, d, meta, apptype)
 }
 
 // resourceMonitorDeleteSpark marks a sematext_monitor_spark resource as retired.
-func resourceMonitorDeleteSpark(d *schema.ResourceData, meta interface{}) error {
+func resourceMonitorDeleteSpark(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	apptype := "Spark"
-	return CommonMonitorDelete(d, meta, apptype)
-}
-
-// resourceMonitorExistsSpark checks a sematext_monitor_spark resource exists in Sematext Cloud.
-func resourceMonitorExistsSpark(d *schema.ResourceData, meta interface{}) (b bool, e error) {
-	apptype := "Spark"
-	return CommonMonitorExists(d, meta, apptype)
+	return CommonMonitorDelete(ctx, d, meta, apptype)
 }
 
 /*

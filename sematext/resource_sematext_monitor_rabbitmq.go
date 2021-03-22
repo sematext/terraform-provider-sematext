@@ -7,6 +7,9 @@ package sematext
 */
 
 import (
+	"context"
+
+	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
@@ -16,45 +19,38 @@ func resourceSematextMonitorRabbitmq() *schema.Resource {
 	fieldSchema := MonitorSchemaCommon("rabbitmq")
 
 	return &schema.Resource{
-		Create: resourceMonitorCreateRabbitmq,
-		Read:   resourceMonitorReadRabbitmq,
-		Update: resourceMonitorUpdateRabbitmq,
-		Delete: resourceMonitorDeleteRabbitmq,
-		Exists: resourceMonitorExistsRabbitmq,
-		Schema: fieldSchema,
+		CreateContext: resourceMonitorCreateRabbitmq,
+		ReadContext:   resourceMonitorReadRabbitmq,
+		UpdateContext: resourceMonitorUpdateRabbitmq,
+		DeleteContext: resourceMonitorDeleteRabbitmq,
+		Schema:        fieldSchema,
 	}
 }
 
 // resourceMonitorCreateRabbitmq creates the sematext_monitor_rabbitmq resource.
-func resourceMonitorCreateRabbitmq(d *schema.ResourceData, meta interface{}) error {
+func resourceMonitorCreateRabbitmq(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	apptype := "rabbitmq"
-	err := CommonMonitorCreate(d, meta, apptype)
+	err := CommonMonitorCreate(ctx, d, meta, apptype)
 
 	return err
 }
 
 // resourceMonitorReadRabbitmq reads the sematext_monitor_rabbitmq resource from Sematext Cloud.
-func resourceMonitorReadRabbitmq(d *schema.ResourceData, meta interface{}) error {
+func resourceMonitorReadRabbitmq(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	apptype := "rabbitmq"
-	return CommonMonitorRead(d, meta, apptype)
+	return CommonMonitorRead(ctx, d, meta, apptype)
 }
 
 // resourceMonitorUpdateRabbitmq updates Sematext Cloud from the sematext_monitor_rabbitmq resource.
-func resourceMonitorUpdateRabbitmq(d *schema.ResourceData, meta interface{}) error {
+func resourceMonitorUpdateRabbitmq(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	apptype := "rabbitmq"
-	return CommonMonitorUpdate(d, meta, apptype)
+	return CommonMonitorUpdate(ctx, d, meta, apptype)
 }
 
 // resourceMonitorDeleteRabbitmq marks a sematext_monitor_rabbitmq resource as retired.
-func resourceMonitorDeleteRabbitmq(d *schema.ResourceData, meta interface{}) error {
+func resourceMonitorDeleteRabbitmq(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	apptype := "rabbitmq"
-	return CommonMonitorDelete(d, meta, apptype)
-}
-
-// resourceMonitorExistsRabbitmq checks a sematext_monitor_rabbitmq resource exists in Sematext Cloud.
-func resourceMonitorExistsRabbitmq(d *schema.ResourceData, meta interface{}) (b bool, e error) {
-	apptype := "rabbitmq"
-	return CommonMonitorExists(d, meta, apptype)
+	return CommonMonitorDelete(ctx, d, meta, apptype)
 }
 
 /*

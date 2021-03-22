@@ -7,6 +7,9 @@ package sematext
 */
 
 import (
+	"context"
+
+	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
@@ -16,45 +19,38 @@ func resourceSematextMonitorPostgresql() *schema.Resource {
 	fieldSchema := MonitorSchemaCommon("postgresql")
 
 	return &schema.Resource{
-		Create: resourceMonitorCreatePostgresql,
-		Read:   resourceMonitorReadPostgresql,
-		Update: resourceMonitorUpdatePostgresql,
-		Delete: resourceMonitorDeletePostgresql,
-		Exists: resourceMonitorExistsPostgresql,
-		Schema: fieldSchema,
+		CreateContext: resourceMonitorCreatePostgresql,
+		ReadContext:   resourceMonitorReadPostgresql,
+		UpdateContext: resourceMonitorUpdatePostgresql,
+		DeleteContext: resourceMonitorDeletePostgresql,
+		Schema:        fieldSchema,
 	}
 }
 
 // resourceMonitorCreatePostgresql creates the sematext_monitor_postgresql resource.
-func resourceMonitorCreatePostgresql(d *schema.ResourceData, meta interface{}) error {
+func resourceMonitorCreatePostgresql(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	apptype := "postgresql"
-	err := CommonMonitorCreate(d, meta, apptype)
+	err := CommonMonitorCreate(ctx, d, meta, apptype)
 
 	return err
 }
 
 // resourceMonitorReadPostgresql reads the sematext_monitor_postgresql resource from Sematext Cloud.
-func resourceMonitorReadPostgresql(d *schema.ResourceData, meta interface{}) error {
+func resourceMonitorReadPostgresql(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	apptype := "postgresql"
-	return CommonMonitorRead(d, meta, apptype)
+	return CommonMonitorRead(ctx, d, meta, apptype)
 }
 
 // resourceMonitorUpdatePostgresql updates Sematext Cloud from the sematext_monitor_postgresql resource.
-func resourceMonitorUpdatePostgresql(d *schema.ResourceData, meta interface{}) error {
+func resourceMonitorUpdatePostgresql(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	apptype := "postgresql"
-	return CommonMonitorUpdate(d, meta, apptype)
+	return CommonMonitorUpdate(ctx, d, meta, apptype)
 }
 
 // resourceMonitorDeletePostgresql marks a sematext_monitor_postgresql resource as retired.
-func resourceMonitorDeletePostgresql(d *schema.ResourceData, meta interface{}) error {
+func resourceMonitorDeletePostgresql(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	apptype := "postgresql"
-	return CommonMonitorDelete(d, meta, apptype)
-}
-
-// resourceMonitorExistsPostgresql checks a sematext_monitor_postgresql resource exists in Sematext Cloud.
-func resourceMonitorExistsPostgresql(d *schema.ResourceData, meta interface{}) (b bool, e error) {
-	apptype := "postgresql"
-	return CommonMonitorExists(d, meta, apptype)
+	return CommonMonitorDelete(ctx, d, meta, apptype)
 }
 
 /*

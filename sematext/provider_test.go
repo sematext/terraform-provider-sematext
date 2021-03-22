@@ -1,6 +1,7 @@
 package sematext
 
 import (
+	"context"
 	"os"
 	"testing"
 
@@ -37,7 +38,7 @@ func TestProviderConfigure(t *testing.T) {
 	config := map[string]interface{}{
 		"sematext_region": "US",
 	}
-	err := p.Configure(nil, terraform.NewResourceConfigRaw(config))
+	err := p.Configure(context.Background(), terraform.NewResourceConfigRaw(config))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -68,5 +69,4 @@ func testAccPreCheck(t *testing.T) {
 		t.Fatal("ERROR : AWS_REGION must be set for acceptance tests")
 	}
 
-	return
 }

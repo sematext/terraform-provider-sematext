@@ -7,6 +7,9 @@ package sematext
 */
 
 import (
+	"context"
+
+	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
@@ -16,45 +19,38 @@ func resourceSematextMonitorLogsene() *schema.Resource {
 	fieldSchema := MonitorSchemaCommon("Logsene")
 
 	return &schema.Resource{
-		Create: resourceMonitorCreateLogsene,
-		Read:   resourceMonitorReadLogsene,
-		Update: resourceMonitorUpdateLogsene,
-		Delete: resourceMonitorDeleteLogsene,
-		Exists: resourceMonitorExistsLogsene,
-		Schema: fieldSchema,
+		CreateContext: resourceMonitorCreateLogsene,
+		ReadContext:   resourceMonitorReadLogsene,
+		UpdateContext: resourceMonitorUpdateLogsene,
+		DeleteContext: resourceMonitorDeleteLogsene,
+		Schema:        fieldSchema,
 	}
 }
 
 // resourceMonitorCreateLogsene creates the sematext_monitor_logsene resource.
-func resourceMonitorCreateLogsene(d *schema.ResourceData, meta interface{}) error {
+func resourceMonitorCreateLogsene(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	apptype := "Logsene"
-	err := CommonMonitorCreate(d, meta, apptype)
+	err := CommonMonitorCreate(ctx, d, meta, apptype)
 
 	return err
 }
 
 // resourceMonitorReadLogsene reads the sematext_monitor_logsene resource from Sematext Cloud.
-func resourceMonitorReadLogsene(d *schema.ResourceData, meta interface{}) error {
+func resourceMonitorReadLogsene(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	apptype := "Logsene"
-	return CommonMonitorRead(d, meta, apptype)
+	return CommonMonitorRead(ctx, d, meta, apptype)
 }
 
 // resourceMonitorUpdateLogsene updates Sematext Cloud from the sematext_monitor_logsene resource.
-func resourceMonitorUpdateLogsene(d *schema.ResourceData, meta interface{}) error {
+func resourceMonitorUpdateLogsene(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	apptype := "Logsene"
-	return CommonMonitorUpdate(d, meta, apptype)
+	return CommonMonitorUpdate(ctx, d, meta, apptype)
 }
 
 // resourceMonitorDeleteLogsene marks a sematext_monitor_logsene resource as retired.
-func resourceMonitorDeleteLogsene(d *schema.ResourceData, meta interface{}) error {
+func resourceMonitorDeleteLogsene(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	apptype := "Logsene"
-	return CommonMonitorDelete(d, meta, apptype)
-}
-
-// resourceMonitorExistsLogsene checks a sematext_monitor_logsene resource exists in Sematext Cloud.
-func resourceMonitorExistsLogsene(d *schema.ResourceData, meta interface{}) (b bool, e error) {
-	apptype := "Logsene"
-	return CommonMonitorExists(d, meta, apptype)
+	return CommonMonitorDelete(ctx, d, meta, apptype)
 }
 
 /*

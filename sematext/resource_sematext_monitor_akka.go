@@ -7,6 +7,9 @@ package sematext
 */
 
 import (
+	"context"
+
+	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
@@ -16,45 +19,38 @@ func resourceSematextMonitorAkka() *schema.Resource {
 	fieldSchema := MonitorSchemaCommon("Akka")
 
 	return &schema.Resource{
-		Create: resourceMonitorCreateAkka,
-		Read:   resourceMonitorReadAkka,
-		Update: resourceMonitorUpdateAkka,
-		Delete: resourceMonitorDeleteAkka,
-		Exists: resourceMonitorExistsAkka,
-		Schema: fieldSchema,
+		CreateContext: resourceMonitorCreateAkka,
+		ReadContext:   resourceMonitorReadAkka,
+		UpdateContext: resourceMonitorUpdateAkka,
+		DeleteContext: resourceMonitorDeleteAkka,
+		Schema:        fieldSchema,
 	}
 }
 
 // resourceMonitorCreateAkka creates the sematext_monitor_akka resource.
-func resourceMonitorCreateAkka(d *schema.ResourceData, meta interface{}) error {
+func resourceMonitorCreateAkka(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	apptype := "Akka"
-	err := CommonMonitorCreate(d, meta, apptype)
+	err := CommonMonitorCreate(ctx, d, meta, apptype)
 
 	return err
 }
 
 // resourceMonitorReadAkka reads the sematext_monitor_akka resource from Sematext Cloud.
-func resourceMonitorReadAkka(d *schema.ResourceData, meta interface{}) error {
+func resourceMonitorReadAkka(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	apptype := "Akka"
-	return CommonMonitorRead(d, meta, apptype)
+	return CommonMonitorRead(ctx, d, meta, apptype)
 }
 
 // resourceMonitorUpdateAkka updates Sematext Cloud from the sematext_monitor_akka resource.
-func resourceMonitorUpdateAkka(d *schema.ResourceData, meta interface{}) error {
+func resourceMonitorUpdateAkka(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	apptype := "Akka"
-	return CommonMonitorUpdate(d, meta, apptype)
+	return CommonMonitorUpdate(ctx, d, meta, apptype)
 }
 
 // resourceMonitorDeleteAkka marks a sematext_monitor_akka resource as retired.
-func resourceMonitorDeleteAkka(d *schema.ResourceData, meta interface{}) error {
+func resourceMonitorDeleteAkka(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	apptype := "Akka"
-	return CommonMonitorDelete(d, meta, apptype)
-}
-
-// resourceMonitorExistsAkka checks a sematext_monitor_akka resource exists in Sematext Cloud.
-func resourceMonitorExistsAkka(d *schema.ResourceData, meta interface{}) (b bool, e error) {
-	apptype := "Akka"
-	return CommonMonitorExists(d, meta, apptype)
+	return CommonMonitorDelete(ctx, d, meta, apptype)
 }
 
 /*

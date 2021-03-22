@@ -16,8 +16,7 @@ import (
 )
 
 type AppTokenType struct {
-	Name          string
-	CreateMissing string
+	Names []string
 }
 
 type ResourceTestFixture interface {
@@ -73,8 +72,7 @@ func (rtf *ResourceTestFixtureDefault) hydrate(resourceType string, appType stri
 	}
 
 	rtf.AppToken = AppTokenType{
-		Name:          "Test Token",
-		CreateMissing: "true",
+		Names: []string{"Staging", "Development", "Production"},
 	}
 
 }
@@ -98,8 +96,7 @@ func (rtf *ResourceTestFixtureAWS) hydrate(resourceType string, appType string) 
 	}
 
 	rtf.AppToken = AppTokenType{
-		Name:          "Test Token",
-		CreateMissing: "true",
+		Names: []string{"Staging", "Development", "Production"},
 	}
 
 	rtf.AwsRegion = os.Getenv("AWS_REGION")
@@ -115,8 +112,9 @@ func (rtf *ResourceTestFixtureDefault) toHCL() string {
 		name = "%s"
 		billing_plan_id = %d
 		discount_code = "%s"
-		apptoken_name = "%s"
-		apptoken_create_missing = %s
+		apptoken {
+			names = %s
+		}
 	}
 	`,
 		rtf.ResourceType,
@@ -124,8 +122,7 @@ func (rtf *ResourceTestFixtureDefault) toHCL() string {
 		rtf.Name,
 		rtf.PlanID,
 		rtf.DiscountCode,
-		rtf.AppToken.Name,
-		rtf.AppToken.CreateMissing,
+		arrayLiteralString(rtf.AppToken.Names),
 	)
 
 }
@@ -137,8 +134,9 @@ func (rtf *ResourceTestFixtureAWS) toHCL() string {
 		name = "%s"
 		billing_plan_id = %d
 		discount_code = "%s"
-		apptoken_name = "%s"
-		apptoken_create_missing = %s
+		apptoken {
+			names = %s
+		}
 		aws_region = "%s"
 		aws_secret_key = "%s"
 		aws_access_key = "%s"
@@ -150,8 +148,7 @@ func (rtf *ResourceTestFixtureAWS) toHCL() string {
 		rtf.Name,
 		rtf.PlanID,
 		rtf.DiscountCode,
-		rtf.AppToken.Name,
-		rtf.AppToken.CreateMissing,
+		arrayLiteralString(rtf.AppToken.Names),
 		rtf.AwsRegion,
 		rtf.AwsSecretKey,
 		rtf.AwsAccessKey,
@@ -194,8 +191,6 @@ func CommonMonitorBasicTest(t *testing.T, resourceType string, appType string) {
 						resource.TestCheckResourceAttr(rtf.StatePath, "name", rtf.Name),
 						resource.TestCheckResourceAttr(rtf.StatePath, "billing_plan_id", strconv.Itoa(rtf.PlanID)),
 						resource.TestCheckResourceAttr(rtf.StatePath, "discount_code", rtf.DiscountCode),
-						resource.TestCheckResourceAttr(rtf.StatePath, "apptoken_name", rtf.AppToken.Name),
-						resource.TestCheckResourceAttr(rtf.StatePath, "apptoken_create_missing", rtf.AppToken.CreateMissing),
 					),
 				},
 			},
@@ -225,8 +220,6 @@ func CommonMonitorBasicTest(t *testing.T, resourceType string, appType string) {
 						resource.TestCheckResourceAttr(rtf.StatePath, "name", rtf.Name),
 						resource.TestCheckResourceAttr(rtf.StatePath, "billing_plan_id", strconv.Itoa(rtf.PlanID)),
 						resource.TestCheckResourceAttr(rtf.StatePath, "discount_code", rtf.DiscountCode),
-						resource.TestCheckResourceAttr(rtf.StatePath, "apptoken_name", rtf.AppToken.Name),
-						resource.TestCheckResourceAttr(rtf.StatePath, "apptoken_create_missing", rtf.AppToken.CreateMissing),
 					),
 				},
 			},
@@ -271,8 +264,6 @@ func CommonMonitorUpdateTest(t *testing.T, resourceType string, appType string) 
 						resource.TestCheckResourceAttr(rtf0.StatePath, "name", rtf0.Name),
 						resource.TestCheckResourceAttr(rtf0.StatePath, "billing_plan_id", strconv.Itoa(rtf0.PlanID)),
 						resource.TestCheckResourceAttr(rtf0.StatePath, "discount_code", rtf0.DiscountCode),
-						resource.TestCheckResourceAttr(rtf0.StatePath, "apptoken_name", rtf0.AppToken.Name),
-						resource.TestCheckResourceAttr(rtf0.StatePath, "apptoken_create_missing", rtf0.AppToken.CreateMissing),
 					),
 				},
 				{
@@ -282,8 +273,6 @@ func CommonMonitorUpdateTest(t *testing.T, resourceType string, appType string) 
 						resource.TestCheckResourceAttr(rtf1.StatePath, "name", rtf1.Name),
 						resource.TestCheckResourceAttr(rtf1.StatePath, "billing_plan_id", strconv.Itoa(rtf1.PlanID)),
 						resource.TestCheckResourceAttr(rtf1.StatePath, "discount_code", rtf1.DiscountCode),
-						resource.TestCheckResourceAttr(rtf1.StatePath, "apptoken_name", rtf1.AppToken.Name),
-						resource.TestCheckResourceAttr(rtf1.StatePath, "apptoken_create_missing", rtf1.AppToken.CreateMissing),
 					),
 				},
 			},
@@ -313,8 +302,6 @@ func CommonMonitorUpdateTest(t *testing.T, resourceType string, appType string) 
 						resource.TestCheckResourceAttr(rtf0.StatePath, "name", rtf0.Name),
 						resource.TestCheckResourceAttr(rtf0.StatePath, "billing_plan_id", strconv.Itoa(rtf0.PlanID)),
 						resource.TestCheckResourceAttr(rtf0.StatePath, "discount_code", rtf0.DiscountCode),
-						resource.TestCheckResourceAttr(rtf0.StatePath, "apptoken_name", rtf0.AppToken.Name),
-						resource.TestCheckResourceAttr(rtf0.StatePath, "apptoken_create_missing", rtf0.AppToken.CreateMissing),
 					),
 				},
 				{
@@ -324,8 +311,6 @@ func CommonMonitorUpdateTest(t *testing.T, resourceType string, appType string) 
 						resource.TestCheckResourceAttr(rtf1.StatePath, "name", rtf1.Name),
 						resource.TestCheckResourceAttr(rtf1.StatePath, "billing_plan_id", strconv.Itoa(rtf1.PlanID)),
 						resource.TestCheckResourceAttr(rtf1.StatePath, "discount_code", rtf1.DiscountCode),
-						resource.TestCheckResourceAttr(rtf1.StatePath, "apptoken_name", rtf1.AppToken.Name),
-						resource.TestCheckResourceAttr(rtf1.StatePath, "apptoken_create_missing", rtf1.AppToken.CreateMissing),
 					),
 				},
 			},
@@ -347,7 +332,7 @@ func ConfirmMonitorCreationDefault(rtf ResourceTestFixtureDefault) resource.Test
 		var err error
 		var app *stcloud.App
 		var rs *terraform.ResourceState
-		var genericAPIResponse stcloud.GenericAPIResponse
+		var appResponse stcloud.AppResponse
 
 		client := testAccProvider.Meta().(*stcloud.APIClient)
 
@@ -366,11 +351,11 @@ func ConfirmMonitorCreationDefault(rtf ResourceTestFixtureDefault) resource.Test
 			return err
 		}
 
-		if genericAPIResponse, _, err = client.AppsAPI.GetUsingGET(context.Background(), id); err != nil {
+		if appResponse, _, err = client.AppsAPI.GetUsingGET(context.Background(), id); err != nil {
 			return fmt.Errorf("ConfirmMonitorCreation : Error in checking monitor %s, %s", rtf.StatePath, err)
 		}
 
-		if app, err = genericAPIResponse.ExtractApp(); err != nil {
+		if app, err = extractApp(&appResponse); err != nil {
 			return err
 		}
 
@@ -395,7 +380,7 @@ func ConfirmMonitorCreationAWS(rtf ResourceTestFixtureAWS) resource.TestCheckFun
 		var err error
 		var app *stcloud.App
 		var rs *terraform.ResourceState
-		var genericAPIResponse stcloud.GenericAPIResponse
+		var appResponse stcloud.AppResponse
 
 		client := testAccProvider.Meta().(*stcloud.APIClient)
 
@@ -407,11 +392,11 @@ func ConfirmMonitorCreationAWS(rtf ResourceTestFixtureAWS) resource.TestCheckFun
 			return err
 		}
 
-		if genericAPIResponse, _, err = client.AppsAPI.GetUsingGET(context.Background(), id); err != nil {
-			return fmt.Errorf("ConfirmMonitorCreation : Error in checking monitor %s, %s", rtf.StatePath, err)
+		if appResponse, _, err = client.AppsAPI.GetUsingGET(context.Background(), id); err != nil {
+			return fmt.Errorf("ConfirmMonitorCreationAWS : Error in checking monitor %s, %s", rtf.StatePath, err)
 		}
 
-		if app, err = genericAPIResponse.ExtractApp(); err != nil {
+		if app, err = extractApp(&appResponse); err != nil {
 			return err
 		}
 
@@ -435,7 +420,7 @@ func ConfirmMonitorDestructionDefault(rtf ResourceTestFixtureDefault) resource.T
 		var err error
 		var rs *terraform.ResourceState
 		var app *stcloud.App
-		var genericAPIResponse stcloud.GenericAPIResponse
+		var appResponse stcloud.AppResponse
 
 		client := testAccProvider.Meta().(*stcloud.APIClient)
 
@@ -452,11 +437,11 @@ func ConfirmMonitorDestructionDefault(rtf ResourceTestFixtureDefault) resource.T
 
 			time.Sleep(time.Second * 4) // TODO - workaround for cache latency on SC API, no longer required, confirm and obsolete after MVP.
 
-			if genericAPIResponse, _, err = client.AppsAPI.GetUsingGET(context.Background(), id); err != nil {
+			if appResponse, _, err = client.AppsAPI.GetUsingGET(context.Background(), id); err != nil {
 				return fmt.Errorf("ConfirmMonitorDestructionDefault : Failed to pull app in checking monitor %s, %s", rtf.StatePath, err)
 			}
 
-			if app, err = genericAPIResponse.ExtractApp(); err != nil {
+			if app, err = extractApp(&appResponse); err != nil {
 				return err
 			}
 
@@ -486,7 +471,7 @@ func ConfirmMonitorDestructionAWS(rtf ResourceTestFixtureAWS) resource.TestCheck
 		var err error
 		var rs *terraform.ResourceState
 		var app *stcloud.App
-		var genericAPIResponse stcloud.GenericAPIResponse
+		var appResponse stcloud.AppResponse
 
 		client := testAccProvider.Meta().(*stcloud.APIClient)
 
@@ -499,11 +484,11 @@ func ConfirmMonitorDestructionAWS(rtf ResourceTestFixtureAWS) resource.TestCheck
 				return err
 			}
 
-			if genericAPIResponse, _, err = client.AppsAPI.GetUsingGET(context.Background(), id); err != nil {
+			if appResponse, _, err = client.AppsAPI.GetUsingGET(context.Background(), id); err != nil {
 				return fmt.Errorf("ConfirmMonitorDestructionDefaultAWS : Failed to pull app in checking monitor %s, %s", rtf.StatePath, err)
 			}
 
-			if app, err = genericAPIResponse.ExtractApp(); err != nil {
+			if app, err = extractApp(&appResponse); err != nil {
 				return err
 			}
 

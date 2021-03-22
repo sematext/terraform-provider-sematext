@@ -7,6 +7,9 @@ package sematext
 */
 
 import (
+	"context"
+
+	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
@@ -16,45 +19,38 @@ func resourceSematextMonitorHadoopmrv1() *schema.Resource {
 	fieldSchema := MonitorSchemaCommon("Hadoop-MRv1")
 
 	return &schema.Resource{
-		Create: resourceMonitorCreateHadoopmrv1,
-		Read:   resourceMonitorReadHadoopmrv1,
-		Update: resourceMonitorUpdateHadoopmrv1,
-		Delete: resourceMonitorDeleteHadoopmrv1,
-		Exists: resourceMonitorExistsHadoopmrv1,
-		Schema: fieldSchema,
+		CreateContext: resourceMonitorCreateHadoopmrv1,
+		ReadContext:   resourceMonitorReadHadoopmrv1,
+		UpdateContext: resourceMonitorUpdateHadoopmrv1,
+		DeleteContext: resourceMonitorDeleteHadoopmrv1,
+		Schema:        fieldSchema,
 	}
 }
 
 // resourceMonitorCreateHadoopmrv1 creates the sematext_monitor_hadoopmrv1 resource.
-func resourceMonitorCreateHadoopmrv1(d *schema.ResourceData, meta interface{}) error {
+func resourceMonitorCreateHadoopmrv1(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	apptype := "Hadoop-MRv1"
-	err := CommonMonitorCreate(d, meta, apptype)
+	err := CommonMonitorCreate(ctx, d, meta, apptype)
 
 	return err
 }
 
 // resourceMonitorReadHadoopmrv1 reads the sematext_monitor_hadoopmrv1 resource from Sematext Cloud.
-func resourceMonitorReadHadoopmrv1(d *schema.ResourceData, meta interface{}) error {
+func resourceMonitorReadHadoopmrv1(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	apptype := "Hadoop-MRv1"
-	return CommonMonitorRead(d, meta, apptype)
+	return CommonMonitorRead(ctx, d, meta, apptype)
 }
 
 // resourceMonitorUpdateHadoopmrv1 updates Sematext Cloud from the sematext_monitor_hadoopmrv1 resource.
-func resourceMonitorUpdateHadoopmrv1(d *schema.ResourceData, meta interface{}) error {
+func resourceMonitorUpdateHadoopmrv1(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	apptype := "Hadoop-MRv1"
-	return CommonMonitorUpdate(d, meta, apptype)
+	return CommonMonitorUpdate(ctx, d, meta, apptype)
 }
 
 // resourceMonitorDeleteHadoopmrv1 marks a sematext_monitor_hadoopmrv1 resource as retired.
-func resourceMonitorDeleteHadoopmrv1(d *schema.ResourceData, meta interface{}) error {
+func resourceMonitorDeleteHadoopmrv1(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	apptype := "Hadoop-MRv1"
-	return CommonMonitorDelete(d, meta, apptype)
-}
-
-// resourceMonitorExistsHadoopmrv1 checks a sematext_monitor_hadoopmrv1 resource exists in Sematext Cloud.
-func resourceMonitorExistsHadoopmrv1(d *schema.ResourceData, meta interface{}) (b bool, e error) {
-	apptype := "Hadoop-MRv1"
-	return CommonMonitorExists(d, meta, apptype)
+	return CommonMonitorDelete(ctx, d, meta, apptype)
 }
 
 /*

@@ -7,6 +7,9 @@ package sematext
 */
 
 import (
+	"context"
+
+	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
@@ -16,45 +19,38 @@ func resourceSematextMonitorNodejs() *schema.Resource {
 	fieldSchema := MonitorSchemaCommon("Node.js")
 
 	return &schema.Resource{
-		Create: resourceMonitorCreateNodejs,
-		Read:   resourceMonitorReadNodejs,
-		Update: resourceMonitorUpdateNodejs,
-		Delete: resourceMonitorDeleteNodejs,
-		Exists: resourceMonitorExistsNodejs,
-		Schema: fieldSchema,
+		CreateContext: resourceMonitorCreateNodejs,
+		ReadContext:   resourceMonitorReadNodejs,
+		UpdateContext: resourceMonitorUpdateNodejs,
+		DeleteContext: resourceMonitorDeleteNodejs,
+		Schema:        fieldSchema,
 	}
 }
 
 // resourceMonitorCreateNodejs creates the sematext_monitor_nodejs resource.
-func resourceMonitorCreateNodejs(d *schema.ResourceData, meta interface{}) error {
+func resourceMonitorCreateNodejs(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	apptype := "Node.js"
-	err := CommonMonitorCreate(d, meta, apptype)
+	err := CommonMonitorCreate(ctx, d, meta, apptype)
 
 	return err
 }
 
 // resourceMonitorReadNodejs reads the sematext_monitor_nodejs resource from Sematext Cloud.
-func resourceMonitorReadNodejs(d *schema.ResourceData, meta interface{}) error {
+func resourceMonitorReadNodejs(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	apptype := "Node.js"
-	return CommonMonitorRead(d, meta, apptype)
+	return CommonMonitorRead(ctx, d, meta, apptype)
 }
 
 // resourceMonitorUpdateNodejs updates Sematext Cloud from the sematext_monitor_nodejs resource.
-func resourceMonitorUpdateNodejs(d *schema.ResourceData, meta interface{}) error {
+func resourceMonitorUpdateNodejs(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	apptype := "Node.js"
-	return CommonMonitorUpdate(d, meta, apptype)
+	return CommonMonitorUpdate(ctx, d, meta, apptype)
 }
 
 // resourceMonitorDeleteNodejs marks a sematext_monitor_nodejs resource as retired.
-func resourceMonitorDeleteNodejs(d *schema.ResourceData, meta interface{}) error {
+func resourceMonitorDeleteNodejs(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	apptype := "Node.js"
-	return CommonMonitorDelete(d, meta, apptype)
-}
-
-// resourceMonitorExistsNodejs checks a sematext_monitor_nodejs resource exists in Sematext Cloud.
-func resourceMonitorExistsNodejs(d *schema.ResourceData, meta interface{}) (b bool, e error) {
-	apptype := "Node.js"
-	return CommonMonitorExists(d, meta, apptype)
+	return CommonMonitorDelete(ctx, d, meta, apptype)
 }
 
 /*

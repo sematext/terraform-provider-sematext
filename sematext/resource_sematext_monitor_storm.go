@@ -7,6 +7,9 @@ package sematext
 */
 
 import (
+	"context"
+
+	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
@@ -16,45 +19,38 @@ func resourceSematextMonitorStorm() *schema.Resource {
 	fieldSchema := MonitorSchemaCommon("Storm")
 
 	return &schema.Resource{
-		Create: resourceMonitorCreateStorm,
-		Read:   resourceMonitorReadStorm,
-		Update: resourceMonitorUpdateStorm,
-		Delete: resourceMonitorDeleteStorm,
-		Exists: resourceMonitorExistsStorm,
-		Schema: fieldSchema,
+		CreateContext: resourceMonitorCreateStorm,
+		ReadContext:   resourceMonitorReadStorm,
+		UpdateContext: resourceMonitorUpdateStorm,
+		DeleteContext: resourceMonitorDeleteStorm,
+		Schema:        fieldSchema,
 	}
 }
 
 // resourceMonitorCreateStorm creates the sematext_monitor_storm resource.
-func resourceMonitorCreateStorm(d *schema.ResourceData, meta interface{}) error {
+func resourceMonitorCreateStorm(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	apptype := "Storm"
-	err := CommonMonitorCreate(d, meta, apptype)
+	err := CommonMonitorCreate(ctx, d, meta, apptype)
 
 	return err
 }
 
 // resourceMonitorReadStorm reads the sematext_monitor_storm resource from Sematext Cloud.
-func resourceMonitorReadStorm(d *schema.ResourceData, meta interface{}) error {
+func resourceMonitorReadStorm(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	apptype := "Storm"
-	return CommonMonitorRead(d, meta, apptype)
+	return CommonMonitorRead(ctx, d, meta, apptype)
 }
 
 // resourceMonitorUpdateStorm updates Sematext Cloud from the sematext_monitor_storm resource.
-func resourceMonitorUpdateStorm(d *schema.ResourceData, meta interface{}) error {
+func resourceMonitorUpdateStorm(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	apptype := "Storm"
-	return CommonMonitorUpdate(d, meta, apptype)
+	return CommonMonitorUpdate(ctx, d, meta, apptype)
 }
 
 // resourceMonitorDeleteStorm marks a sematext_monitor_storm resource as retired.
-func resourceMonitorDeleteStorm(d *schema.ResourceData, meta interface{}) error {
+func resourceMonitorDeleteStorm(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	apptype := "Storm"
-	return CommonMonitorDelete(d, meta, apptype)
-}
-
-// resourceMonitorExistsStorm checks a sematext_monitor_storm resource exists in Sematext Cloud.
-func resourceMonitorExistsStorm(d *schema.ResourceData, meta interface{}) (b bool, e error) {
-	apptype := "Storm"
-	return CommonMonitorExists(d, meta, apptype)
+	return CommonMonitorDelete(ctx, d, meta, apptype)
 }
 
 /*

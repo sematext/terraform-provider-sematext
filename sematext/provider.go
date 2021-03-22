@@ -7,12 +7,14 @@ package sematext
 */
 
 import (
+	"context"
 	"errors"
 	"fmt"
 	"net/url"
 	"os"
 
 	"github.com/blang/semver/v4"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/meta"
 	"github.com/sematext/sematext-api-client-go/stcloud"
@@ -74,8 +76,10 @@ func Provider() *schema.Provider {
 		},
 	}
 
-	provider.ConfigureFunc = func(d *schema.ResourceData) (interface{}, error) {
+	provider.ConfigureContextFunc = func(ctx context.Context, d *schema.ResourceData) (interface{}, diag.Diagnostics) {
 
+		//func(d *schema.ResourceData) (interface{}, error) {
+		var diags diag.Diagnostics
 		var err error
 		var tfVersionString string
 		var tfVersionSemver semver.Version
@@ -91,21 +95,33 @@ func Provider() *schema.Provider {
 			sdkVersionString = meta.SDKVersion
 
 			if sdkVersionString == "" {
-				return nil, errors.New("ERROR : problem trying to parse Terraform SDK version")
+				diags = append(diags, diag.Diagnostic{
+					Severity: diag.Error,
+					Summary:  "failed to parse Terraform version",
+					Detail:   "failed to parse Terraform version",
+				})
+
+				return nil, diags
 			}
 
 			sdkVersionSemver, err = semver.Parse(sdkVersionString)
 			if err != nil {
-				return nil, err
+				return nil, diag.FromErr(err)
 			}
 
 			sdkVersionSupportedRange, err = semver.ParseRange(">=2.0.3")
 			if err != nil {
-				return nil, err
+				return nil, diag.FromErr(err)
 			}
 
 			if !sdkVersionSupportedRange(sdkVersionSemver) {
-				return nil, errors.New("ERROR : Terraform sdk version not supported")
+				diags = append(diags, diag.Diagnostic{
+					Severity: diag.Error,
+					Summary:  "Terraform sdk version not supported",
+					Detail:   "Terraform sdk version not supported",
+				})
+
+				return nil, diags
 			}
 
 			tfVersionString = "0.13.0"
@@ -114,32 +130,53 @@ func Provider() *schema.Provider {
 
 		tfVersionSemver, err = semver.Parse(tfVersionString)
 		if err != nil {
-			return nil, err
+			return nil, diag.FromErr(err)
 		}
 
 		tfVersionSupportedRange, err = semver.ParseRange(">=0.13.0")
 		if err != nil {
-			return nil, err
+			return nil, diag.FromErr(err)
 		}
 
 		if !tfVersionSupportedRange(tfVersionSemver) {
-			return nil, errors.New("ERROR : Terraform version must be >=0.13.0")
+			diags = append(diags, diag.Diagnostic{
+				Severity: diag.Error,
+				Summary:  "Terraform version must be >=0.13.0",
+				Detail:   "Terraform version must be >=0.13.0",
+			})
+
+			return nil, diags
+
 		}
 
 		region := d.Get("sematext_region").(string)
 		if !IsValidSematextRegion(region) {
-			return nil, errors.New("ERROR : Missing or invalid sematext_region parameter in provider stanza")
+			diags = append(diags, diag.Diagnostic{
+				Severity: diag.Error,
+				Summary:  "Missing or invalid sematext_region parameter in provider stanza",
+				Detail:   "Missing or invalid sematext_region parameter in provider stanza",
+			})
+
+			return nil, diags
+
 		}
 
 		token := os.Getenv("SEMATEXT_API_KEY")
 		if !IsValidUUID(token) {
-			return nil, errors.New("ERROR : Missing or invalid env SEMATEXT_API_KEY")
+			diags = append(diags, diag.Diagnostic{
+				Severity: diag.Error,
+				Summary:  "Missing or invalid env SEMATEXT_API_KEY",
+				Detail:   "Missing or invalid env SEMATEXT_API_KEY",
+			})
+
+			return nil, diags
+
 		}
 
 		cfg := stcloud.NewConfiguration()
 
 		if baseURL, err = url.Parse("https://apps.sematext.com"); err != nil {
-			return nil, err
+			return nil, diag.FromErr(err)
 		}
 
 		switch region {
@@ -152,7 +189,7 @@ func Provider() *schema.Provider {
 		}
 
 		if err != nil {
-			return nil, err
+			return nil, diag.FromErr(err)
 		}
 
 		cfg.BasePath = baseURL.String()
