@@ -75,6 +75,8 @@ func MonitorSchemaCommon(appType string) map[string]*schema.Schema {
 					},
 				},
 			},
+			Required: true,
+			ForceNew: false,
 		},
 
 		/*

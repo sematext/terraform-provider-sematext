@@ -87,9 +87,6 @@ func CommonMonitorCreate(ctx context.Context, d *schema.ResourceData, meta inter
 		appsResponse, _, err = client.MonitoringAppAPI.CreateSpmApplication1(ctx, *createAppInfo)
 	}
 
-	//spew.Dump(createAppInfo)
-	//spew.Dump(genericAPIResponse)
-
 	if err != nil {
 		return diag.FromErr(err)
 	}
@@ -102,7 +99,7 @@ func CommonMonitorCreate(ctx context.Context, d *schema.ResourceData, meta inter
 
 	d.SetId(strconv.FormatInt(app.ID, 10))
 
-	appTokenNames = d.Get("apptoken.names").([]string)
+	appTokenNames = extractAppTokenNames(d.Get("apptoken"))
 	tokenAccumulator = map[string]string{}
 	for _, tokenName := range appTokenNames {
 
@@ -177,7 +174,7 @@ func CommonMonitorRead(ctx context.Context, d *schema.ResourceData, meta interfa
 	}
 
 	// get the list of apptoken names that are supposed to be here
-	appTokenNames = d.Get("apptoken.names").([]string)
+	appTokenNames = extractAppTokenNames(d.Get("apptoken"))
 
 	// pull tokens for this app from SC.
 	if tokensResponse, _, err = client.TokensAPIControllerAPI.GetAppTokens1(ctx, id); err != nil {
@@ -323,7 +320,7 @@ func CommonMonitorUpdate(ctx context.Context, d *schema.ResourceData, meta inter
 	}
 
 	// get the list of apptoken names that are supposed to be here
-	appTokenNames = d.Get("apptoken.names").([]string)
+	//appTokenNames = extractAppTokenNames(d.Get("apptoken"))
 
 	// pull tokens for this app from SC.
 	if tokensResponse, _, err = client.TokensAPIControllerAPI.GetAppTokens1(ctx, id); err != nil {

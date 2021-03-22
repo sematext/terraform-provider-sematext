@@ -4,8 +4,11 @@ import (
 	"bytes"
 	"encoding/json"
 	"errors"
+	"fmt"
+	"strings"
 
 	"github.com/google/uuid"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/sematext/sematext-api-client-go/stcloud"
 )
 
@@ -85,4 +88,20 @@ func contains(s []string, str string) bool {
 	}
 
 	return false
+}
+
+func arrayLiteralString(array []string) string {
+	s := strings.Join(array, "\",\"")
+	return fmt.Sprintf("[\"%s\"]", s)
+}
+
+func extractAppTokenNames(set interface{}) []string {
+	var names []interface{}
+	var result []string
+	names = set.(*schema.Set).List()[0].(map[string]interface{})["names"].([]interface{})
+
+	for _, name := range names {
+		result = append(result, name.(string))
+	}
+	return result
 }
