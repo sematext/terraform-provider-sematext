@@ -428,14 +428,14 @@ func ConfirmMonitorDestructionDefault(rtf ResourceTestFixtureDefault) resource.T
 
 		for _, rs = range s.RootModule().Resources {
 
-			if !strings.HasPrefix(rs.Type, "sematext_") { // TODO Consider shift to template and make check tighter after MVP
+			if !strings.HasPrefix(rs.Type, "sematext_") {
 				continue
 			}
 			if id, err = strconv.ParseInt(rs.Primary.ID, 10, 64); err != nil {
 				return err
 			}
 
-			time.Sleep(time.Second * 4) // TODO - workaround for cache latency on SC API, no longer required, confirm and obsolete after MVP.
+			time.Sleep(time.Second * 10) // TODO - workaround for cache latency on SC API, no longer required, confirm and obsolete after MVP.
 
 			if appResponse, _, err = client.AppsAPI.GetUsingGET(context.Background(), id); err != nil {
 				return fmt.Errorf("ConfirmMonitorDestructionDefault : Failed to pull app in checking monitor %s, %s", rtf.StatePath, err)
