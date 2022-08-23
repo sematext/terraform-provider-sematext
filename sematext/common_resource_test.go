@@ -179,7 +179,7 @@ func CommonMonitorBasicTest(t *testing.T, resourceType string, appType string) {
 		rtf.hydrate(resourceType, appType)
 
 		fixture := rtf.toHCL()
-		
+
 		resource.Test(t, resource.TestCase{
 			PreCheck:     func() { testAccPreCheck(t) },
 			Providers:    testAccProviders,
@@ -234,7 +234,6 @@ func CommonMonitorUpdateTest(t *testing.T, resourceType string, appType string) 
 	fmt.Println("---------------------------------------")
 	fmt.Println("CommonMonitorUpdateTest Called")
 	fmt.Println("---------------------------------------")
-	fmt.Println("appType")
 	fmt.Println(appType)
 	fmt.Println("---------------------------------------")
 
@@ -337,13 +336,6 @@ func ConfirmMonitorCreationDefault(rtf ResourceTestFixtureDefault) resource.Test
 
 		client := testAccProvider.Meta().(*stcloud.APIClient)
 
-		/*
-			fmt.Println("---------------------------------------")
-			fmt.Println("rtf.StatePath")
-			fmt.Println(rtf.StatePath)
-			spew.Dump(s.RootModule().Resources)
-			fmt.Println("---------------------------------------")
-		*/
 		if rs, found = s.RootModule().Resources[rtf.StatePath]; !found {
 			return fmt.Errorf("ConfirmMonitorCreation : Resource not found in state: %s %s", rtf.ResourceType, rtf.ResourceName)
 		}

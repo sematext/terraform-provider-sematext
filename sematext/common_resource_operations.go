@@ -2,6 +2,7 @@ package sematext
 
 import (
 	"context"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"net/http"
@@ -88,7 +89,9 @@ func CommonMonitorCreate(ctx context.Context, d *schema.ResourceData, meta inter
 	}
 
 	if err != nil {
-		return diag.FromErr(err)
+		var body map[string]interface{}
+		json.Unmarshal([]byte(err.(stcloud.GenericSwaggerError).Body()), &body)
+		return diag.FromErr(errors.New(body["message"].(string)))
 	}
 
 	var app *stcloud.App
