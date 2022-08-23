@@ -2,6 +2,7 @@ package sematext
 
 import (
 	"context"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"net/http"
@@ -61,7 +62,7 @@ func CommonMonitorCreate(ctx context.Context, d *schema.ResourceData, meta inter
 		if _, found := stcloud.LookupPlanID2Apptypes[initialPlanID.(int)]; !found {
 			return diag.FromErr(fmt.Errorf("error : %v is invalid billing_plan_id for %v", initialPlanID, appType))
 		}
-		createAppInfo.InitialPlanID = int64(initialPlanID.(int))
+		createAppInfo.InitialPlanId = int64(initialPlanID.(int))
 	} else {
 		return diag.FromErr(errors.New("error : missing billing_plan_id"))
 	}
@@ -82,13 +83,15 @@ func CommonMonitorCreate(ctx context.Context, d *schema.ResourceData, meta inter
 	}
 
 	if appType == "Logsene" || appType == "mobile-logs" {
-		appsResponse, _, err = client.LogsAppAPI.CreateLogseneApplication(ctx, *createAppInfo)
+		appsResponse, _, err = client.LogsAppApi.CreateLogseneApplication(ctx, *createAppInfo)
 	} else {
-		appsResponse, _, err = client.MonitoringAppAPI.CreateSpmApplication1(ctx, *createAppInfo)
+		appsResponse, _, err = client.MonitoringAppApi.CreateSpmApplication1(ctx, *createAppInfo)
 	}
 
 	if err != nil {
-		return diag.FromErr(err)
+		var body map[string]interface{}
+		json.Unmarshal([]byte(err.(stcloud.GenericSwaggerError).Body()), &body)
+		return diag.FromErr(errors.New(body["message"].(string)))
 	}
 
 	var app *stcloud.App
@@ -97,7 +100,7 @@ func CommonMonitorCreate(ctx context.Context, d *schema.ResourceData, meta inter
 		return diag.FromErr(err)
 	}
 
-	d.SetId(strconv.FormatInt(app.ID, 10))
+	d.SetId(strconv.FormatInt(app.Id, 10))
 
 	appTokenNames = extractAppTokenNames(d.Get("apptoken"))
 	tokenAccumulator = map[string]string{}
@@ -107,7 +110,7 @@ func CommonMonitorCreate(ctx context.Context, d *schema.ResourceData, meta inter
 		createTokenDto.Name = tokenName
 		createTokenDto.Readable = true
 		createTokenDto.Writeable = true
-		tokenResponse, _, err = client.TokensAPIControllerAPI.CreateAppToken1(ctx, createTokenDto, app.ID) // TODO handle Model_Error better
+		tokenResponse, _, err = client.TokensApiControllerApi.CreateAppToken1(ctx, createTokenDto, app.Id) // TODO handle Model_Error better
 		if err != nil {
 			return diag.FromErr(err)
 		}
@@ -141,7 +144,7 @@ func CommonMonitorRead(ctx context.Context, d *schema.ResourceData, meta interfa
 		return diag.FromErr(err)
 	}
 
-	appResponse, httpResponse, err = client.AppsAPI.GetUsingGET(ctx, id)
+	appResponse, httpResponse, err = client.AppsApi.GetUsingGET(ctx, id)
 	if err != nil {
 		return diag.FromErr(err)
 	}
@@ -166,18 +169,18 @@ func CommonMonitorRead(ctx context.Context, d *schema.ResourceData, meta interfa
 
 	case "AWS EBS", "AWS EC2", "AWS ELB":
 		d.Set("name", app.Name)
-		d.Set("billing_plan_id", app.Plan.ID)
+		d.Set("billing_plan_id", app.Plan.Id)
 
 	default:
 		d.Set("name", app.Name)
-		d.Set("billing_plan_id", app.Plan.ID)
+		d.Set("billing_plan_id", app.Plan.Id)
 	}
 
 	// get the list of apptoken names that are supposed to be here
 	appTokenNames = extractAppTokenNames(d.Get("apptoken"))
 
 	// pull tokens for this app from SC.
-	if tokensResponse, _, err = client.TokensAPIControllerAPI.GetAppTokens1(ctx, id); err != nil {
+	if tokensResponse, _, err = client.TokensApiControllerApi.GetAppTokens(ctx, id); err != nil {
 		return diag.FromErr(err)
 	}
 	tokenEntries, err = extractAppTokens(tokensResponse)
@@ -258,7 +261,7 @@ func CommonMonitorUpdate(ctx context.Context, d *schema.ResourceData, meta inter
 
 	if appInfoChanged {
 		updateAppInfo.Status = "ACTIVE"
-		_, _, err = client.AppsAPI.UpdateUsingPUT3(context.Background(), *updateAppInfo, id)
+		_, _, err = client.AppsApi.UpdateUsingPUT2(context.Background(), *updateAppInfo, id)
 		if err != nil {
 			return diag.FromErr(err)
 		}
@@ -269,8 +272,8 @@ func CommonMonitorUpdate(ctx context.Context, d *schema.ResourceData, meta inter
 	billingInfoChanged := false
 
 	if d.HasChange("billing_plan_id") {
-		_, newBillingPlanID := d.GetChange("billing_plan_id")
-		billingInfo.PlanID = newBillingPlanID.(int64)
+		_, newBillingPlanId := d.GetChange("billing_plan_id")
+		billingInfo.PlanId = newBillingPlanId.(int64)
 		billingInfoChanged = true
 	}
 
@@ -299,21 +302,21 @@ func CommonMonitorUpdate(ctx context.Context, d *schema.ResourceData, meta inter
 	}
 
 	if appInfoChanged {
-		_, _, err = client.AppsAPI.UpdateUsingPUT3(context.Background(), *updateAppInfo, id)
+		_, _, err = client.AppsApi.UpdateUsingPUT2(context.Background(), *updateAppInfo, id)
 		if err != nil {
 			return diag.FromErr(err)
 		}
 	}
 
 	if billingInfoChanged {
-		_, _, err = client.BillingAPI.UpdatePlanUsingPUT1(context.Background(), *billingInfo, id)
+		_, _, err = client.BillingApi.UpdatePlanUsingPUT(context.Background(), *billingInfo, id)
 		if err != nil {
 			return diag.FromErr(err)
 		}
 	}
 
 	if cloudWatchSettingsChanged {
-		_, _, err = client.AwsSettingsControllerAPI.UpdateUsingPUT1(context.Background(), *cloudWatchSettings, id)
+		_, _, err = client.AwsSettingsControllerApi.UpdateUsingPUT1(context.Background(), *cloudWatchSettings, id)
 		if err != nil {
 			return diag.FromErr(err)
 		}
@@ -323,7 +326,7 @@ func CommonMonitorUpdate(ctx context.Context, d *schema.ResourceData, meta inter
 	//appTokenNames = extractAppTokenNames(d.Get("apptoken"))
 
 	// pull tokens for this app from SC.
-	if tokensResponse, _, err = client.TokensAPIControllerAPI.GetAppTokens1(ctx, id); err != nil {
+	if tokensResponse, _, err = client.TokensApiControllerApi.GetAppTokens(ctx, id); err != nil {
 		return diag.FromErr(err)
 	}
 	tokenEntries, err = extractAppTokens(tokensResponse)
@@ -360,7 +363,7 @@ func CommonMonitorUpdate(ctx context.Context, d *schema.ResourceData, meta inter
 			createTokenDto.Name = tokenName
 			createTokenDto.Readable = true
 			createTokenDto.Writeable = true
-			tokenResponse, _, err = client.TokensAPIControllerAPI.CreateAppToken1(ctx, createTokenDto, id) // TODO handle Model_Error better
+			tokenResponse, _, err = client.TokensApiControllerApi.CreateAppToken1(ctx, createTokenDto, id) // TODO handle Model_Error better
 			if err != nil {
 				return diag.FromErr(err)
 			}
@@ -390,14 +393,14 @@ func CommonMonitorDelete(ctx context.Context, d *schema.ResourceData, meta inter
 
 	updateAppInfo := &stcloud.UpdateAppInfo{}
 	updateAppInfo.Status = "DISABLED"
-	_, _, err = client.AppsAPI.UpdateUsingPUT3(context.Background(), *updateAppInfo, id)
+	_, _, err = client.AppsApi.UpdateUsingPUT2(context.Background(), *updateAppInfo, id)
 	if err != nil {
 		return diag.FromErr(err)
 	}
 
 	time.Sleep(2 * time.Second)
 
-	_, httpResponse, err = client.AppsAPI.DeleteUsingDELETE1(context.Background(), id)
+	_, httpResponse, err = client.AppsApi.DeleteUsingDELETE(context.Background(), id)
 	if err != nil {
 		return diag.FromErr(err)
 	}

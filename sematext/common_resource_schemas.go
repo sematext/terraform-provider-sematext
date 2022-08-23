@@ -152,7 +152,6 @@ func MonitorSchemaCommon(appType string) map[string]*schema.Schema {
 			Required:    true,
 			ForceNew:    false,
 			ValidateFunc: func(value interface{}, key string) (warns []string, errs []error) {
-				fmt.Println(value.(string))
 				if matched, err := regexp.MatchString(`([0-9A-Za-z]{20})`, value.(string)); !matched {
 					errs = append(errs, errors.New("invalid aws_access_key"))
 					if err != nil {
@@ -169,7 +168,6 @@ func MonitorSchemaCommon(appType string) map[string]*schema.Schema {
 			Required:    true,
 			ForceNew:    false,
 			ValidateFunc: func(value interface{}, key string) (warns []string, errs []error) {
-				fmt.Println(value.(string))
 				if matched, err := regexp.MatchString(`([0-9A-Za-z+/=]{40})`, value.(string)); !matched {
 					errs = append(errs, errors.New("invalid aws_secret_key"))
 					if err != nil {
@@ -187,7 +185,6 @@ func MonitorSchemaCommon(appType string) map[string]*schema.Schema {
 			Required:    true,
 			ForceNew:    false,
 			ValidateFunc: func(value interface{}, key string) (warns []string, errs []error) {
-				fmt.Println(value.(string))
 				if valid, _ := regexp.MatchString(`(MINUTE|FIVE_MINUTES|FIFTEEN_MINUTES)`, value.(string)); !valid {
 					errs = append(errs, errors.New("invalid aws_fetch_frequency"))
 				}
@@ -201,7 +198,6 @@ func MonitorSchemaCommon(appType string) map[string]*schema.Schema {
 			Required:    true,
 			ForceNew:    false,
 			ValidateFunc: func(value interface{}, key string) (warns []string, errs []error) {
-				fmt.Println(value.(string))
 				if _, found := stcloud.AWSRegion2STRegion[value.(string)]; !found {
 					errs = append(errs, errors.New("invalid aws_region"))
 				}

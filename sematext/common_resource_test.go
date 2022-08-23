@@ -179,6 +179,7 @@ func CommonMonitorBasicTest(t *testing.T, resourceType string, appType string) {
 		rtf.hydrate(resourceType, appType)
 
 		fixture := rtf.toHCL()
+
 		resource.Test(t, resource.TestCase{
 			PreCheck:     func() { testAccPreCheck(t) },
 			Providers:    testAccProviders,
@@ -233,7 +234,6 @@ func CommonMonitorUpdateTest(t *testing.T, resourceType string, appType string) 
 	fmt.Println("---------------------------------------")
 	fmt.Println("CommonMonitorUpdateTest Called")
 	fmt.Println("---------------------------------------")
-	fmt.Println("appType")
 	fmt.Println(appType)
 	fmt.Println("---------------------------------------")
 
@@ -336,13 +336,6 @@ func ConfirmMonitorCreationDefault(rtf ResourceTestFixtureDefault) resource.Test
 
 		client := testAccProvider.Meta().(*stcloud.APIClient)
 
-		/*
-			fmt.Println("---------------------------------------")
-			fmt.Println("rtf.StatePath")
-			fmt.Println(rtf.StatePath)
-			spew.Dump(s.RootModule().Resources)
-			fmt.Println("---------------------------------------")
-		*/
 		if rs, found = s.RootModule().Resources[rtf.StatePath]; !found {
 			return fmt.Errorf("ConfirmMonitorCreation : Resource not found in state: %s %s", rtf.ResourceType, rtf.ResourceName)
 		}
@@ -351,7 +344,7 @@ func ConfirmMonitorCreationDefault(rtf ResourceTestFixtureDefault) resource.Test
 			return err
 		}
 
-		if appResponse, _, err = client.AppsAPI.GetUsingGET(context.Background(), id); err != nil {
+		if appResponse, _, err = client.AppsApi.GetUsingGET(context.Background(), id); err != nil {
 			return fmt.Errorf("ConfirmMonitorCreation : Error in checking monitor %s, %s", rtf.StatePath, err)
 		}
 
@@ -392,7 +385,7 @@ func ConfirmMonitorCreationAWS(rtf ResourceTestFixtureAWS) resource.TestCheckFun
 			return err
 		}
 
-		if appResponse, _, err = client.AppsAPI.GetUsingGET(context.Background(), id); err != nil {
+		if appResponse, _, err = client.AppsApi.GetUsingGET(context.Background(), id); err != nil {
 			return fmt.Errorf("ConfirmMonitorCreationAWS : Error in checking monitor %s, %s", rtf.StatePath, err)
 		}
 
@@ -437,7 +430,7 @@ func ConfirmMonitorDestructionDefault(rtf ResourceTestFixtureDefault) resource.T
 
 			time.Sleep(time.Second * 10) // TODO - workaround for cache latency on SC API, no longer required, confirm and obsolete after MVP.
 
-			if appResponse, _, err = client.AppsAPI.GetUsingGET(context.Background(), id); err != nil {
+			if appResponse, _, err = client.AppsApi.GetUsingGET(context.Background(), id); err != nil {
 				return fmt.Errorf("ConfirmMonitorDestructionDefault : Failed to pull app in checking monitor %s, %s", rtf.StatePath, err)
 			}
 
@@ -484,7 +477,7 @@ func ConfirmMonitorDestructionAWS(rtf ResourceTestFixtureAWS) resource.TestCheck
 				return err
 			}
 
-			if appResponse, _, err = client.AppsAPI.GetUsingGET(context.Background(), id); err != nil {
+			if appResponse, _, err = client.AppsApi.GetUsingGET(context.Background(), id); err != nil {
 				return fmt.Errorf("ConfirmMonitorDestructionDefaultAWS : Failed to pull app in checking monitor %s, %s", rtf.StatePath, err)
 			}
 
