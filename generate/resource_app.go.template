@@ -1,0 +1,55 @@
+package generated
+
+/*
+	Note: Generated file, any edits will be overwritten!
+	Correct way to alter is to edit generate/resource_sematext_App.go.template
+	Then run generate/generate.sh
+*/
+
+import (
+	"context"
+
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
+	"github.com/sematext/terraform-provider-sematext/sematext"
+)
+
+// resourceOperationApp<<CLASS_NAME>> is the resource class that handles <<RESOURCE_NAME>>
+func resourceOperationApp<<CLASS_NAME>>() *schema.Resource {
+
+	return &schema.Resource{
+		CreateContext: 	resourceOperationCreateApp<<CLASS_NAME>>,
+		ReadContext:   	resourceOperationReadApp<<CLASS_NAME>>,
+		UpdateContext: 	resourceOperationUpdateApp<<CLASS_NAME>>,
+		DeleteContext: 	resourceOperationDeleteApp<<CLASS_NAME>>,
+		Schema: 		sematext.ResourceSchemaApp("<<APP_TYPE>>"),
+		Importer : 		sematext.ResourceImporterApp("<<APP_TYPE>>"),
+	}
+}
+
+// resourceOperationCreateApp<<CLASS_NAME>> creates the <<RESOURCE_NAME>> resource.
+func resourceOperationCreateApp<<CLASS_NAME>>(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+	apptype := "<<APP_TYPE>>"
+	err := sematext.ResourceOperationCreateApp(ctx, d, meta, apptype)
+	return err
+}
+
+// resourceOperationReadApp<<CLASS_NAME>> reads the <<RESOURCE_NAME>> resource from Sematext Cloud.
+func resourceOperationReadApp<<CLASS_NAME>>(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+	apptype := "<<APP_TYPE>>"
+	return sematext.ResourceOperationReadApp(ctx, d, meta, apptype)
+}
+
+// resourceOperationUpdateApp<<CLASS_NAME>> updates Sematext Cloud from the <<RESOURCE_NAME>> resource.
+func resourceOperationUpdateApp<<CLASS_NAME>>(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+	apptype := "<<APP_TYPE>>"
+	return sematext.ResourceOperationUpdateApp(ctx, d, meta, apptype)
+}
+
+// resourceOperationDeleteApp<<CLASS_NAME>> marks a <<RESOURCE_NAME>> resource as retired.
+func resourceOperationDeleteApp<<CLASS_NAME>>(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+	apptype := "<<APP_TYPE>>"
+	return sematext.ResourceOperationDeleteApp(ctx, d, meta, apptype)
+}
+
+

@@ -10,14 +10,14 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"os"
 	"net/url"
+	"os"
 
+	"github.com/blang/semver/v4"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/meta"
 	"github.com/sematext/sematext-api-client-go/stcloud"
-	"github.com/blang/semver/v4"
 	"github.com/sematext/terraform-provider-sematext/sematext"
 )
 
@@ -43,7 +43,37 @@ func Provider() *schema.Provider {
 		},
 
 		ResourcesMap: map[string]*schema.Resource{
-<<RESOURCE_LIST>>
+			"sematext_app_akka":          resourceOperationAppAkka(),
+			"sematext_app_apache":        resourceOperationAppApache(),
+			"sematext_app_awsebs":        resourceOperationAppAwsebs(),
+			"sematext_app_awsec2":        resourceOperationAppAwsec2(),
+			"sematext_app_awselb":        resourceOperationAppAwselb(),
+			"sematext_app_cassandra":     resourceOperationAppCassandra(),
+			"sematext_app_clickhouse":    resourceOperationAppClickhouse(),
+			"sematext_app_elasticsearch": resourceOperationAppElasticsearch(),
+			"sematext_app_hadoopmrv1":    resourceOperationAppHadoopmrv1(),
+			"sematext_app_hadoopyarn":    resourceOperationAppHadoopyarn(),
+			"sematext_app_haproxy":       resourceOperationAppHaproxy(),
+			"sematext_app_hbase":         resourceOperationAppHbase(),
+			"sematext_app_infra":         resourceOperationAppInfra(),
+			"sematext_app_jvm":           resourceOperationAppJvm(),
+			"sematext_app_kafka":         resourceOperationAppKafka(),
+			"sematext_app_logsene":       resourceOperationAppLogsene(),
+			"sematext_app_mongodb":       resourceOperationAppMongodb(),
+			"sematext_app_mysql":         resourceOperationAppMysql(),
+			"sematext_app_nginx":         resourceOperationAppNginx(),
+			"sematext_app_nginxplus":     resourceOperationAppNginxplus(),
+			"sematext_app_nodejs":        resourceOperationAppNodejs(),
+			"sematext_app_redis":         resourceOperationAppRedis(),
+			"sematext_app_solr":          resourceOperationAppSolr(),
+			"sematext_app_solrcloud":     resourceOperationAppSolrcloud(),
+			"sematext_app_spark":         resourceOperationAppSpark(),
+			"sematext_app_storm":         resourceOperationAppStorm(),
+			"sematext_app_tomcat":        resourceOperationAppTomcat(),
+			"sematext_app_zookeeper":     resourceOperationAppZookeeper(),
+			"sematext_app_postgresql":    resourceOperationAppPostgresql(),
+			"sematext_app_rabbitmq":      resourceOperationAppRabbitmq(),
+			"sematext_app_mobilelogs":    resourceOperationAppMobilelogs(),
 		},
 	}
 
