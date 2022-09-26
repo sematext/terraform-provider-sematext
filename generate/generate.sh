@@ -57,7 +57,7 @@ do
     resourcename="sematext_app_${lowercase}"
     sed -e "s/<<CLASS_NAME>>/${classname}/g" -e "s/<<APP_TYPE>>/${apptype}/g" -e "s/<<RESOURCE_NAME>>/${resourcename}/g" ./resource_app.go.template > "../sematext/generated/resource_app_${lowercase}.go"
     sed -e "s/<<CLASS_NAME>>/${classname}/g" -e "s/<<APP_TYPE>>/${apptype}/g" -e "s/<<RESOURCE_NAME>>/${resourcename}/g" ./resource_app_test.go.template > "../sematext/generated/resource_app_${lowercase}_test.go"
-    resourcelist+="\"${resourcename}\": resourceOperationApp${classname}(),\\n"
+    resourcelist+="\"${resourcename}\": resourceApp${classname}(),\\n"
 
 
 done

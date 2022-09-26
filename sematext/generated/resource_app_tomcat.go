@@ -14,16 +14,16 @@ import (
 	"github.com/sematext/terraform-provider-sematext/sematext"
 )
 
-// resourceOperationAppTomcat is the resource class that handles sematext_app_tomcat
-func resourceOperationAppTomcat() *schema.Resource {
+// resourceAppTomcat is the resource class that handles sematext_app_tomcat
+func resourceAppTomcat() *schema.Resource {
 
 	return &schema.Resource{
+		Schema:        sematext.ResourceSchemaApp("Tomcat"),
 		CreateContext: resourceOperationCreateAppTomcat,
 		ReadContext:   resourceOperationReadAppTomcat,
 		UpdateContext: resourceOperationUpdateAppTomcat,
 		DeleteContext: resourceOperationDeleteAppTomcat,
-		Schema:        sematext.ResourceSchemaApp("Tomcat"),
-		Importer:      sematext.ResourceImporterApp("Tomcat"),
+		Importer:      resourceOperationImportAppTomcat(),
 	}
 }
 
@@ -50,4 +50,10 @@ func resourceOperationUpdateAppTomcat(ctx context.Context, d *schema.ResourceDat
 func resourceOperationDeleteAppTomcat(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	apptype := "Tomcat"
 	return sematext.ResourceOperationDeleteApp(ctx, d, meta, apptype)
+}
+
+// resourceOperationImportAppTomcat imports a sematext_app_tomcat resource into the state file.
+func resourceOperationImportAppTomcat() *schema.ResourceImporter {
+	apptype := "Tomcat"
+	return sematext.ResourceOperationImportApp(apptype)
 }

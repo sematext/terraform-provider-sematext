@@ -14,16 +14,16 @@ import (
 	"github.com/sematext/terraform-provider-sematext/sematext"
 )
 
-// resourceOperationAppApache is the resource class that handles sematext_app_apache
-func resourceOperationAppApache() *schema.Resource {
+// resourceAppApache is the resource class that handles sematext_app_apache
+func resourceAppApache() *schema.Resource {
 
 	return &schema.Resource{
+		Schema:        sematext.ResourceSchemaApp("Apache"),
 		CreateContext: resourceOperationCreateAppApache,
 		ReadContext:   resourceOperationReadAppApache,
 		UpdateContext: resourceOperationUpdateAppApache,
 		DeleteContext: resourceOperationDeleteAppApache,
-		Schema:        sematext.ResourceSchemaApp("Apache"),
-		Importer:      sematext.ResourceImporterApp("Apache"),
+		Importer:      resourceOperationImportAppApache(),
 	}
 }
 
@@ -50,4 +50,10 @@ func resourceOperationUpdateAppApache(ctx context.Context, d *schema.ResourceDat
 func resourceOperationDeleteAppApache(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	apptype := "Apache"
 	return sematext.ResourceOperationDeleteApp(ctx, d, meta, apptype)
+}
+
+// resourceOperationImportAppApache imports a sematext_app_apache resource into the state file.
+func resourceOperationImportAppApache() *schema.ResourceImporter {
+	apptype := "Apache"
+	return sematext.ResourceOperationImportApp(apptype)
 }

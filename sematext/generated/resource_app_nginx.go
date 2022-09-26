@@ -14,16 +14,16 @@ import (
 	"github.com/sematext/terraform-provider-sematext/sematext"
 )
 
-// resourceOperationAppNginx is the resource class that handles sematext_app_nginx
-func resourceOperationAppNginx() *schema.Resource {
+// resourceAppNginx is the resource class that handles sematext_app_nginx
+func resourceAppNginx() *schema.Resource {
 
 	return &schema.Resource{
+		Schema:        sematext.ResourceSchemaApp("Nginx"),
 		CreateContext: resourceOperationCreateAppNginx,
 		ReadContext:   resourceOperationReadAppNginx,
 		UpdateContext: resourceOperationUpdateAppNginx,
 		DeleteContext: resourceOperationDeleteAppNginx,
-		Schema:        sematext.ResourceSchemaApp("Nginx"),
-		Importer:      sematext.ResourceImporterApp("Nginx"),
+		Importer:      resourceOperationImportAppNginx(),
 	}
 }
 
@@ -50,4 +50,10 @@ func resourceOperationUpdateAppNginx(ctx context.Context, d *schema.ResourceData
 func resourceOperationDeleteAppNginx(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	apptype := "Nginx"
 	return sematext.ResourceOperationDeleteApp(ctx, d, meta, apptype)
+}
+
+// resourceOperationImportAppNginx imports a sematext_app_nginx resource into the state file.
+func resourceOperationImportAppNginx() *schema.ResourceImporter {
+	apptype := "Nginx"
+	return sematext.ResourceOperationImportApp(apptype)
 }

@@ -14,16 +14,16 @@ import (
 	"github.com/sematext/terraform-provider-sematext/sematext"
 )
 
-// resourceOperationAppAwselb is the resource class that handles sematext_app_awselb
-func resourceOperationAppAwselb() *schema.Resource {
+// resourceAppAwselb is the resource class that handles sematext_app_awselb
+func resourceAppAwselb() *schema.Resource {
 
 	return &schema.Resource{
+		Schema:        sematext.ResourceSchemaApp("AWS ELB"),
 		CreateContext: resourceOperationCreateAppAwselb,
 		ReadContext:   resourceOperationReadAppAwselb,
 		UpdateContext: resourceOperationUpdateAppAwselb,
 		DeleteContext: resourceOperationDeleteAppAwselb,
-		Schema:        sematext.ResourceSchemaApp("AWS ELB"),
-		Importer:      sematext.ResourceImporterApp("AWS ELB"),
+		Importer:      resourceOperationImportAppAwselb(),
 	}
 }
 
@@ -50,4 +50,10 @@ func resourceOperationUpdateAppAwselb(ctx context.Context, d *schema.ResourceDat
 func resourceOperationDeleteAppAwselb(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	apptype := "AWS ELB"
 	return sematext.ResourceOperationDeleteApp(ctx, d, meta, apptype)
+}
+
+// resourceOperationImportAppAwselb imports a sematext_app_awselb resource into the state file.
+func resourceOperationImportAppAwselb() *schema.ResourceImporter {
+	apptype := "AWS ELB"
+	return sematext.ResourceOperationImportApp(apptype)
 }

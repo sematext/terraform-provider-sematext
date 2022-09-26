@@ -14,16 +14,16 @@ import (
 	"github.com/sematext/terraform-provider-sematext/sematext"
 )
 
-// resourceOperationAppAwsec2 is the resource class that handles sematext_app_awsec2
-func resourceOperationAppAwsec2() *schema.Resource {
+// resourceAppAwsec2 is the resource class that handles sematext_app_awsec2
+func resourceAppAwsec2() *schema.Resource {
 
 	return &schema.Resource{
+		Schema:        sematext.ResourceSchemaApp("AWS EC2"),
 		CreateContext: resourceOperationCreateAppAwsec2,
 		ReadContext:   resourceOperationReadAppAwsec2,
 		UpdateContext: resourceOperationUpdateAppAwsec2,
 		DeleteContext: resourceOperationDeleteAppAwsec2,
-		Schema:        sematext.ResourceSchemaApp("AWS EC2"),
-		Importer:      sematext.ResourceImporterApp("AWS EC2"),
+		Importer:      resourceOperationImportAppAwsec2(),
 	}
 }
 
@@ -50,4 +50,10 @@ func resourceOperationUpdateAppAwsec2(ctx context.Context, d *schema.ResourceDat
 func resourceOperationDeleteAppAwsec2(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	apptype := "AWS EC2"
 	return sematext.ResourceOperationDeleteApp(ctx, d, meta, apptype)
+}
+
+// resourceOperationImportAppAwsec2 imports a sematext_app_awsec2 resource into the state file.
+func resourceOperationImportAppAwsec2() *schema.ResourceImporter {
+	apptype := "AWS EC2"
+	return sematext.ResourceOperationImportApp(apptype)
 }

@@ -14,16 +14,16 @@ import (
 	"github.com/sematext/terraform-provider-sematext/sematext"
 )
 
-// resourceOperationAppClickhouse is the resource class that handles sematext_app_clickhouse
-func resourceOperationAppClickhouse() *schema.Resource {
+// resourceAppClickhouse is the resource class that handles sematext_app_clickhouse
+func resourceAppClickhouse() *schema.Resource {
 
 	return &schema.Resource{
+		Schema:        sematext.ResourceSchemaApp("ClickHouse"),
 		CreateContext: resourceOperationCreateAppClickhouse,
 		ReadContext:   resourceOperationReadAppClickhouse,
 		UpdateContext: resourceOperationUpdateAppClickhouse,
 		DeleteContext: resourceOperationDeleteAppClickhouse,
-		Schema:        sematext.ResourceSchemaApp("ClickHouse"),
-		Importer:      sematext.ResourceImporterApp("ClickHouse"),
+		Importer:      resourceOperationImportAppClickhouse(),
 	}
 }
 
@@ -50,4 +50,10 @@ func resourceOperationUpdateAppClickhouse(ctx context.Context, d *schema.Resourc
 func resourceOperationDeleteAppClickhouse(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	apptype := "ClickHouse"
 	return sematext.ResourceOperationDeleteApp(ctx, d, meta, apptype)
+}
+
+// resourceOperationImportAppClickhouse imports a sematext_app_clickhouse resource into the state file.
+func resourceOperationImportAppClickhouse() *schema.ResourceImporter {
+	apptype := "ClickHouse"
+	return sematext.ResourceOperationImportApp(apptype)
 }

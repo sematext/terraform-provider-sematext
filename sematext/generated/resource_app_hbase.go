@@ -14,16 +14,16 @@ import (
 	"github.com/sematext/terraform-provider-sematext/sematext"
 )
 
-// resourceOperationAppHbase is the resource class that handles sematext_app_hbase
-func resourceOperationAppHbase() *schema.Resource {
+// resourceAppHbase is the resource class that handles sematext_app_hbase
+func resourceAppHbase() *schema.Resource {
 
 	return &schema.Resource{
+		Schema:        sematext.ResourceSchemaApp("HBase"),
 		CreateContext: resourceOperationCreateAppHbase,
 		ReadContext:   resourceOperationReadAppHbase,
 		UpdateContext: resourceOperationUpdateAppHbase,
 		DeleteContext: resourceOperationDeleteAppHbase,
-		Schema:        sematext.ResourceSchemaApp("HBase"),
-		Importer:      sematext.ResourceImporterApp("HBase"),
+		Importer:      resourceOperationImportAppHbase(),
 	}
 }
 
@@ -50,4 +50,10 @@ func resourceOperationUpdateAppHbase(ctx context.Context, d *schema.ResourceData
 func resourceOperationDeleteAppHbase(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	apptype := "HBase"
 	return sematext.ResourceOperationDeleteApp(ctx, d, meta, apptype)
+}
+
+// resourceOperationImportAppHbase imports a sematext_app_hbase resource into the state file.
+func resourceOperationImportAppHbase() *schema.ResourceImporter {
+	apptype := "HBase"
+	return sematext.ResourceOperationImportApp(apptype)
 }

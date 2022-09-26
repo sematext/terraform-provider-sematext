@@ -14,16 +14,16 @@ import (
 	"github.com/sematext/terraform-provider-sematext/sematext"
 )
 
-// resourceOperationAppSolr is the resource class that handles sematext_app_solr
-func resourceOperationAppSolr() *schema.Resource {
+// resourceAppSolr is the resource class that handles sematext_app_solr
+func resourceAppSolr() *schema.Resource {
 
 	return &schema.Resource{
+		Schema:        sematext.ResourceSchemaApp("Solr"),
 		CreateContext: resourceOperationCreateAppSolr,
 		ReadContext:   resourceOperationReadAppSolr,
 		UpdateContext: resourceOperationUpdateAppSolr,
 		DeleteContext: resourceOperationDeleteAppSolr,
-		Schema:        sematext.ResourceSchemaApp("Solr"),
-		Importer:      sematext.ResourceImporterApp("Solr"),
+		Importer:      resourceOperationImportAppSolr(),
 	}
 }
 
@@ -50,4 +50,10 @@ func resourceOperationUpdateAppSolr(ctx context.Context, d *schema.ResourceData,
 func resourceOperationDeleteAppSolr(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	apptype := "Solr"
 	return sematext.ResourceOperationDeleteApp(ctx, d, meta, apptype)
+}
+
+// resourceOperationImportAppSolr imports a sematext_app_solr resource into the state file.
+func resourceOperationImportAppSolr() *schema.ResourceImporter {
+	apptype := "Solr"
+	return sematext.ResourceOperationImportApp(apptype)
 }

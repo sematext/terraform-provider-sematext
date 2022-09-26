@@ -14,16 +14,16 @@ import (
 	"github.com/sematext/terraform-provider-sematext/sematext"
 )
 
-// resourceOperationAppElasticsearch is the resource class that handles sematext_app_elasticsearch
-func resourceOperationAppElasticsearch() *schema.Resource {
+// resourceAppElasticsearch is the resource class that handles sematext_app_elasticsearch
+func resourceAppElasticsearch() *schema.Resource {
 
 	return &schema.Resource{
+		Schema:        sematext.ResourceSchemaApp("Elastic Search"),
 		CreateContext: resourceOperationCreateAppElasticsearch,
 		ReadContext:   resourceOperationReadAppElasticsearch,
 		UpdateContext: resourceOperationUpdateAppElasticsearch,
 		DeleteContext: resourceOperationDeleteAppElasticsearch,
-		Schema:        sematext.ResourceSchemaApp("Elastic Search"),
-		Importer:      sematext.ResourceImporterApp("Elastic Search"),
+		Importer:      resourceOperationImportAppElasticsearch(),
 	}
 }
 
@@ -50,4 +50,10 @@ func resourceOperationUpdateAppElasticsearch(ctx context.Context, d *schema.Reso
 func resourceOperationDeleteAppElasticsearch(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	apptype := "Elastic Search"
 	return sematext.ResourceOperationDeleteApp(ctx, d, meta, apptype)
+}
+
+// resourceOperationImportAppElasticsearch imports a sematext_app_elasticsearch resource into the state file.
+func resourceOperationImportAppElasticsearch() *schema.ResourceImporter {
+	apptype := "Elastic Search"
+	return sematext.ResourceOperationImportApp(apptype)
 }

@@ -14,16 +14,16 @@ import (
 	"github.com/sematext/terraform-provider-sematext/sematext"
 )
 
-// resourceOperationAppJvm is the resource class that handles sematext_app_jvm
-func resourceOperationAppJvm() *schema.Resource {
+// resourceAppJvm is the resource class that handles sematext_app_jvm
+func resourceAppJvm() *schema.Resource {
 
 	return &schema.Resource{
+		Schema:        sematext.ResourceSchemaApp("JVM"),
 		CreateContext: resourceOperationCreateAppJvm,
 		ReadContext:   resourceOperationReadAppJvm,
 		UpdateContext: resourceOperationUpdateAppJvm,
 		DeleteContext: resourceOperationDeleteAppJvm,
-		Schema:        sematext.ResourceSchemaApp("JVM"),
-		Importer:      sematext.ResourceImporterApp("JVM"),
+		Importer:      resourceOperationImportAppJvm(),
 	}
 }
 
@@ -50,4 +50,10 @@ func resourceOperationUpdateAppJvm(ctx context.Context, d *schema.ResourceData, 
 func resourceOperationDeleteAppJvm(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	apptype := "JVM"
 	return sematext.ResourceOperationDeleteApp(ctx, d, meta, apptype)
+}
+
+// resourceOperationImportAppJvm imports a sematext_app_jvm resource into the state file.
+func resourceOperationImportAppJvm() *schema.ResourceImporter {
+	apptype := "JVM"
+	return sematext.ResourceOperationImportApp(apptype)
 }

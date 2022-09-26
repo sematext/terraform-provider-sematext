@@ -14,16 +14,16 @@ import (
 	"github.com/sematext/terraform-provider-sematext/sematext"
 )
 
-// resourceOperationAppMobilelogs is the resource class that handles sematext_app_mobilelogs
-func resourceOperationAppMobilelogs() *schema.Resource {
+// resourceAppMobilelogs is the resource class that handles sematext_app_mobilelogs
+func resourceAppMobilelogs() *schema.Resource {
 
 	return &schema.Resource{
+		Schema:        sematext.ResourceSchemaApp("mobile-logs"),
 		CreateContext: resourceOperationCreateAppMobilelogs,
 		ReadContext:   resourceOperationReadAppMobilelogs,
 		UpdateContext: resourceOperationUpdateAppMobilelogs,
 		DeleteContext: resourceOperationDeleteAppMobilelogs,
-		Schema:        sematext.ResourceSchemaApp("mobile-logs"),
-		Importer:      sematext.ResourceImporterApp("mobile-logs"),
+		Importer:      resourceOperationImportAppMobilelogs(),
 	}
 }
 
@@ -50,4 +50,10 @@ func resourceOperationUpdateAppMobilelogs(ctx context.Context, d *schema.Resourc
 func resourceOperationDeleteAppMobilelogs(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	apptype := "mobile-logs"
 	return sematext.ResourceOperationDeleteApp(ctx, d, meta, apptype)
+}
+
+// resourceOperationImportAppMobilelogs imports a sematext_app_mobilelogs resource into the state file.
+func resourceOperationImportAppMobilelogs() *schema.ResourceImporter {
+	apptype := "mobile-logs"
+	return sematext.ResourceOperationImportApp(apptype)
 }

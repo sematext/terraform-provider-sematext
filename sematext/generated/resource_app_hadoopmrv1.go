@@ -14,16 +14,16 @@ import (
 	"github.com/sematext/terraform-provider-sematext/sematext"
 )
 
-// resourceOperationAppHadoopmrv1 is the resource class that handles sematext_app_hadoopmrv1
-func resourceOperationAppHadoopmrv1() *schema.Resource {
+// resourceAppHadoopmrv1 is the resource class that handles sematext_app_hadoopmrv1
+func resourceAppHadoopmrv1() *schema.Resource {
 
 	return &schema.Resource{
+		Schema:        sematext.ResourceSchemaApp("Hadoop-MRv1"),
 		CreateContext: resourceOperationCreateAppHadoopmrv1,
 		ReadContext:   resourceOperationReadAppHadoopmrv1,
 		UpdateContext: resourceOperationUpdateAppHadoopmrv1,
 		DeleteContext: resourceOperationDeleteAppHadoopmrv1,
-		Schema:        sematext.ResourceSchemaApp("Hadoop-MRv1"),
-		Importer:      sematext.ResourceImporterApp("Hadoop-MRv1"),
+		Importer:      resourceOperationImportAppHadoopmrv1(),
 	}
 }
 
@@ -50,4 +50,10 @@ func resourceOperationUpdateAppHadoopmrv1(ctx context.Context, d *schema.Resourc
 func resourceOperationDeleteAppHadoopmrv1(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	apptype := "Hadoop-MRv1"
 	return sematext.ResourceOperationDeleteApp(ctx, d, meta, apptype)
+}
+
+// resourceOperationImportAppHadoopmrv1 imports a sematext_app_hadoopmrv1 resource into the state file.
+func resourceOperationImportAppHadoopmrv1() *schema.ResourceImporter {
+	apptype := "Hadoop-MRv1"
+	return sematext.ResourceOperationImportApp(apptype)
 }

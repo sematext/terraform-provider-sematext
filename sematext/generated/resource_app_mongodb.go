@@ -14,16 +14,16 @@ import (
 	"github.com/sematext/terraform-provider-sematext/sematext"
 )
 
-// resourceOperationAppMongodb is the resource class that handles sematext_app_mongodb
-func resourceOperationAppMongodb() *schema.Resource {
+// resourceAppMongodb is the resource class that handles sematext_app_mongodb
+func resourceAppMongodb() *schema.Resource {
 
 	return &schema.Resource{
+		Schema:        sematext.ResourceSchemaApp("MongoDB"),
 		CreateContext: resourceOperationCreateAppMongodb,
 		ReadContext:   resourceOperationReadAppMongodb,
 		UpdateContext: resourceOperationUpdateAppMongodb,
 		DeleteContext: resourceOperationDeleteAppMongodb,
-		Schema:        sematext.ResourceSchemaApp("MongoDB"),
-		Importer:      sematext.ResourceImporterApp("MongoDB"),
+		Importer:      resourceOperationImportAppMongodb(),
 	}
 }
 
@@ -50,4 +50,10 @@ func resourceOperationUpdateAppMongodb(ctx context.Context, d *schema.ResourceDa
 func resourceOperationDeleteAppMongodb(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	apptype := "MongoDB"
 	return sematext.ResourceOperationDeleteApp(ctx, d, meta, apptype)
+}
+
+// resourceOperationImportAppMongodb imports a sematext_app_mongodb resource into the state file.
+func resourceOperationImportAppMongodb() *schema.ResourceImporter {
+	apptype := "MongoDB"
+	return sematext.ResourceOperationImportApp(apptype)
 }

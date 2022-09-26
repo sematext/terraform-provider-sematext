@@ -14,16 +14,16 @@ import (
 	"github.com/sematext/terraform-provider-sematext/sematext"
 )
 
-// resourceOperationAppPostgresql is the resource class that handles sematext_app_postgresql
-func resourceOperationAppPostgresql() *schema.Resource {
+// resourceAppPostgresql is the resource class that handles sematext_app_postgresql
+func resourceAppPostgresql() *schema.Resource {
 
 	return &schema.Resource{
+		Schema:        sematext.ResourceSchemaApp("postgresql"),
 		CreateContext: resourceOperationCreateAppPostgresql,
 		ReadContext:   resourceOperationReadAppPostgresql,
 		UpdateContext: resourceOperationUpdateAppPostgresql,
 		DeleteContext: resourceOperationDeleteAppPostgresql,
-		Schema:        sematext.ResourceSchemaApp("postgresql"),
-		Importer:      sematext.ResourceImporterApp("postgresql"),
+		Importer:      resourceOperationImportAppPostgresql(),
 	}
 }
 
@@ -50,4 +50,10 @@ func resourceOperationUpdateAppPostgresql(ctx context.Context, d *schema.Resourc
 func resourceOperationDeleteAppPostgresql(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	apptype := "postgresql"
 	return sematext.ResourceOperationDeleteApp(ctx, d, meta, apptype)
+}
+
+// resourceOperationImportAppPostgresql imports a sematext_app_postgresql resource into the state file.
+func resourceOperationImportAppPostgresql() *schema.ResourceImporter {
+	apptype := "postgresql"
+	return sematext.ResourceOperationImportApp(apptype)
 }

@@ -14,16 +14,16 @@ import (
 	"github.com/sematext/terraform-provider-sematext/sematext"
 )
 
-// resourceOperationAppHaproxy is the resource class that handles sematext_app_haproxy
-func resourceOperationAppHaproxy() *schema.Resource {
+// resourceAppHaproxy is the resource class that handles sematext_app_haproxy
+func resourceAppHaproxy() *schema.Resource {
 
 	return &schema.Resource{
+		Schema:        sematext.ResourceSchemaApp("HAProxy"),
 		CreateContext: resourceOperationCreateAppHaproxy,
 		ReadContext:   resourceOperationReadAppHaproxy,
 		UpdateContext: resourceOperationUpdateAppHaproxy,
 		DeleteContext: resourceOperationDeleteAppHaproxy,
-		Schema:        sematext.ResourceSchemaApp("HAProxy"),
-		Importer:      sematext.ResourceImporterApp("HAProxy"),
+		Importer:      resourceOperationImportAppHaproxy(),
 	}
 }
 
@@ -50,4 +50,10 @@ func resourceOperationUpdateAppHaproxy(ctx context.Context, d *schema.ResourceDa
 func resourceOperationDeleteAppHaproxy(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	apptype := "HAProxy"
 	return sematext.ResourceOperationDeleteApp(ctx, d, meta, apptype)
+}
+
+// resourceOperationImportAppHaproxy imports a sematext_app_haproxy resource into the state file.
+func resourceOperationImportAppHaproxy() *schema.ResourceImporter {
+	apptype := "HAProxy"
+	return sematext.ResourceOperationImportApp(apptype)
 }

@@ -14,16 +14,16 @@ import (
 	"github.com/sematext/terraform-provider-sematext/sematext"
 )
 
-// resourceOperationAppStorm is the resource class that handles sematext_app_storm
-func resourceOperationAppStorm() *schema.Resource {
+// resourceAppStorm is the resource class that handles sematext_app_storm
+func resourceAppStorm() *schema.Resource {
 
 	return &schema.Resource{
+		Schema:        sematext.ResourceSchemaApp("Storm"),
 		CreateContext: resourceOperationCreateAppStorm,
 		ReadContext:   resourceOperationReadAppStorm,
 		UpdateContext: resourceOperationUpdateAppStorm,
 		DeleteContext: resourceOperationDeleteAppStorm,
-		Schema:        sematext.ResourceSchemaApp("Storm"),
-		Importer:      sematext.ResourceImporterApp("Storm"),
+		Importer:      resourceOperationImportAppStorm(),
 	}
 }
 
@@ -50,4 +50,10 @@ func resourceOperationUpdateAppStorm(ctx context.Context, d *schema.ResourceData
 func resourceOperationDeleteAppStorm(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	apptype := "Storm"
 	return sematext.ResourceOperationDeleteApp(ctx, d, meta, apptype)
+}
+
+// resourceOperationImportAppStorm imports a sematext_app_storm resource into the state file.
+func resourceOperationImportAppStorm() *schema.ResourceImporter {
+	apptype := "Storm"
+	return sematext.ResourceOperationImportApp(apptype)
 }

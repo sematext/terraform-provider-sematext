@@ -14,16 +14,16 @@ import (
 	"github.com/sematext/terraform-provider-sematext/sematext"
 )
 
-// resourceOperationAppMysql is the resource class that handles sematext_app_mysql
-func resourceOperationAppMysql() *schema.Resource {
+// resourceAppMysql is the resource class that handles sematext_app_mysql
+func resourceAppMysql() *schema.Resource {
 
 	return &schema.Resource{
+		Schema:        sematext.ResourceSchemaApp("MySQL"),
 		CreateContext: resourceOperationCreateAppMysql,
 		ReadContext:   resourceOperationReadAppMysql,
 		UpdateContext: resourceOperationUpdateAppMysql,
 		DeleteContext: resourceOperationDeleteAppMysql,
-		Schema:        sematext.ResourceSchemaApp("MySQL"),
-		Importer:      sematext.ResourceImporterApp("MySQL"),
+		Importer:      resourceOperationImportAppMysql(),
 	}
 }
 
@@ -50,4 +50,10 @@ func resourceOperationUpdateAppMysql(ctx context.Context, d *schema.ResourceData
 func resourceOperationDeleteAppMysql(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	apptype := "MySQL"
 	return sematext.ResourceOperationDeleteApp(ctx, d, meta, apptype)
+}
+
+// resourceOperationImportAppMysql imports a sematext_app_mysql resource into the state file.
+func resourceOperationImportAppMysql() *schema.ResourceImporter {
+	apptype := "MySQL"
+	return sematext.ResourceOperationImportApp(apptype)
 }

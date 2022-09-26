@@ -14,16 +14,16 @@ import (
 	"github.com/sematext/terraform-provider-sematext/sematext"
 )
 
-// resourceOperationAppInfra is the resource class that handles sematext_app_infra
-func resourceOperationAppInfra() *schema.Resource {
+// resourceAppInfra is the resource class that handles sematext_app_infra
+func resourceAppInfra() *schema.Resource {
 
 	return &schema.Resource{
+		Schema:        sematext.ResourceSchemaApp("Infra"),
 		CreateContext: resourceOperationCreateAppInfra,
 		ReadContext:   resourceOperationReadAppInfra,
 		UpdateContext: resourceOperationUpdateAppInfra,
 		DeleteContext: resourceOperationDeleteAppInfra,
-		Schema:        sematext.ResourceSchemaApp("Infra"),
-		Importer:      sematext.ResourceImporterApp("Infra"),
+		Importer:      resourceOperationImportAppInfra(),
 	}
 }
 
@@ -50,4 +50,10 @@ func resourceOperationUpdateAppInfra(ctx context.Context, d *schema.ResourceData
 func resourceOperationDeleteAppInfra(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	apptype := "Infra"
 	return sematext.ResourceOperationDeleteApp(ctx, d, meta, apptype)
+}
+
+// resourceOperationImportAppInfra imports a sematext_app_infra resource into the state file.
+func resourceOperationImportAppInfra() *schema.ResourceImporter {
+	apptype := "Infra"
+	return sematext.ResourceOperationImportApp(apptype)
 }

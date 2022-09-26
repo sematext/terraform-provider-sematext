@@ -14,16 +14,16 @@ import (
 	"github.com/sematext/terraform-provider-sematext/sematext"
 )
 
-// resourceOperationAppRedis is the resource class that handles sematext_app_redis
-func resourceOperationAppRedis() *schema.Resource {
+// resourceAppRedis is the resource class that handles sematext_app_redis
+func resourceAppRedis() *schema.Resource {
 
 	return &schema.Resource{
+		Schema:        sematext.ResourceSchemaApp("Redis"),
 		CreateContext: resourceOperationCreateAppRedis,
 		ReadContext:   resourceOperationReadAppRedis,
 		UpdateContext: resourceOperationUpdateAppRedis,
 		DeleteContext: resourceOperationDeleteAppRedis,
-		Schema:        sematext.ResourceSchemaApp("Redis"),
-		Importer:      sematext.ResourceImporterApp("Redis"),
+		Importer:      resourceOperationImportAppRedis(),
 	}
 }
 
@@ -50,4 +50,10 @@ func resourceOperationUpdateAppRedis(ctx context.Context, d *schema.ResourceData
 func resourceOperationDeleteAppRedis(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	apptype := "Redis"
 	return sematext.ResourceOperationDeleteApp(ctx, d, meta, apptype)
+}
+
+// resourceOperationImportAppRedis imports a sematext_app_redis resource into the state file.
+func resourceOperationImportAppRedis() *schema.ResourceImporter {
+	apptype := "Redis"
+	return sematext.ResourceOperationImportApp(apptype)
 }

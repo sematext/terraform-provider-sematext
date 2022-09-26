@@ -14,16 +14,16 @@ import (
 	"github.com/sematext/terraform-provider-sematext/sematext"
 )
 
-// resourceOperationAppSpark is the resource class that handles sematext_app_spark
-func resourceOperationAppSpark() *schema.Resource {
+// resourceAppSpark is the resource class that handles sematext_app_spark
+func resourceAppSpark() *schema.Resource {
 
 	return &schema.Resource{
+		Schema:        sematext.ResourceSchemaApp("Spark"),
 		CreateContext: resourceOperationCreateAppSpark,
 		ReadContext:   resourceOperationReadAppSpark,
 		UpdateContext: resourceOperationUpdateAppSpark,
 		DeleteContext: resourceOperationDeleteAppSpark,
-		Schema:        sematext.ResourceSchemaApp("Spark"),
-		Importer:      sematext.ResourceImporterApp("Spark"),
+		Importer:      resourceOperationImportAppSpark(),
 	}
 }
 
@@ -50,4 +50,10 @@ func resourceOperationUpdateAppSpark(ctx context.Context, d *schema.ResourceData
 func resourceOperationDeleteAppSpark(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	apptype := "Spark"
 	return sematext.ResourceOperationDeleteApp(ctx, d, meta, apptype)
+}
+
+// resourceOperationImportAppSpark imports a sematext_app_spark resource into the state file.
+func resourceOperationImportAppSpark() *schema.ResourceImporter {
+	apptype := "Spark"
+	return sematext.ResourceOperationImportApp(apptype)
 }

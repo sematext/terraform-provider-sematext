@@ -14,16 +14,16 @@ import (
 	"github.com/sematext/terraform-provider-sematext/sematext"
 )
 
-// resourceOperationAppRabbitmq is the resource class that handles sematext_app_rabbitmq
-func resourceOperationAppRabbitmq() *schema.Resource {
+// resourceAppRabbitmq is the resource class that handles sematext_app_rabbitmq
+func resourceAppRabbitmq() *schema.Resource {
 
 	return &schema.Resource{
+		Schema:        sematext.ResourceSchemaApp("rabbitmq"),
 		CreateContext: resourceOperationCreateAppRabbitmq,
 		ReadContext:   resourceOperationReadAppRabbitmq,
 		UpdateContext: resourceOperationUpdateAppRabbitmq,
 		DeleteContext: resourceOperationDeleteAppRabbitmq,
-		Schema:        sematext.ResourceSchemaApp("rabbitmq"),
-		Importer:      sematext.ResourceImporterApp("rabbitmq"),
+		Importer:      resourceOperationImportAppRabbitmq(),
 	}
 }
 
@@ -50,4 +50,10 @@ func resourceOperationUpdateAppRabbitmq(ctx context.Context, d *schema.ResourceD
 func resourceOperationDeleteAppRabbitmq(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	apptype := "rabbitmq"
 	return sematext.ResourceOperationDeleteApp(ctx, d, meta, apptype)
+}
+
+// resourceOperationImportAppRabbitmq imports a sematext_app_rabbitmq resource into the state file.
+func resourceOperationImportAppRabbitmq() *schema.ResourceImporter {
+	apptype := "rabbitmq"
+	return sematext.ResourceOperationImportApp(apptype)
 }

@@ -14,16 +14,16 @@ import (
 	"github.com/sematext/terraform-provider-sematext/sematext"
 )
 
-// resourceOperationAppZookeeper is the resource class that handles sematext_app_zookeeper
-func resourceOperationAppZookeeper() *schema.Resource {
+// resourceAppZookeeper is the resource class that handles sematext_app_zookeeper
+func resourceAppZookeeper() *schema.Resource {
 
 	return &schema.Resource{
+		Schema:        sematext.ResourceSchemaApp("ZooKeeper"),
 		CreateContext: resourceOperationCreateAppZookeeper,
 		ReadContext:   resourceOperationReadAppZookeeper,
 		UpdateContext: resourceOperationUpdateAppZookeeper,
 		DeleteContext: resourceOperationDeleteAppZookeeper,
-		Schema:        sematext.ResourceSchemaApp("ZooKeeper"),
-		Importer:      sematext.ResourceImporterApp("ZooKeeper"),
+		Importer:      resourceOperationImportAppZookeeper(),
 	}
 }
 
@@ -50,4 +50,10 @@ func resourceOperationUpdateAppZookeeper(ctx context.Context, d *schema.Resource
 func resourceOperationDeleteAppZookeeper(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	apptype := "ZooKeeper"
 	return sematext.ResourceOperationDeleteApp(ctx, d, meta, apptype)
+}
+
+// resourceOperationImportAppZookeeper imports a sematext_app_zookeeper resource into the state file.
+func resourceOperationImportAppZookeeper() *schema.ResourceImporter {
+	apptype := "ZooKeeper"
+	return sematext.ResourceOperationImportApp(apptype)
 }

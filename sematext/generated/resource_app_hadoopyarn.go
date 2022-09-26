@@ -14,16 +14,16 @@ import (
 	"github.com/sematext/terraform-provider-sematext/sematext"
 )
 
-// resourceOperationAppHadoopyarn is the resource class that handles sematext_app_hadoopyarn
-func resourceOperationAppHadoopyarn() *schema.Resource {
+// resourceAppHadoopyarn is the resource class that handles sematext_app_hadoopyarn
+func resourceAppHadoopyarn() *schema.Resource {
 
 	return &schema.Resource{
+		Schema:        sematext.ResourceSchemaApp("Hadoop-YARN"),
 		CreateContext: resourceOperationCreateAppHadoopyarn,
 		ReadContext:   resourceOperationReadAppHadoopyarn,
 		UpdateContext: resourceOperationUpdateAppHadoopyarn,
 		DeleteContext: resourceOperationDeleteAppHadoopyarn,
-		Schema:        sematext.ResourceSchemaApp("Hadoop-YARN"),
-		Importer:      sematext.ResourceImporterApp("Hadoop-YARN"),
+		Importer:      resourceOperationImportAppHadoopyarn(),
 	}
 }
 
@@ -50,4 +50,10 @@ func resourceOperationUpdateAppHadoopyarn(ctx context.Context, d *schema.Resourc
 func resourceOperationDeleteAppHadoopyarn(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	apptype := "Hadoop-YARN"
 	return sematext.ResourceOperationDeleteApp(ctx, d, meta, apptype)
+}
+
+// resourceOperationImportAppHadoopyarn imports a sematext_app_hadoopyarn resource into the state file.
+func resourceOperationImportAppHadoopyarn() *schema.ResourceImporter {
+	apptype := "Hadoop-YARN"
+	return sematext.ResourceOperationImportApp(apptype)
 }

@@ -14,16 +14,16 @@ import (
 	"github.com/sematext/terraform-provider-sematext/sematext"
 )
 
-// resourceOperationAppLogsene is the resource class that handles sematext_app_logsene
-func resourceOperationAppLogsene() *schema.Resource {
+// resourceAppLogsene is the resource class that handles sematext_app_logsene
+func resourceAppLogsene() *schema.Resource {
 
 	return &schema.Resource{
+		Schema:        sematext.ResourceSchemaApp("Logsene"),
 		CreateContext: resourceOperationCreateAppLogsene,
 		ReadContext:   resourceOperationReadAppLogsene,
 		UpdateContext: resourceOperationUpdateAppLogsene,
 		DeleteContext: resourceOperationDeleteAppLogsene,
-		Schema:        sematext.ResourceSchemaApp("Logsene"),
-		Importer:      sematext.ResourceImporterApp("Logsene"),
+		Importer:      resourceOperationImportAppLogsene(),
 	}
 }
 
@@ -50,4 +50,10 @@ func resourceOperationUpdateAppLogsene(ctx context.Context, d *schema.ResourceDa
 func resourceOperationDeleteAppLogsene(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	apptype := "Logsene"
 	return sematext.ResourceOperationDeleteApp(ctx, d, meta, apptype)
+}
+
+// resourceOperationImportAppLogsene imports a sematext_app_logsene resource into the state file.
+func resourceOperationImportAppLogsene() *schema.ResourceImporter {
+	apptype := "Logsene"
+	return sematext.ResourceOperationImportApp(apptype)
 }

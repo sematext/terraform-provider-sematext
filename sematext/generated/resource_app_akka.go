@@ -14,16 +14,16 @@ import (
 	"github.com/sematext/terraform-provider-sematext/sematext"
 )
 
-// resourceOperationAppAkka is the resource class that handles sematext_app_akka
-func resourceOperationAppAkka() *schema.Resource {
+// resourceAppAkka is the resource class that handles sematext_app_akka
+func resourceAppAkka() *schema.Resource {
 
 	return &schema.Resource{
+		Schema:        sematext.ResourceSchemaApp("Akka"),
 		CreateContext: resourceOperationCreateAppAkka,
 		ReadContext:   resourceOperationReadAppAkka,
 		UpdateContext: resourceOperationUpdateAppAkka,
 		DeleteContext: resourceOperationDeleteAppAkka,
-		Schema:        sematext.ResourceSchemaApp("Akka"),
-		Importer:      sematext.ResourceImporterApp("Akka"),
+		Importer:      resourceOperationImportAppAkka(),
 	}
 }
 
@@ -50,4 +50,10 @@ func resourceOperationUpdateAppAkka(ctx context.Context, d *schema.ResourceData,
 func resourceOperationDeleteAppAkka(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	apptype := "Akka"
 	return sematext.ResourceOperationDeleteApp(ctx, d, meta, apptype)
+}
+
+// resourceOperationImportAppAkka imports a sematext_app_akka resource into the state file.
+func resourceOperationImportAppAkka() *schema.ResourceImporter {
+	apptype := "Akka"
+	return sematext.ResourceOperationImportApp(apptype)
 }

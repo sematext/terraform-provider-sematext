@@ -14,16 +14,16 @@ import (
 	"github.com/sematext/terraform-provider-sematext/sematext"
 )
 
-// resourceOperationAppNodejs is the resource class that handles sematext_app_nodejs
-func resourceOperationAppNodejs() *schema.Resource {
+// resourceAppNodejs is the resource class that handles sematext_app_nodejs
+func resourceAppNodejs() *schema.Resource {
 
 	return &schema.Resource{
+		Schema:        sematext.ResourceSchemaApp("Node.js"),
 		CreateContext: resourceOperationCreateAppNodejs,
 		ReadContext:   resourceOperationReadAppNodejs,
 		UpdateContext: resourceOperationUpdateAppNodejs,
 		DeleteContext: resourceOperationDeleteAppNodejs,
-		Schema:        sematext.ResourceSchemaApp("Node.js"),
-		Importer:      sematext.ResourceImporterApp("Node.js"),
+		Importer:      resourceOperationImportAppNodejs(),
 	}
 }
 
@@ -50,4 +50,10 @@ func resourceOperationUpdateAppNodejs(ctx context.Context, d *schema.ResourceDat
 func resourceOperationDeleteAppNodejs(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	apptype := "Node.js"
 	return sematext.ResourceOperationDeleteApp(ctx, d, meta, apptype)
+}
+
+// resourceOperationImportAppNodejs imports a sematext_app_nodejs resource into the state file.
+func resourceOperationImportAppNodejs() *schema.ResourceImporter {
+	apptype := "Node.js"
+	return sematext.ResourceOperationImportApp(apptype)
 }

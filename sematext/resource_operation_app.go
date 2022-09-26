@@ -419,14 +419,9 @@ func ResourceOperationDeleteApp(ctx context.Context, d *schema.ResourceData, met
 }
 
 // ResourceOperationImportApp  is a common import handler used by most resources.
-func ResourceOperationImportApp(apptype string) ([]*schema.ResourceData, error) {
+func ResourceOperationImportApp(appType string) *schema.ResourceImporter {
 
-	// TODO Decide if Resource Import necessary post-MVP
-
-	fmt.Println("---------------------------------------")
-	fmt.Println("ResourceOperationImportApp Called")
-	fmt.Println("---------------------------------------")
-
-	return nil, nil
-
+	return &schema.ResourceImporter{
+		StateContext: schema.ImportStatePassthroughContext,
+	}
 }

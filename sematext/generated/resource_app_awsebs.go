@@ -14,16 +14,16 @@ import (
 	"github.com/sematext/terraform-provider-sematext/sematext"
 )
 
-// resourceOperationAppAwsebs is the resource class that handles sematext_app_awsebs
-func resourceOperationAppAwsebs() *schema.Resource {
+// resourceAppAwsebs is the resource class that handles sematext_app_awsebs
+func resourceAppAwsebs() *schema.Resource {
 
 	return &schema.Resource{
+		Schema:        sematext.ResourceSchemaApp("AWS EBS"),
 		CreateContext: resourceOperationCreateAppAwsebs,
 		ReadContext:   resourceOperationReadAppAwsebs,
 		UpdateContext: resourceOperationUpdateAppAwsebs,
 		DeleteContext: resourceOperationDeleteAppAwsebs,
-		Schema:        sematext.ResourceSchemaApp("AWS EBS"),
-		Importer:      sematext.ResourceImporterApp("AWS EBS"),
+		Importer:      resourceOperationImportAppAwsebs(),
 	}
 }
 
@@ -50,4 +50,10 @@ func resourceOperationUpdateAppAwsebs(ctx context.Context, d *schema.ResourceDat
 func resourceOperationDeleteAppAwsebs(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	apptype := "AWS EBS"
 	return sematext.ResourceOperationDeleteApp(ctx, d, meta, apptype)
+}
+
+// resourceOperationImportAppAwsebs imports a sematext_app_awsebs resource into the state file.
+func resourceOperationImportAppAwsebs() *schema.ResourceImporter {
+	apptype := "AWS EBS"
+	return sematext.ResourceOperationImportApp(apptype)
 }

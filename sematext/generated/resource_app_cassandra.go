@@ -14,16 +14,16 @@ import (
 	"github.com/sematext/terraform-provider-sematext/sematext"
 )
 
-// resourceOperationAppCassandra is the resource class that handles sematext_app_cassandra
-func resourceOperationAppCassandra() *schema.Resource {
+// resourceAppCassandra is the resource class that handles sematext_app_cassandra
+func resourceAppCassandra() *schema.Resource {
 
 	return &schema.Resource{
+		Schema:        sematext.ResourceSchemaApp("Cassandra"),
 		CreateContext: resourceOperationCreateAppCassandra,
 		ReadContext:   resourceOperationReadAppCassandra,
 		UpdateContext: resourceOperationUpdateAppCassandra,
 		DeleteContext: resourceOperationDeleteAppCassandra,
-		Schema:        sematext.ResourceSchemaApp("Cassandra"),
-		Importer:      sematext.ResourceImporterApp("Cassandra"),
+		Importer:      resourceOperationImportAppCassandra(),
 	}
 }
 
@@ -50,4 +50,10 @@ func resourceOperationUpdateAppCassandra(ctx context.Context, d *schema.Resource
 func resourceOperationDeleteAppCassandra(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	apptype := "Cassandra"
 	return sematext.ResourceOperationDeleteApp(ctx, d, meta, apptype)
+}
+
+// resourceOperationImportAppCassandra imports a sematext_app_cassandra resource into the state file.
+func resourceOperationImportAppCassandra() *schema.ResourceImporter {
+	apptype := "Cassandra"
+	return sematext.ResourceOperationImportApp(apptype)
 }

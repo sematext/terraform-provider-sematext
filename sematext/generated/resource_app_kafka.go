@@ -14,16 +14,16 @@ import (
 	"github.com/sematext/terraform-provider-sematext/sematext"
 )
 
-// resourceOperationAppKafka is the resource class that handles sematext_app_kafka
-func resourceOperationAppKafka() *schema.Resource {
+// resourceAppKafka is the resource class that handles sematext_app_kafka
+func resourceAppKafka() *schema.Resource {
 
 	return &schema.Resource{
+		Schema:        sematext.ResourceSchemaApp("Kafka"),
 		CreateContext: resourceOperationCreateAppKafka,
 		ReadContext:   resourceOperationReadAppKafka,
 		UpdateContext: resourceOperationUpdateAppKafka,
 		DeleteContext: resourceOperationDeleteAppKafka,
-		Schema:        sematext.ResourceSchemaApp("Kafka"),
-		Importer:      sematext.ResourceImporterApp("Kafka"),
+		Importer:      resourceOperationImportAppKafka(),
 	}
 }
 
@@ -50,4 +50,10 @@ func resourceOperationUpdateAppKafka(ctx context.Context, d *schema.ResourceData
 func resourceOperationDeleteAppKafka(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	apptype := "Kafka"
 	return sematext.ResourceOperationDeleteApp(ctx, d, meta, apptype)
+}
+
+// resourceOperationImportAppKafka imports a sematext_app_kafka resource into the state file.
+func resourceOperationImportAppKafka() *schema.ResourceImporter {
+	apptype := "Kafka"
+	return sematext.ResourceOperationImportApp(apptype)
 }

@@ -14,16 +14,16 @@ import (
 	"github.com/sematext/terraform-provider-sematext/sematext"
 )
 
-// resourceOperationApp<<CLASS_NAME>> is the resource class that handles <<RESOURCE_NAME>>
-func resourceOperationApp<<CLASS_NAME>>() *schema.Resource {
+// resourceApp<<CLASS_NAME>> is the resource class that handles <<RESOURCE_NAME>>
+func resourceApp<<CLASS_NAME>>() *schema.Resource {
 
 	return &schema.Resource{
+		Schema: 		sematext.ResourceSchemaApp("<<APP_TYPE>>"),
 		CreateContext: 	resourceOperationCreateApp<<CLASS_NAME>>,
 		ReadContext:   	resourceOperationReadApp<<CLASS_NAME>>,
 		UpdateContext: 	resourceOperationUpdateApp<<CLASS_NAME>>,
 		DeleteContext: 	resourceOperationDeleteApp<<CLASS_NAME>>,
-		Schema: 		sematext.ResourceSchemaApp("<<APP_TYPE>>"),
-		Importer : 		sematext.ResourceImporterApp("<<APP_TYPE>>"),
+		Importer: 		resourceOperationImportApp<<CLASS_NAME>>(),
 	}
 }
 
@@ -50,6 +50,12 @@ func resourceOperationUpdateApp<<CLASS_NAME>>(ctx context.Context, d *schema.Res
 func resourceOperationDeleteApp<<CLASS_NAME>>(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	apptype := "<<APP_TYPE>>"
 	return sematext.ResourceOperationDeleteApp(ctx, d, meta, apptype)
+}
+
+// resourceOperationImportApp<<CLASS_NAME>> imports a <<RESOURCE_NAME>> resource into the state file.
+func resourceOperationImportApp<<CLASS_NAME>>() *schema.ResourceImporter {
+	apptype := "<<APP_TYPE>>"
+	return sematext.ResourceOperationImportApp(apptype)
 }
 
 
