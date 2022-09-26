@@ -1,8 +1,8 @@
 # <img src="https://sematext.com/wp-content/uploads/2020/09/just-octi-blue.png" valign="bottom" width="60px"/>**&nbsp;&nbsp;Terraform Provider For Sematext Cloud**
 
-# Sematext MongoDB Resource
+# Sematext Cassandra Resource
 
-Creates a monitoring application within [Sematext Cloud](https://sematext.com/cloud/).
+Creates a monitoring application 'app' within [Sematext Cloud](https://sematext.com/cloud/).
 Refer to [Refer to Sematext Provider for authentication detail](../index.md)
 
 ## Example Usage
@@ -21,8 +21,8 @@ provider "sematext" {
   sematext_region = "US"
 }
 
-resource "sematext_monitor_mongodb" "mymonitor" {
-  name = "my monitor name"
+resource "sematext_app_cassandra" "myapp" {
+  name = "my app name"
   billing_plan_id = <[plan id](../guides/plans.md)>
   apptoken {
     name "my apptoken name"
@@ -36,7 +36,6 @@ resource "sematext_monitor_mongodb" "mymonitor" {
 * `name` - List attributes that this resource exports;
 * `billing_plan_id` - List attributes that this resource exports. [Refer to plan guidance for list of legal values](../guides/plans.md);
 * `apptoken.name` - Refer note below;
-
 
 ## App-tokens
 

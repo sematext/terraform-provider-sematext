@@ -1,8 +1,8 @@
 # <img src="https://sematext.com/wp-content/uploads/2020/09/just-octi-blue.png" valign="bottom" width="60px"/>**&nbsp;&nbsp;Terraform Provider For Sematext Cloud**
 
-# Sematext HAProxy Resource
+# Sematext Storm Resource
 
-Creates a monitoring application within [Sematext Cloud](https://sematext.com/cloud/).
+Creates a monitoring application 'app' within [Sematext Cloud](https://sematext.com/cloud/).
 Refer to [Refer to Sematext Provider for authentication detail](../index.md)
 
 ## Example Usage
@@ -21,8 +21,8 @@ provider "sematext" {
   sematext_region = "US"
 }
 
-resource "sematext_monitor_haproxy" "mymonitor" {
-  name = "my monitor name"
+resource "sematext_app_storm" "myapp" {
+  name = "my app name"
   billing_plan_id = <[plan id](../guides/plans.md)>
   apptoken {
     name "my apptoken name"
