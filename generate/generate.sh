@@ -52,22 +52,19 @@ do
     stripped=${apptype//[^[:alnum:]]/}
     lowercase=${stripped,,}
     titlecase=${lowercase^}
-
-    monitorfile="../sematext/resource_sematext_monitor_${lowercase}.go"
-    testfile="../sematext/resource_sematext_monitor_${lowercase}_test.go"
     classname=${titlecase}
-    resourcename="sematext_monitor_${lowercase}"
 
-    sed -e "s/<<CLASS_NAME>>/${classname}/g" -e "s/<<APP_TYPE>>/${apptype}/g" -e "s/<<RESOURCE_NAME>>/${resourcename}/g" ./resource_sematext_monitor.go.template > $monitorfile
-    sed -e "s/<<CLASS_NAME>>/${classname}/g" -e "s/<<APP_TYPE>>/${apptype}/g" -e "s/<<RESOURCE_NAME>>/${resourcename}/g" ./resource_sematext_monitor_test.go.template > $testfile
+    resourcename="sematext_app_${lowercase}"
+    sed -e "s/<<CLASS_NAME>>/${classname}/g" -e "s/<<APP_TYPE>>/${apptype}/g" -e "s/<<RESOURCE_NAME>>/${resourcename}/g" ./resource_app.go.template > "../sematext/generated/resource_app_${lowercase}.go"
+    sed -e "s/<<CLASS_NAME>>/${classname}/g" -e "s/<<APP_TYPE>>/${apptype}/g" -e "s/<<RESOURCE_NAME>>/${resourcename}/g" ./resource_app_test.go.template > "../sematext/generated/resource_app_${lowercase}_test.go"
+    resourcelist+="\"${resourcename}\": resourceApp${classname}(),\\n"
 
-    resourcelist+="\"${resourcename}\": resourceSematextMonitor${classname}(),\\n"
 
 done
 
 echo "Rewriting Terraform Provider and test file"
 
-sed -e "s/<<RESOURCE_LIST>>/${resourcelist}/g" ./provider.go.template > "../sematext/provider.go"
+sed -e "s/<<RESOURCE_LIST>>/${resourcelist}/g" ./provider.go.template > "../sematext/generated/provider.go"
 
 cd ..
 make fmt

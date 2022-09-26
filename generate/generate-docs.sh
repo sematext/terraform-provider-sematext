@@ -54,9 +54,9 @@ do
     lowercase=${stripped,,}
     titlecase=${lowercase^}
 
-    resourcetemplatefile="./resource_sematext_resource.md.template"
+    resourcetemplatefile="./resource_app.md.template"
     classname=${titlecase}
-    resourcename="sematext_monitor_${lowercase}"
+    resourcename="sematext_app_${lowercase}"
     resourcetargetfile="../docs/resources/${resourcename}.md"
     resourcelinks+="\* [$apptype](..\/docs\/resources\/${resourcename}.md)\n"
 

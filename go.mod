@@ -10,7 +10,7 @@ require (
 	github.com/hashicorp/terraform-plugin-sdk/v2 v2.20.0
 	//github.com/hashicorp/terraform-plugin-test/v2 v2.2.2 // indirect
 	github.com/sematext/sematext-api-client-go v1.5.0
-	github.com/davecgh/go-spew v1.1.1 
+	github.com/davecgh/go-spew v1.1.1  // indirect
 )
 
 require (

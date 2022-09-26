@@ -10,14 +10,14 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"os"
 	"net/url"
+	"os"
 
+	"github.com/blang/semver/v4"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/meta"
 	"github.com/sematext/sematext-api-client-go/stcloud"
-	"github.com/blang/semver/v4"
 	"github.com/sematext/terraform-provider-sematext/sematext"
 )
 
@@ -43,7 +43,37 @@ func Provider() *schema.Provider {
 		},
 
 		ResourcesMap: map[string]*schema.Resource{
-<<RESOURCE_LIST>>
+			"sematext_app_akka":          resourceAppAkka(),
+			"sematext_app_apache":        resourceAppApache(),
+			"sematext_app_awsebs":        resourceAppAwsebs(),
+			"sematext_app_awsec2":        resourceAppAwsec2(),
+			"sematext_app_awselb":        resourceAppAwselb(),
+			"sematext_app_cassandra":     resourceAppCassandra(),
+			"sematext_app_clickhouse":    resourceAppClickhouse(),
+			"sematext_app_elasticsearch": resourceAppElasticsearch(),
+			"sematext_app_hadoopmrv1":    resourceAppHadoopmrv1(),
+			"sematext_app_hadoopyarn":    resourceAppHadoopyarn(),
+			"sematext_app_haproxy":       resourceAppHaproxy(),
+			"sematext_app_hbase":         resourceAppHbase(),
+			"sematext_app_infra":         resourceAppInfra(),
+			"sematext_app_jvm":           resourceAppJvm(),
+			"sematext_app_kafka":         resourceAppKafka(),
+			"sematext_app_logsene":       resourceAppLogsene(),
+			"sematext_app_mongodb":       resourceAppMongodb(),
+			"sematext_app_mysql":         resourceAppMysql(),
+			"sematext_app_nginx":         resourceAppNginx(),
+			"sematext_app_nginxplus":     resourceAppNginxplus(),
+			"sematext_app_nodejs":        resourceAppNodejs(),
+			"sematext_app_redis":         resourceAppRedis(),
+			"sematext_app_solr":          resourceAppSolr(),
+			"sematext_app_solrcloud":     resourceAppSolrcloud(),
+			"sematext_app_spark":         resourceAppSpark(),
+			"sematext_app_storm":         resourceAppStorm(),
+			"sematext_app_tomcat":        resourceAppTomcat(),
+			"sematext_app_zookeeper":     resourceAppZookeeper(),
+			"sematext_app_postgresql":    resourceAppPostgresql(),
+			"sematext_app_rabbitmq":      resourceAppRabbitmq(),
+			"sematext_app_mobilelogs":    resourceAppMobilelogs(),
 		},
 	}
 
