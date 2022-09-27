@@ -1,0 +1,28 @@
+Things to fix in Alert API on SC API
+
+
+1) No alert id produced when creating.
+
+https://apps.sematext.com/api-explorer/#/Alerts/createAlertUsingPOST_1
+
+/users-web/api/v3/alerts Create  - this doesn't return an id for the created AlertRule
+
+The id is referenced in the other REST ops as updateableAlertId but it is not provided anywhere.
+
+DELETE /users-web/api/v3/alerts/{updateableAlertId}
+
+Note you'll need to:
+
+- Add the id field into AlertRule struct and populate it
+- Update the swagger spec
+
+
+2) AlertRule.metadata needs to be spelled out explicitly in the Swagger schema. No information available
+e.g. OneOf for each of the integrations
+
+
+
+3) Swagger response from a Create (/users-web/api/v3/alerts) operation is incorrectly returning an AlertRule. Should be
+
+
+

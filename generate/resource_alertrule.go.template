@@ -1,0 +1,54 @@
+package generated
+
+/*
+	Note: Generated file, any edits will be overwritten!
+	Correct way to alter is to edit generate/resource_sematext_app.go.template
+	Then run generate/generate.sh
+*/
+
+import (
+	"context"
+
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
+	"github.com/sematext/terraform-provider-sematext/sematext"
+)
+
+// resourceAlertRule<<CLASS_NAME>> is the resource class that handles <<RESOURCE_NAME>>
+func resourceAlertRule<<CLASS_NAME>>() *schema.Resource {
+
+	return &schema.Resource{
+		Schema:        sematext.ResourceSchemaAlertRule("<<APP_TYPE>>"),
+		CreateContext: resourceOperationCreateAlertRule<<CLASS_NAME>>,
+		ReadContext:   resourceOperationReadAlertRule<<CLASS_NAME>>,
+		UpdateContext: resourceOperationUpdateAlertRule<<CLASS_NAME>>,
+		DeleteContext: resourceOperationDeleteAlertRule<<CLASS_NAME>>,
+		Importer:      resourceOperationImportAlertRule<<CLASS_NAME>>(),
+	}
+}
+
+// resourceOperationCreateAlertRule<<CLASS_NAME>> creates the <<RESOURCE_NAME>> resource.
+func resourceOperationCreateAlertRule<<CLASS_NAME>>(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+	return sematext.ResourceOperationCreateAlertRule(ctx, d, meta, "<<APP_TYPE>>")
+}
+
+// resourceOperationReadAlertRule<<CLASS_NAME>> reads the <<RESOURCE_NAME>> resource from Sematext Cloud.
+func resourceOperationReadAlertRule<<CLASS_NAME>>(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+	return sematext.ResourceOperationReadAlertRule(ctx, d, meta, "<<APP_TYPE>>")
+}
+
+// resourceOperationUpdateAlertRule<<CLASS_NAME>> updates Sematext Cloud from the <<RESOURCE_NAME>> resource.
+func resourceOperationUpdateAlertRule<<CLASS_NAME>>(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+	return sematext.ResourceOperationUpdateAlertRule(ctx, d, meta, "<<APP_TYPE>>")
+}
+
+// resourceOperationDeleteAlertRule<<CLASS_NAME>> marks a <<RESOURCE_NAME>> resource as retired.
+func resourceOperationDeleteAlertRule<<CLASS_NAME>>(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+	return sematext.ResourceOperationDeleteAlertRule(ctx, d, meta, "<<APP_TYPE>>")
+}
+
+// resourceOperationImportAlertRule<<CLASS_NAME>> imports a <<RESOURCE_NAME>> resource into the state file.
+func resourceOperationImportAlertRule<<CLASS_NAME>>() *schema.ResourceImporter {
+	apptype := "<<APP_TYPE>>"
+	return sematext.ResourceOperationImportAlertRule()
+}

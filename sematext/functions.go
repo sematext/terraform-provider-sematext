@@ -105,3 +105,9 @@ func extractAppTokenNames(set interface{}) []string {
 	}
 	return result
 }
+
+func extractAlertRule(stcloud.AlertRuleResponse) (*stcloud.AlertRule, error) {
+
+	return &stcloud.AlertRule{} // TODO - WIP
+
+}

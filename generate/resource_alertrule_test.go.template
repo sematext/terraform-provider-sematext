@@ -1,0 +1,25 @@
+package generated
+
+/*
+	Note: Generated file, any edits will be overwritten!
+	Correct way to alter is to edit generate/resource_sematext_app_test.go.template
+	Then run generate/generate.sh
+*/
+
+
+import (
+	"testing"
+	"github.com/sematext/terraform-provider-sematext/sematext"
+
+)
+
+// TestResourceAlertRule<<CLASS_NAME>>Lifecycle tests resource creation.
+func TestResourceAlertRule<<CLASS_NAME>>Lifecycle(t *testing.T) {
+	sematext.CommonTestLifecycleAlertRule(t, "<<RESOURCE_NAME>>", "<<APP_TYPE>>")
+}
+
+
+// TestResourceAlertRule<<CLASS_NAME>>Update tests for resource updates.
+func TestResourceAlertRule<<CLASS_NAME>>Update(t *testing.T) {
+	sematext.CommonTestUpdateAlertRule(t, "<<RESOURCE_NAME>>", "<<APP_TYPE>>")
+}
