@@ -4,13 +4,13 @@ go 1.18
 
 require (
 	github.com/blang/semver/v4 v4.0.0
+	github.com/davecgh/go-spew v1.1.1 // indirect
 	//github.com/davecgh/go-spew v1.1.1
 	github.com/google/uuid v1.3.0
 	//github.com/hashicorp/go-hclog v0.15.0 //indirect
 	github.com/hashicorp/terraform-plugin-sdk/v2 v2.20.0
 	//github.com/hashicorp/terraform-plugin-test/v2 v2.2.2 // indirect
 	github.com/sematext/sematext-api-client-go v1.5.0
-	github.com/davecgh/go-spew v1.1.1  // indirect
 )
 
 require (
@@ -18,7 +18,6 @@ require (
 	github.com/antihax/optional v1.0.0 // indirect
 	github.com/apparentlymart/go-cidr v1.1.0 // indirect
 	github.com/apparentlymart/go-textseg/v13 v13.0.0 // indirect
-
 	github.com/fatih/color v1.13.0 // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/google/go-cmp v0.5.8 // indirect
@@ -56,8 +55,8 @@ require (
 	golang.org/x/crypto v0.0.0-20220517005047-85d78b3ac167 // indirect
 	golang.org/x/net v0.0.0-20220624214902-1bab6f366d9e // indirect
 	golang.org/x/oauth2 v0.0.0-20220722155238-128564f6959c // indirect
-	golang.org/x/sys v0.0.0-20220520151302-bc2c85ada10a // indirect
-	golang.org/x/text v0.3.7 // indirect
+	golang.org/x/sys v0.0.0-20220722155257-8c9f86f7a55f // indirect
+	golang.org/x/text v0.3.8 // indirect
 	google.golang.org/appengine v1.6.7 // indirect
 	google.golang.org/genproto v0.0.0-20200825200019-8632dd797987 // indirect
 	google.golang.org/grpc v1.48.0 // indirect
