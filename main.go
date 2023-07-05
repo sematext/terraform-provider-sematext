@@ -1,15 +1,35 @@
 package main
 
 import (
-	"github.com/hashicorp/terraform-plugin-sdk/v2/plugin"
+	"context"
+	"flag"
+	"log"
 
-	"github.com/sematext/terraform-provider-sematext/sematext/generated"
+	"github.com/hashicorp/terraform-plugin-framework/providerserver"
+	"github.com/hashicorp/terraform-provider-scaffolding-framework/internal/provider" // @TODO - switch this to sematext provider
+)
+
+var (
+	// these will be set by the goreleaser configuration
+	// to appropriate values for the compiled binary.
+	version string = "dev"
 )
 
 func main() {
-	plugin.Serve(
-		&plugin.ServeOpts{
-			ProviderFunc: generated.Provider,
-		},
-	)
+	var debug bool
+
+	flag.BoolVar(&debug, "debug", false, "set to true to run the provider with support for debuggers like delve")
+	flag.Parse()
+
+	opts := providerserver.ServeOpts{
+		Address:         "registry.terraform.io/providers/sematext/sematext",
+		Debug:           debug,
+		ProtocolVersion: 6,
+	}
+
+	err := providerserver.Serve(context.Background(), provider.New(version), opts)
+
+	if err != nil {
+		log.Fatal(err.Error())
+	}
 }
