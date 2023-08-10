@@ -25,54 +25,42 @@ import (
 )
 
 // Ensure provider defined types fully satisfy framework interfaces.
-var _ resource.Resource = &App<<CLASS_NAME>>Resource{}
-var _ resource.ResourceWithImportState = &App<<CLASS_NAME>>Resource{}
+var _ resource.Resource = &AppClickhouseResource{}
+var _ resource.ResourceWithImportState = &AppClickhouseResource{}
 
 
-// App<<CLASS_NAME>>Resource defines the resource implementation. // TODO check name
-type App<<CLASS_NAME>>Resource struct {
+func NewAppClickhouseResource() resource.Resource {
+	return &AppClickhouseResource{}
+}
+
+// AppClickhouseResource defines the resource implementation.
+type AppClickhouseResource struct {
 	client *stcloud.Configuration 
 }
 
 
-// App<<CLASS_NAME>>ResourceModel describes the resource data model.
-type App<<CLASS_NAME>>ResourceModel struct {
-
-	Id types.String `tfsdk:"id"`
-	Name  types.String `tfsdk:"name"`
-	BillingPlanId   types.Int64 `tfsdk:"billing_plan_id"`
-	DiscountCode  types.String `tfsdk:"discount_code"`
-
-	// TODO each element is a Resource with Schema {"names" : [<string>]}
-	Apptoken types.Set `tfsdk:"apptoken"` 
-
-	// TODO each element is a Resource with Schema {CreatedAt : <string>, Enabled : <bool>, ID: <string>, Name: <Readable>, Token : <string>, Writeable, <bool>}
-	ApptokenEntries types.Set `tfsdk:"apptoken_entries"`
-	": { string map }
-
-	SCApptokenEntries types.Set `tfsdk:"sc_apptoken_entries"`
-	aws_access_key types.String `tfsdk:"aws_access_key"`
-	aws_secret_key types.String `tfsdk:"aws_secret_key"`
-	aws_fetch_frequency types.String `tfsdk:"aws_fetch_frequency"`
-	aws_region types.String `tfsdk:"aws_region"`
-
+// AppClickhouseResourceModel describes the resource data model.
+type AppClickhouseResourceModel struct {
+	semtext.ResourceModel //TODO does this organisation work?
 }
 
 
-func (r *App<<CLASS_NAME>>Resource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
+func (r *AppClickhouseResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
 
 	resp.Version = req.Provider.Version
-	resp.TypeName = req.ProviderTypeName + "_" + App<<CLASS_NAME>>Resource	
+	resp.TypeName = req.ProviderTypeName + "_" + AppClickhouseResource	
 
 }
 
-func (r *App<<CLASS_NAME>>Resource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 
-	resp.Schema = sematext.ResourceSchemaApp("<<APP_TYPE>>")
+func (r *AppClickhouseResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
+
+	resp.Schema = sematext.ResourceSchemaApp("ClickHouse")
 	
 }
 
-func (r *App<<CLASS_NAME>>Resource) Configure(ctx context.Context, req resource.ConfigureRequest, resp *resource.ConfigureResponse) {
+
+func (r *AppClickhouseResource) Configure(ctx context.Context, req resource.ConfigureRequest, resp *resource.ConfigureResponse) {
 	
 	// Prevent panic if the provider has not been configured.
 	if req.ProviderData == nil {
@@ -93,8 +81,8 @@ func (r *App<<CLASS_NAME>>Resource) Configure(ctx context.Context, req resource.
 	r.client = client
 }
 
-func (r *App<<CLASS_NAME>>Resource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
-	var data *App<<CLASS_NAME>>ResourceModel
+func (r *AppClickhouseResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
+	var data *AppClickhouseResourceModel
 
 	// Read Terraform plan data into the model
 	resp.Diagnostics.Append(req.Plan.Get(ctx, &data)...)
@@ -123,8 +111,8 @@ func (r *App<<CLASS_NAME>>Resource) Create(ctx context.Context, req resource.Cre
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
 
-func (r *App<<CLASS_NAME>>Resource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
-	var data *App<<CLASS_NAME>>ResourceModel
+func (r *AppClickhouseResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
+	var data *AppClickhouseResourceModel
 
 	// Read Terraform prior state data into the model
 	resp.Diagnostics.Append(req.State.Get(ctx, &data)...)
@@ -146,8 +134,8 @@ func (r *App<<CLASS_NAME>>Resource) Read(ctx context.Context, req resource.ReadR
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
 
-func (r *App<<CLASS_NAME>>Resource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
-	var data *App<<CLASS_NAME>>ResourceModel
+func (r *AppClickhouseResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
+	var data *AppClickhouseResourceModel
 
 	// Read Terraform plan data into the model
 	resp.Diagnostics.Append(req.Plan.Get(ctx, &data)...)
@@ -168,8 +156,8 @@ func (r *App<<CLASS_NAME>>Resource) Update(ctx context.Context, req resource.Upd
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
 
-func (r *App<<CLASS_NAME>>Resource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
-	var data *App<<CLASS_NAME>>ResourceModel
+func (r *AppClickhouseResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
+	var data *AppClickhouseResourceModel
 
 	// Read Terraform prior state data into the model
 	resp.Diagnostics.Append(req.State.Get(ctx, &data)...)
@@ -187,12 +175,7 @@ func (r *App<<CLASS_NAME>>Resource) Delete(ctx context.Context, req resource.Del
 	// }
 }
 
-func (r *App<<CLASS_NAME>>Resource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
+func (r *AppClickhouseResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
 	resource.ImportStatePassthroughID(ctx, path.Root("id"), req, resp)
-}
-
-
-func NewApp<<CLASS_NAME>>Resource() resource.Resource {
-	return &App<<CLASS_NAME>>Resource{}
 }
 
