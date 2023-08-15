@@ -1,4 +1,4 @@
-package generated
+package sematext
 
 /*
 	Note: Generated file, any edits will be overwritten!

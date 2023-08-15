@@ -41,7 +41,7 @@ type AppNginxplusResource struct {
 
 // AppNginxplusResourceModel describes the resource data model.
 type AppNginxplusResourceModel struct {
-	semtext.ResourceModel //TODO does this organisation work?
+	sematext.ResourceModel //TODO does this organisation work?
 }
 
 

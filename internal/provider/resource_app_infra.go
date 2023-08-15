@@ -41,7 +41,7 @@ type AppInfraResource struct {
 
 // AppInfraResourceModel describes the resource data model.
 type AppInfraResourceModel struct {
-	semtext.ResourceModel //TODO does this organisation work?
+	sematext.ResourceModel //TODO does this organisation work?
 }
 
 

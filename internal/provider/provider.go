@@ -1,4 +1,4 @@
-package provider
+package sematext
 
 /*
 	Note: Generated file, any edits will be overwritten!
@@ -8,36 +8,40 @@ package provider
 
 import (
 	"context"
-	"errors"
 	"fmt"
-	"os"
 	"net/url"
+	"os"
 
-	"github.com/sematext/sematext-api-client-go/stcloud"
+	"github.com/google/uuid"
+	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/provider"
 	"github.com/hashicorp/terraform-plugin-framework/provider/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/sematext/sematext-api-client-go/stcloud"
 )
 
 // Ensure SematextCloudProvider satisfies various provider interfaces.
 var _ provider.Provider = &SematextCloudProvider{}
 
+func New(version string) func() provider.Provider {
+    return func() provider.Provider {
+        return &SematextCloudProvider{
+            version: version,
+        }
+    }
+}
+
 // SematextCloudProvider defines the provider implementation.
 type SematextCloudProvider struct {
-	// version is set to the provider version on release, "dev" when the
-	// provider is built and ran locally, and "test" when running acceptance
-	// testing.
-	version string
-
+	version string // set to provider version on release or "dev" on local build or "test" during testing
 }
 
 // SematextCloudProviderModel describes the provider data model.
 type SematextCloudProviderModel struct {
-
 	SematextRegion types.String `tfsdk:"sematext_region"`	
-
 }
 
 func (p *SematextCloudProvider) Metadata(ctx context.Context, req provider.MetadataRequest, resp *provider.MetadataResponse) {
@@ -46,21 +50,20 @@ func (p *SematextCloudProvider) Metadata(ctx context.Context, req provider.Metad
 }
 
 func (p *SematextCloudProvider) Schema(ctx context.Context, req provider.SchemaRequest, resp *provider.SchemaResponse) {
+
 	resp.Schema = schema.Schema{
+
 		Attributes: map[string]schema.Attribute{
-			"sematext_region": {
-				Type:        schema.TypeString,
+
+			"sematext_region": schema.StringAttribute{
+				MarkdownDescription: "The Sematext Cloud region, either US or EU.",
+				Description: "The Sematext Cloud region, either US or EU.",
 				Required:    true,
-				DefaultFunc: schema.EnvDefaultFunc("SEMATEXT_REGION", "US"),
-				ValidateFunc: func(val interface{}, key string) (warns []string, errs []error) {
-					region := val.(string)
-					if val == nil || !sematext.IsValidSematextRegion(region) {
-						errs = append(errs, fmt.Errorf("ERROR  : sematext_region missing or invalid in sematext provider"))
-					}
-					return
-				},
-				Description: "The Sematext region, either US or EU.",
+				Validators: []validator.String{
+					stringvalidator.OneOf("US", "EU"),
+				},			
 			},
+
 		},
 	}
 }
@@ -68,59 +71,40 @@ func (p *SematextCloudProvider) Schema(ctx context.Context, req provider.SchemaR
 func (p *SematextCloudProvider) Configure(ctx context.Context, req provider.ConfigureRequest, resp *provider.ConfigureResponse) {
 	
 	var model SematextCloudProviderModel
-	var err error	
 	var baseURL *url.URL
 
-
-    // Read configuration data into model
 	resp.Diagnostics.Append(req.Config.Get(ctx, &model)...)
 
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
-	// Get the Sematext API Token
+
 	apiToken := os.Getenv("SEMATEXT_API_KEY")
-	if !sematext.IsValidUUID(apiToken) {
+	if !IsValidUUID(apiToken) {
 		resp.Diagnostics.AddError( // @TODO - severity (diag.Error)
 			"Missing or invalid env SEMATEXT_API_KEY",
-			"Missing or invalid env SEMATEXT_API_KEY" //@TODO adjust brevity
+			"Missing or invalid env SEMATEXT_API_KEY", //@TODO adjust brevity
 		)
-	}	
-
-	// Get the Sematext API Region and set the endpoint
-	region := model.SematextRegion
-	if !sematext.IsValidSematextRegion(region) {
-		resp.Diagnostics.AddError( // @TODO - severity (diag.Error)
-			"Missing or invalid sematext_region parameter in provider stanza",
-			"Missing or invalid sematext_region parameter in provider stanza",
-		)
+		return
 	}
-	model.SematextRegion = region
 
-	switch region {
-	case "US":
-		baseURL, err = url.Parse("https://apps.sematext.com")
-	case "EU":
-		baseURL, err = url.Parse("https://apps.eu.sematext.com")
-	default:
-		resp.Diagnostics.AddError( // @TODO - severity (diag.Error)
+	if model.SematextRegion.ValueString() == "US" {
+		baseURL, _ = url.Parse("https://apps.sematext.com")
+	} else if model.SematextRegion.ValueString() == "EU" {
+		baseURL, _ = url.Parse("https://apps.eu.sematext.com")
+	} else {
+		resp.Diagnostics.AddError( // @TODO - add severity (diag.Error)
 			"sematext_region must be one of EU, US",
 			"sematext_region must be one of EU, US",
-		)		
-	}
-	if err != null {
-		resp.Diagnostics.AddError( // @TODO - severity (diag.Error)
-			"Internal error parsing endpoint",
-			"Internal error parsing endpoint",
 		)
+		return
 	}
-	model.Endpoint = baseURL.String()	
 
 	sematextCloudConnection := stcloud.NewConfiguration()
 	sematextCloudConnection.BasePath = baseURL.String()
-	sematextCloudConnection.UserAgent = fmt.Sprintf("HashiCorp/1.0 Terraform/%s", tfVersionString)
-	sematextCloudConnection.AddDefaultHeader("Authorization", fmt.Sprintf("apiKey %s", apitoken))
+	sematextCloudConnection.UserAgent = fmt.Sprintf("HashiCorp/1.0 Terraform/%s", p.version)
+	sematextCloudConnection.AddDefaultHeader("Authorization", fmt.Sprintf("apiKey %s", apiToken))
 	client := stcloud.NewAPIClient(sematextCloudConnection)
 
 	resp.DataSourceData = client
@@ -130,53 +114,48 @@ func (p *SematextCloudProvider) Configure(ctx context.Context, req provider.Conf
 
 func (p *SematextCloudProvider) Resources(ctx context.Context) []func() resource.Resource {
 	return []func() resource.Resource{
-		Akka,
-Apache,
-Awsebs,
-Awsec2,
-Awselb,
-Cassandra,
-Clickhouse,
-Elasticsearch,
-Hadoopmrv1,
-Hadoopyarn,
-Haproxy,
-Hbase,
-Infra,
-Jvm,
-Kafka,
-Logsene,
-Mongodb,
-Mysql,
-Nginx,
-Nginxplus,
-Nodejs,
-Redis,
-Solr,
-Solrcloud,
-Spark,
-Storm,
-Tomcat,
-Zookeeper,
-Postgresql,
-Rabbitmq,
-Mobilelogs,
+        NewAppAkkaResource,
+        NewAppApacheResource,
+        NewAppAwsebsResource,
+        NewAppAwsec2Resource,
+        NewAppAwselbResource,
+        NewAppCassandraResource,
+        NewAppClickhouseResource,
+        NewAppElasticsearchResource,
+        NewAppHadoopmrv1Resource,
+        NewAppHadoopyarnResource,
+        NewAppHaproxyResource,
+        NewAppHbaseResource,
+        NewAppInfraResource,
+        NewAppJvmResource,
+        NewAppKafkaResource,
+        NewAppLogseneResource,
+        NewAppMongodbResource,
+        NewAppMysqlResource,
+        NewAppNginxResource,
+        NewAppNginxplusResource,
+        NewAppNodejsResource,
+        NewAppRedisResource,
+        NewAppSolrResource,
+        NewAppSolrcloudResource,
+        NewAppSparkResource,
+        NewAppStormResource,
+        NewAppTomcatResource,
+        NewAppZookeeperResource,
+        NewAppPostgresqlResource,
+        NewAppRabbitmqResource,
+        NewAppMobilelogsResource,
 
 	}
 }
 
-/* unused
 func (p *SematextCloudProvider) DataSources(ctx context.Context) []func() datasource.DataSource {
 	return []func() datasource.DataSource{
-		NOT IMPLEMENTED
 	}
 }
-*/
 
-func New(version string) func() provider.Provider {
-	return func() provider.Provider {
-		return &SematextCloudProvider{
-			version: version,
-		}
-	}
+
+func IsValidUUID(u string) bool {
+	_, err := uuid.Parse(u)
+	return err == nil
 }

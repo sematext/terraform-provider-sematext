@@ -41,7 +41,7 @@ type AppHaproxyResource struct {
 
 // AppHaproxyResourceModel describes the resource data model.
 type AppHaproxyResourceModel struct {
-	semtext.ResourceModel //TODO does this organisation work?
+	sematext.ResourceModel //TODO does this organisation work?
 }
 
 

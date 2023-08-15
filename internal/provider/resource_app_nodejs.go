@@ -41,7 +41,7 @@ type AppNodejsResource struct {
 
 // AppNodejsResourceModel describes the resource data model.
 type AppNodejsResourceModel struct {
-	semtext.ResourceModel //TODO does this organisation work?
+	sematext.ResourceModel //TODO does this organisation work?
 }
 
 

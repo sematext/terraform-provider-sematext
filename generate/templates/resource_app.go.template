@@ -41,7 +41,7 @@ type App<<CLASS_NAME>>Resource struct {
 
 // App<<CLASS_NAME>>ResourceModel describes the resource data model.
 type App<<CLASS_NAME>>ResourceModel struct {
-	semtext.ResourceModel //TODO does this organisation work?
+	sematext.ResourceModel //TODO does this organisation work?
 }
 
 

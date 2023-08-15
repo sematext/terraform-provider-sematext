@@ -41,7 +41,7 @@ type AppSparkResource struct {
 
 // AppSparkResourceModel describes the resource data model.
 type AppSparkResourceModel struct {
-	semtext.ResourceModel //TODO does this organisation work?
+	sematext.ResourceModel //TODO does this organisation work?
 }
 
 

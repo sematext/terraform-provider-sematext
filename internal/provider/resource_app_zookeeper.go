@@ -41,7 +41,7 @@ type AppZookeeperResource struct {
 
 // AppZookeeperResourceModel describes the resource data model.
 type AppZookeeperResourceModel struct {
-	semtext.ResourceModel //TODO does this organisation work?
+	sematext.ResourceModel //TODO does this organisation work?
 }
 
 

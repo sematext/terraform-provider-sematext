@@ -41,7 +41,7 @@ type AppCassandraResource struct {
 
 // AppCassandraResourceModel describes the resource data model.
 type AppCassandraResourceModel struct {
-	semtext.ResourceModel //TODO does this organisation work?
+	sematext.ResourceModel //TODO does this organisation work?
 }
 
 

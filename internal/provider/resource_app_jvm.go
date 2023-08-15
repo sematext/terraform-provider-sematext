@@ -41,7 +41,7 @@ type AppJvmResource struct {
 
 // AppJvmResourceModel describes the resource data model.
 type AppJvmResourceModel struct {
-	semtext.ResourceModel //TODO does this organisation work?
+	sematext.ResourceModel //TODO does this organisation work?
 }
 
 

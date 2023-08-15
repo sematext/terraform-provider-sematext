@@ -41,7 +41,7 @@ type AppRabbitmqResource struct {
 
 // AppRabbitmqResourceModel describes the resource data model.
 type AppRabbitmqResourceModel struct {
-	semtext.ResourceModel //TODO does this organisation work?
+	sematext.ResourceModel //TODO does this organisation work?
 }
 
 

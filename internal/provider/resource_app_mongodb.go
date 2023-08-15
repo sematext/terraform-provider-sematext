@@ -41,7 +41,7 @@ type AppMongodbResource struct {
 
 // AppMongodbResourceModel describes the resource data model.
 type AppMongodbResourceModel struct {
-	semtext.ResourceModel //TODO does this organisation work?
+	sematext.ResourceModel //TODO does this organisation work?
 }
 
 

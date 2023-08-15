@@ -41,7 +41,7 @@ type AppPostgresqlResource struct {
 
 // AppPostgresqlResourceModel describes the resource data model.
 type AppPostgresqlResourceModel struct {
-	semtext.ResourceModel //TODO does this organisation work?
+	sematext.ResourceModel //TODO does this organisation work?
 }
 
 

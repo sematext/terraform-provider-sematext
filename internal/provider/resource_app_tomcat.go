@@ -41,7 +41,7 @@ type AppTomcatResource struct {
 
 // AppTomcatResourceModel describes the resource data model.
 type AppTomcatResourceModel struct {
-	semtext.ResourceModel //TODO does this organisation work?
+	sematext.ResourceModel //TODO does this organisation work?
 }
 
 

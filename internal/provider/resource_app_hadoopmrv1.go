@@ -41,7 +41,7 @@ type AppHadoopmrv1Resource struct {
 
 // AppHadoopmrv1ResourceModel describes the resource data model.
 type AppHadoopmrv1ResourceModel struct {
-	semtext.ResourceModel //TODO does this organisation work?
+	sematext.ResourceModel //TODO does this organisation work?
 }
 
 

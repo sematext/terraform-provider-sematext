@@ -41,7 +41,7 @@ type AppSolrcloudResource struct {
 
 // AppSolrcloudResourceModel describes the resource data model.
 type AppSolrcloudResourceModel struct {
-	semtext.ResourceModel //TODO does this organisation work?
+	sematext.ResourceModel //TODO does this organisation work?
 }
 
 

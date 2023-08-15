@@ -41,7 +41,7 @@ type AppAwselbResource struct {
 
 // AppAwselbResourceModel describes the resource data model.
 type AppAwselbResourceModel struct {
-	semtext.ResourceModel //TODO does this organisation work?
+	sematext.ResourceModel //TODO does this organisation work?
 }
 
 

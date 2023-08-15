@@ -11,23 +11,16 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/sematext/sematext-api-client-go/stcloud"
-
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringdefault"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-log/tflog"
-
+	"github.com/sematext/sematext-api-client-go/stcloud"
 )
 
 // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &AppAkkaResource{}
 var _ resource.ResourceWithImportState = &AppAkkaResource{}
-
 
 func NewAppAkkaResource() resource.Resource {
 	return &AppAkkaResource{}
@@ -35,33 +28,29 @@ func NewAppAkkaResource() resource.Resource {
 
 // AppAkkaResource defines the resource implementation.
 type AppAkkaResource struct {
-	client *stcloud.Configuration 
+	client *stcloud.Configuration
 }
-
 
 // AppAkkaResourceModel describes the resource data model.
 type AppAkkaResourceModel struct {
-	semtext.ResourceModel //TODO does this organisation work?
+	sematext.ResourceModel //TODO does this organisation work?
 }
-
 
 func (r *AppAkkaResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
 
 	resp.Version = req.Provider.Version
-	resp.TypeName = req.ProviderTypeName + "_" + AppAkkaResource	
+	resp.TypeName = req.ProviderTypeName + "_" + AppAkkaResource
 
 }
-
 
 func (r *AppAkkaResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 
 	resp.Schema = sematext.ResourceSchemaApp("Akka")
-	
+
 }
 
-
 func (r *AppAkkaResource) Configure(ctx context.Context, req resource.ConfigureRequest, resp *resource.ConfigureResponse) {
-	
+
 	// Prevent panic if the provider has not been configured.
 	if req.ProviderData == nil {
 		return
@@ -121,7 +110,6 @@ func (r *AppAkkaResource) Read(ctx context.Context, req resource.ReadRequest, re
 		return
 	}
 
-
 	// If applicable, this is a great opportunity to initialize any necessary
 	// provider client data and make a call using it.
 	// httpResp, err := r.client.Do(httpReq)
@@ -178,4 +166,3 @@ func (r *AppAkkaResource) Delete(ctx context.Context, req resource.DeleteRequest
 func (r *AppAkkaResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
 	resource.ImportStatePassthroughID(ctx, path.Root("id"), req, resp)
 }
-

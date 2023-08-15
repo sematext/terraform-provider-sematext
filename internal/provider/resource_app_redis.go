@@ -41,7 +41,7 @@ type AppRedisResource struct {
 
 // AppRedisResourceModel describes the resource data model.
 type AppRedisResourceModel struct {
-	semtext.ResourceModel //TODO does this organisation work?
+	sematext.ResourceModel //TODO does this organisation work?
 }
 
 

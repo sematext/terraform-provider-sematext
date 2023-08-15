@@ -41,7 +41,7 @@ type AppLogseneResource struct {
 
 // AppLogseneResourceModel describes the resource data model.
 type AppLogseneResourceModel struct {
-	semtext.ResourceModel //TODO does this organisation work?
+	sematext.ResourceModel //TODO does this organisation work?
 }
 
 

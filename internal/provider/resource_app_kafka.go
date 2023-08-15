@@ -41,7 +41,7 @@ type AppKafkaResource struct {
 
 // AppKafkaResourceModel describes the resource data model.
 type AppKafkaResourceModel struct {
-	semtext.ResourceModel //TODO does this organisation work?
+	sematext.ResourceModel //TODO does this organisation work?
 }
 
 

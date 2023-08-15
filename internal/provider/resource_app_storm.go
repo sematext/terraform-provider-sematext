@@ -41,7 +41,7 @@ type AppStormResource struct {
 
 // AppStormResourceModel describes the resource data model.
 type AppStormResourceModel struct {
-	semtext.ResourceModel //TODO does this organisation work?
+	sematext.ResourceModel //TODO does this organisation work?
 }
 
 

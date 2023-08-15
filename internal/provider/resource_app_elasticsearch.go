@@ -41,7 +41,7 @@ type AppElasticsearchResource struct {
 
 // AppElasticsearchResourceModel describes the resource data model.
 type AppElasticsearchResourceModel struct {
-	semtext.ResourceModel //TODO does this organisation work?
+	sematext.ResourceModel //TODO does this organisation work?
 }
 
 
