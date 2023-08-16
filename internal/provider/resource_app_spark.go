@@ -41,21 +41,20 @@ type AppSparkResource struct {
 
 // AppSparkResourceModel describes the resource data model.
 type AppSparkResourceModel struct {
-	sematext.ResourceModel //TODO does this organisation work?
+	ResourceModel //TODO does this organisation work?
 }
 
 
 func (r *AppSparkResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
 
-	resp.Version = req.Provider.Version
-	resp.TypeName = req.ProviderTypeName + "_" + AppSparkResource	
+	resp.TypeName = req.ProviderTypeName + "_AppSparkResource"	
 
 }
 
 
 func (r *AppSparkResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 
-	resp.Schema = sematext.ResourceSchemaApp("Spark")
+	resp.Schema = ResourceSchemaApp("Spark")
 	
 }
 

@@ -41,21 +41,20 @@ type AppInfraResource struct {
 
 // AppInfraResourceModel describes the resource data model.
 type AppInfraResourceModel struct {
-	sematext.ResourceModel //TODO does this organisation work?
+	ResourceModel //TODO does this organisation work?
 }
 
 
 func (r *AppInfraResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
 
-	resp.Version = req.Provider.Version
-	resp.TypeName = req.ProviderTypeName + "_" + AppInfraResource	
+	resp.TypeName = req.ProviderTypeName + "_AppInfraResource"	
 
 }
 
 
 func (r *AppInfraResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 
-	resp.Schema = sematext.ResourceSchemaApp("Infra")
+	resp.Schema = ResourceSchemaApp("Infra")
 	
 }
 

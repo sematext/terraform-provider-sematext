@@ -48,11 +48,11 @@ func ResourceOperationCreateApp(ctx context.Context, d *schema.ResourceData, met
 	}
 
 	name, namePresent := d.GetOk("name")
-	if namePresent {
-		createAppInfo.Name = name.(string)
-	} else {
+	if !namePresent {
 		return diag.FromErr(errors.New("error : missing name field"))
 	}
+
+	createAppInfo.Name = name.(string)
 
 	if discountCode, discountCodePresent := d.GetOk("discount_code"); discountCodePresent {
 		createAppInfo.DiscountCode = discountCode.(string)

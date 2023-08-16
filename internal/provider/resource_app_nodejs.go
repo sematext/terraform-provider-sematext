@@ -41,21 +41,20 @@ type AppNodejsResource struct {
 
 // AppNodejsResourceModel describes the resource data model.
 type AppNodejsResourceModel struct {
-	sematext.ResourceModel //TODO does this organisation work?
+	ResourceModel //TODO does this organisation work?
 }
 
 
 func (r *AppNodejsResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
 
-	resp.Version = req.Provider.Version
-	resp.TypeName = req.ProviderTypeName + "_" + AppNodejsResource	
+	resp.TypeName = req.ProviderTypeName + "_AppNodejsResource"	
 
 }
 
 
 func (r *AppNodejsResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 
-	resp.Schema = sematext.ResourceSchemaApp("Node.js")
+	resp.Schema = ResourceSchemaApp("Node.js")
 	
 }
 

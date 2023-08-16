@@ -41,21 +41,20 @@ type AppHaproxyResource struct {
 
 // AppHaproxyResourceModel describes the resource data model.
 type AppHaproxyResourceModel struct {
-	sematext.ResourceModel //TODO does this organisation work?
+	ResourceModel //TODO does this organisation work?
 }
 
 
 func (r *AppHaproxyResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
 
-	resp.Version = req.Provider.Version
-	resp.TypeName = req.ProviderTypeName + "_" + AppHaproxyResource	
+	resp.TypeName = req.ProviderTypeName + "_AppHaproxyResource"	
 
 }
 
 
 func (r *AppHaproxyResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 
-	resp.Schema = sematext.ResourceSchemaApp("HAProxy")
+	resp.Schema = ResourceSchemaApp("HAProxy")
 	
 }
 

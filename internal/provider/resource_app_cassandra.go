@@ -41,21 +41,20 @@ type AppCassandraResource struct {
 
 // AppCassandraResourceModel describes the resource data model.
 type AppCassandraResourceModel struct {
-	sematext.ResourceModel //TODO does this organisation work?
+	ResourceModel //TODO does this organisation work?
 }
 
 
 func (r *AppCassandraResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
 
-	resp.Version = req.Provider.Version
-	resp.TypeName = req.ProviderTypeName + "_" + AppCassandraResource	
+	resp.TypeName = req.ProviderTypeName + "_AppCassandraResource"	
 
 }
 
 
 func (r *AppCassandraResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 
-	resp.Schema = sematext.ResourceSchemaApp("Cassandra")
+	resp.Schema = ResourceSchemaApp("Cassandra")
 	
 }
 

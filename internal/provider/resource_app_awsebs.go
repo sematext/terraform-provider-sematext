@@ -41,21 +41,20 @@ type AppAwsebsResource struct {
 
 // AppAwsebsResourceModel describes the resource data model.
 type AppAwsebsResourceModel struct {
-	sematext.ResourceModel //TODO does this organisation work?
+	ResourceModel //TODO does this organisation work?
 }
 
 
 func (r *AppAwsebsResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
 
-	resp.Version = req.Provider.Version
-	resp.TypeName = req.ProviderTypeName + "_" + AppAwsebsResource	
+	resp.TypeName = req.ProviderTypeName + "_AppAwsebsResource"	
 
 }
 
 
 func (r *AppAwsebsResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 
-	resp.Schema = sematext.ResourceSchemaApp("AWS EBS")
+	resp.Schema = ResourceSchemaApp("AWS EBS")
 	
 }
 

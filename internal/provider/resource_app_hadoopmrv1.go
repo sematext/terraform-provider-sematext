@@ -41,21 +41,20 @@ type AppHadoopmrv1Resource struct {
 
 // AppHadoopmrv1ResourceModel describes the resource data model.
 type AppHadoopmrv1ResourceModel struct {
-	sematext.ResourceModel //TODO does this organisation work?
+	ResourceModel //TODO does this organisation work?
 }
 
 
 func (r *AppHadoopmrv1Resource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
 
-	resp.Version = req.Provider.Version
-	resp.TypeName = req.ProviderTypeName + "_" + AppHadoopmrv1Resource	
+	resp.TypeName = req.ProviderTypeName + "_AppHadoopmrv1Resource"	
 
 }
 
 
 func (r *AppHadoopmrv1Resource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 
-	resp.Schema = sematext.ResourceSchemaApp("Hadoop-MRv1")
+	resp.Schema = ResourceSchemaApp("Hadoop-MRv1")
 	
 }
 

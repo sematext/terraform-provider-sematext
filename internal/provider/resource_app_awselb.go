@@ -41,21 +41,20 @@ type AppAwselbResource struct {
 
 // AppAwselbResourceModel describes the resource data model.
 type AppAwselbResourceModel struct {
-	sematext.ResourceModel //TODO does this organisation work?
+	ResourceModel //TODO does this organisation work?
 }
 
 
 func (r *AppAwselbResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
 
-	resp.Version = req.Provider.Version
-	resp.TypeName = req.ProviderTypeName + "_" + AppAwselbResource	
+	resp.TypeName = req.ProviderTypeName + "_AppAwselbResource"	
 
 }
 
 
 func (r *AppAwselbResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 
-	resp.Schema = sematext.ResourceSchemaApp("AWS ELB")
+	resp.Schema = ResourceSchemaApp("AWS ELB")
 	
 }
 

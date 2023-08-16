@@ -41,21 +41,20 @@ type AppNginxResource struct {
 
 // AppNginxResourceModel describes the resource data model.
 type AppNginxResourceModel struct {
-	sematext.ResourceModel //TODO does this organisation work?
+	ResourceModel //TODO does this organisation work?
 }
 
 
 func (r *AppNginxResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
 
-	resp.Version = req.Provider.Version
-	resp.TypeName = req.ProviderTypeName + "_" + AppNginxResource	
+	resp.TypeName = req.ProviderTypeName + "_AppNginxResource"	
 
 }
 
 
 func (r *AppNginxResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 
-	resp.Schema = sematext.ResourceSchemaApp("Nginx")
+	resp.Schema = ResourceSchemaApp("Nginx")
 	
 }
 

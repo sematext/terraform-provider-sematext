@@ -41,21 +41,20 @@ type AppLogseneResource struct {
 
 // AppLogseneResourceModel describes the resource data model.
 type AppLogseneResourceModel struct {
-	sematext.ResourceModel //TODO does this organisation work?
+	ResourceModel //TODO does this organisation work?
 }
 
 
 func (r *AppLogseneResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
 
-	resp.Version = req.Provider.Version
-	resp.TypeName = req.ProviderTypeName + "_" + AppLogseneResource	
+	resp.TypeName = req.ProviderTypeName + "_AppLogseneResource"	
 
 }
 
 
 func (r *AppLogseneResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 
-	resp.Schema = sematext.ResourceSchemaApp("Logsene")
+	resp.Schema = ResourceSchemaApp("Logsene")
 	
 }
 

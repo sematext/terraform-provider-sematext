@@ -41,21 +41,20 @@ type AppKafkaResource struct {
 
 // AppKafkaResourceModel describes the resource data model.
 type AppKafkaResourceModel struct {
-	sematext.ResourceModel //TODO does this organisation work?
+	ResourceModel //TODO does this organisation work?
 }
 
 
 func (r *AppKafkaResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
 
-	resp.Version = req.Provider.Version
-	resp.TypeName = req.ProviderTypeName + "_" + AppKafkaResource	
+	resp.TypeName = req.ProviderTypeName + "_AppKafkaResource"	
 
 }
 
 
 func (r *AppKafkaResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 
-	resp.Schema = sematext.ResourceSchemaApp("Kafka")
+	resp.Schema = ResourceSchemaApp("Kafka")
 	
 }
 

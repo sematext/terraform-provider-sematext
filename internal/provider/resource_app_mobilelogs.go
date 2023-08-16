@@ -41,21 +41,20 @@ type AppMobilelogsResource struct {
 
 // AppMobilelogsResourceModel describes the resource data model.
 type AppMobilelogsResourceModel struct {
-	sematext.ResourceModel //TODO does this organisation work?
+	ResourceModel //TODO does this organisation work?
 }
 
 
 func (r *AppMobilelogsResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
 
-	resp.Version = req.Provider.Version
-	resp.TypeName = req.ProviderTypeName + "_" + AppMobilelogsResource	
+	resp.TypeName = req.ProviderTypeName + "_AppMobilelogsResource"	
 
 }
 
 
 func (r *AppMobilelogsResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 
-	resp.Schema = sematext.ResourceSchemaApp("mobile-logs")
+	resp.Schema = ResourceSchemaApp("mobile-logs")
 	
 }
 

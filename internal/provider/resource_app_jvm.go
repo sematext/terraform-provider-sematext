@@ -41,21 +41,20 @@ type AppJvmResource struct {
 
 // AppJvmResourceModel describes the resource data model.
 type AppJvmResourceModel struct {
-	sematext.ResourceModel //TODO does this organisation work?
+	ResourceModel //TODO does this organisation work?
 }
 
 
 func (r *AppJvmResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
 
-	resp.Version = req.Provider.Version
-	resp.TypeName = req.ProviderTypeName + "_" + AppJvmResource	
+	resp.TypeName = req.ProviderTypeName + "_AppJvmResource"	
 
 }
 
 
 func (r *AppJvmResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 
-	resp.Schema = sematext.ResourceSchemaApp("JVM")
+	resp.Schema = ResourceSchemaApp("JVM")
 	
 }
 

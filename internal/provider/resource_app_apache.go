@@ -41,21 +41,20 @@ type AppApacheResource struct {
 
 // AppApacheResourceModel describes the resource data model.
 type AppApacheResourceModel struct {
-	sematext.ResourceModel //TODO does this organisation work?
+	ResourceModel //TODO does this organisation work?
 }
 
 
 func (r *AppApacheResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
 
-	resp.Version = req.Provider.Version
-	resp.TypeName = req.ProviderTypeName + "_" + AppApacheResource	
+	resp.TypeName = req.ProviderTypeName + "_AppApacheResource"	
 
 }
 
 
 func (r *AppApacheResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 
-	resp.Schema = sematext.ResourceSchemaApp("Apache")
+	resp.Schema = ResourceSchemaApp("Apache")
 	
 }
 

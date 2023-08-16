@@ -41,21 +41,20 @@ type AppHadoopyarnResource struct {
 
 // AppHadoopyarnResourceModel describes the resource data model.
 type AppHadoopyarnResourceModel struct {
-	sematext.ResourceModel //TODO does this organisation work?
+	ResourceModel //TODO does this organisation work?
 }
 
 
 func (r *AppHadoopyarnResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
 
-	resp.Version = req.Provider.Version
-	resp.TypeName = req.ProviderTypeName + "_" + AppHadoopyarnResource	
+	resp.TypeName = req.ProviderTypeName + "_AppHadoopyarnResource"	
 
 }
 
 
 func (r *AppHadoopyarnResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 
-	resp.Schema = sematext.ResourceSchemaApp("Hadoop-YARN")
+	resp.Schema = ResourceSchemaApp("Hadoop-YARN")
 	
 }
 

@@ -41,21 +41,20 @@ type AppRedisResource struct {
 
 // AppRedisResourceModel describes the resource data model.
 type AppRedisResourceModel struct {
-	sematext.ResourceModel //TODO does this organisation work?
+	ResourceModel //TODO does this organisation work?
 }
 
 
 func (r *AppRedisResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
 
-	resp.Version = req.Provider.Version
-	resp.TypeName = req.ProviderTypeName + "_" + AppRedisResource	
+	resp.TypeName = req.ProviderTypeName + "_AppRedisResource"	
 
 }
 
 
 func (r *AppRedisResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 
-	resp.Schema = sematext.ResourceSchemaApp("Redis")
+	resp.Schema = ResourceSchemaApp("Redis")
 	
 }
 

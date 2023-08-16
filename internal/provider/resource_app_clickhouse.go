@@ -41,21 +41,20 @@ type AppClickhouseResource struct {
 
 // AppClickhouseResourceModel describes the resource data model.
 type AppClickhouseResourceModel struct {
-	sematext.ResourceModel //TODO does this organisation work?
+	ResourceModel //TODO does this organisation work?
 }
 
 
 func (r *AppClickhouseResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
 
-	resp.Version = req.Provider.Version
-	resp.TypeName = req.ProviderTypeName + "_" + AppClickhouseResource	
+	resp.TypeName = req.ProviderTypeName + "_AppClickhouseResource"	
 
 }
 
 
 func (r *AppClickhouseResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 
-	resp.Schema = sematext.ResourceSchemaApp("ClickHouse")
+	resp.Schema = ResourceSchemaApp("ClickHouse")
 	
 }
 

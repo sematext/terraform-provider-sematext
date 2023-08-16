@@ -41,21 +41,20 @@ type AppHbaseResource struct {
 
 // AppHbaseResourceModel describes the resource data model.
 type AppHbaseResourceModel struct {
-	sematext.ResourceModel //TODO does this organisation work?
+	ResourceModel //TODO does this organisation work?
 }
 
 
 func (r *AppHbaseResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
 
-	resp.Version = req.Provider.Version
-	resp.TypeName = req.ProviderTypeName + "_" + AppHbaseResource	
+	resp.TypeName = req.ProviderTypeName + "_AppHbaseResource"	
 
 }
 
 
 func (r *AppHbaseResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 
-	resp.Schema = sematext.ResourceSchemaApp("HBase")
+	resp.Schema = ResourceSchemaApp("HBase")
 	
 }
 

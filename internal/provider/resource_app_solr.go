@@ -41,21 +41,20 @@ type AppSolrResource struct {
 
 // AppSolrResourceModel describes the resource data model.
 type AppSolrResourceModel struct {
-	sematext.ResourceModel //TODO does this organisation work?
+	ResourceModel //TODO does this organisation work?
 }
 
 
 func (r *AppSolrResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
 
-	resp.Version = req.Provider.Version
-	resp.TypeName = req.ProviderTypeName + "_" + AppSolrResource	
+	resp.TypeName = req.ProviderTypeName + "_AppSolrResource"	
 
 }
 
 
 func (r *AppSolrResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 
-	resp.Schema = sematext.ResourceSchemaApp("Solr")
+	resp.Schema = ResourceSchemaApp("Solr")
 	
 }
 

@@ -41,21 +41,20 @@ type AppMongodbResource struct {
 
 // AppMongodbResourceModel describes the resource data model.
 type AppMongodbResourceModel struct {
-	sematext.ResourceModel //TODO does this organisation work?
+	ResourceModel //TODO does this organisation work?
 }
 
 
 func (r *AppMongodbResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
 
-	resp.Version = req.Provider.Version
-	resp.TypeName = req.ProviderTypeName + "_" + AppMongodbResource	
+	resp.TypeName = req.ProviderTypeName + "_AppMongodbResource"	
 
 }
 
 
 func (r *AppMongodbResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 
-	resp.Schema = sematext.ResourceSchemaApp("MongoDB")
+	resp.Schema = ResourceSchemaApp("MongoDB")
 	
 }
 

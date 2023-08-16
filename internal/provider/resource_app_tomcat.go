@@ -41,21 +41,20 @@ type AppTomcatResource struct {
 
 // AppTomcatResourceModel describes the resource data model.
 type AppTomcatResourceModel struct {
-	sematext.ResourceModel //TODO does this organisation work?
+	ResourceModel //TODO does this organisation work?
 }
 
 
 func (r *AppTomcatResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
 
-	resp.Version = req.Provider.Version
-	resp.TypeName = req.ProviderTypeName + "_" + AppTomcatResource	
+	resp.TypeName = req.ProviderTypeName + "_AppTomcatResource"	
 
 }
 
 
 func (r *AppTomcatResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 
-	resp.Schema = sematext.ResourceSchemaApp("Tomcat")
+	resp.Schema = ResourceSchemaApp("Tomcat")
 	
 }
 

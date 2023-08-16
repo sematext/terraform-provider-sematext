@@ -41,21 +41,20 @@ type AppElasticsearchResource struct {
 
 // AppElasticsearchResourceModel describes the resource data model.
 type AppElasticsearchResourceModel struct {
-	sematext.ResourceModel //TODO does this organisation work?
+	ResourceModel //TODO does this organisation work?
 }
 
 
 func (r *AppElasticsearchResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
 
-	resp.Version = req.Provider.Version
-	resp.TypeName = req.ProviderTypeName + "_" + AppElasticsearchResource	
+	resp.TypeName = req.ProviderTypeName + "_AppElasticsearchResource"	
 
 }
 
 
 func (r *AppElasticsearchResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 
-	resp.Schema = sematext.ResourceSchemaApp("Elastic Search")
+	resp.Schema = ResourceSchemaApp("Elastic Search")
 	
 }
 

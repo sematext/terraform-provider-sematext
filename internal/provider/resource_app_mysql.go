@@ -41,21 +41,20 @@ type AppMysqlResource struct {
 
 // AppMysqlResourceModel describes the resource data model.
 type AppMysqlResourceModel struct {
-	sematext.ResourceModel //TODO does this organisation work?
+	ResourceModel //TODO does this organisation work?
 }
 
 
 func (r *AppMysqlResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
 
-	resp.Version = req.Provider.Version
-	resp.TypeName = req.ProviderTypeName + "_" + AppMysqlResource	
+	resp.TypeName = req.ProviderTypeName + "_AppMysqlResource"	
 
 }
 
 
 func (r *AppMysqlResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 
-	resp.Schema = sematext.ResourceSchemaApp("MySQL")
+	resp.Schema = ResourceSchemaApp("MySQL")
 	
 }
 

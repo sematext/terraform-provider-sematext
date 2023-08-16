@@ -41,21 +41,20 @@ type AppZookeeperResource struct {
 
 // AppZookeeperResourceModel describes the resource data model.
 type AppZookeeperResourceModel struct {
-	sematext.ResourceModel //TODO does this organisation work?
+	ResourceModel //TODO does this organisation work?
 }
 
 
 func (r *AppZookeeperResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
 
-	resp.Version = req.Provider.Version
-	resp.TypeName = req.ProviderTypeName + "_" + AppZookeeperResource	
+	resp.TypeName = req.ProviderTypeName + "_AppZookeeperResource"	
 
 }
 
 
 func (r *AppZookeeperResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 
-	resp.Schema = sematext.ResourceSchemaApp("ZooKeeper")
+	resp.Schema = ResourceSchemaApp("ZooKeeper")
 	
 }
 

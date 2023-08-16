@@ -41,21 +41,20 @@ type AppRabbitmqResource struct {
 
 // AppRabbitmqResourceModel describes the resource data model.
 type AppRabbitmqResourceModel struct {
-	sematext.ResourceModel //TODO does this organisation work?
+	ResourceModel //TODO does this organisation work?
 }
 
 
 func (r *AppRabbitmqResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
 
-	resp.Version = req.Provider.Version
-	resp.TypeName = req.ProviderTypeName + "_" + AppRabbitmqResource	
+	resp.TypeName = req.ProviderTypeName + "_AppRabbitmqResource"	
 
 }
 
 
 func (r *AppRabbitmqResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 
-	resp.Schema = sematext.ResourceSchemaApp("rabbitmq")
+	resp.Schema = ResourceSchemaApp("rabbitmq")
 	
 }
 

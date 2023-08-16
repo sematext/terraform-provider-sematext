@@ -41,21 +41,20 @@ type AppPostgresqlResource struct {
 
 // AppPostgresqlResourceModel describes the resource data model.
 type AppPostgresqlResourceModel struct {
-	sematext.ResourceModel //TODO does this organisation work?
+	ResourceModel //TODO does this organisation work?
 }
 
 
 func (r *AppPostgresqlResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
 
-	resp.Version = req.Provider.Version
-	resp.TypeName = req.ProviderTypeName + "_" + AppPostgresqlResource	
+	resp.TypeName = req.ProviderTypeName + "_AppPostgresqlResource"	
 
 }
 
 
 func (r *AppPostgresqlResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 
-	resp.Schema = sematext.ResourceSchemaApp("postgresql")
+	resp.Schema = ResourceSchemaApp("postgresql")
 	
 }
 

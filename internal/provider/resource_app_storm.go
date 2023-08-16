@@ -41,21 +41,20 @@ type AppStormResource struct {
 
 // AppStormResourceModel describes the resource data model.
 type AppStormResourceModel struct {
-	sematext.ResourceModel //TODO does this organisation work?
+	ResourceModel //TODO does this organisation work?
 }
 
 
 func (r *AppStormResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
 
-	resp.Version = req.Provider.Version
-	resp.TypeName = req.ProviderTypeName + "_" + AppStormResource	
+	resp.TypeName = req.ProviderTypeName + "_AppStormResource"	
 
 }
 
 
 func (r *AppStormResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 
-	resp.Schema = sematext.ResourceSchemaApp("Storm")
+	resp.Schema = ResourceSchemaApp("Storm")
 	
 }
 
