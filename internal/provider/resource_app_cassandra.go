@@ -10,6 +10,7 @@ import (
 	"context"
 	"fmt"
 	"net/http"
+	"os"
 
 	"github.com/sematext/sematext-api-client-go/stcloud"
 
@@ -33,29 +34,23 @@ func NewAppCassandraResource() resource.Resource {
 	return &AppCassandraResource{}
 }
 
+// AppCassandraResourceModel describes the resource data model.
+type AppCassandraResourceModel = ResourceModel
+
+
 // AppCassandraResource defines the resource implementation.
 type AppCassandraResource struct {
 	client *stcloud.Configuration 
 }
 
 
-// AppCassandraResourceModel describes the resource data model.
-type AppCassandraResourceModel struct {
-	ResourceModel //TODO does this organisation work?
-}
-
-
 func (r *AppCassandraResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
-
 	resp.TypeName = req.ProviderTypeName + "_AppCassandraResource"	
-
 }
 
 
 func (r *AppCassandraResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
-
 	resp.Schema = ResourceSchemaApp("Cassandra")
-	
 }
 
 
@@ -77,7 +72,68 @@ func (r *AppCassandraResource) Configure(ctx context.Context, req resource.Confi
 		return
 	}
 
+	var config AppCassandraResourceModel
+    diags := req.Config.Get(ctx, &config)
+    resp.Diagnostics.Append(diags...)
+    if resp.Diagnostics.HasError() {
+        return
+    }	
+
 	r.client = client
+
+
+	if appType == "AWS EBS" || appType == "AWS EC2" || appType == "AWS ELB" { 
+
+		// get AWS out of the environment
+		var awsregion string
+		var aws_access_key string
+		var aws_secret_key string
+		
+		if config.AwsAccessKey.IsUnknown() {
+			aws_access_key, ok = os.LookupEnv("AWS_ACCESS_KEY_ID")
+			if ok {
+				config.AwsAccessKey
+			} else {
+				resp.Diagnostics.AddAttributeError(
+            		path.Root("aws_access_key"),
+            			"aws_access_key missing from resource",
+            			"The provider cannot create or modify a Sematext Cloud app that requires AWS access (aws_access_key is missing or blank). "+
+						"Either set the value statically in the resource configuration, or use the AWS_ACCESS_KEY_ID environment variable.",
+        		)
+			} 
+		}
+
+		if config.AwsSecretKey.IsUnknown() {	
+			aws_secret_key, ok = os.LookupEnv("AWS_SECRET_ACCESS_KEY")
+			if !ok {
+				resp.Diagnostics.AddAttributeError(
+            		path.Root("aws_secret_key"),
+            			"aws_access_key missing from resource",
+            			"The provider cannot create or modify a Sematext Cloud app that requires AWS access (aws_access_key is missing or blank). "+
+						"Either set the value statically in the resource configuration, or use the AWS_SECRET_ACCESS_KEY environment variable.",
+        		)
+			}
+		}
+
+		if resp.Diagnostics.HasError() {
+        	return
+    	}
+
+
+
+
+
+		if config.AwsRegion.IsUnknown() {	
+			awsregion, ok := os.LookupEnv("AWS_REGION")
+			if !ok {
+				awsregion, ok = os.LookupEnv("AWS_DEFAULT_REGION")
+			}
+			if !ok {
+				awsregion = "us-east-1"
+			}
+		}
+
+}
 }
 
 func (r *AppCassandraResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {

@@ -27,11 +27,11 @@ import (
 var _ provider.Provider = &SematextCloudProvider{}
 
 func New(version string) func() provider.Provider {
-	return func() provider.Provider {
-		return &SematextCloudProvider{
-			version: version,
-		}
-	}
+    return func() provider.Provider {
+        return &SematextCloudProvider{
+            version: version,
+        }
+    }
 }
 
 // SematextCloudProvider defines the provider implementation.
@@ -41,7 +41,7 @@ type SematextCloudProvider struct {
 
 // SematextCloudProviderModel describes the provider data model.
 type SematextCloudProviderModel struct {
-	SematextRegion types.String `tfsdk:"sematext_region"`
+	SematextRegion types.String `tfsdk:"sematext_region"`	
 }
 
 func (p *SematextCloudProvider) Metadata(ctx context.Context, req provider.MetadataRequest, resp *provider.MetadataResponse) {
@@ -57,18 +57,19 @@ func (p *SematextCloudProvider) Schema(ctx context.Context, req provider.SchemaR
 
 			"sematext_region": schema.StringAttribute{
 				MarkdownDescription: "The Sematext Cloud region, either US or EU.",
-				Description:         "The Sematext Cloud region, either US or EU.",
-				Required:            true,
+				Description: "The Sematext Cloud region, either US or EU.",
+				Required:    true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("US", "EU"),
-				},
+				},			
 			},
+
 		},
 	}
 }
 
 func (p *SematextCloudProvider) Configure(ctx context.Context, req provider.ConfigureRequest, resp *provider.ConfigureResponse) {
-
+	
 	var model SematextCloudProviderModel
 	var baseURL *url.URL
 
@@ -77,6 +78,7 @@ func (p *SematextCloudProvider) Configure(ctx context.Context, req provider.Conf
 	if resp.Diagnostics.HasError() {
 		return
 	}
+
 
 	apiToken := os.Getenv("SEMATEXT_API_KEY")
 	if !IsValidUUID(apiToken) {
@@ -112,43 +114,46 @@ func (p *SematextCloudProvider) Configure(ctx context.Context, req provider.Conf
 
 func (p *SematextCloudProvider) Resources(ctx context.Context) []func() resource.Resource {
 	return []func() resource.Resource{
-		NewAppAkkaResource,
-		NewAppApacheResource,
-		NewAppAwsebsResource,
-		NewAppAwsec2Resource,
-		NewAppAwselbResource,
-		NewAppCassandraResource,
-		NewAppClickhouseResource,
-		NewAppElasticsearchResource,
-		NewAppHadoopmrv1Resource,
-		NewAppHadoopyarnResource,
-		NewAppHaproxyResource,
-		NewAppHbaseResource,
-		NewAppInfraResource,
-		NewAppJvmResource,
-		NewAppKafkaResource,
-		NewAppLogseneResource,
-		NewAppMongodbResource,
-		NewAppMysqlResource,
-		NewAppNginxResource,
-		NewAppNginxplusResource,
-		NewAppNodejsResource,
-		NewAppRedisResource,
-		NewAppSolrResource,
-		NewAppSolrcloudResource,
-		NewAppSparkResource,
-		NewAppStormResource,
-		NewAppTomcatResource,
-		NewAppZookeeperResource,
-		NewAppPostgresqlResource,
-		NewAppRabbitmqResource,
-		NewAppMobilelogsResource,
+        NewAppAkkaResource,
+        NewAppApacheResource,
+        NewAppAwsebsResource,
+        NewAppAwsec2Resource,
+        NewAppAwselbResource,
+        NewAppCassandraResource,
+        NewAppClickhouseResource,
+        NewAppElasticsearchResource,
+        NewAppHadoopmrv1Resource,
+        NewAppHadoopyarnResource,
+        NewAppHaproxyResource,
+        NewAppHbaseResource,
+        NewAppInfraResource,
+        NewAppJvmResource,
+        NewAppKafkaResource,
+        NewAppLogseneResource,
+        NewAppMongodbResource,
+        NewAppMysqlResource,
+        NewAppNginxResource,
+        NewAppNginxplusResource,
+        NewAppNodejsResource,
+        NewAppRedisResource,
+        NewAppSolrResource,
+        NewAppSolrcloudResource,
+        NewAppSparkResource,
+        NewAppStormResource,
+        NewAppTomcatResource,
+        NewAppZookeeperResource,
+        NewAppPostgresqlResource,
+        NewAppRabbitmqResource,
+        NewAppMobilelogsResource,
+
 	}
 }
 
 func (p *SematextCloudProvider) DataSources(ctx context.Context) []func() datasource.DataSource {
-	return []func() datasource.DataSource{}
+	return []func() datasource.DataSource{
+	}
 }
+
 
 func IsValidUUID(u string) bool {
 	_, err := uuid.Parse(u)

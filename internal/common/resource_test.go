@@ -20,10 +20,6 @@ var testProviders map[string]*schema.Provider
 var testProvider schema.Provider
 var testProviderFunc func() *schema.Provider
 
-type AppTokenType struct {
-	Names []string
-}
-
 type ResourceTestFixture interface {
 	hydrate(resourceType string, appType string)
 	toHCL() string
