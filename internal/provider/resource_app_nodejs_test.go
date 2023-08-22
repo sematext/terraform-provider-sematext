@@ -8,17 +8,16 @@ package sematext
 
 
 import (
-	"github.com/sematext/terraform-provider-sematext/sematext"
 	"testing"
 )
 
 // TestAccResourceLifecycleAppNodejs tests resource creation.
 func TestAccResourceLifecycleAppNodejs(t *testing.T) {
-	sematext.ResourceTestLifecycleApp(t, "sematext_app_nodejs", "Node.js")
+	ResourceTestLifecycleApp(t, "sematext_app_nodejs", "Node.js")
 }
 
 
 // TestAccResourceUpdateAppNodejs tests for resource updates.
 func TestAccResourceUpdateAppNodejs(t *testing.T) {
-	sematext.ResourceTestUpdateApp(t, "sematext_app_nodejs", "Node.js")
+	ResourceTestUpdateApp(t, "sematext_app_nodejs", "Node.js")
 }

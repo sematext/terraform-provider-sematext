@@ -8,17 +8,16 @@ package sematext
 
 
 import (
-	"github.com/sematext/terraform-provider-sematext/sematext"
 	"testing"
 )
 
 // TestAccResourceLifecycleAppZookeeper tests resource creation.
 func TestAccResourceLifecycleAppZookeeper(t *testing.T) {
-	sematext.ResourceTestLifecycleApp(t, "sematext_app_zookeeper", "ZooKeeper")
+	ResourceTestLifecycleApp(t, "sematext_app_zookeeper", "ZooKeeper")
 }
 
 
 // TestAccResourceUpdateAppZookeeper tests for resource updates.
 func TestAccResourceUpdateAppZookeeper(t *testing.T) {
-	sematext.ResourceTestUpdateApp(t, "sematext_app_zookeeper", "ZooKeeper")
+	ResourceTestUpdateApp(t, "sematext_app_zookeeper", "ZooKeeper")
 }

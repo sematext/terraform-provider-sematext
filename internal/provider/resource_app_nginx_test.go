@@ -8,17 +8,16 @@ package sematext
 
 
 import (
-	"github.com/sematext/terraform-provider-sematext/sematext"
 	"testing"
 )
 
 // TestAccResourceLifecycleAppNginx tests resource creation.
 func TestAccResourceLifecycleAppNginx(t *testing.T) {
-	sematext.ResourceTestLifecycleApp(t, "sematext_app_nginx", "Nginx")
+	ResourceTestLifecycleApp(t, "sematext_app_nginx", "Nginx")
 }
 
 
 // TestAccResourceUpdateAppNginx tests for resource updates.
 func TestAccResourceUpdateAppNginx(t *testing.T) {
-	sematext.ResourceTestUpdateApp(t, "sematext_app_nginx", "Nginx")
+	ResourceTestUpdateApp(t, "sematext_app_nginx", "Nginx")
 }

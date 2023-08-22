@@ -8,17 +8,16 @@ package sematext
 
 
 import (
-	"github.com/sematext/terraform-provider-sematext/sematext"
 	"testing"
 )
 
 // TestAccResourceLifecycleAppPostgresql tests resource creation.
 func TestAccResourceLifecycleAppPostgresql(t *testing.T) {
-	sematext.ResourceTestLifecycleApp(t, "sematext_app_postgresql", "postgresql")
+	ResourceTestLifecycleApp(t, "sematext_app_postgresql", "postgresql")
 }
 
 
 // TestAccResourceUpdateAppPostgresql tests for resource updates.
 func TestAccResourceUpdateAppPostgresql(t *testing.T) {
-	sematext.ResourceTestUpdateApp(t, "sematext_app_postgresql", "postgresql")
+	ResourceTestUpdateApp(t, "sematext_app_postgresql", "postgresql")
 }

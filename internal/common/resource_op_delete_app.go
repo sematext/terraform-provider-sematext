@@ -2,51 +2,89 @@ package sematext
 
 import (
 	"context"
+	"encoding/json"
 	"net/http"
 	"strconv"
 	"time"
 
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
-	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
+	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/sematext/sematext-api-client-go/stcloud"
 )
 
 // ResourceOperationDeleteApp is a common retire handler used by most resources.
-func ResourceOpDeleteApp(ctx context.Context, d *schema.ResourceData, meta interface{}, appType string) diag.Diagnostics {
+func ResourceOpDeleteApp(resourceApp ResourceApp, ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
 
-	var diags diag.Diagnostics
 	var id int64
 	var err error
+	var resourceAppModel ResourceAppModel
 	var httpResponse *http.Response
+	var body map[string]interface{}
 
-	client := meta.(*stcloud.APIClient)
-	if id, err = strconv.ParseInt(d.Id(), 10, 64); err != nil {
-		return diag.FromErr(err)
+	// Read Terraform plan data into the model
+	resp.Diagnostics.Append(req.State.Get(ctx, &resourceAppModel)...)
+
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	if id, err = strconv.ParseInt(resourceAppModel.Id, 10, 64); err != nil {
+		resp.Diagnostics.AddError(
+			"Unable to Delete Resource",
+			"An unexpected error occurred while attempting to convert the id. "+
+				"Please retry the operation or report this issue to the provider developers.\n\n"+
+				"Error: "+err.Error(),
+		)
+		return
 	}
 
 	updateAppInfo := &stcloud.UpdateAppInfo{}
 	updateAppInfo.Status = "DISABLED"
-	_, _, err = client.AppsApi.UpdateUsingPUT2(context.Background(), *updateAppInfo, id)
+	_, httpResponse, err = resourceApp.client.AppsApi.UpdateUsingPUT2(context.Background(), *updateAppInfo, id)
 	if err != nil {
-		return diag.FromErr(err)
+		json.Unmarshal([]byte(err.(stcloud.GenericSwaggerError).Body()), &body)
+		resp.Diagnostics.AddError(
+			"Unable to Delete Resource",
+			"An unexpected error occurred while attempting to disable a resource prior to deletion. "+
+				"Please retry the operation or report this issue to the provider developers.\n\n"+
+				"Error: "+body["message"].(string),
+		)
+		return
+	}
+
+	// Return error if the HTTP status code is not 200 OK
+	if httpResponse.StatusCode != http.StatusOK {
+		resp.Diagnostics.AddError(
+			"Unable to Delete Resource",
+			"An unexpected error occurred while attempting to disable a resource prior to deletion. "+
+				"Please retry the operation or report this issue to the provider developers.\n\n"+
+				"HTTP Status: "+httpResponse.Status,
+		)
+		return
 	}
 
 	time.Sleep(2 * time.Second)
 
-	_, httpResponse, err = client.AppsApi.DeleteUsingDELETE(context.Background(), id)
+	_, httpResponse, err = resourceApp.client.AppsApi.DeleteUsingDELETE(context.Background(), id)
 	if err != nil {
-		return diag.FromErr(err)
+		json.Unmarshal([]byte(err.(stcloud.GenericSwaggerError).Body()), &body)
+		resp.Diagnostics.AddError(
+			"Unable to Delete Resource",
+			"An unexpected error occurred while attempting to delete a resource. "+
+				"Please retry the operation or report this issue to the provider developers.\n\n"+
+				"Error: "+body["message"].(string),
+		)
+		return
 	}
 
-	if httpResponse.StatusCode != 200 {
-		diags = append(diags, diag.Diagnostic{
-			Severity: diag.Error,
-			Summary:  "error deleting app",
-			Detail:   "error deleting an app named '" + d.Get("name").(string) + "'",
-		})
-
-		return diags
+	// Return error if the HTTP status code is not 200 OK
+	if httpResponse.StatusCode != http.StatusOK {
+		resp.Diagnostics.AddError(
+			"Unable to Delete Resource",
+			"An unexpected error occurred while attempting to delete a resource. "+
+				"Please retry the operation or report this issue to the provider developers.\n\n"+
+				"HTTP Status: "+httpResponse.Status,
+		)
+		return
 	}
 
-	return diags
 }

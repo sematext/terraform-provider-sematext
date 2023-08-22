@@ -8,17 +8,16 @@ package sematext
 
 
 import (
-	"github.com/sematext/terraform-provider-sematext/sematext"
 	"testing"
 )
 
 // TestAccResourceLifecycleAppMysql tests resource creation.
 func TestAccResourceLifecycleAppMysql(t *testing.T) {
-	sematext.ResourceTestLifecycleApp(t, "sematext_app_mysql", "MySQL")
+	ResourceTestLifecycleApp(t, "sematext_app_mysql", "MySQL")
 }
 
 
 // TestAccResourceUpdateAppMysql tests for resource updates.
 func TestAccResourceUpdateAppMysql(t *testing.T) {
-	sematext.ResourceTestUpdateApp(t, "sematext_app_mysql", "MySQL")
+	ResourceTestUpdateApp(t, "sematext_app_mysql", "MySQL")
 }

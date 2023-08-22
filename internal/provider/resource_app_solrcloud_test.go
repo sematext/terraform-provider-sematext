@@ -8,17 +8,16 @@ package sematext
 
 
 import (
-	"github.com/sematext/terraform-provider-sematext/sematext"
 	"testing"
 )
 
 // TestAccResourceLifecycleAppSolrcloud tests resource creation.
 func TestAccResourceLifecycleAppSolrcloud(t *testing.T) {
-	sematext.ResourceTestLifecycleApp(t, "sematext_app_solrcloud", "SolrCloud")
+	ResourceTestLifecycleApp(t, "sematext_app_solrcloud", "SolrCloud")
 }
 
 
 // TestAccResourceUpdateAppSolrcloud tests for resource updates.
 func TestAccResourceUpdateAppSolrcloud(t *testing.T) {
-	sematext.ResourceTestUpdateApp(t, "sematext_app_solrcloud", "SolrCloud")
+	ResourceTestUpdateApp(t, "sematext_app_solrcloud", "SolrCloud")
 }

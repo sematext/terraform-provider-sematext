@@ -8,17 +8,16 @@ package sematext
 
 
 import (
-	"github.com/sematext/terraform-provider-sematext/sematext"
 	"testing"
 )
 
 // TestAccResourceLifecycleAppElasticsearch tests resource creation.
 func TestAccResourceLifecycleAppElasticsearch(t *testing.T) {
-	sematext.ResourceTestLifecycleApp(t, "sematext_app_elasticsearch", "Elastic Search")
+	ResourceTestLifecycleApp(t, "sematext_app_elasticsearch", "Elastic Search")
 }
 
 
 // TestAccResourceUpdateAppElasticsearch tests for resource updates.
 func TestAccResourceUpdateAppElasticsearch(t *testing.T) {
-	sematext.ResourceTestUpdateApp(t, "sematext_app_elasticsearch", "Elastic Search")
+	ResourceTestUpdateApp(t, "sematext_app_elasticsearch", "Elastic Search")
 }

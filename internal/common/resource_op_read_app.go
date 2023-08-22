@@ -2,19 +2,16 @@ package sematext
 
 import (
 	"context"
+	"encoding/json"
 	"net/http"
 	"strconv"
 
 	"github.com/hashicorp/terraform-plugin-framework/resource"
-	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/sematext/sematext-api-client-go/stcloud"
 )
 
 // ResourceOperationReadApp is a common read handler used by most resources.
-func ResourceOpReadApp(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse, appType string, resourceModel *ResourceModel) {
-
-	// Read Terraform prior state data into the model
-	resp.Diagnostics.Append(req.State.Get(ctx, &ResourceModel)...)
+func ResourceOpReadApp(resourceApp ResourceApp, ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse, appType string) {
 
 	var appResponse stcloud.AppResponse
 	var id int64
@@ -25,56 +22,110 @@ func ResourceOpReadApp(ctx context.Context, req resource.ReadRequest, resp *reso
 	var tokenEntries *[]stcloud.TokenDto
 	var tokenEntry stcloud.TokenDto
 	var tokenAccumulator map[string]string
+	var resourceAppModel ResourceAppModel
 	var httpResponse *http.Response
+	var body map[string]interface{}
 
-	client := meta.(*stcloud.APIClient)
+	// Read Terraform prior state data into the model
+	resp.Diagnostics.Append(req.State.Get(ctx, &resourceAppModel)...)
 
-	if id, err = strconv.ParseInt(d.Id(), 10, 64); err != nil {
-		return diag.FromErr(err)
+	if resp.Diagnostics.HasError() {
+		return
 	}
 
-	appResponse, httpResponse, err = client.AppsApi.GetUsingGET(ctx, id)
+	if id, err = strconv.ParseInt(resourceAppModel.Id, 10, 64); err != nil {
+		resp.Diagnostics.AddError(
+			"Unable to Delete Resource",
+			"An unexpected error occurred while attempting to convert the id. "+
+				"Please retry the operation or report this issue to the provider developers.\n\n"+
+				"Error: "+err.Error(),
+		)
+		return
+	}
+
+	appResponse, httpResponse, err = resourceApp.client.AppsApi.GetUsingGET(ctx, id)
+
 	if err != nil {
-		return diag.FromErr(err)
+
+		json.Unmarshal([]byte(err.(stcloud.GenericSwaggerError).Body()), &body)
+		resp.Diagnostics.AddError(
+			"Error trying to Read Resource",
+			"An unexpected error occurred while attempting to read the resource. "+
+				"Please retry the operation or report this issue to the provider developers.\n\n"+
+				"Error: "+body["message"].(string),
+		)
+
+		return
 	}
 
-	//existance check
-	if httpResponse.StatusCode == 404 {
-		diags = append(diags, diag.Diagnostic{
-			Severity: diag.Warning,
-			Summary:  "resource not found during Read",
-			Detail:   "resource '" + d.Get("name").(string) + "' is not present on Sematext Cloud during Read",
-		})
-		d.SetId("")
-		return diags
+	// Return error if the HTTP status code is not 200 OK
+	if httpResponse.StatusCode != http.StatusOK {
+		resp.Diagnostics.AddError(
+			"Error trying to Read Resource",
+			"An unexpected error occurred while attempting to read the resource. "+
+				"Please retry the operation or report this issue to the provider developers.\n\n"+
+				"HTTP Status: "+httpResponse.Status,
+		)
+		return
 	}
 
 	app, err = extractApp(&appResponse)
 	if err != nil {
-		return diag.FromErr(err)
+		resp.Diagnostics.AddError(
+			"Error trying to Read Resource",
+			"An unexpected error occurred while attempting to read the resource (bad response). "+
+				"Please retry the operation or report this issue to the provider developers.\n\n"+
+				"Error: "+err.Error(),
+		)
+		return
 	}
 
 	switch appType {
 
 	case "AWS EBS", "AWS EC2", "AWS ELB":
-		d.Set("name", app.Name)
-		d.Set("billing_plan_id", app.Plan.Id)
-
+		resourceAppModel.Name = app.Name
+		resourceAppModel.BillingPlanId = app.Plan.Id
 	default:
-		d.Set("name", app.Name)
-		d.Set("billing_plan_id", app.Plan.Id)
+		resourceAppModel.Name = app.Name
+		resourceAppModel.BillingPlanId = app.Plan.Id
 	}
 
 	// get the list of apptoken names that are supposed to be here
-	appTokenNames = extractAppTokenNames(d.Get("apptoken"))
+	appTokenNames = extractAppTokenNames(resourceAppModel.AppToken)
 
 	// pull tokens for this app from SC.
-	if tokensResponse, _, err = client.TokensApiControllerApi.GetAppTokens(ctx, id); err != nil {
-		return diag.FromErr(err)
+	if tokensResponse, httpResponse, err = resourceApp.client.TokensApiControllerApi.GetAppTokens(ctx, id); err != nil {
+		json.Unmarshal([]byte(err.(stcloud.GenericSwaggerError).Body()), &body)
+		resp.Diagnostics.AddError(
+			"Error trying to Read Resource",
+			"An unexpected error occurred while attempting to read the resource. "+
+				"Please retry the operation or report this issue to the provider developers.\n\n"+
+				"Error: "+body["message"].(string),
+		)
+
+		return
 	}
+
+	// Return error if the HTTP status code is not 200 OK
+	if httpResponse.StatusCode != http.StatusOK {
+		resp.Diagnostics.AddError(
+			"Error trying to Read Resource",
+			"An unexpected error occurred while attempting to read the resource. "+
+				"Please retry the operation or report this issue to the provider developers.\n\n"+
+				"HTTP Status: "+httpResponse.Status,
+		)
+		return
+	}
+
 	tokenEntries, err = extractAppTokens(tokensResponse)
 	if err != nil {
-		return diag.FromErr(err)
+		resp.Diagnostics.AddError(
+			"Error trying to Read Resource",
+			"An unexpected error occurred while attempting to read the resource (bad response). "+
+				"Please retry the operation or report this issue to the provider developers.\n\n"+
+				"Error: "+err.Error(),
+		)
+		return
 	}
 
 	// filter list of tokenEntries, ignore any not present in the Terraform HCL script
@@ -85,26 +136,28 @@ func ResourceOpReadApp(ctx context.Context, req resource.ReadRequest, resp *reso
 		if contains(appTokenNames, tokenEntry.Name) {
 			tokenAccumulator[tokenEntry.Name] = tokenEntry.Token
 			if !tokenEntry.Writeable {
-				diags = append(diags, diag.Diagnostic{
-					Severity: diag.Warning,
-					Summary:  "apptoken not writable",
-					Detail:   "an apptoken named '" + tokenEntry.Name + "' exists but is not writable - update will fail unless made writable",
-				})
+				resp.Diagnostics.AddError(
+					"Warning: AppToken on Sematext Cloud is not set writable",
+					"An apptoken named '"+tokenEntry.Name+"' exists but is not writable - update will fail unless made writable.",
+				)
 			}
 		}
 	}
 
 	for _, tokenName := range appTokenNames {
 		if _, found := tokenAccumulator[tokenName]; !found {
-			diags = append(diags, diag.Diagnostic{
-				Severity: diag.Warning,
-				Summary:  "apptoken not present at sematext cloud",
-				Detail:   "an apptoken named '" + tokenEntry.Name + "' is not yet present in your cloud account - terraform update will create this",
-			})
+
+			resp.Diagnostics.AddError(
+				"Warning: AppToken on Sematext Cloud does not exist yet.",
+				"An apptoken named '"+tokenEntry.Name+"' is not yet present in your cloud account - terraform update will create this.",
+			)
+
 		}
 	}
 
-	d.Set("sc_apptoken_entries", tokenAccumulator)
+	resourceAppModel.ScAppTokenEntries = tokenAccumulator
 
-	return diags
+	// Save updated data into Terraform state
+	resp.Diagnostics.Append(resp.State.Set(ctx, &resourceAppModel)...)
+
 }

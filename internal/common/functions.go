@@ -98,7 +98,7 @@ func arrayLiteralString(array []string) string {
 func extractAppTokenNames(set interface{}) []string {
 	var names []interface{}
 	var result []string
-	names = set.(*schema.Set).List()[0].(map[string]interface{})["names"].([]interface{})
+	names = set.(*schema.Set).List()[0].(map[string]interface{})["names"].([]interface{}) // @TODO - adjust for new framework.
 
 	for _, name := range names {
 		result = append(result, name.(string))

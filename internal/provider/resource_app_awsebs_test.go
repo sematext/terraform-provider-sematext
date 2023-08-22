@@ -8,17 +8,16 @@ package sematext
 
 
 import (
-	"github.com/sematext/terraform-provider-sematext/sematext"
 	"testing"
 )
 
 // TestAccResourceLifecycleAppAwsebs tests resource creation.
 func TestAccResourceLifecycleAppAwsebs(t *testing.T) {
-	sematext.ResourceTestLifecycleApp(t, "sematext_app_awsebs", "AWS EBS")
+	ResourceTestLifecycleApp(t, "sematext_app_awsebs", "AWS EBS")
 }
 
 
 // TestAccResourceUpdateAppAwsebs tests for resource updates.
 func TestAccResourceUpdateAppAwsebs(t *testing.T) {
-	sematext.ResourceTestUpdateApp(t, "sematext_app_awsebs", "AWS EBS")
+	ResourceTestUpdateApp(t, "sematext_app_awsebs", "AWS EBS")
 }

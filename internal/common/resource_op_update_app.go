@@ -2,18 +2,17 @@ package sematext
 
 import (
 	"context"
+	"encoding/json"
 	"net/http"
 	"strconv"
 
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
-	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
+	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/sematext/sematext-api-client-go/stcloud"
 )
 
 // ResourceOperationUpdateApp is a common update handler used by most resources.
-func ResourceOpUpdateApp(ctx context.Context, d *schema.ResourceData, meta interface{}, appType string) diag.Diagnostics {
+func ResourceOpUpdateApp(resourceApp ResourceApp, ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
 
-	var diags diag.Diagnostics
 	var id int64
 	var err error
 	var appTokenNames []string
@@ -23,105 +22,148 @@ func ResourceOpUpdateApp(ctx context.Context, d *schema.ResourceData, meta inter
 	var tokenAccumulator map[string]string
 	var createTokenDto stcloud.CreateTokenDto
 	var tokenResponse stcloud.TokenResponse
+	var resourceAppModel ResourceAppModel
 	var httpResponse *http.Response
+	var body map[string]interface{}
 
-	client := meta.(*stcloud.APIClient)
-	if id, err = strconv.ParseInt(d.Id(), 10, 64); err != nil {
-		return diag.FromErr(err)
+	// Read Terraform plan data into the model
+	resp.Diagnostics.Append(req.Plan.Get(ctx, &resourceAppModel)...)
+
+	if resp.Diagnostics.HasError() {
+		return
 	}
 
-	//existance check
-	if httpResponse.StatusCode == 404 {
-		diags = append(diags, diag.Diagnostic{
-			Severity: diag.Error,
-			Summary:  "resource not found during Update",
-			Detail:   "resource '" + d.Get("name").(string) + "' is not present on Sematext Cloud during Update",
-		})
-		return diags
+	if id, err = strconv.ParseInt(resourceAppModel.Id, 10, 64); err != nil {
+		resp.Diagnostics.AddError(
+			"Unable to Update Resource",
+			"An unexpected error occurred while attempting to update the resource. "+
+				"Please retry the operation or report this issue to the provider developers.\n\n"+
+				"Error: "+err.Error(),
+		)
+		return
 	}
 
 	updateAppInfo := &stcloud.UpdateAppInfo{}
-	appInfoChanged := false
+	updateAppInfo.Name = resourceAppModel.Name
 
-	if d.HasChange("name") {
-		_, newName := d.GetChange("name")
-		updateAppInfo.Name = newName.(string)
-		appInfoChanged = true
+	_, httpResponse, err = resourceApp.client.AppsApi.UpdateUsingPUT2(context.Background(), *updateAppInfo, id)
+
+	if err != nil {
+		json.Unmarshal([]byte(err.(stcloud.GenericSwaggerError).Body()), &body)
+		resp.Diagnostics.AddError(
+			"Unable to Update Resource",
+			"An unexpected error occurred while attempting to create the resource. "+
+				"Please retry the operation or report this issue to the provider developers.\n\n"+
+				"Error: "+body["message"].(string),
+		)
+		return
 	}
 
-	if appInfoChanged {
-		updateAppInfo.Status = "ACTIVE"
-		_, _, err = client.AppsApi.UpdateUsingPUT2(context.Background(), *updateAppInfo, id)
-		if err != nil {
-			return diag.FromErr(err)
-		}
-
+	// Return error if the HTTP status code is not 200 OK
+	if httpResponse.StatusCode != http.StatusOK {
+		resp.Diagnostics.AddError(
+			"Unable to Update Resource",
+			"An unexpected error occurred while attempting to create the resource. "+
+				"Please retry the operation or report this issue to the provider developers.\n\n"+
+				"HTTP Status: "+httpResponse.Status,
+		)
+		return
 	}
 
 	billingInfo := &stcloud.BillingInfo{}
-	billingInfoChanged := false
+	billingInfo.PlanId = resourceAppModel.BillingPlanId
 
-	if d.HasChange("billing_plan_id") {
-		_, newBillingPlanId := d.GetChange("billing_plan_id")
-		billingInfo.PlanId = newBillingPlanId.(int64)
-		billingInfoChanged = true
+	_, httpResponse, err = resourceApp.client.BillingApi.UpdatePlanUsingPUT(context.Background(), *billingInfo, id)
+
+	if err != nil {
+		json.Unmarshal([]byte(err.(stcloud.GenericSwaggerError).Body()), &body)
+		resp.Diagnostics.AddError(
+			"Unable to Update Resource Billing Code",
+			"An unexpected error occurred while attempting to create the resource. "+
+				"Please retry the operation or report this issue to the provider developers.\n\n"+
+				"Error: "+body["message"].(string),
+		)
+		return
+	}
+
+	// Return error if the HTTP status code is not 200 OK
+	if httpResponse.StatusCode != http.StatusOK {
+		resp.Diagnostics.AddError(
+			"Unable to Update Resource Billing Code",
+			"An unexpected error occurred while attempting to create the resource. "+
+				"Please retry the operation or report this issue to the provider developers.\n\n"+
+				"HTTP Status: "+httpResponse.Status,
+		)
+		return
 	}
 
 	cloudWatchSettings := &stcloud.CloudWatchSettings{}
-	cloudWatchSettingsChanged := false
+	cloudWatchSettings.AccessKey = resourceAppModel.AwsAccessKey.String()
+	cloudWatchSettings.SecretKey = resourceAppModel.AwsSecretKey.String()
+	cloudWatchSettings.FetchFrequency = resourceAppModel.AwsFetchFrequency.String()
+	cloudWatchSettings.Region = resourceAppModel.AwsRegion.String()
 
-	if d.HasChange("aws_access_key") {
-		_, newAwsAccessKey := d.GetChange("aws_access_key")
-		cloudWatchSettings.AccessKey = newAwsAccessKey.(string)
-		cloudWatchSettingsChanged = true
-	}
-	if d.HasChange("aws_secret_key") {
-		_, newAwsSecretKey := d.GetChange("aws_secret_key")
-		cloudWatchSettings.SecretKey = newAwsSecretKey.(string)
-		cloudWatchSettingsChanged = true
-	}
-	if d.HasChange("aws_fetch_frequency") {
-		_, newAwsFetchFrequency := d.GetChange("aws_fetch_frequency")
-		cloudWatchSettings.FetchFrequency = newAwsFetchFrequency.(string)
-		cloudWatchSettingsChanged = true
-	}
-	if d.HasChange("aws_region") {
-		_, newAwsRegion := d.GetChange("aws_region")
-		cloudWatchSettings.Region = newAwsRegion.(string)
-		cloudWatchSettingsChanged = true
+	_, httpResponse, err = resourceApp.client.AwsSettingsControllerApi.UpdateUsingPUT1(context.Background(), *cloudWatchSettings, id)
+
+	if err != nil {
+		json.Unmarshal([]byte(err.(stcloud.GenericSwaggerError).Body()), &body)
+		resp.Diagnostics.AddError(
+			"Unable to Update Resource Billing Code",
+			"An unexpected error occurred while attempting to create the resource. "+
+				"Please retry the operation or report this issue to the provider developers.\n\n"+
+				"Error: "+body["message"].(string),
+		)
+		return
 	}
 
-	if appInfoChanged {
-		_, _, err = client.AppsApi.UpdateUsingPUT2(context.Background(), *updateAppInfo, id)
-		if err != nil {
-			return diag.FromErr(err)
-		}
-	}
-
-	if billingInfoChanged {
-		_, _, err = client.BillingApi.UpdatePlanUsingPUT(context.Background(), *billingInfo, id)
-		if err != nil {
-			return diag.FromErr(err)
-		}
-	}
-
-	if cloudWatchSettingsChanged {
-		_, _, err = client.AwsSettingsControllerApi.UpdateUsingPUT1(context.Background(), *cloudWatchSettings, id)
-		if err != nil {
-			return diag.FromErr(err)
-		}
+	// Return error if the HTTP status code is not 200 OK
+	if httpResponse.StatusCode != http.StatusOK {
+		resp.Diagnostics.AddError(
+			"Unable to Update Resource Billing Code",
+			"An unexpected error occurred while attempting to create the resource. "+
+				"Please retry the operation or report this issue to the provider developers.\n\n"+
+				"HTTP Status: "+httpResponse.Status,
+		)
+		return
 	}
 
 	// get the list of apptoken names that are supposed to be here
-	//appTokenNames = extractAppTokenNames(d.Get("apptoken"))
+	appTokenNames = extractAppTokenNames(resourceAppModel.AppToken)
 
 	// pull tokens for this app from SC.
-	if tokensResponse, _, err = client.TokensApiControllerApi.GetAppTokens(ctx, id); err != nil {
-		return diag.FromErr(err)
+	_, _, err = resourceApp.client.TokensApiControllerApi.GetAppTokens(ctx, id)
+
+	if err != nil {
+		json.Unmarshal([]byte(err.(stcloud.GenericSwaggerError).Body()), &body)
+		resp.Diagnostics.AddError(
+			"Unable to Update Resource Billing Code",
+			"An unexpected error occurred while attempting to create the resource. "+
+				"Please retry the operation or report this issue to the provider developers.\n\n"+
+				"Error: "+body["message"].(string),
+		)
+		return
 	}
+
+	// Return error if the HTTP status code is not 200 OK
+	if httpResponse.StatusCode != http.StatusOK {
+		resp.Diagnostics.AddError(
+			"Unable to Update Resource Billing Code",
+			"An unexpected error occurred while attempting to create the resource. "+
+				"Please retry the operation or report this issue to the provider developers.\n\n"+
+				"HTTP Status: "+httpResponse.Status,
+		)
+		return
+	}
+
 	tokenEntries, err = extractAppTokens(tokensResponse)
 	if err != nil {
-		return diag.FromErr(err)
+		resp.Diagnostics.AddError(
+			"Unable to Update - token error.",
+			"An unexpected error occurred while attempting to create the resource. "+
+				"Please retry the operation or report this issue to the provider developers.\n\n"+
+				"Error: "+err.Error(),
+		)
+		return
 	}
 
 	//overwrite UUIDs from SC
@@ -130,12 +172,11 @@ func ResourceOpUpdateApp(ctx context.Context, d *schema.ResourceData, meta inter
 		if contains(appTokenNames, tokenEntry.Name) {
 			tokenAccumulator[tokenEntry.Name] = tokenEntry.Token
 			if !tokenEntry.Writeable {
-				diags = append(diags, diag.Diagnostic{
-					Severity: diag.Error,
-					Summary:  "apptoken not writable at sematext cloud",
-					Detail:   "an apptoken named '" + tokenEntry.Name + "' is not writable in your cloud account - aborting lest resources blocked from sending records",
-				})
-				return diags
+				resp.Diagnostics.AddError(
+					"Warning : App-token is not writable on Sematext Cloud..",
+					"An apptoken named '"+tokenEntry.Name+"' is not writable in your cloud account - aborting lest resources get blocked from sending records.",
+				)
+				return
 			}
 		}
 	}
@@ -143,27 +184,49 @@ func ResourceOpUpdateApp(ctx context.Context, d *schema.ResourceData, meta inter
 	//create tokens for any appTokenNames that are missing from SC
 	for _, tokenName := range appTokenNames {
 		if _, found := tokenAccumulator[tokenName]; !found {
-			diags = append(diags, diag.Diagnostic{
-				Severity: diag.Warning,
-				Summary:  "creating apptoken",
-				Detail:   "an apptoken named '" + tokenEntry.Name + "' will be created in your cloud account",
-			})
+
+			resp.Diagnostics.AddError(
+				"Warning : App-token will be created on Sematext Cloud.",
+				"An app-token named '"+tokenEntry.Name+"' will be created in your cloud account",
+			)
 
 			createTokenDto = stcloud.CreateTokenDto{}
 			createTokenDto.Name = tokenName
 			createTokenDto.Readable = true
 			createTokenDto.Writeable = true
-			tokenResponse, _, err = client.TokensApiControllerApi.CreateAppToken1(ctx, createTokenDto, id) // TODO handle Model_Error better
+
+			tokenResponse, httpResponse, err = resourceApp.client.TokensApiControllerApi.CreateAppToken1(ctx, createTokenDto, id)
+
 			if err != nil {
-				return diag.FromErr(err)
+				json.Unmarshal([]byte(err.(stcloud.GenericSwaggerError).Body()), &body)
+				resp.Diagnostics.AddError(
+					"Unable to create app-token.",
+					"An unexpected error occurred while attempting to create an app-token while updating the resource. "+
+						"Please retry the operation or report this issue to the provider developers.\n\n"+
+						"Error: "+body["message"].(string),
+				)
+				return
 			}
+
+			// Return error if the HTTP status code is not 200 OK
+			if httpResponse.StatusCode != http.StatusOK {
+				resp.Diagnostics.AddError(
+					"Unable to create app-token.",
+					"An unexpected error occurred while attempting to create an app-token while updating the resource. "+
+						"Please retry the operation or report this issue to the provider developers.\n\n"+
+						"HTTP Status: "+httpResponse.Status,
+				)
+				return
+			}
+
 			tokenAccumulator[tokenName] = tokenResponse.Data.Token.Token
 
 		}
 	}
 
-	d.Set("sc_apptoken_entries", tokenAccumulator)
+	resourceAppModel.ScAppTokenEntries = tokenAccumulator
 
-	return diags
+	// Save updated data into Terraform state
+	resp.Diagnostics.Append(resp.State.Set(ctx, &resourceAppModel)...)
 
 }

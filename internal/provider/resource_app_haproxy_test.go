@@ -8,17 +8,16 @@ package sematext
 
 
 import (
-	"github.com/sematext/terraform-provider-sematext/sematext"
 	"testing"
 )
 
 // TestAccResourceLifecycleAppHaproxy tests resource creation.
 func TestAccResourceLifecycleAppHaproxy(t *testing.T) {
-	sematext.ResourceTestLifecycleApp(t, "sematext_app_haproxy", "HAProxy")
+	ResourceTestLifecycleApp(t, "sematext_app_haproxy", "HAProxy")
 }
 
 
 // TestAccResourceUpdateAppHaproxy tests for resource updates.
 func TestAccResourceUpdateAppHaproxy(t *testing.T) {
-	sematext.ResourceTestUpdateApp(t, "sematext_app_haproxy", "HAProxy")
+	ResourceTestUpdateApp(t, "sematext_app_haproxy", "HAProxy")
 }

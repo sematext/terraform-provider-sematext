@@ -8,17 +8,16 @@ package sematext
 
 
 import (
-	"github.com/sematext/terraform-provider-sematext/sematext"
 	"testing"
 )
 
 // TestAccResourceLifecycleAppMongodb tests resource creation.
 func TestAccResourceLifecycleAppMongodb(t *testing.T) {
-	sematext.ResourceTestLifecycleApp(t, "sematext_app_mongodb", "MongoDB")
+	ResourceTestLifecycleApp(t, "sematext_app_mongodb", "MongoDB")
 }
 
 
 // TestAccResourceUpdateAppMongodb tests for resource updates.
 func TestAccResourceUpdateAppMongodb(t *testing.T) {
-	sematext.ResourceTestUpdateApp(t, "sematext_app_mongodb", "MongoDB")
+	ResourceTestUpdateApp(t, "sematext_app_mongodb", "MongoDB")
 }

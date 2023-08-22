@@ -8,17 +8,16 @@ package sematext
 
 
 import (
-	"github.com/sematext/terraform-provider-sematext/sematext"
 	"testing"
 )
 
 // TestAccResourceLifecycleAppRabbitmq tests resource creation.
 func TestAccResourceLifecycleAppRabbitmq(t *testing.T) {
-	sematext.ResourceTestLifecycleApp(t, "sematext_app_rabbitmq", "rabbitmq")
+	ResourceTestLifecycleApp(t, "sematext_app_rabbitmq", "rabbitmq")
 }
 
 
 // TestAccResourceUpdateAppRabbitmq tests for resource updates.
 func TestAccResourceUpdateAppRabbitmq(t *testing.T) {
-	sematext.ResourceTestUpdateApp(t, "sematext_app_rabbitmq", "rabbitmq")
+	ResourceTestUpdateApp(t, "sematext_app_rabbitmq", "rabbitmq")
 }

@@ -8,17 +8,16 @@ package sematext
 
 
 import (
-	"github.com/sematext/terraform-provider-sematext/sematext"
 	"testing"
 )
 
 // TestAccResourceLifecycleAppHadoopmrv1 tests resource creation.
 func TestAccResourceLifecycleAppHadoopmrv1(t *testing.T) {
-	sematext.ResourceTestLifecycleApp(t, "sematext_app_hadoopmrv1", "Hadoop-MRv1")
+	ResourceTestLifecycleApp(t, "sematext_app_hadoopmrv1", "Hadoop-MRv1")
 }
 
 
 // TestAccResourceUpdateAppHadoopmrv1 tests for resource updates.
 func TestAccResourceUpdateAppHadoopmrv1(t *testing.T) {
-	sematext.ResourceTestUpdateApp(t, "sematext_app_hadoopmrv1", "Hadoop-MRv1")
+	ResourceTestUpdateApp(t, "sematext_app_hadoopmrv1", "Hadoop-MRv1")
 }

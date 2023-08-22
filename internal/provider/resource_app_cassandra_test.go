@@ -8,17 +8,16 @@ package sematext
 
 
 import (
-	"github.com/sematext/terraform-provider-sematext/sematext"
 	"testing"
 )
 
 // TestAccResourceLifecycleAppCassandra tests resource creation.
 func TestAccResourceLifecycleAppCassandra(t *testing.T) {
-	sematext.ResourceTestLifecycleApp(t, "sematext_app_cassandra", "Cassandra")
+	ResourceTestLifecycleApp(t, "sematext_app_cassandra", "Cassandra")
 }
 
 
 // TestAccResourceUpdateAppCassandra tests for resource updates.
 func TestAccResourceUpdateAppCassandra(t *testing.T) {
-	sematext.ResourceTestUpdateApp(t, "sematext_app_cassandra", "Cassandra")
+	ResourceTestUpdateApp(t, "sematext_app_cassandra", "Cassandra")
 }

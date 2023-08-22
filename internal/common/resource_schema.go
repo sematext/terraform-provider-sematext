@@ -13,7 +13,7 @@ import (
 )
 
 // ResourceSchemaApp contains common resource fields
-func ResourceSchemaMonitoringApp(appType string) schema.Schema {
+func ResourceSchemaApp(appType string) schema.Schema {
 
 	resourceSchema := schema.Schema{
 		// This description is used by the documentation generator and the language server.
@@ -169,7 +169,7 @@ type AppTokenEntryType struct {
 	Writeable bool   `tdfsk:"writable"`
 }
 
-type ResourceModel struct {
+type ResourceAppModel struct {
 	Id                string `tfsdk:"id"`
 	Name              string `tfsdk:"name"`
 	BillingPlanId     int64  `tfsdk:"billing_plan_id"`
@@ -183,4 +183,8 @@ type ResourceModel struct {
 	AwsSecretKey      types.String `tfsdk:"aws_secret_key"`
 	AwsFetchFrequency types.String `tfsdk:"aws_fetch_frequency"`
 	AwsRegion         types.String `tfsdk:"aws_region"`
+}
+
+type ResourceApp struct {
+	client *stcloud.APIClient
 }

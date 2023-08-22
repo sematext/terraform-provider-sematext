@@ -8,17 +8,16 @@ package sematext
 
 
 import (
-	"github.com/sematext/terraform-provider-sematext/sematext"
 	"testing"
 )
 
 // TestAccResourceLifecycleAppClickhouse tests resource creation.
 func TestAccResourceLifecycleAppClickhouse(t *testing.T) {
-	sematext.ResourceTestLifecycleApp(t, "sematext_app_clickhouse", "ClickHouse")
+	ResourceTestLifecycleApp(t, "sematext_app_clickhouse", "ClickHouse")
 }
 
 
 // TestAccResourceUpdateAppClickhouse tests for resource updates.
 func TestAccResourceUpdateAppClickhouse(t *testing.T) {
-	sematext.ResourceTestUpdateApp(t, "sematext_app_clickhouse", "ClickHouse")
+	ResourceTestUpdateApp(t, "sematext_app_clickhouse", "ClickHouse")
 }

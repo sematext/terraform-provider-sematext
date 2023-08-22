@@ -8,17 +8,16 @@ package sematext
 
 
 import (
-	"github.com/sematext/terraform-provider-sematext/sematext"
 	"testing"
 )
 
 // TestAccResourceLifecycleAppRedis tests resource creation.
 func TestAccResourceLifecycleAppRedis(t *testing.T) {
-	sematext.ResourceTestLifecycleApp(t, "sematext_app_redis", "Redis")
+	ResourceTestLifecycleApp(t, "sematext_app_redis", "Redis")
 }
 
 
 // TestAccResourceUpdateAppRedis tests for resource updates.
 func TestAccResourceUpdateAppRedis(t *testing.T) {
-	sematext.ResourceTestUpdateApp(t, "sematext_app_redis", "Redis")
+	ResourceTestUpdateApp(t, "sematext_app_redis", "Redis")
 }
