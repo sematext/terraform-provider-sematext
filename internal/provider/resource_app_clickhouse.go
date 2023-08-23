@@ -46,7 +46,7 @@ func (r *AppClickhouseResource) Configure(ctx context.Context, req resource.Conf
 
 
 func (r *AppClickhouseResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
-	
+		
 	ResourceOpCreateApp(r, ctx, req, resp, "Clickhouse")
 
 }

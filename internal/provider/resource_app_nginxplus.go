@@ -46,7 +46,7 @@ func (r *AppNginxplusResource) Configure(ctx context.Context, req resource.Confi
 
 
 func (r *AppNginxplusResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
-	
+		
 	ResourceOpCreateApp(r, ctx, req, resp, "Nginxplus")
 
 }

@@ -43,6 +43,7 @@ apptypes=(
 
 resourcelist=""
 
+cp ./templates/provider_test.go.template ../internal/provider/provider_test.go
 
 for apptype in "${apptypes[@]}"
 do
@@ -67,6 +68,5 @@ sed -e "s/<<RESOURCE_LIST>>/${resourcelist}/g" ./templates/provider.go.template 
 
 cd ..
 make fmt
-
 
 cd $dir

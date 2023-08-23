@@ -46,7 +46,7 @@ func (r *AppLogseneResource) Configure(ctx context.Context, req resource.Configu
 
 
 func (r *AppLogseneResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
-	
+		
 	ResourceOpCreateApp(r, ctx, req, resp, "Logsene")
 
 }

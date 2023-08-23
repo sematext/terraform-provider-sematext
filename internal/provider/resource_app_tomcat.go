@@ -46,7 +46,7 @@ func (r *AppTomcatResource) Configure(ctx context.Context, req resource.Configur
 
 
 func (r *AppTomcatResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
-	
+		
 	ResourceOpCreateApp(r, ctx, req, resp, "Tomcat")
 
 }

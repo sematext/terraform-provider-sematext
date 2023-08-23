@@ -46,7 +46,7 @@ func (r *AppCassandraResource) Configure(ctx context.Context, req resource.Confi
 
 
 func (r *AppCassandraResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
-	
+		
 	ResourceOpCreateApp(r, ctx, req, resp, "Cassandra")
 
 }

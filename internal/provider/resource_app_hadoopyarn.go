@@ -46,7 +46,7 @@ func (r *AppHadoopyarnResource) Configure(ctx context.Context, req resource.Conf
 
 
 func (r *AppHadoopyarnResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
-	
+		
 	ResourceOpCreateApp(r, ctx, req, resp, "Hadoopyarn")
 
 }

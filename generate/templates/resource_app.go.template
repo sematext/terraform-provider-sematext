@@ -46,7 +46,7 @@ func (r *App<<CLASS_NAME>>Resource) Configure(ctx context.Context, req resource.
 
 
 func (r *App<<CLASS_NAME>>Resource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
-	
+		
 	ResourceOpCreateApp(r, ctx, req, resp, "<<CLASS_NAME>>")
 
 }

@@ -46,7 +46,7 @@ func (r *AppHaproxyResource) Configure(ctx context.Context, req resource.Configu
 
 
 func (r *AppHaproxyResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
-	
+		
 	ResourceOpCreateApp(r, ctx, req, resp, "Haproxy")
 
 }

@@ -115,7 +115,7 @@ func ResourceOpCreateApp(resourceApp ResourceApp, ctx context.Context, req resou
 
 	resourceAppModel.Id = strconv.FormatInt(app.Id, 10)
 
-	appTokenNames = extractAppTokenNames(app.Tokens) // user supplied app
+	appTokenNames = app.Tokens
 
 	tokenAccumulator = map[string]string{}
 	for _, tokenName := range appTokenNames {
@@ -124,7 +124,7 @@ func ResourceOpCreateApp(resourceApp ResourceApp, ctx context.Context, req resou
 		createTokenDto.Name = tokenName
 		createTokenDto.Readable = true
 		createTokenDto.Writeable = true
-+		tokenResponse, httpResponse, err = resourceApp.client.TokensApiControllerApi.CreateAppToken1(ctx, createTokenDto, app.Id) // TODO handle Model_Error better
+		tokenResponse, httpResponse, err = resourceApp.client.TokensApiControllerApi.CreateAppToken1(ctx, createTokenDto, app.Id) // TODO handle Model_Error better
 
 		// Return error if the HTTP status code is not 200 OK
 		if httpResponse.StatusCode != http.StatusOK {

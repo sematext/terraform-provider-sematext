@@ -46,7 +46,7 @@ func (r *AppHadoopmrv1Resource) Configure(ctx context.Context, req resource.Conf
 
 
 func (r *AppHadoopmrv1Resource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
-	
+		
 	ResourceOpCreateApp(r, ctx, req, resp, "Hadoopmrv1")
 
 }

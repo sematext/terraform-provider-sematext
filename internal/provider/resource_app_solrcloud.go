@@ -46,7 +46,7 @@ func (r *AppSolrcloudResource) Configure(ctx context.Context, req resource.Confi
 
 
 func (r *AppSolrcloudResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
-	
+		
 	ResourceOpCreateApp(r, ctx, req, resp, "Solrcloud")
 
 }

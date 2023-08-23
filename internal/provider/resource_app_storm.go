@@ -46,7 +46,7 @@ func (r *AppStormResource) Configure(ctx context.Context, req resource.Configure
 
 
 func (r *AppStormResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
-	
+		
 	ResourceOpCreateApp(r, ctx, req, resp, "Storm")
 
 }

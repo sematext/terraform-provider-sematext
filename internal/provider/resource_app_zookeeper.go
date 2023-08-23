@@ -46,7 +46,7 @@ func (r *AppZookeeperResource) Configure(ctx context.Context, req resource.Confi
 
 
 func (r *AppZookeeperResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
-	
+		
 	ResourceOpCreateApp(r, ctx, req, resp, "Zookeeper")
 
 }

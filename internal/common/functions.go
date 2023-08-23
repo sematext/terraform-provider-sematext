@@ -8,7 +8,6 @@ import (
 	"strings"
 
 	"github.com/google/uuid"
-	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/sematext/sematext-api-client-go/stcloud"
 )
 
@@ -95,13 +94,14 @@ func arrayLiteralString(array []string) string {
 	return fmt.Sprintf("[\"%s\"]", s)
 }
 
-func extractAppTokenNames(set interface{}) []string {
-	var names []interface{}
-	var result []string
-	names = set.(*schema.Set).List()[0].(map[string]interface{})["names"].([]interface{}) // @TODO - adjust for new framework.
+func extractAppTokenNames(AppTokens []AppTokenType) []string {
 
-	for _, name := range names {
-		result = append(result, name.(string))
+	var result []string
+	//names = set.(*schema.Set).List()[0].(map[string]interface{})["names"].([]interface{}) // @TODO - adjust for new framework.
+	for _, token := range AppTokens {
+		for _, name := range token.Name {
+			result = append(result, name)
+		}
 	}
 	return result
 }

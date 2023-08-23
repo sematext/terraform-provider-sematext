@@ -46,7 +46,7 @@ func (r *AppElasticsearchResource) Configure(ctx context.Context, req resource.C
 
 
 func (r *AppElasticsearchResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
-	
+		
 	ResourceOpCreateApp(r, ctx, req, resp, "Elasticsearch")
 
 }

@@ -46,7 +46,7 @@ func (r *AppMobilelogsResource) Configure(ctx context.Context, req resource.Conf
 
 
 func (r *AppMobilelogsResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
-	
+		
 	ResourceOpCreateApp(r, ctx, req, resp, "Mobilelogs")
 
 }

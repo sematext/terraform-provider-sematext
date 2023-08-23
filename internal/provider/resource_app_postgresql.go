@@ -46,7 +46,7 @@ func (r *AppPostgresqlResource) Configure(ctx context.Context, req resource.Conf
 
 
 func (r *AppPostgresqlResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
-	
+		
 	ResourceOpCreateApp(r, ctx, req, resp, "Postgresql")
 
 }

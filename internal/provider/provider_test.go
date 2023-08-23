@@ -1,4 +1,3 @@
- 
 package sematext
 
 import (
@@ -24,4 +23,3 @@ func testAccPreCheck(t *testing.T) {
 	// TODO - migrate provider tests
 
 }
-

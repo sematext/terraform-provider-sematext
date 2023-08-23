@@ -1,21 +1,13 @@
 package sematext
 
 import (
-	"context"
 	"fmt"
-	"os"
-	"strconv"
-	"strings"
 	"testing"
-	"time"
 
-	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/acctest"
-	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
-	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
-	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
-	"github.com/sematext/sematext-api-client-go/stcloud"
+	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
 )
 
+/*
 var testProviders map[string]*schema.Provider
 var testProvider schema.Provider
 var testProviderFunc func() *schema.Provider
@@ -52,6 +44,55 @@ type ResourceTestFixtureAWS struct {
 	AwsAccessKey      string
 	AwsFetchFrequency string
 }
+
+*/
+
+func TestAccAppResource(t *testing.T) {
+	resource.Test(t, resource.TestCase{
+		PreCheck:                 func() { testAccPreCheck(t) },
+		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
+		Steps: []resource.TestStep{
+			// Create and Read testing
+			{
+				Config: testAccAppResourceConfig("one"),
+				Check: resource.ComposeAggregateTestCheckFunc(
+					resource.TestCheckResourceAttr("scaffolding_example.test", "configurable_attribute", "one"),                  //@TODO switch to SC App
+					resource.TestCheckResourceAttr("scaffolding_example.test", "defaulted", "example value when not configured"), //@TODO switch to SC App
+					resource.TestCheckResourceAttr("scaffolding_example.test", "id", "example-id"),                               //@TODO switch to SC App
+				),
+			},
+			// ImportState testing
+			{
+				ResourceName:      "scaffolding_example.test",
+				ImportState:       true,
+				ImportStateVerify: true,
+				// This is not normally necessary, but is here because this
+				// example code does not have an actual upstream service.
+				// Once the Read method is able to refresh information from
+				// the upstream service, this can be removed.
+				ImportStateVerifyIgnore: []string{"configurable_attribute", "defaulted"},
+			},
+			// Update and Read testing
+			{
+				Config: testAccAppResourceConfig("two"),
+				Check: resource.ComposeAggregateTestCheckFunc(
+					resource.TestCheckResourceAttr("scaffolding_example.test", "configurable_attribute", "two"), //@TODO switch to SC App
+				),
+			},
+			// Delete testing automatically occurs in TestCase
+		},
+	})
+}
+
+func testAccAppResourceConfig(configurableAttribute string) string {
+	return fmt.Sprintf(`
+resource "scaffolding_example" "test" {
+  configurable_attribute = %[1]q
+}
+`, configurableAttribute)
+}
+
+/*
 
 func (rtf *ResourceTestFixtureDefault) hydrate(resourceType string, appType string) {
 
@@ -538,3 +579,5 @@ func testCheckProviderFixture(t *testing.T) {
 	}
 
 }
+
+*/

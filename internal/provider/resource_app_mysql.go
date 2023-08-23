@@ -46,7 +46,7 @@ func (r *AppMysqlResource) Configure(ctx context.Context, req resource.Configure
 
 
 func (r *AppMysqlResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
-	
+		
 	ResourceOpCreateApp(r, ctx, req, resp, "Mysql")
 
 }

@@ -46,7 +46,7 @@ func (r *AppAwsec2Resource) Configure(ctx context.Context, req resource.Configur
 
 
 func (r *AppAwsec2Resource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
-	
+		
 	ResourceOpCreateApp(r, ctx, req, resp, "Awsec2")
 
 }

@@ -46,7 +46,7 @@ func (r *AppApacheResource) Configure(ctx context.Context, req resource.Configur
 
 
 func (r *AppApacheResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
-	
+		
 	ResourceOpCreateApp(r, ctx, req, resp, "Apache")
 
 }
