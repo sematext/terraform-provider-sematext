@@ -1,4 +1,4 @@
-package sematext
+package common
 
 import (
 	"bytes"
@@ -22,9 +22,7 @@ func IsValidSematextRegion(region string) bool {
 
 // IsValidUUID checks a string is UUIDv4
 func IsValidUUID(u string) bool {
-
 	_, err := uuid.Parse(u)
-
 	return err == nil
 }
 
@@ -99,7 +97,7 @@ func extractAppTokenNames(AppTokens []AppTokenType) []string {
 	var result []string
 	//names = set.(*schema.Set).List()[0].(map[string]interface{})["names"].([]interface{}) // @TODO - adjust for new framework.
 	for _, token := range AppTokens {
-		for _, name := range token.Name {
+		for _, name := range token.Names {
 			result = append(result, name)
 		}
 	}

@@ -1,4 +1,4 @@
-package sematext
+package resources
 
 /*
 	Note: Generated file, any edits will be overwritten!
@@ -8,9 +8,18 @@ package sematext
 
 import (
 	"context"
-	"github.com/hashicorp/terraform-plugin-framework/resource"
 
+	"github.com/hashicorp/terraform-plugin-framework/resource"
+	"github.com/sematext/sematext-api-client-go/stcloud"
+
+	"github.com/sematext/terraform-provider-sematext/internal/common"
 )
+
+
+type App<<CLASS_NAME>>Resource struct {
+	client *stcloud.APIClient
+}
+
 
 // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &App<<CLASS_NAME>>Resource{}
@@ -18,61 +27,107 @@ var _ resource.ResourceWithImportState = &App<<CLASS_NAME>>Resource{}
 
 
 func NewApp<<CLASS_NAME>>Resource() resource.Resource {
+
 	return &App<<CLASS_NAME>>Resource{}
+
 }
-
-// App<<CLASS_NAME>>ResourceModel describes the resource data model.
-type App<<CLASS_NAME>>ResourceModel = AppResourceModel
-
-
-// App<<CLASS_NAME>>Resource defines the resource implementation.
-type App<<CLASS_NAME>>Resource = AppResource
 
 
 func (r *App<<CLASS_NAME>>Resource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
-	resp.TypeName = req.ProviderTypeName + "_App<<CLASS_NAME>>Resource"	
+
+	resp.TypeName = "<<RESOURCE_NAME>>"	
+
 }
 
 
 func (r *App<<CLASS_NAME>>Resource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
-	resp.Schema = ResourceSchemaApp("<<APP_TYPE>>")
+
+	appType := "<<APP_TYPE>>"
+
+	if appType == "AWS EBS" || appType == "AWS EC2" || appType == "AWS ELB" { 
+		resp.Schema = common.ResourceSchemaAppAWS("<<APP_TYPE>>")
+	} else{
+		resp.Schema = common.ResourceSchemaAppDefault("<<APP_TYPE>>")
+	}
+
 }
 
 
 func (r *App<<CLASS_NAME>>Resource) Configure(ctx context.Context, req resource.ConfigureRequest, resp *resource.ConfigureResponse) {
 
-	ResourceOpConfigureApp(r, ctx, req, resp, "<<CLASS_NAME>>")
+	appType := "<<APP_TYPE>>"
+
+	if appType == "AWS EBS" || appType == "AWS EC2" || appType == "AWS ELB" { 
+		common.ResourceOpConfigureAppAWS(r.client, ctx, req, resp, "<<CLASS_NAME>>")
+	} else {
+		common.ResourceOpConfigureAppDefault(r.client, ctx, req, resp, "<<CLASS_NAME>>")
+	}
+
 }
 
 
 func (r *App<<CLASS_NAME>>Resource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
+
+	appType := "<<APP_TYPE>>"
 		
-	ResourceOpCreateApp(r, ctx, req, resp, "<<CLASS_NAME>>")
+	if appType == "AWS EBS" || appType == "AWS EC2" || appType == "AWS ELB" { 
+		common.ResourceOpCreateAppAWS(r.client, ctx, req, resp, "<<CLASS_NAME>>")
+	} else{
+		common.ResourceOpCreateAppDefault(r.client, ctx, req, resp, "<<CLASS_NAME>>")
+	}
 
 }
 
 
 func (r *App<<CLASS_NAME>>Resource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
 
-	ResourceOpReadApp(r, ctx, req, resp, "<<CLASS_NAME>>")
+	appType := "<<APP_TYPE>>"
+
+	if appType == "AWS EBS" || appType == "AWS EC2" || appType == "AWS ELB" { 
+		common.ResourceOpReadAppAWS(r.client, ctx, req, resp, "<<CLASS_NAME>>")
+	} else {
+		common.ResourceOpReadAppDefault(r.client, ctx, req, resp, "<<CLASS_NAME>>")
+	}
 
 }
+
 
 func (r *App<<CLASS_NAME>>Resource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
 
-	ResourceOpUpdateApp(r, ctx, req, resp, "<<CLASS_NAME>>")
+	appType := "<<APP_TYPE>>"
+
+	if appType == "AWS EBS" || appType == "AWS EC2" || appType == "AWS ELB" { 
+		common.ResourceOpUpdateAppAWS(r.client, ctx, req, resp, "<<CLASS_NAME>>")
+	} else {
+		common.ResourceOpUpdateAppDefault(r.client, ctx, req, resp, "<<CLASS_NAME>>")
+	}
 
 }
+
 
 func (r *App<<CLASS_NAME>>Resource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
 
-	ResourceOpDeleteApp(r, ctx, req, resp, "<<CLASS_NAME>>")
+	appType := "<<APP_TYPE>>"
+
+	if appType == "AWS EBS" || appType == "AWS EC2" || appType == "AWS ELB" { 
+		common.ResourceOpDeleteAppAWS(r.client, ctx, req, resp, "<<CLASS_NAME>>")
+	} else { 
+		common.ResourceOpDeleteAppDefault(r.client, ctx, req, resp, "<<CLASS_NAME>>")
+	}
+	
 
 }
 
+
 func (r *App<<CLASS_NAME>>Resource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
 
-	ResourceOpImportApp(r, ctx, req, resp, "<<CLASS_NAME>>")
+	appType := "<<APP_TYPE>>"
+
+	if appType == "AWS EBS" || appType == "AWS EC2" || appType == "AWS ELB" { 
+  		common.ResourceOpImportAppAWS(r.client, ctx, req, resp, "<<CLASS_NAME>>")
+	} else {
+		common.ResourceOpImportAppDefault(r.client, ctx, req, resp, "<<CLASS_NAME>>")
+	}
 
 }
 

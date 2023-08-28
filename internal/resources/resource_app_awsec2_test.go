@@ -12,20 +12,20 @@ import (
 	"github.com/sematext/terraform-provider-sematext/internal/common"
 )
 
-// TestAccResourceApp<<CLASS_NAME>> tests resource lifecycle.
-func TestAccAppResource<<CLASS_NAME>>(t *testing.T) {
+// TestAccResourceAppAwsec2 tests resource lifecycle.
+func TestAccAppResourceAwsec2(t *testing.T) {
 
-	appType := "<<CLASS_NAME>>"
+	appType := "Awsec2"
 
 	switch appType {
 
 	case "AWS EBS", "AWS EC2", "AWS ELB":
 
-		common.TestAccResourceAppAWS(t, "<<RESOURCE_NAME>>", "<<APP_TYPE>>")
+		common.TestAccResourceAppAWS(t, "sematext_app_awsec2", "AWS EC2")
 
 	default:
 
-		common.TestAccResourceAppDefault(t, "<<RESOURCE_NAME>>", "<<APP_TYPE>>")
+		common.TestAccResourceAppDefault(t, "sematext_app_awsec2", "AWS EC2")
 		
 	}
 

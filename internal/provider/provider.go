@@ -1,4 +1,4 @@
-package sematext
+package provider
 
 /*
 	Note: Generated file, any edits will be overwritten!
@@ -21,7 +21,14 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/sematext/sematext-api-client-go/stcloud"
+	"github.com/sematext/terraform-provider-sematext/internal/resources"
 )
+
+func isValidUUID(u string) bool {
+	_, err := uuid.Parse(u)
+	return err == nil
+}
+
 
 // Ensure SematextCloudProvider satisfies various provider interfaces.
 var _ provider.Provider = &SematextCloudProvider{}
@@ -81,7 +88,7 @@ func (p *SematextCloudProvider) Configure(ctx context.Context, req provider.Conf
 
 
 	apiToken := os.Getenv("SEMATEXT_API_KEY")
-	if !IsValidUUID(apiToken) {
+	if !isValidUUID(apiToken) {
 		resp.Diagnostics.AddError( // @TODO - severity (diag.Error)
 			"Missing or invalid env SEMATEXT_API_KEY",
 			"Missing or invalid env SEMATEXT_API_KEY", //@TODO adjust brevity
@@ -114,37 +121,37 @@ func (p *SematextCloudProvider) Configure(ctx context.Context, req provider.Conf
 
 func (p *SematextCloudProvider) Resources(ctx context.Context) []func() resource.Resource {
 	return []func() resource.Resource{
-        NewAppAkkaResource,
-        NewAppApacheResource,
-        NewAppAwsebsResource,
-        NewAppAwsec2Resource,
-        NewAppAwselbResource,
-        NewAppCassandraResource,
-        NewAppClickhouseResource,
-        NewAppElasticsearchResource,
-        NewAppHadoopmrv1Resource,
-        NewAppHadoopyarnResource,
-        NewAppHaproxyResource,
-        NewAppHbaseResource,
-        NewAppInfraResource,
-        NewAppJvmResource,
-        NewAppKafkaResource,
-        NewAppLogseneResource,
-        NewAppMongodbResource,
-        NewAppMysqlResource,
-        NewAppNginxResource,
-        NewAppNginxplusResource,
-        NewAppNodejsResource,
-        NewAppRedisResource,
-        NewAppSolrResource,
-        NewAppSolrcloudResource,
-        NewAppSparkResource,
-        NewAppStormResource,
-        NewAppTomcatResource,
-        NewAppZookeeperResource,
-        NewAppPostgresqlResource,
-        NewAppRabbitmqResource,
-        NewAppMobilelogsResource,
+        resources.NewAppAkkaResource,
+        resources.NewAppApacheResource,
+        resources.NewAppAwsebsResource,
+        resources.NewAppAwsec2Resource,
+        resources.NewAppAwselbResource,
+        resources.NewAppCassandraResource,
+        resources.NewAppClickhouseResource,
+        resources.NewAppElasticsearchResource,
+        resources.NewAppHadoopmrv1Resource,
+        resources.NewAppHadoopyarnResource,
+        resources.NewAppHaproxyResource,
+        resources.NewAppHbaseResource,
+        resources.NewAppInfraResource,
+        resources.NewAppJvmResource,
+        resources.NewAppKafkaResource,
+        resources.NewAppLogseneResource,
+        resources.NewAppMongodbResource,
+        resources.NewAppMysqlResource,
+        resources.NewAppNginxResource,
+        resources.NewAppNginxplusResource,
+        resources.NewAppNodejsResource,
+        resources.NewAppRedisResource,
+        resources.NewAppSolrResource,
+        resources.NewAppSolrcloudResource,
+        resources.NewAppSparkResource,
+        resources.NewAppStormResource,
+        resources.NewAppTomcatResource,
+        resources.NewAppZookeeperResource,
+        resources.NewAppPostgresqlResource,
+        resources.NewAppRabbitmqResource,
+        resources.NewAppMobilelogsResource,
 
 	}
 }
@@ -159,3 +166,4 @@ func IsValidUUID(u string) bool {
 	_, err := uuid.Parse(u)
 	return err == nil
 }
+

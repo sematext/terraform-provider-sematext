@@ -6,7 +6,8 @@ import (
 	"log"
 
 	"github.com/hashicorp/terraform-plugin-framework/providerserver"
-	"github.com/hashicorp/terraform-provider-scaffolding-framework/internal/provider" // @TODO - switch this to sematext provider
+
+	"github.com/sematext/terraform-provider-sematext/internal/provider"
 )
 
 var (
