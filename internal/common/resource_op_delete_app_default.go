@@ -11,7 +11,7 @@ import (
 	"github.com/sematext/sematext-api-client-go/stcloud"
 )
 
-func ResourceOpDeleteAppDefault(client *stcloud.APIClient, ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse, appType string) {
+func ResourceOpDeleteDefault(client *stcloud.APIClient, ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse, appType string) {
 
 	var id int64
 	var err error

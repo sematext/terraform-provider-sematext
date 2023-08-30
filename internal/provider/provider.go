@@ -21,7 +21,39 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/sematext/sematext-api-client-go/stcloud"
-	"github.com/sematext/terraform-provider-sematext/internal/resources"
+
+	    "github.com/sematext/terraform-provider-sematext/internal/resource/akka"
+    "github.com/sematext/terraform-provider-sematext/internal/resource/apache"
+    "github.com/sematext/terraform-provider-sematext/internal/resource/awsebs"
+    "github.com/sematext/terraform-provider-sematext/internal/resource/awsec2"
+    "github.com/sematext/terraform-provider-sematext/internal/resource/awselb"
+    "github.com/sematext/terraform-provider-sematext/internal/resource/cassandra"
+    "github.com/sematext/terraform-provider-sematext/internal/resource/clickhouse"
+    "github.com/sematext/terraform-provider-sematext/internal/resource/elasticsearch"
+    "github.com/sematext/terraform-provider-sematext/internal/resource/hadoopmrv1"
+    "github.com/sematext/terraform-provider-sematext/internal/resource/hadoopyarn"
+    "github.com/sematext/terraform-provider-sematext/internal/resource/haproxy"
+    "github.com/sematext/terraform-provider-sematext/internal/resource/hbase"
+    "github.com/sematext/terraform-provider-sematext/internal/resource/infra"
+    "github.com/sematext/terraform-provider-sematext/internal/resource/jvm"
+    "github.com/sematext/terraform-provider-sematext/internal/resource/kafka"
+    "github.com/sematext/terraform-provider-sematext/internal/resource/logsene"
+    "github.com/sematext/terraform-provider-sematext/internal/resource/mongodb"
+    "github.com/sematext/terraform-provider-sematext/internal/resource/mysql"
+    "github.com/sematext/terraform-provider-sematext/internal/resource/nginx"
+    "github.com/sematext/terraform-provider-sematext/internal/resource/nginxplus"
+    "github.com/sematext/terraform-provider-sematext/internal/resource/nodejs"
+    "github.com/sematext/terraform-provider-sematext/internal/resource/redis"
+    "github.com/sematext/terraform-provider-sematext/internal/resource/solr"
+    "github.com/sematext/terraform-provider-sematext/internal/resource/solrcloud"
+    "github.com/sematext/terraform-provider-sematext/internal/resource/spark"
+    "github.com/sematext/terraform-provider-sematext/internal/resource/storm"
+    "github.com/sematext/terraform-provider-sematext/internal/resource/tomcat"
+    "github.com/sematext/terraform-provider-sematext/internal/resource/zookeeper"
+    "github.com/sematext/terraform-provider-sematext/internal/resource/postgresql"
+    "github.com/sematext/terraform-provider-sematext/internal/resource/rabbitmq"
+    "github.com/sematext/terraform-provider-sematext/internal/resource/mobilelogs"
+
 )
 
 func isValidUUID(u string) bool {
@@ -121,37 +153,37 @@ func (p *SematextCloudProvider) Configure(ctx context.Context, req provider.Conf
 
 func (p *SematextCloudProvider) Resources(ctx context.Context) []func() resource.Resource {
 	return []func() resource.Resource{
-        resources.NewAppAkkaResource,
-        resources.NewAppApacheResource,
-        resources.NewAppAwsebsResource,
-        resources.NewAppAwsec2Resource,
-        resources.NewAppAwselbResource,
-        resources.NewAppCassandraResource,
-        resources.NewAppClickhouseResource,
-        resources.NewAppElasticsearchResource,
-        resources.NewAppHadoopmrv1Resource,
-        resources.NewAppHadoopyarnResource,
-        resources.NewAppHaproxyResource,
-        resources.NewAppHbaseResource,
-        resources.NewAppInfraResource,
-        resources.NewAppJvmResource,
-        resources.NewAppKafkaResource,
-        resources.NewAppLogseneResource,
-        resources.NewAppMongodbResource,
-        resources.NewAppMysqlResource,
-        resources.NewAppNginxResource,
-        resources.NewAppNginxplusResource,
-        resources.NewAppNodejsResource,
-        resources.NewAppRedisResource,
-        resources.NewAppSolrResource,
-        resources.NewAppSolrcloudResource,
-        resources.NewAppSparkResource,
-        resources.NewAppStormResource,
-        resources.NewAppTomcatResource,
-        resources.NewAppZookeeperResource,
-        resources.NewAppPostgresqlResource,
-        resources.NewAppRabbitmqResource,
-        resources.NewAppMobilelogsResource,
+        akka.NewResource,
+        apache.NewResource,
+        awsebs.NewResource,
+        awsec2.NewResource,
+        awselb.NewResource,
+        cassandra.NewResource,
+        clickhouse.NewResource,
+        elasticsearch.NewResource,
+        hadoopmrv1.NewResource,
+        hadoopyarn.NewResource,
+        haproxy.NewResource,
+        hbase.NewResource,
+        infra.NewResource,
+        jvm.NewResource,
+        kafka.NewResource,
+        logsene.NewResource,
+        mongodb.NewResource,
+        mysql.NewResource,
+        nginx.NewResource,
+        nginxplus.NewResource,
+        nodejs.NewResource,
+        redis.NewResource,
+        solr.NewResource,
+        solrcloud.NewResource,
+        spark.NewResource,
+        storm.NewResource,
+        tomcat.NewResource,
+        zookeeper.NewResource,
+        postgresql.NewResource,
+        rabbitmq.NewResource,
+        mobilelogs.NewResource,
 
 	}
 }

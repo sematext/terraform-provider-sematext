@@ -9,7 +9,7 @@ import (
 	"github.com/sematext/sematext-api-client-go/stcloud"
 )
 
-func ResourceSchemaAppDefault(appType string) schema.Schema {
+func ResourceSchemaDefault(appType string) schema.Schema {
 
 	resourceSchema := schema.Schema{
 		// This description is used by the documentation generator and the language server.

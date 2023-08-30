@@ -10,7 +10,7 @@ import (
 	"github.com/sematext/sematext-api-client-go/stcloud"
 )
 
-func ResourceOpReadAppAWS(client *stcloud.APIClient, ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse, appType string) {
+func ResourceOpReadAWS(client *stcloud.APIClient, ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse, appType string) {
 
 	var appResponse stcloud.AppResponse
 	var id int64

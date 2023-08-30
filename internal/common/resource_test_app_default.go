@@ -7,8 +7,6 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/hashicorp/terraform-plugin-framework/providerserver"
-	"github.com/hashicorp/terraform-plugin-go/tfprotov6"
 	"github.com/hashicorp/terraform-plugin-testing/helper/acctest"
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
 	"github.com/sematext/sematext-api-client-go/stcloud"
@@ -88,40 +86,7 @@ func (rtf *ResourceTestFixtureDefault) toHCL() string {
 
 }
 
-var providerProtoV6ProviderFactoriesDefault = map[string]func() (tfprotov6.ProviderServer, error){
-	"sematext_cloud": providerserver.NewProtocol6WithError(New("test")()),
-}
-
-func providerPreCheckTestDefault(t *testing.T) {
-	// You can add code here to run prior to any test case execution, for example assertions
-	// about the appropriate environment variables being set are common to see in a pre-check
-	// function.
-
-	token := os.Getenv("SEMATEXT_API_KEY")
-	if !IsValidUUID(token) {
-		t.Fatal("ERROR : SEMATEXT_API_KEY environment not set correctly")
-	}
-
-	region := os.Getenv("SEMATEXT_REGION")
-	if !stcloud.IsValidSematextRegion(region) {
-		t.Fatal("ERROR : SEMATEXT_REGION environment not set correctly")
-	}
-
-	if os.Getenv("Default_ACCESS_KEY_ID") == "" {
-		t.Fatal("ERROR : Default_ACCESS_KEY_ID must be set for acceptance tests")
-	}
-
-	if os.Getenv("Default_ACCESS_KEY_ID") != "" && os.Getenv("Default_SECRET_ACCESS_KEY") == "" {
-		t.Fatal("ERROR : Default_SECRET_ACCESS_KEY must be set for acceptance tests")
-	}
-
-	if os.Getenv("Default_REGION") == "" {
-		t.Fatal("ERROR : Default_REGION must be set for acceptance tests")
-	}
-
-}
-
-func TestAccResourceAppDefault(t *testing.T, resourceType string, appType string) {
+func TestAccResourceDefault(t *testing.T, resourceType string, appType string) {
 
 	testname := resourceType + ".test"
 
@@ -133,8 +98,8 @@ func TestAccResourceAppDefault(t *testing.T, resourceType string, appType string
 	fixture1.Name = fixture0.Name + "_2"
 
 	resource.Test(t, resource.TestCase{
-		PreCheck:                 func() { providerPreCheckTestDefault(t) },
-		ProtoV6ProviderFactories: providerProtoV6ProviderFactoriesDefault,
+		//PreCheck:                 func() { ProviderPreCheckTestDefault(t) },
+		//ProtoV6ProviderFactories: ProviderProtoV6ProviderFactoriesDefault,
 		Steps: []resource.TestStep{
 			// Create and Read testing
 			{

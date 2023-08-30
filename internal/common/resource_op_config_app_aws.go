@@ -8,7 +8,7 @@ import (
 	"github.com/sematext/sematext-api-client-go/stcloud"
 )
 
-func ResourceOpConfigureAppAWS(client *stcloud.APIClient, ctx context.Context, req resource.ConfigureRequest, resp *resource.ConfigureResponse, appType string) {
+func ResourceOpConfigureAWS(client *stcloud.APIClient, ctx context.Context, req resource.ConfigureRequest, resp *resource.ConfigureResponse, appType string) {
 
 	if req.ProviderData == nil {
 		return

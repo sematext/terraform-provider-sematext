@@ -1,4 +1,4 @@
-package resources
+package <<PACKAGE_NAME>>
 
 /*
 	Note: Generated file, any edits will be overwritten!
@@ -21,11 +21,11 @@ func TestAccAppResource<<CLASS_NAME>>(t *testing.T) {
 
 	case "AWS EBS", "AWS EC2", "AWS ELB":
 
-		common.TestAccResourceAppAWS(t, "<<RESOURCE_NAME>>", "<<APP_TYPE>>")
+		common.TestAccResourceAWS(t, "<<RESOURCE_NAME>>", "<<APP_TYPE>>")
 
 	default:
 
-		common.TestAccResourceAppDefault(t, "<<RESOURCE_NAME>>", "<<APP_TYPE>>")
+		common.TestAccResourceDefault(t, "<<RESOURCE_NAME>>", "<<APP_TYPE>>")
 		
 	}
 

@@ -8,7 +8,7 @@ import (
 	"github.com/sematext/sematext-api-client-go/stcloud"
 )
 
-func ResourceOpConfigureAppDefault(client *stcloud.APIClient, ctx context.Context, req resource.ConfigureRequest, resp *resource.ConfigureResponse, appType string) {
+func ResourceOpConfigureDefault(client *stcloud.APIClient, ctx context.Context, req resource.ConfigureRequest, resp *resource.ConfigureResponse, appType string) {
 
 	if req.ProviderData == nil {
 		return

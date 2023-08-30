@@ -10,7 +10,7 @@ import (
 	"github.com/sematext/sematext-api-client-go/stcloud"
 )
 
-func ResourceOpUpdateAppAWS(client *stcloud.APIClient, ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse, appType string) {
+func ResourceOpUpdateAWS(client *stcloud.APIClient, ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse, appType string) {
 
 	var id int64
 	var err error

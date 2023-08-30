@@ -11,7 +11,7 @@ import (
 	"github.com/sematext/sematext-api-client-go/stcloud"
 )
 
-func ResourceOpCreateAppAWS(client *stcloud.APIClient, ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse, appType string) {
+func ResourceOpCreateAWS(client *stcloud.APIClient, ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse, appType string) {
 
 	if resp.Diagnostics.HasError() {
 		return
