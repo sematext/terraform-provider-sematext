@@ -9,11 +9,11 @@ package mysql
 
 import (
 	"testing"
-	"github.com/sematext/terraform-provider-sematext/internal/common"
+	"github.com/sematext/terraform-provider-sematext/internal/test"
 )
 
-// TestAccResourceAppMysql tests resource lifecycle.
-func TestAccAppResourceMysql(t *testing.T) {
+// TestAccResource tests resource lifecycle.
+func TestAccResource(t *testing.T) {
 
 	appType := "Mysql"
 
@@ -21,11 +21,11 @@ func TestAccAppResourceMysql(t *testing.T) {
 
 	case "AWS EBS", "AWS EC2", "AWS ELB":
 
-		common.TestAccResourceAWS(t, "sematext_app_mysql", "MySQL")
+		test.TestAccResourceAWS(t, "sematext_app_mysql", "MySQL")
 
 	default:
 
-		common.TestAccResourceDefault(t, "sematext_app_mysql", "MySQL")
+		test.TestAccResourceDefault(t, "sematext_app_mysql", "MySQL")
 		
 	}
 

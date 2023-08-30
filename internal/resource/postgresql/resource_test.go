@@ -9,11 +9,11 @@ package postgresql
 
 import (
 	"testing"
-	"github.com/sematext/terraform-provider-sematext/internal/common"
+	"github.com/sematext/terraform-provider-sematext/internal/test"
 )
 
-// TestAccResourceAppPostgresql tests resource lifecycle.
-func TestAccAppResourcePostgresql(t *testing.T) {
+// TestAccResource tests resource lifecycle.
+func TestAccResource(t *testing.T) {
 
 	appType := "Postgresql"
 
@@ -21,11 +21,11 @@ func TestAccAppResourcePostgresql(t *testing.T) {
 
 	case "AWS EBS", "AWS EC2", "AWS ELB":
 
-		common.TestAccResourceAWS(t, "sematext_app_postgresql", "postgresql")
+		test.TestAccResourceAWS(t, "sematext_app_postgresql", "postgresql")
 
 	default:
 
-		common.TestAccResourceDefault(t, "sematext_app_postgresql", "postgresql")
+		test.TestAccResourceDefault(t, "sematext_app_postgresql", "postgresql")
 		
 	}
 

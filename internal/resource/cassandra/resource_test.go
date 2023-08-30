@@ -9,11 +9,11 @@ package cassandra
 
 import (
 	"testing"
-	"github.com/sematext/terraform-provider-sematext/internal/common"
+	"github.com/sematext/terraform-provider-sematext/internal/test"
 )
 
-// TestAccResourceAppCassandra tests resource lifecycle.
-func TestAccAppResourceCassandra(t *testing.T) {
+// TestAccResource tests resource lifecycle.
+func TestAccResource(t *testing.T) {
 
 	appType := "Cassandra"
 
@@ -21,11 +21,11 @@ func TestAccAppResourceCassandra(t *testing.T) {
 
 	case "AWS EBS", "AWS EC2", "AWS ELB":
 
-		common.TestAccResourceAWS(t, "sematext_app_cassandra", "Cassandra")
+		test.TestAccResourceAWS(t, "sematext_app_cassandra", "Cassandra")
 
 	default:
 
-		common.TestAccResourceDefault(t, "sematext_app_cassandra", "Cassandra")
+		test.TestAccResourceDefault(t, "sematext_app_cassandra", "Cassandra")
 		
 	}
 

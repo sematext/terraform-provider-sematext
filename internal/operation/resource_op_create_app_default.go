@@ -1,4 +1,4 @@
-package common
+package operation
 
 import (
 	"context"
@@ -9,6 +9,9 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-log/tflog"
 	"github.com/sematext/sematext-api-client-go/stcloud"
+
+	"github.com/sematext/terraform-provider-sematext/internal/common"
+	"github.com/sematext/terraform-provider-sematext/internal/util"
 )
 
 func ResourceOpCreateDefault(client *stcloud.APIClient, ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse, appType string) {
@@ -23,7 +26,7 @@ func ResourceOpCreateDefault(client *stcloud.APIClient, ctx context.Context, req
 	var createTokenDto stcloud.CreateTokenDto
 	var appTokenNames []string
 	var tokenAccumulator map[string]string
-	var resourceAppModelDefault AppResourceModelDefault
+	var resourceAppModelDefault common.AppResourceModelDefault
 	var httpResponse *http.Response
 	var body map[string]interface{}
 
@@ -70,7 +73,7 @@ func ResourceOpCreateDefault(client *stcloud.APIClient, ctx context.Context, req
 	}
 
 	var app *stcloud.App
-	app, err = extractFirstApp(&appsResponse)
+	app, err = util.ExtractFirstApp(&appsResponse)
 	if err != nil {
 		resp.Diagnostics.AddError(
 			"Unable to Create Resource",
@@ -123,7 +126,5 @@ func ResourceOpCreateDefault(client *stcloud.APIClient, ctx context.Context, req
 
 	// Save data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &resourceAppModelDefault)...)
-
-	return
 
 }

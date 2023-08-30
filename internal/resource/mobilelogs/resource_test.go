@@ -9,11 +9,11 @@ package mobilelogs
 
 import (
 	"testing"
-	"github.com/sematext/terraform-provider-sematext/internal/common"
+	"github.com/sematext/terraform-provider-sematext/internal/test"
 )
 
-// TestAccResourceAppMobilelogs tests resource lifecycle.
-func TestAccAppResourceMobilelogs(t *testing.T) {
+// TestAccResource tests resource lifecycle.
+func TestAccResource(t *testing.T) {
 
 	appType := "Mobilelogs"
 
@@ -21,11 +21,11 @@ func TestAccAppResourceMobilelogs(t *testing.T) {
 
 	case "AWS EBS", "AWS EC2", "AWS ELB":
 
-		common.TestAccResourceAWS(t, "sematext_app_mobilelogs", "mobile-logs")
+		test.TestAccResourceAWS(t, "sematext_app_mobilelogs", "mobile-logs")
 
 	default:
 
-		common.TestAccResourceDefault(t, "sematext_app_mobilelogs", "mobile-logs")
+		test.TestAccResourceDefault(t, "sematext_app_mobilelogs", "mobile-logs")
 		
 	}
 

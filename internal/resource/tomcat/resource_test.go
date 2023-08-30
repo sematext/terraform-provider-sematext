@@ -9,11 +9,11 @@ package tomcat
 
 import (
 	"testing"
-	"github.com/sematext/terraform-provider-sematext/internal/common"
+	"github.com/sematext/terraform-provider-sematext/internal/test"
 )
 
-// TestAccResourceAppTomcat tests resource lifecycle.
-func TestAccAppResourceTomcat(t *testing.T) {
+// TestAccResource tests resource lifecycle.
+func TestAccResource(t *testing.T) {
 
 	appType := "Tomcat"
 
@@ -21,11 +21,11 @@ func TestAccAppResourceTomcat(t *testing.T) {
 
 	case "AWS EBS", "AWS EC2", "AWS ELB":
 
-		common.TestAccResourceAWS(t, "sematext_app_tomcat", "Tomcat")
+		test.TestAccResourceAWS(t, "sematext_app_tomcat", "Tomcat")
 
 	default:
 
-		common.TestAccResourceDefault(t, "sematext_app_tomcat", "Tomcat")
+		test.TestAccResourceDefault(t, "sematext_app_tomcat", "Tomcat")
 		
 	}
 

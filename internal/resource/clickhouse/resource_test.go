@@ -9,11 +9,11 @@ package clickhouse
 
 import (
 	"testing"
-	"github.com/sematext/terraform-provider-sematext/internal/common"
+	"github.com/sematext/terraform-provider-sematext/internal/test"
 )
 
-// TestAccResourceAppClickhouse tests resource lifecycle.
-func TestAccAppResourceClickhouse(t *testing.T) {
+// TestAccResource tests resource lifecycle.
+func TestAccResource(t *testing.T) {
 
 	appType := "Clickhouse"
 
@@ -21,11 +21,11 @@ func TestAccAppResourceClickhouse(t *testing.T) {
 
 	case "AWS EBS", "AWS EC2", "AWS ELB":
 
-		common.TestAccResourceAWS(t, "sematext_app_clickhouse", "ClickHouse")
+		test.TestAccResourceAWS(t, "sematext_app_clickhouse", "ClickHouse")
 
 	default:
 
-		common.TestAccResourceDefault(t, "sematext_app_clickhouse", "ClickHouse")
+		test.TestAccResourceDefault(t, "sematext_app_clickhouse", "ClickHouse")
 		
 	}
 

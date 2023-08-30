@@ -62,33 +62,33 @@ func isValidUUID(u string) bool {
 }
 
 
-// Ensure SematextCloudProvider satisfies various provider interfaces.
-var _ provider.Provider = &SematextCloudProvider{}
+// Ensure Provider satisfies various provider interfaces.
+var _ provider.Provider = &Provider{}
 
 func New(version string) func() provider.Provider {
     return func() provider.Provider {
-        return &SematextCloudProvider{
+        return &Provider{
             version: version,
         }
     }
 }
 
-// SematextCloudProvider defines the provider implementation.
-type SematextCloudProvider struct {
+// Provider defines the provider implementation.
+type Provider struct {
 	version string // set to provider version on release or "dev" on local build or "test" during testing
 }
 
-// SematextCloudProviderModel describes the provider data model.
-type SematextCloudProviderModel struct {
+// ProviderModel describes the provider data model.
+type ProviderModel struct {
 	SematextRegion types.String `tfsdk:"sematext_region"`	
 }
 
-func (p *SematextCloudProvider) Metadata(ctx context.Context, req provider.MetadataRequest, resp *provider.MetadataResponse) {
+func (p *Provider) Metadata(ctx context.Context, req provider.MetadataRequest, resp *provider.MetadataResponse) {
 	resp.TypeName = "SematextCloud"
 	resp.Version = p.version
 }
 
-func (p *SematextCloudProvider) Schema(ctx context.Context, req provider.SchemaRequest, resp *provider.SchemaResponse) {
+func (p *Provider) Schema(ctx context.Context, req provider.SchemaRequest, resp *provider.SchemaResponse) {
 
 	resp.Schema = schema.Schema{
 
@@ -107,9 +107,9 @@ func (p *SematextCloudProvider) Schema(ctx context.Context, req provider.SchemaR
 	}
 }
 
-func (p *SematextCloudProvider) Configure(ctx context.Context, req provider.ConfigureRequest, resp *provider.ConfigureResponse) {
+func (p *Provider) Configure(ctx context.Context, req provider.ConfigureRequest, resp *provider.ConfigureResponse) {
 	
-	var model SematextCloudProviderModel
+	var model ProviderModel
 	var baseURL *url.URL
 
 	resp.Diagnostics.Append(req.Config.Get(ctx, &model)...)
@@ -151,7 +151,7 @@ func (p *SematextCloudProvider) Configure(ctx context.Context, req provider.Conf
 
 }
 
-func (p *SematextCloudProvider) Resources(ctx context.Context) []func() resource.Resource {
+func (p *Provider) Resources(ctx context.Context) []func() resource.Resource {
 	return []func() resource.Resource{
         akka.NewResource,
         apache.NewResource,
@@ -188,7 +188,7 @@ func (p *SematextCloudProvider) Resources(ctx context.Context) []func() resource
 	}
 }
 
-func (p *SematextCloudProvider) DataSources(ctx context.Context) []func() datasource.DataSource {
+func (p *Provider) DataSources(ctx context.Context) []func() datasource.DataSource {
 	return []func() datasource.DataSource{
 	}
 }

@@ -1,4 +1,4 @@
-package common
+package util
 
 import (
 	"bytes"
@@ -9,6 +9,8 @@ import (
 
 	"github.com/google/uuid"
 	"github.com/sematext/sematext-api-client-go/stcloud"
+
+	"github.com/sematext/terraform-provider-sematext/internal/common"
 )
 
 // IsValidSematextRegion checks sematext api region is valid.
@@ -36,7 +38,7 @@ func PrettyPrintJSON(b []byte) ([]byte, error) {
 }
 
 // ExtractApp - cope with missing field or empty array in appsResponse.Data
-func extractApp(appResponse *stcloud.AppResponse) (*stcloud.App, error) {
+func ExtractApp(appResponse *stcloud.AppResponse) (*stcloud.App, error) {
 
 	if appResponse.Success {
 		if appResponse.Data != nil {
@@ -50,7 +52,7 @@ func extractApp(appResponse *stcloud.AppResponse) (*stcloud.App, error) {
 }
 
 // ExtractApp - cope with missing field or empty array in appsResponse.Data
-func extractFirstApp(appsResponse *stcloud.AppsResponse) (*stcloud.App, error) {
+func ExtractFirstApp(appsResponse *stcloud.AppsResponse) (*stcloud.App, error) {
 
 	if appsResponse.Success {
 		if appsResponse.Data != nil {
@@ -64,7 +66,7 @@ func extractFirstApp(appsResponse *stcloud.AppsResponse) (*stcloud.App, error) {
 }
 
 // ExtractAppTokens - cope with missing field or empty array in Response to token operation
-func extractAppTokens(tokensResponse stcloud.TokensResponse) (*[]stcloud.TokenDto, error) {
+func ExtractAppTokens(tokensResponse stcloud.TokensResponse) (*[]stcloud.TokenDto, error) {
 
 	if tokensResponse.Success {
 		if tokensResponse.Data != nil {
@@ -77,7 +79,7 @@ func extractAppTokens(tokensResponse stcloud.TokensResponse) (*[]stcloud.TokenDt
 	return nil, errors.New(tokensResponse.Errors[0].Message)
 }
 
-func contains(s []string, str string) bool {
+func Contains(s []string, str string) bool {
 	for _, v := range s {
 		if v == str {
 			return true
@@ -87,15 +89,14 @@ func contains(s []string, str string) bool {
 	return false
 }
 
-func arrayLiteralString(array []string) string {
+func ArrayLiteralString(array []string) string {
 	s := strings.Join(array, "\",\"")
 	return fmt.Sprintf("[\"%s\"]", s)
 }
 
-func extractAppTokenNames(AppTokens []AppTokenType) []string {
+func ExtractAppTokenNames(AppTokens [](common.AppTokenType)) []string {
 
 	var result []string
-	//names = set.(*schema.Set).List()[0].(map[string]interface{})["names"].([]interface{}) // @TODO - adjust for new framework.
 	for _, token := range AppTokens {
 		for _, name := range token.Names {
 			result = append(result, name)
@@ -104,7 +105,7 @@ func extractAppTokenNames(AppTokens []AppTokenType) []string {
 	return result
 }
 
-func int64StringMapKeys(m map[int64]string) []int64 {
+func Int64StringMapKeys(m map[int64]string) []int64 {
 	i := 0
 	keys := make([]int64, len(m))
 	for k := range m {
@@ -113,7 +114,8 @@ func int64StringMapKeys(m map[int64]string) []int64 {
 	}
 	return keys
 }
-func stringStringMapKeys(m map[string]string) []string {
+
+func StringStringMapKeys(m map[string]string) []string {
 	i := 0
 	keys := make([]string, len(m))
 	for k := range m {
@@ -123,7 +125,7 @@ func stringStringMapKeys(m map[string]string) []string {
 	return keys
 }
 
-func intArraytoInt64array(a []int) []int64 {
+func IntArraytoInt64array(a []int) []int64 {
 	result := make([]int64, len(a))
 	for i, v := range a {
 		result[i] = int64(v)

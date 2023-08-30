@@ -1,4 +1,4 @@
-package common
+package operation
 
 import (
 	"context"
@@ -8,9 +8,12 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/sematext/sematext-api-client-go/stcloud"
+
+	"github.com/sematext/terraform-provider-sematext/internal/common"
+	"github.com/sematext/terraform-provider-sematext/internal/util"
 )
 
-func ResourceOpUpdateAWS(client *stcloud.APIClient, ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse, appType string) {
+func ResourceOpUpdateDefault(client *stcloud.APIClient, ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse, appType string) {
 
 	var id int64
 	var err error
@@ -21,18 +24,18 @@ func ResourceOpUpdateAWS(client *stcloud.APIClient, ctx context.Context, req res
 	var tokenAccumulator map[string]string
 	var createTokenDto stcloud.CreateTokenDto
 	var tokenResponse stcloud.TokenResponse
-	var appResourceModelAWS AppResourceModelAWS
+	var appResourceModelDefault common.AppResourceModelDefault
 	var httpResponse *http.Response
 	var body map[string]interface{}
 
 	// Read Terraform plan data into the model
-	resp.Diagnostics.Append(req.Plan.Get(ctx, &appResourceModelAWS)...)
+	resp.Diagnostics.Append(req.Plan.Get(ctx, &appResourceModelDefault)...)
 
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
-	if id, err = strconv.ParseInt(appResourceModelAWS.Id, 10, 64); err != nil {
+	if id, err = strconv.ParseInt(appResourceModelDefault.Id, 10, 64); err != nil {
 		resp.Diagnostics.AddError(
 			"Unable to Update Resource",
 			"An unexpected error occurred while attempting to update the resource. "+
@@ -43,7 +46,7 @@ func ResourceOpUpdateAWS(client *stcloud.APIClient, ctx context.Context, req res
 	}
 
 	updateAppInfo := &stcloud.UpdateAppInfo{}
-	updateAppInfo.Name = appResourceModelAWS.Name
+	updateAppInfo.Name = appResourceModelDefault.Name
 
 	_, httpResponse, err = client.AppsApi.UpdateUsingPUT2(context.Background(), *updateAppInfo, id)
 
@@ -70,7 +73,7 @@ func ResourceOpUpdateAWS(client *stcloud.APIClient, ctx context.Context, req res
 	}
 
 	billingInfo := &stcloud.BillingInfo{}
-	billingInfo.PlanId = appResourceModelAWS.BillingPlanId
+	billingInfo.PlanId = appResourceModelDefault.BillingPlanId
 
 	_, httpResponse, err = client.BillingApi.UpdatePlanUsingPUT(context.Background(), *billingInfo, id)
 
@@ -96,38 +99,8 @@ func ResourceOpUpdateAWS(client *stcloud.APIClient, ctx context.Context, req res
 		return
 	}
 
-	cloudWatchSettings := &stcloud.CloudWatchSettings{}
-	cloudWatchSettings.AccessKey = appResourceModelAWS.AwsAccessKey.String()
-	cloudWatchSettings.SecretKey = appResourceModelAWS.AwsSecretKey.String()
-	cloudWatchSettings.FetchFrequency = appResourceModelAWS.AwsFetchFrequency.String()
-	cloudWatchSettings.Region = appResourceModelAWS.AwsRegion.String()
-
-	_, httpResponse, err = client.AwsSettingsControllerApi.UpdateUsingPUT1(context.Background(), *cloudWatchSettings, id)
-
-	if err != nil {
-		json.Unmarshal([]byte(err.(stcloud.GenericSwaggerError).Body()), &body)
-		resp.Diagnostics.AddError(
-			"Unable to Update Resource Billing Code",
-			"An unexpected error occurred while attempting to create the resource. "+
-				"Please retry the operation or report this issue to the provider developers.\n\n"+
-				"Error: "+body["message"].(string),
-		)
-		return
-	}
-
-	// Return error if the HTTP status code is not 200 OK
-	if httpResponse.StatusCode != http.StatusOK {
-		resp.Diagnostics.AddError(
-			"Unable to Update Resource Billing Code",
-			"An unexpected error occurred while attempting to create the resource. "+
-				"Please retry the operation or report this issue to the provider developers.\n\n"+
-				"HTTP Status: "+httpResponse.Status,
-		)
-		return
-	}
-
 	// get the list of apptoken names that are supposed to be here
-	appTokenNames = extractAppTokenNames(appResourceModelAWS.AppToken)
+	appTokenNames = util.ExtractAppTokenNames(appResourceModelDefault.AppToken)
 
 	// pull tokens for this app from SC.
 	_, _, err = client.TokensApiControllerApi.GetAppTokens(ctx, id)
@@ -154,7 +127,7 @@ func ResourceOpUpdateAWS(client *stcloud.APIClient, ctx context.Context, req res
 		return
 	}
 
-	tokenEntries, err = extractAppTokens(tokensResponse)
+	tokenEntries, err = util.ExtractAppTokens(tokensResponse)
 	if err != nil {
 		resp.Diagnostics.AddError(
 			"Unable to Update - token error.",
@@ -168,7 +141,7 @@ func ResourceOpUpdateAWS(client *stcloud.APIClient, ctx context.Context, req res
 	//overwrite UUIDs from SC
 	tokenAccumulator = map[string]string{}
 	for _, tokenEntry = range *tokenEntries {
-		if contains(appTokenNames, tokenEntry.Name) {
+		if util.Contains(appTokenNames, tokenEntry.Name) {
 			tokenAccumulator[tokenEntry.Name] = tokenEntry.Token
 			if !tokenEntry.Writeable {
 				resp.Diagnostics.AddError(
@@ -223,9 +196,9 @@ func ResourceOpUpdateAWS(client *stcloud.APIClient, ctx context.Context, req res
 		}
 	}
 
-	appResourceModelAWS.ScAppTokenEntries = tokenAccumulator
+	appResourceModelDefault.ScAppTokenEntries = tokenAccumulator
 
 	// Save updated data into Terraform state
-	resp.Diagnostics.Append(resp.State.Set(ctx, &appResourceModelAWS)...)
+	resp.Diagnostics.Append(resp.State.Set(ctx, &appResourceModelDefault)...)
 
 }

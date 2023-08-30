@@ -9,11 +9,11 @@ package awsebs
 
 import (
 	"testing"
-	"github.com/sematext/terraform-provider-sematext/internal/common"
+	"github.com/sematext/terraform-provider-sematext/internal/test"
 )
 
-// TestAccResourceAppAwsebs tests resource lifecycle.
-func TestAccAppResourceAwsebs(t *testing.T) {
+// TestAccResource tests resource lifecycle.
+func TestAccResource(t *testing.T) {
 
 	appType := "Awsebs"
 
@@ -21,11 +21,11 @@ func TestAccAppResourceAwsebs(t *testing.T) {
 
 	case "AWS EBS", "AWS EC2", "AWS ELB":
 
-		common.TestAccResourceAWS(t, "sematext_app_awsebs", "AWS EBS")
+		test.TestAccResourceAWS(t, "sematext_app_awsebs", "AWS EBS")
 
 	default:
 
-		common.TestAccResourceDefault(t, "sematext_app_awsebs", "AWS EBS")
+		test.TestAccResourceDefault(t, "sematext_app_awsebs", "AWS EBS")
 		
 	}
 

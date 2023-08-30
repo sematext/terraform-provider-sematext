@@ -9,11 +9,11 @@ package spark
 
 import (
 	"testing"
-	"github.com/sematext/terraform-provider-sematext/internal/common"
+	"github.com/sematext/terraform-provider-sematext/internal/test"
 )
 
-// TestAccResourceAppSpark tests resource lifecycle.
-func TestAccAppResourceSpark(t *testing.T) {
+// TestAccResource tests resource lifecycle.
+func TestAccResource(t *testing.T) {
 
 	appType := "Spark"
 
@@ -21,11 +21,11 @@ func TestAccAppResourceSpark(t *testing.T) {
 
 	case "AWS EBS", "AWS EC2", "AWS ELB":
 
-		common.TestAccResourceAWS(t, "sematext_app_spark", "Spark")
+		test.TestAccResourceAWS(t, "sematext_app_spark", "Spark")
 
 	default:
 
-		common.TestAccResourceDefault(t, "sematext_app_spark", "Spark")
+		test.TestAccResourceDefault(t, "sematext_app_spark", "Spark")
 		
 	}
 

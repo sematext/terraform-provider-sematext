@@ -1,4 +1,4 @@
-package common
+package test
 
 import (
 	"fmt"
@@ -10,10 +10,13 @@ import (
 	"github.com/hashicorp/terraform-plugin-testing/helper/acctest"
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
 	"github.com/sematext/sematext-api-client-go/stcloud"
+
+	"github.com/sematext/terraform-provider-sematext/internal/common"
+	"github.com/sematext/terraform-provider-sematext/internal/util"
 )
 
-// ResourceTestFixtureAWS a test fixture representing a resource - AWS EBS, AWS EC2, AWS ELB
-type ResourceTestFixtureAWS struct {
+// ResourceTestFixtureDefault a test fixture representing a resource
+type ResourceTestFixtureDefault struct {
 	ResourceType      string
 	ResourceName      string
 	AppType           string
@@ -21,14 +24,14 @@ type ResourceTestFixtureAWS struct {
 	StatePath         string
 	PlanID            int
 	DiscountCode      string
-	AppToken          AppTokenType
+	AppToken          common.AppTokenType
 	AwsRegion         string
 	AwsSecretKey      string
 	AwsAccessKey      string
 	AwsFetchFrequency string
 }
 
-func (rtf *ResourceTestFixtureAWS) hydrate(resourceType string, appType string) {
+func (rtf *ResourceTestFixtureDefault) hydrate(resourceType string, appType string) {
 
 	rndID := acctest.RandStringFromCharSet(10, acctest.CharSetAlphaNum)
 	rtf.ResourceType = resourceType
@@ -46,17 +49,17 @@ func (rtf *ResourceTestFixtureAWS) hydrate(resourceType string, appType string) 
 		rtf.DiscountCode = stcloud.TestDiscountCodeMetrics
 	}
 
-	rtf.AppToken = AppTokenType{
+	rtf.AppToken = common.AppTokenType{
 		Names: []string{"Staging", "Development", "Production"},
 	}
 
-	rtf.AwsRegion = os.Getenv("AWS_REGION")
-	rtf.AwsAccessKey = os.Getenv("AWS_ACCESS_KEY_ID")
-	rtf.AwsSecretKey = os.Getenv("AWS_SECRET_ACCESS_KEY")
+	rtf.AwsRegion = os.Getenv("Default_REGION")
+	rtf.AwsAccessKey = os.Getenv("Default_ACCESS_KEY_ID")
+	rtf.AwsSecretKey = os.Getenv("Default_SECRET_ACCESS_KEY")
 	rtf.AwsFetchFrequency = "FIVE_MINUTES"
 }
 
-func (rtf *ResourceTestFixtureAWS) toHCL() string {
+func (rtf *ResourceTestFixtureDefault) toHCL() string {
 
 	return fmt.Sprintf(`
 	resource "%s" "%s" {
@@ -77,7 +80,7 @@ func (rtf *ResourceTestFixtureAWS) toHCL() string {
 		rtf.Name,
 		rtf.PlanID,
 		rtf.DiscountCode,
-		arrayLiteralString(rtf.AppToken.Names),
+		util.ArrayLiteralString(rtf.AppToken.Names),
 		rtf.AwsRegion,
 		rtf.AwsSecretKey,
 		rtf.AwsAccessKey,
@@ -86,11 +89,11 @@ func (rtf *ResourceTestFixtureAWS) toHCL() string {
 
 }
 
-func TestAccResourceAWS(t *testing.T, resourceType string, appType string) {
+func TestAccResourceDefault(t *testing.T, resourceType string, appType string) {
 
 	testname := resourceType + ".test"
 
-	fixture0 := &ResourceTestFixtureAWS{}
+	fixture0 := &ResourceTestFixtureDefault{}
 	fixture0.hydrate(resourceType, appType)
 
 	fixture1 := fixture0
@@ -98,8 +101,8 @@ func TestAccResourceAWS(t *testing.T, resourceType string, appType string) {
 	fixture1.Name = fixture0.Name + "_2"
 
 	resource.Test(t, resource.TestCase{
-		//PreCheck:                 func() { ProviderPreCheckTestAWS(t) },
-		//ProtoV6ProviderFactories: ProviderProtoV6ProviderFactoriesAWS,
+		//PreCheck:                 func() { provider.ProviderPreCheckTestDefault(t) },
+		//ProtoV6ProviderFactories: provider.ProviderProtoV6ProviderFactoriesDefault,
 		Steps: []resource.TestStep{
 			// Create and Read testing
 			{

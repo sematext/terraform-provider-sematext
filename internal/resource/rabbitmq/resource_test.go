@@ -9,11 +9,11 @@ package rabbitmq
 
 import (
 	"testing"
-	"github.com/sematext/terraform-provider-sematext/internal/common"
+	"github.com/sematext/terraform-provider-sematext/internal/test"
 )
 
-// TestAccResourceAppRabbitmq tests resource lifecycle.
-func TestAccAppResourceRabbitmq(t *testing.T) {
+// TestAccResource tests resource lifecycle.
+func TestAccResource(t *testing.T) {
 
 	appType := "Rabbitmq"
 
@@ -21,11 +21,11 @@ func TestAccAppResourceRabbitmq(t *testing.T) {
 
 	case "AWS EBS", "AWS EC2", "AWS ELB":
 
-		common.TestAccResourceAWS(t, "sematext_app_rabbitmq", "rabbitmq")
+		test.TestAccResourceAWS(t, "sematext_app_rabbitmq", "rabbitmq")
 
 	default:
 
-		common.TestAccResourceDefault(t, "sematext_app_rabbitmq", "rabbitmq")
+		test.TestAccResourceDefault(t, "sematext_app_rabbitmq", "rabbitmq")
 		
 	}
 

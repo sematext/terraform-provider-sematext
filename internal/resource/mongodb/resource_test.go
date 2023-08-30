@@ -9,11 +9,11 @@ package mongodb
 
 import (
 	"testing"
-	"github.com/sematext/terraform-provider-sematext/internal/common"
+	"github.com/sematext/terraform-provider-sematext/internal/test"
 )
 
-// TestAccResourceAppMongodb tests resource lifecycle.
-func TestAccAppResourceMongodb(t *testing.T) {
+// TestAccResource tests resource lifecycle.
+func TestAccResource(t *testing.T) {
 
 	appType := "Mongodb"
 
@@ -21,11 +21,11 @@ func TestAccAppResourceMongodb(t *testing.T) {
 
 	case "AWS EBS", "AWS EC2", "AWS ELB":
 
-		common.TestAccResourceAWS(t, "sematext_app_mongodb", "MongoDB")
+		test.TestAccResourceAWS(t, "sematext_app_mongodb", "MongoDB")
 
 	default:
 
-		common.TestAccResourceDefault(t, "sematext_app_mongodb", "MongoDB")
+		test.TestAccResourceDefault(t, "sematext_app_mongodb", "MongoDB")
 		
 	}
 

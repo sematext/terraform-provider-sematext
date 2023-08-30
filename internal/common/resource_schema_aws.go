@@ -153,3 +153,32 @@ func ResourceSchemaAWS(appType string) schema.Schema {
 
 	return resourceSchema
 }
+
+func int64StringMapKeys(m map[int64]string) []int64 {
+	i := 0
+	keys := make([]int64, len(m))
+	for k := range m {
+		keys[i] = int64(k)
+		i++
+	}
+	return keys
+}
+
+func stringStringMapKeys(m map[string]string) []string {
+	i := 0
+	keys := make([]string, len(m))
+	for k := range m {
+		keys[i] = string(k)
+		i++
+	}
+	return keys
+}
+
+func intArraytoInt64array(a []int) []int64 {
+	result := make([]int64, len(a))
+	for i, v := range a {
+		result[i] = int64(v)
+	}
+	return result
+
+}

@@ -1,4 +1,4 @@
-package common
+package operation
 
 import (
 	"context"
@@ -9,24 +9,26 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/sematext/sematext-api-client-go/stcloud"
+
+	"github.com/sematext/terraform-provider-sematext/internal/common"
 )
 
-func ResourceOpDeleteAWS(client *stcloud.APIClient, ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse, appType string) {
+func ResourceOpDeleteDefault(client *stcloud.APIClient, ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse, appType string) {
 
 	var id int64
 	var err error
-	var appResourceModelAWS AppResourceModelAWS
+	var appResourceModelDefault common.AppResourceModelDefault
 	var httpResponse *http.Response
 	var body map[string]interface{}
 
 	// Read Terraform plan data into the model
-	resp.Diagnostics.Append(req.State.Get(ctx, &appResourceModelAWS)...)
+	resp.Diagnostics.Append(req.State.Get(ctx, &appResourceModelDefault)...)
 
 	if resp.Diagnostics.HasError() {
 		return
 	}
 
-	if id, err = strconv.ParseInt(appResourceModelAWS.Id, 10, 64); err != nil {
+	if id, err = strconv.ParseInt(appResourceModelDefault.Id, 10, 64); err != nil {
 		resp.Diagnostics.AddError(
 			"Unable to Delete Resource",
 			"An unexpected error occurred while attempting to convert the id. "+

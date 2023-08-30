@@ -9,11 +9,11 @@ package solr
 
 import (
 	"testing"
-	"github.com/sematext/terraform-provider-sematext/internal/common"
+	"github.com/sematext/terraform-provider-sematext/internal/test"
 )
 
-// TestAccResourceAppSolr tests resource lifecycle.
-func TestAccAppResourceSolr(t *testing.T) {
+// TestAccResource tests resource lifecycle.
+func TestAccResource(t *testing.T) {
 
 	appType := "Solr"
 
@@ -21,11 +21,11 @@ func TestAccAppResourceSolr(t *testing.T) {
 
 	case "AWS EBS", "AWS EC2", "AWS ELB":
 
-		common.TestAccResourceAWS(t, "sematext_app_solr", "Solr")
+		test.TestAccResourceAWS(t, "sematext_app_solr", "Solr")
 
 	default:
 
-		common.TestAccResourceDefault(t, "sematext_app_solr", "Solr")
+		test.TestAccResourceDefault(t, "sematext_app_solr", "Solr")
 		
 	}
 

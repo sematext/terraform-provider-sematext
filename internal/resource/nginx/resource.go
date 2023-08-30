@@ -11,6 +11,7 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/sematext/sematext-api-client-go/stcloud"
+	"github.com/sematext/terraform-provider-sematext/internal/operation"
 	"github.com/sematext/terraform-provider-sematext/internal/common"
 )
 
@@ -57,9 +58,9 @@ func (r *Resource) Configure(ctx context.Context, req resource.ConfigureRequest,
 	appType := "Nginx"
 
 	if appType == "AWS EBS" || appType == "AWS EC2" || appType == "AWS ELB" { 
-		common.ResourceOpConfigureAWS(r.client, ctx, req, resp, "Nginx")
+		operation.ResourceOpConfigureAWS(r.client, ctx, req, resp, "Nginx")
 	} else {
-		common.ResourceOpConfigureDefault(r.client, ctx, req, resp, "Nginx")
+		operation.ResourceOpConfigureDefault(r.client, ctx, req, resp, "Nginx")
 	}
 
 }
@@ -70,9 +71,9 @@ func (r *Resource) Create(ctx context.Context, req resource.CreateRequest, resp 
 	appType := "Nginx"
 		
 	if appType == "AWS EBS" || appType == "AWS EC2" || appType == "AWS ELB" { 
-		common.ResourceOpCreateAWS(r.client, ctx, req, resp, "Nginx")
+		operation.ResourceOpCreateAWS(r.client, ctx, req, resp, "Nginx")
 	} else{
-		common.ResourceOpCreateDefault(r.client, ctx, req, resp, "Nginx")
+		operation.ResourceOpCreateDefault(r.client, ctx, req, resp, "Nginx")
 	}
 
 }
@@ -83,9 +84,9 @@ func (r *Resource) Read(ctx context.Context, req resource.ReadRequest, resp *res
 	appType := "Nginx"
 
 	if appType == "AWS EBS" || appType == "AWS EC2" || appType == "AWS ELB" { 
-		common.ResourceOpReadAWS(r.client, ctx, req, resp, "Nginx")
+		operation.ResourceOpReadAWS(r.client, ctx, req, resp, "Nginx")
 	} else {
-		common.ResourceOpReadDefault(r.client, ctx, req, resp, "Nginx")
+		operation.ResourceOpReadDefault(r.client, ctx, req, resp, "Nginx")
 	}
 
 }
@@ -96,9 +97,9 @@ func (r *Resource) Update(ctx context.Context, req resource.UpdateRequest, resp 
 	appType := "Nginx"
 
 	if appType == "AWS EBS" || appType == "AWS EC2" || appType == "AWS ELB" { 
-		common.ResourceOpUpdateAWS(r.client, ctx, req, resp, "Nginx")
+		operation.ResourceOpUpdateAWS(r.client, ctx, req, resp, "Nginx")
 	} else {
-		common.ResourceOpUpdateDefault(r.client, ctx, req, resp, "Nginx")
+		operation.ResourceOpUpdateDefault(r.client, ctx, req, resp, "Nginx")
 	}
 
 }
@@ -109,9 +110,9 @@ func (r *Resource) Delete(ctx context.Context, req resource.DeleteRequest, resp 
 	appType := "Nginx"
 
 	if appType == "AWS EBS" || appType == "AWS EC2" || appType == "AWS ELB" { 
-		common.ResourceOpDeleteAWS(r.client, ctx, req, resp, "Nginx")
+		operation.ResourceOpDeleteAWS(r.client, ctx, req, resp, "Nginx")
 	} else { 
-		common.ResourceOpDeleteDefault(r.client, ctx, req, resp, "Nginx")
+		operation.ResourceOpDeleteDefault(r.client, ctx, req, resp, "Nginx")
 	}
 	
 
@@ -123,9 +124,9 @@ func (r *Resource) ImportState(ctx context.Context, req resource.ImportStateRequ
 	appType := "Nginx"
 
 	if appType == "AWS EBS" || appType == "AWS EC2" || appType == "AWS ELB" { 
-  		common.ResourceOpImportAWS(r.client, ctx, req, resp, "Nginx")
+  		operation.ResourceOpImportAWS(r.client, ctx, req, resp, "Nginx")
 	} else {
-		common.ResourceOpImportDefault(r.client, ctx, req, resp, "Nginx")
+		operation.ResourceOpImportDefault(r.client, ctx, req, resp, "Nginx")
 	}
 
 }

@@ -9,11 +9,11 @@ package kafka
 
 import (
 	"testing"
-	"github.com/sematext/terraform-provider-sematext/internal/common"
+	"github.com/sematext/terraform-provider-sematext/internal/test"
 )
 
-// TestAccResourceAppKafka tests resource lifecycle.
-func TestAccAppResourceKafka(t *testing.T) {
+// TestAccResource tests resource lifecycle.
+func TestAccResource(t *testing.T) {
 
 	appType := "Kafka"
 
@@ -21,11 +21,11 @@ func TestAccAppResourceKafka(t *testing.T) {
 
 	case "AWS EBS", "AWS EC2", "AWS ELB":
 
-		common.TestAccResourceAWS(t, "sematext_app_kafka", "Kafka")
+		test.TestAccResourceAWS(t, "sematext_app_kafka", "Kafka")
 
 	default:
 
-		common.TestAccResourceDefault(t, "sematext_app_kafka", "Kafka")
+		test.TestAccResourceDefault(t, "sematext_app_kafka", "Kafka")
 		
 	}
 

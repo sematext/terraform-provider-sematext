@@ -9,11 +9,11 @@ package hbase
 
 import (
 	"testing"
-	"github.com/sematext/terraform-provider-sematext/internal/common"
+	"github.com/sematext/terraform-provider-sematext/internal/test"
 )
 
-// TestAccResourceAppHbase tests resource lifecycle.
-func TestAccAppResourceHbase(t *testing.T) {
+// TestAccResource tests resource lifecycle.
+func TestAccResource(t *testing.T) {
 
 	appType := "Hbase"
 
@@ -21,11 +21,11 @@ func TestAccAppResourceHbase(t *testing.T) {
 
 	case "AWS EBS", "AWS EC2", "AWS ELB":
 
-		common.TestAccResourceAWS(t, "sematext_app_hbase", "HBase")
+		test.TestAccResourceAWS(t, "sematext_app_hbase", "HBase")
 
 	default:
 
-		common.TestAccResourceDefault(t, "sematext_app_hbase", "HBase")
+		test.TestAccResourceDefault(t, "sematext_app_hbase", "HBase")
 		
 	}
 

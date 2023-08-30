@@ -9,11 +9,11 @@ package <<PACKAGE_NAME>>
 
 import (
 	"testing"
-	"github.com/sematext/terraform-provider-sematext/internal/common"
+	"github.com/sematext/terraform-provider-sematext/internal/test"
 )
 
-// TestAccResourceApp<<CLASS_NAME>> tests resource lifecycle.
-func TestAccAppResource<<CLASS_NAME>>(t *testing.T) {
+// TestAccResource tests resource lifecycle.
+func TestAccResource(t *testing.T) {
 
 	appType := "<<CLASS_NAME>>"
 
@@ -21,11 +21,11 @@ func TestAccAppResource<<CLASS_NAME>>(t *testing.T) {
 
 	case "AWS EBS", "AWS EC2", "AWS ELB":
 
-		common.TestAccResourceAWS(t, "<<RESOURCE_NAME>>", "<<APP_TYPE>>")
+		test.TestAccResourceAWS(t, "<<RESOURCE_NAME>>", "<<APP_TYPE>>")
 
 	default:
 
-		common.TestAccResourceDefault(t, "<<RESOURCE_NAME>>", "<<APP_TYPE>>")
+		test.TestAccResourceDefault(t, "<<RESOURCE_NAME>>", "<<APP_TYPE>>")
 		
 	}
 

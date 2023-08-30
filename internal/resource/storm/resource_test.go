@@ -9,11 +9,11 @@ package storm
 
 import (
 	"testing"
-	"github.com/sematext/terraform-provider-sematext/internal/common"
+	"github.com/sematext/terraform-provider-sematext/internal/test"
 )
 
-// TestAccResourceAppStorm tests resource lifecycle.
-func TestAccAppResourceStorm(t *testing.T) {
+// TestAccResource tests resource lifecycle.
+func TestAccResource(t *testing.T) {
 
 	appType := "Storm"
 
@@ -21,11 +21,11 @@ func TestAccAppResourceStorm(t *testing.T) {
 
 	case "AWS EBS", "AWS EC2", "AWS ELB":
 
-		common.TestAccResourceAWS(t, "sematext_app_storm", "Storm")
+		test.TestAccResourceAWS(t, "sematext_app_storm", "Storm")
 
 	default:
 
-		common.TestAccResourceDefault(t, "sematext_app_storm", "Storm")
+		test.TestAccResourceDefault(t, "sematext_app_storm", "Storm")
 		
 	}
 

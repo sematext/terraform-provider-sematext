@@ -11,6 +11,7 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/sematext/sematext-api-client-go/stcloud"
+	"github.com/sematext/terraform-provider-sematext/internal/operation"
 	"github.com/sematext/terraform-provider-sematext/internal/common"
 )
 
@@ -57,9 +58,9 @@ func (r *Resource) Configure(ctx context.Context, req resource.ConfigureRequest,
 	appType := "Apache"
 
 	if appType == "AWS EBS" || appType == "AWS EC2" || appType == "AWS ELB" { 
-		common.ResourceOpConfigureAWS(r.client, ctx, req, resp, "Apache")
+		operation.ResourceOpConfigureAWS(r.client, ctx, req, resp, "Apache")
 	} else {
-		common.ResourceOpConfigureDefault(r.client, ctx, req, resp, "Apache")
+		operation.ResourceOpConfigureDefault(r.client, ctx, req, resp, "Apache")
 	}
 
 }
@@ -70,9 +71,9 @@ func (r *Resource) Create(ctx context.Context, req resource.CreateRequest, resp 
 	appType := "Apache"
 		
 	if appType == "AWS EBS" || appType == "AWS EC2" || appType == "AWS ELB" { 
-		common.ResourceOpCreateAWS(r.client, ctx, req, resp, "Apache")
+		operation.ResourceOpCreateAWS(r.client, ctx, req, resp, "Apache")
 	} else{
-		common.ResourceOpCreateDefault(r.client, ctx, req, resp, "Apache")
+		operation.ResourceOpCreateDefault(r.client, ctx, req, resp, "Apache")
 	}
 
 }
@@ -83,9 +84,9 @@ func (r *Resource) Read(ctx context.Context, req resource.ReadRequest, resp *res
 	appType := "Apache"
 
 	if appType == "AWS EBS" || appType == "AWS EC2" || appType == "AWS ELB" { 
-		common.ResourceOpReadAWS(r.client, ctx, req, resp, "Apache")
+		operation.ResourceOpReadAWS(r.client, ctx, req, resp, "Apache")
 	} else {
-		common.ResourceOpReadDefault(r.client, ctx, req, resp, "Apache")
+		operation.ResourceOpReadDefault(r.client, ctx, req, resp, "Apache")
 	}
 
 }
@@ -96,9 +97,9 @@ func (r *Resource) Update(ctx context.Context, req resource.UpdateRequest, resp 
 	appType := "Apache"
 
 	if appType == "AWS EBS" || appType == "AWS EC2" || appType == "AWS ELB" { 
-		common.ResourceOpUpdateAWS(r.client, ctx, req, resp, "Apache")
+		operation.ResourceOpUpdateAWS(r.client, ctx, req, resp, "Apache")
 	} else {
-		common.ResourceOpUpdateDefault(r.client, ctx, req, resp, "Apache")
+		operation.ResourceOpUpdateDefault(r.client, ctx, req, resp, "Apache")
 	}
 
 }
@@ -109,9 +110,9 @@ func (r *Resource) Delete(ctx context.Context, req resource.DeleteRequest, resp 
 	appType := "Apache"
 
 	if appType == "AWS EBS" || appType == "AWS EC2" || appType == "AWS ELB" { 
-		common.ResourceOpDeleteAWS(r.client, ctx, req, resp, "Apache")
+		operation.ResourceOpDeleteAWS(r.client, ctx, req, resp, "Apache")
 	} else { 
-		common.ResourceOpDeleteDefault(r.client, ctx, req, resp, "Apache")
+		operation.ResourceOpDeleteDefault(r.client, ctx, req, resp, "Apache")
 	}
 	
 
@@ -123,9 +124,9 @@ func (r *Resource) ImportState(ctx context.Context, req resource.ImportStateRequ
 	appType := "Apache"
 
 	if appType == "AWS EBS" || appType == "AWS EC2" || appType == "AWS ELB" { 
-  		common.ResourceOpImportAWS(r.client, ctx, req, resp, "Apache")
+  		operation.ResourceOpImportAWS(r.client, ctx, req, resp, "Apache")
 	} else {
-		common.ResourceOpImportDefault(r.client, ctx, req, resp, "Apache")
+		operation.ResourceOpImportDefault(r.client, ctx, req, resp, "Apache")
 	}
 
 }

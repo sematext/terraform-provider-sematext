@@ -9,11 +9,11 @@ package infra
 
 import (
 	"testing"
-	"github.com/sematext/terraform-provider-sematext/internal/common"
+	"github.com/sematext/terraform-provider-sematext/internal/test"
 )
 
-// TestAccResourceAppInfra tests resource lifecycle.
-func TestAccAppResourceInfra(t *testing.T) {
+// TestAccResource tests resource lifecycle.
+func TestAccResource(t *testing.T) {
 
 	appType := "Infra"
 
@@ -21,11 +21,11 @@ func TestAccAppResourceInfra(t *testing.T) {
 
 	case "AWS EBS", "AWS EC2", "AWS ELB":
 
-		common.TestAccResourceAWS(t, "sematext_app_infra", "Infra")
+		test.TestAccResourceAWS(t, "sematext_app_infra", "Infra")
 
 	default:
 
-		common.TestAccResourceDefault(t, "sematext_app_infra", "Infra")
+		test.TestAccResourceDefault(t, "sematext_app_infra", "Infra")
 		
 	}
 

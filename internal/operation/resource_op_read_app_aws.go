@@ -1,4 +1,4 @@
-package common
+package operation
 
 import (
 	"context"
@@ -8,6 +8,9 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/sematext/sematext-api-client-go/stcloud"
+
+	"github.com/sematext/terraform-provider-sematext/internal/common"
+	"github.com/sematext/terraform-provider-sematext/internal/util"
 )
 
 func ResourceOpReadAWS(client *stcloud.APIClient, ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse, appType string) {
@@ -21,7 +24,7 @@ func ResourceOpReadAWS(client *stcloud.APIClient, ctx context.Context, req resou
 	var tokenEntries *[]stcloud.TokenDto
 	var tokenEntry stcloud.TokenDto
 	var tokenAccumulator map[string]string
-	var appResourceModelAWS AppResourceModelAWS
+	var appResourceModelAWS common.AppResourceModelAWS
 	var httpResponse *http.Response
 	var body map[string]interface{}
 
@@ -68,7 +71,7 @@ func ResourceOpReadAWS(client *stcloud.APIClient, ctx context.Context, req resou
 		return
 	}
 
-	app, err = extractApp(&appResponse)
+	app, err = util.ExtractApp(&appResponse)
 	if err != nil {
 		resp.Diagnostics.AddError(
 			"Error trying to Read Resource",
@@ -83,7 +86,7 @@ func ResourceOpReadAWS(client *stcloud.APIClient, ctx context.Context, req resou
 	appResourceModelAWS.BillingPlanId = app.Plan.Id
 
 	// get the list of apptoken names that are supposed to be here
-	appTokenNames = extractAppTokenNames(appResourceModelAWS.AppToken)
+	appTokenNames = util.ExtractAppTokenNames(appResourceModelAWS.AppToken)
 
 	// pull tokens for this app from SC.
 	if tokensResponse, httpResponse, err = client.TokensApiControllerApi.GetAppTokens(ctx, id); err != nil {
@@ -109,7 +112,7 @@ func ResourceOpReadAWS(client *stcloud.APIClient, ctx context.Context, req resou
 		return
 	}
 
-	tokenEntries, err = extractAppTokens(tokensResponse)
+	tokenEntries, err = util.ExtractAppTokens(tokensResponse)
 	if err != nil {
 		resp.Diagnostics.AddError(
 			"Error trying to Read Resource",
@@ -125,7 +128,7 @@ func ResourceOpReadAWS(client *stcloud.APIClient, ctx context.Context, req resou
 	//   if any are missing output a warning
 	tokenAccumulator = map[string]string{}
 	for _, tokenEntry = range *tokenEntries {
-		if contains(appTokenNames, tokenEntry.Name) {
+		if util.Contains(appTokenNames, tokenEntry.Name) {
 			tokenAccumulator[tokenEntry.Name] = tokenEntry.Token
 			if !tokenEntry.Writeable {
 				resp.Diagnostics.AddError(

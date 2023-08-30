@@ -9,11 +9,11 @@ package nginxplus
 
 import (
 	"testing"
-	"github.com/sematext/terraform-provider-sematext/internal/common"
+	"github.com/sematext/terraform-provider-sematext/internal/test"
 )
 
-// TestAccResourceAppNginxplus tests resource lifecycle.
-func TestAccAppResourceNginxplus(t *testing.T) {
+// TestAccResource tests resource lifecycle.
+func TestAccResource(t *testing.T) {
 
 	appType := "Nginxplus"
 
@@ -21,11 +21,11 @@ func TestAccAppResourceNginxplus(t *testing.T) {
 
 	case "AWS EBS", "AWS EC2", "AWS ELB":
 
-		common.TestAccResourceAWS(t, "sematext_app_nginxplus", "Nginx-Plus")
+		test.TestAccResourceAWS(t, "sematext_app_nginxplus", "Nginx-Plus")
 
 	default:
 
-		common.TestAccResourceDefault(t, "sematext_app_nginxplus", "Nginx-Plus")
+		test.TestAccResourceDefault(t, "sematext_app_nginxplus", "Nginx-Plus")
 		
 	}
 

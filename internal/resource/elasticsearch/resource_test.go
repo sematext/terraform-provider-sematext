@@ -9,11 +9,11 @@ package elasticsearch
 
 import (
 	"testing"
-	"github.com/sematext/terraform-provider-sematext/internal/common"
+	"github.com/sematext/terraform-provider-sematext/internal/test"
 )
 
-// TestAccResourceAppElasticsearch tests resource lifecycle.
-func TestAccAppResourceElasticsearch(t *testing.T) {
+// TestAccResource tests resource lifecycle.
+func TestAccResource(t *testing.T) {
 
 	appType := "Elasticsearch"
 
@@ -21,11 +21,11 @@ func TestAccAppResourceElasticsearch(t *testing.T) {
 
 	case "AWS EBS", "AWS EC2", "AWS ELB":
 
-		common.TestAccResourceAWS(t, "sematext_app_elasticsearch", "Elastic Search")
+		test.TestAccResourceAWS(t, "sematext_app_elasticsearch", "Elastic Search")
 
 	default:
 
-		common.TestAccResourceDefault(t, "sematext_app_elasticsearch", "Elastic Search")
+		test.TestAccResourceDefault(t, "sematext_app_elasticsearch", "Elastic Search")
 		
 	}
 

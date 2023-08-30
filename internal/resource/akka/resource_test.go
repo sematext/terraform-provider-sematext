@@ -9,11 +9,11 @@ package akka
 
 import (
 	"testing"
-	"github.com/sematext/terraform-provider-sematext/internal/common"
+	"github.com/sematext/terraform-provider-sematext/internal/test"
 )
 
-// TestAccResourceAppAkka tests resource lifecycle.
-func TestAccAppResourceAkka(t *testing.T) {
+// TestAccResource tests resource lifecycle.
+func TestAccResource(t *testing.T) {
 
 	appType := "Akka"
 
@@ -21,11 +21,11 @@ func TestAccAppResourceAkka(t *testing.T) {
 
 	case "AWS EBS", "AWS EC2", "AWS ELB":
 
-		common.TestAccResourceAWS(t, "sematext_app_akka", "Akka")
+		test.TestAccResourceAWS(t, "sematext_app_akka", "Akka")
 
 	default:
 
-		common.TestAccResourceDefault(t, "sematext_app_akka", "Akka")
+		test.TestAccResourceDefault(t, "sematext_app_akka", "Akka")
 		
 	}
 

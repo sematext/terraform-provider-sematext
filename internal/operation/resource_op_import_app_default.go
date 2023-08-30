@@ -1,4 +1,4 @@
-package common
+package operation
 
 import (
 	"context"
@@ -8,6 +8,6 @@ import (
 	"github.com/sematext/sematext-api-client-go/stcloud"
 )
 
-func ResourceOpImportAWS(client *stcloud.APIClient, ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse, appType string) {
+func ResourceOpImportDefault(client *stcloud.APIClient, ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse, appType string) {
 	resource.ImportStatePassthroughID(ctx, path.Root("id"), req, resp)
 }

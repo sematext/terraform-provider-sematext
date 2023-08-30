@@ -9,11 +9,11 @@ package redis
 
 import (
 	"testing"
-	"github.com/sematext/terraform-provider-sematext/internal/common"
+	"github.com/sematext/terraform-provider-sematext/internal/test"
 )
 
-// TestAccResourceAppRedis tests resource lifecycle.
-func TestAccAppResourceRedis(t *testing.T) {
+// TestAccResource tests resource lifecycle.
+func TestAccResource(t *testing.T) {
 
 	appType := "Redis"
 
@@ -21,11 +21,11 @@ func TestAccAppResourceRedis(t *testing.T) {
 
 	case "AWS EBS", "AWS EC2", "AWS ELB":
 
-		common.TestAccResourceAWS(t, "sematext_app_redis", "Redis")
+		test.TestAccResourceAWS(t, "sematext_app_redis", "Redis")
 
 	default:
 
-		common.TestAccResourceDefault(t, "sematext_app_redis", "Redis")
+		test.TestAccResourceDefault(t, "sematext_app_redis", "Redis")
 		
 	}
 

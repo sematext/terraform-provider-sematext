@@ -11,6 +11,7 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/sematext/sematext-api-client-go/stcloud"
+	"github.com/sematext/terraform-provider-sematext/internal/operation"
 	"github.com/sematext/terraform-provider-sematext/internal/common"
 )
 
@@ -57,9 +58,9 @@ func (r *Resource) Configure(ctx context.Context, req resource.ConfigureRequest,
 	appType := "mobile-logs"
 
 	if appType == "AWS EBS" || appType == "AWS EC2" || appType == "AWS ELB" { 
-		common.ResourceOpConfigureAWS(r.client, ctx, req, resp, "Mobilelogs")
+		operation.ResourceOpConfigureAWS(r.client, ctx, req, resp, "Mobilelogs")
 	} else {
-		common.ResourceOpConfigureDefault(r.client, ctx, req, resp, "Mobilelogs")
+		operation.ResourceOpConfigureDefault(r.client, ctx, req, resp, "Mobilelogs")
 	}
 
 }
@@ -70,9 +71,9 @@ func (r *Resource) Create(ctx context.Context, req resource.CreateRequest, resp 
 	appType := "mobile-logs"
 		
 	if appType == "AWS EBS" || appType == "AWS EC2" || appType == "AWS ELB" { 
-		common.ResourceOpCreateAWS(r.client, ctx, req, resp, "Mobilelogs")
+		operation.ResourceOpCreateAWS(r.client, ctx, req, resp, "Mobilelogs")
 	} else{
-		common.ResourceOpCreateDefault(r.client, ctx, req, resp, "Mobilelogs")
+		operation.ResourceOpCreateDefault(r.client, ctx, req, resp, "Mobilelogs")
 	}
 
 }
@@ -83,9 +84,9 @@ func (r *Resource) Read(ctx context.Context, req resource.ReadRequest, resp *res
 	appType := "mobile-logs"
 
 	if appType == "AWS EBS" || appType == "AWS EC2" || appType == "AWS ELB" { 
-		common.ResourceOpReadAWS(r.client, ctx, req, resp, "Mobilelogs")
+		operation.ResourceOpReadAWS(r.client, ctx, req, resp, "Mobilelogs")
 	} else {
-		common.ResourceOpReadDefault(r.client, ctx, req, resp, "Mobilelogs")
+		operation.ResourceOpReadDefault(r.client, ctx, req, resp, "Mobilelogs")
 	}
 
 }
@@ -96,9 +97,9 @@ func (r *Resource) Update(ctx context.Context, req resource.UpdateRequest, resp 
 	appType := "mobile-logs"
 
 	if appType == "AWS EBS" || appType == "AWS EC2" || appType == "AWS ELB" { 
-		common.ResourceOpUpdateAWS(r.client, ctx, req, resp, "Mobilelogs")
+		operation.ResourceOpUpdateAWS(r.client, ctx, req, resp, "Mobilelogs")
 	} else {
-		common.ResourceOpUpdateDefault(r.client, ctx, req, resp, "Mobilelogs")
+		operation.ResourceOpUpdateDefault(r.client, ctx, req, resp, "Mobilelogs")
 	}
 
 }
@@ -109,9 +110,9 @@ func (r *Resource) Delete(ctx context.Context, req resource.DeleteRequest, resp 
 	appType := "mobile-logs"
 
 	if appType == "AWS EBS" || appType == "AWS EC2" || appType == "AWS ELB" { 
-		common.ResourceOpDeleteAWS(r.client, ctx, req, resp, "Mobilelogs")
+		operation.ResourceOpDeleteAWS(r.client, ctx, req, resp, "Mobilelogs")
 	} else { 
-		common.ResourceOpDeleteDefault(r.client, ctx, req, resp, "Mobilelogs")
+		operation.ResourceOpDeleteDefault(r.client, ctx, req, resp, "Mobilelogs")
 	}
 	
 
@@ -123,9 +124,9 @@ func (r *Resource) ImportState(ctx context.Context, req resource.ImportStateRequ
 	appType := "mobile-logs"
 
 	if appType == "AWS EBS" || appType == "AWS EC2" || appType == "AWS ELB" { 
-  		common.ResourceOpImportAWS(r.client, ctx, req, resp, "Mobilelogs")
+  		operation.ResourceOpImportAWS(r.client, ctx, req, resp, "Mobilelogs")
 	} else {
-		common.ResourceOpImportDefault(r.client, ctx, req, resp, "Mobilelogs")
+		operation.ResourceOpImportDefault(r.client, ctx, req, resp, "Mobilelogs")
 	}
 
 }
