@@ -44,7 +44,6 @@ apptypes=(
 resourcelist=""
 resourceimportlist=""
 
-cp ./templates/provider_test.go.template ../internal/provider/provider_test.go
 
 for apptype in "${apptypes[@]}"
 do
@@ -69,11 +68,9 @@ do
 
 done
 
-echo "Rewriting Terraform Provider and test file"
-
-
+echo "Rewriting Terraform Provider and Test"
 sed -e "s/<<RESOURCE_IMPORTS>>/${resourceimportlist}/g" -e "s/<<RESOURCE_LIST>>/${resourcelist}/g" ./templates/provider.go.template > "../internal/provider/provider.go"
-sed -e "s/<<RESOURCE_IMPORTS>>/${resourceimportlist}/g" -e "s/<<RESOURCE_LIST>>/${resourcelist}/g" ./templates/provider_test.go.template > "../internal/provider/provider_test.go"
+sed -e "s/<<RESOURCE_IMPORTS>>/${resourceimportlist}/g" -e "s/<<RESOURCE_LIST>>/${resourcelist}/g" ./templates/provider_test.go.template > "../internal/provider_test/provider_test.go"
 
 cd ..
 make fmt

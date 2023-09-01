@@ -1,4 +1,4 @@
-package nginx
+package nginx_test
 
 /*
 	Note: Generated file, any edits will be overwritten!
@@ -9,7 +9,7 @@ package nginx
 
 import (
 	"testing"
-	"github.com/sematext/terraform-provider-sematext/internal/test"
+	"github.com/sematext/terraform-provider-sematext/internal/testcase"
 )
 
 // TestAccResource tests resource lifecycle.
@@ -21,14 +21,28 @@ func TestAccResource(t *testing.T) {
 
 	case "AWS EBS", "AWS EC2", "AWS ELB":
 
-		test.TestAccResourceAWS(t, "sematext_app_nginx", "Nginx")
+		testcase.TestAccResourceAWS(t, "sematext_app_nginx", "Nginx")
 
 	default:
 
-		test.TestAccResourceDefault(t, "sematext_app_nginx", "Nginx")
+		testcase.TestAccResourceDefault(t, "sematext_app_nginx", "Nginx")
 		
 	}
 
 }
 
+/*
+
+	@TODO - check provider config
+
+	p := schema.Provider{}
+
+	config := map[string]interface{}{
+		"sematext_region": "US",
+	}
+	err := p.Configure(context.Background(), terraform.NewResourceConfigRaw(config))
+	if err != nil {
+		t.Fatal(err)
+	}
+*/
 
