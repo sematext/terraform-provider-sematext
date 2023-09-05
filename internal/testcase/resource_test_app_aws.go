@@ -12,7 +12,7 @@ import (
 	"github.com/sematext/sematext-api-client-go/stcloud"
 
 	"github.com/sematext/terraform-provider-sematext/internal/common"
-	"github.com/sematext/terraform-provider-sematext/internal/provider_test"
+	"github.com/sematext/terraform-provider-sematext/internal/providertest"
 	"github.com/sematext/terraform-provider-sematext/internal/util"
 )
 
@@ -102,8 +102,8 @@ func TestAccResourceAWS(t *testing.T, resourceType string, appType string) {
 	fixture1.Name = fixture0.Name + "_2"
 
 	resource.Test(t, resource.TestCase{
-		PreCheck:                 func() { provider_test.ProviderPreCheckTestAWS(t) },
-		ProtoV6ProviderFactories: provider_test.ProviderProtoV6ProviderFactoriesAWS,
+		PreCheck:                 func() { providertest.ProviderPreCheckTestAWS(t) },
+		ProtoV6ProviderFactories: providertest.ProviderProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			// Create and Read testing
 			{
