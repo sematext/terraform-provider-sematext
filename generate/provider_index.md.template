@@ -44,7 +44,7 @@ There are two authentication tokens
 * Sematext Cloud App access token - retrieved on resource creation - refer to examples on how to access this inside your Terrform scripting.
 
 
-## Enviropnment Variables
+## Environment Variables
 
 The following environment variables are required:
 
