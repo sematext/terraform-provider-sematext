@@ -49,7 +49,7 @@ There are two authentication tokens
 The following environment variables are required:
 
 * SEMATEXT_REGION="US"
-* SEMATEXT_API_KEY="&lt;Sematext-Cloud-Token&gt;"
+* SEMATEXT_API_KEY="&lt;Sematext-Cloud-Token&gt;" # If not set using sematext_api_key in the `provider {}` code block
 
 If working with AWS Cloudwatch the following environment vars should be set:
 
