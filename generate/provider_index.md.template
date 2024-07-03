@@ -18,7 +18,8 @@ terraform {
 }
 
 provider "sematext" {
-    sematext_region = "US"
+    sematext_api_key = "00000000-0000-0000-0000-000000000000"
+    sematext_region  = "US"
 }
 
 resource "sematext_monitor_nodejs" "mymonitor" {
@@ -31,6 +32,7 @@ resource "sematext_monitor_nodejs" "mymonitor" {
 
 The following arguments are supported:
 
+* `sematext_api_key` - (Optional) your Sematext Cloud API key. The provider will use environment variable SEMATEXT_API_KEY (see below) by default if both are set;
 * `sematext_region` - (Required) desired Sematext Cloud Region  "US" or "EU";
 
 
@@ -42,12 +44,12 @@ There are two authentication tokens
 * Sematext Cloud App access token - retrieved on resource creation - refer to examples on how to access this inside your Terrform scripting.
 
 
-## Enviropnment Variables
+## Environment Variables
 
 The following environment variables are required:
 
 * SEMATEXT_REGION="US"
-* SEMATEXT_API_KEY="&lt;Sematext-Cloud-Token&gt;"
+* SEMATEXT_API_KEY="&lt;Sematext-Cloud-Token&gt;" # If not set using sematext_api_key in the `provider {}` code block
 
 If working with AWS Cloudwatch the following environment vars should be set:
 
