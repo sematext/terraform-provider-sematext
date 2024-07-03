@@ -3,7 +3,8 @@
 # Sematext MySQL Resource
 
 Creates a monitoring application 'app' within [Sematext Cloud](https://sematext.com/cloud/).
-Refer to [Refer to Sematext Provider for authentication detail](../index.md)
+[Refer to Sematext Provider for authentication detail](../index.md)
+[Refer to Plans Reference for billing_plan_ids](../guides/plans.md)
 
 ## Example Usage
 
@@ -23,19 +24,19 @@ provider "sematext" {
 
 resource "sematext_app_mysql" "myapp" {
   name = "my app name"
-  billing_plan_id = <[plan id](../guides/plans.md)>
+  billing_plan_id = my_billing_plan_id # Pro Infra; Refer to plan guidance for list of legal values
   apptoken {
-    name "my apptoken name"
-    create_missing true
+    names = ["my apptoken name"]
   }
 }
 ```
 
 ## Argument Reference
 
-* `name` - List attributes that this resource exports;
+* `names` - List attributes that this resource exports;
 * `billing_plan_id` - List attributes that this resource exports. [Refer to plan guidance for list of legal values](../guides/plans.md);
 * `apptoken.name` - Refer note below;
+
 
 ## App-tokens
 
