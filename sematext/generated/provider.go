@@ -29,7 +29,7 @@ func Provider() *schema.Provider {
 		Schema: map[string]*schema.Schema{
 			"sematext_api_key": {
 				Type:        schema.TypeString,
-				Required:    false,
+				Optional:    true,
 				DefaultFunc: schema.EnvDefaultFunc("SEMATEXT_API_KEY", ""),
 				ValidateFunc: func(val interface{}, key string) (warns []string, errs []error) {
 					api_key := val.(string)
