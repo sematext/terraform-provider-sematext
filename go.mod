@@ -1,6 +1,6 @@
 module github.com/sematext/terraform-provider-sematext
 
-go 1.18
+go 1.22.0
 
 require (
 	github.com/blang/semver/v4 v4.0.0
@@ -17,7 +17,7 @@ require (
 	github.com/agext/levenshtein v1.2.3 // indirect
 	github.com/antihax/optional v1.0.0 // indirect
 	github.com/apparentlymart/go-textseg/v13 v13.0.0 // indirect
-	github.com/cloudflare/circl v1.3.7 // indirect
+	github.com/cloudflare/circl v1.6.1 // indirect
 	github.com/fatih/color v1.15.0 // indirect
 	github.com/golang/protobuf v1.5.3 // indirect
 	github.com/google/go-cmp v0.5.9 // indirect
